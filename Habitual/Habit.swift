@@ -9,17 +9,35 @@
 import Foundation
 import CoreData
 
-enum Repeat: Int {
+public enum Repeat: Int16 {
     case Daily = 0
     case Weekly = 1
     case Monthly = 2
+    
+    public func name() -> String{
+        switch self {
+        case .Daily:
+            return "Daily"
+        case .Weekly:
+            return "Weekly"
+        default:
+            return "Monthly"
+        }
+        
+    }
 }
 
 @objc(Habit)
 public class Habit: NSManagedObject {
     
     @NSManaged var datesCompleted: AnyObject
-    @NSManaged var repeat: Int
+    
+    @NSManaged var repeatInt: Int16
+    var repeat:Repeat { // Wrapper because enums can't be saved in Core Data
+        get{return Repeat(rawValue: repeatInt) ?? .Daily}
+        set{repeatInt = newValue.rawValue}
+    }
+    
     @NSManaged var name: String
 
 }

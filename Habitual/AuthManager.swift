@@ -145,7 +145,7 @@ public class AuthManager : NSObject{
         }
     }
     
-    public static func addHabitForCurrentUser(name:String, repeat:Int){
+    public static func addHabitForCurrentUser(name:String, repeat:Repeat){
         
         let entityDescription =
         NSEntityDescription.entityForName("Habit",

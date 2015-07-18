@@ -16,15 +16,19 @@ class HabitDetailController: UITableViewController {
     
     var habit:Habit?
     
+    let repeats = ["Daily", "Weekly", "Monthly"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let habit = habit {
             nameTextField.text = habit.name
-            
+            daysInARowLabel.text = String(habit.datesCompleted.length ?? 0)
             self.navigationItem.title = habit.name
+            self.repeatLabel.text = habit.repeat.name()
         }else{
             self.navigationItem.title = "New Habit"
+            self.daysInARowLabel.text = "-"
 
             let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "done:")
 
@@ -35,7 +39,9 @@ class HabitDetailController: UITableViewController {
     
     func done(sender: UIBarButtonItem){
         
-        AuthManager.addHabitForCurrentUser(self.nameTextField.text, repeat: Repeat.Weekly.rawValue)
+        let index = Int16(find(repeats, repeatLabel.text!)!)
+        
+        AuthManager.addHabitForCurrentUser(self.nameTextField.text, repeat: Repeat(rawValue: index)!)
         NSNotificationCenter.defaultCenter().postNotificationName(kNotificationIdentifierRefreshHome, object: nil)
         navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -44,10 +50,8 @@ class HabitDetailController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let repeats = ["Daily", "Monthly", "Weekly"]
-        
         if indexPath.row == 1 {
-            let index = find(repeats, repeatLabel.text!)! % 3
+            let index = ((find(repeats, repeatLabel.text!)!) + 1) % 3
             self.repeatLabel.text = repeats[Int(index)]
         }
         
