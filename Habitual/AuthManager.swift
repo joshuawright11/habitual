@@ -119,11 +119,12 @@ public class AuthManager : NSObject{
         if let jsonString = jsonString, dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             
             let json = JSON(data: dataFromString)
-            return User(json: json)
+            var loadedUser = User(json: json)
+            loadedUser.habits = getHabitsOfCurrentUser()
+            return user
         }else{
-            
             let user = User(json: JSON("username:name"))
-            
+            user.habits = getHabitsOfCurrentUser()
             return user
         }
     }
@@ -144,11 +145,7 @@ public class AuthManager : NSObject{
         }
     }
     
-    /**
-        Private helper method to load a User's Habits from CoreData when a user is loaded from 
-        NSUserDefaults (meaning that the user must already have been logged in).
-    */
-    public static func getHabitsOfCurrentUser(){
+    public static func addHabitForCurrentUser(name:String, repeat:Int){
         
         let entityDescription =
         NSEntityDescription.entityForName("Habit",
@@ -157,22 +154,51 @@ public class AuthManager : NSObject{
         let habit = Habit(entity: entityDescription!,
             insertIntoManagedObjectContext: managedObjectContext)
         
-        habit.name = "testing"
-        habit.repeat = 0x1
+        habit.name = name
+        habit.repeat = repeat
         habit.datesCompleted = []
         
         var error: NSError?
         
         managedObjectContext?.save(&error)
         
-        if let err = error {
-            println("Aww error: " + err.description)
-        } else {
-            println("It worked!")
-        }
+        if let err = error {println("Aww error: " + err.description)}
+        else {user?.habits.append(habit)}
     }
     
-    public static func testRetreival(){
+    /**
+        Private helper method to load a User's Habits from CoreData when a user is loaded from
+        NSUserDefaults (meaning that the user must already have been logged in).
+    */
+    private static func getHabitsOfCurrentUser() -> [Habit]{
+        let entityDescription =
+        NSEntityDescription.entityForName("Habit",
+            inManagedObjectContext: managedObjectContext!)
+        
+        let request = NSFetchRequest()
+        request.entity = entityDescription
+        
+        var error: NSError?
+        
+        var objects = managedObjectContext?.executeFetchRequest(request,
+            error: &error)
+        
+        var habits:[Habit] = []
+        
+        if let results = objects {
+            
+            if results.count > 0 {
+                
+                for result in results{
+                    let habit = result as! Habit
+                    habits.append(habit)
+                }
+            } else {println("u dun messed up now")}
+        }
+        return habits;
+    }
+    
+    public static func clearHabitsOfCurrentUser() {
         let entityDescription =
         NSEntityDescription.entityForName("Habit",
             inManagedObjectContext: managedObjectContext!)
@@ -191,12 +217,11 @@ public class AuthManager : NSObject{
                 
                 for result in results{
                     let habit = result as! Habit
-                    println(habit.name);
+                    managedObjectContext?.deleteObject(habit)
                 }
-            } else {
-                println("u dun messed up now")
-            }
+                managedObjectContext?.save(nil)
+                user?.habits = [];
+            } else {println("u dun messed up now")}
         }
     }
-    
 }

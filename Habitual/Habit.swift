@@ -9,11 +9,17 @@
 import Foundation
 import CoreData
 
-@objc(Habit)
-class Habit: NSManagedObject {
+enum Repeat: Int {
+    case Daily = 0
+    case Weekly = 1
+    case Monthly = 2
+}
 
+@objc(Habit)
+public class Habit: NSManagedObject {
+    
     @NSManaged var datesCompleted: AnyObject
-    @NSManaged var repeat: NSNumber
+    @NSManaged var repeat: Int
     @NSManaged var name: String
 
 }

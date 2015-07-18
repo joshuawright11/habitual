@@ -12,7 +12,7 @@ class User: PObject {
     
     let username:String
     
-    let habits:[Habit]
+    var habits:[Habit]
     
     required init(json: JSON) {
         username = json["username"].stringValue
