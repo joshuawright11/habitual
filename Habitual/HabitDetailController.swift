@@ -23,7 +23,7 @@ class HabitDetailController: UITableViewController {
         
         if let habit = habit {
             nameTextField.text = habit.name
-            daysInARowLabel.text = String(habit.datesCompleted.length ?? 0)
+            daysInARowLabel.text = String(habit.datesCompleted.count ?? 0)
             self.navigationItem.title = habit.name
             self.repeatLabel.text = habit.repeat.name()
         }else{

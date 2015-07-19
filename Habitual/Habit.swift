@@ -23,14 +23,17 @@ public enum Repeat: Int16 {
         default:
             return "Monthly"
         }
-        
     }
 }
 
 @objc(Habit)
 public class Habit: NSManagedObject {
     
-    @NSManaged var datesCompleted: AnyObject
+    @NSManaged var datesCompletedData: AnyObject
+    var datesCompleted: [NSDate] {
+        get{return datesCompletedData as? [NSDate] ?? []}
+        set{datesCompletedData = newValue}
+    }
     
     @NSManaged var repeatInt: Int16
     var repeat:Repeat { // Wrapper because enums can't be saved in Core Data
