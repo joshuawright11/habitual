@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Timepiece
 
 class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegate {
     
@@ -37,13 +38,12 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
 
             let point = gestureRecognizer.locationInView(self.tableView)
             if let ip = self.tableView.indexPathForRowAtPoint(point){
-                moreInfo(habits[ip.row])
+
+                if habits[ip.row].didToday() {println("Nice try but no");return}
+                habits[ip.row].datesCompleted.append(NSDate())
+                self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
             }
         }
-    }
-    
-    func moreInfo(habit: Habit){
-        habit.datesCompleted.append(NSDate())
     }
     
     @IBAction func clearData(){
@@ -63,9 +63,13 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! UITableViewCell
-
-        cell.textLabel?.text = habits[indexPath.row].name
-
+        
+        let habit = habits[indexPath.row]
+        
+        cell.textLabel?.text = habit.name
+        
+        cell.accessoryType = habit.didToday() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        
         return cell
     }
     

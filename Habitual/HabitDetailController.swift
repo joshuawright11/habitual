@@ -13,6 +13,7 @@ class HabitDetailController: UITableViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var daysInARowLabel: UILabel!
+    @IBOutlet weak var daysInARowTitle: UILabel!
     
     var habit:Habit?
     
@@ -28,7 +29,8 @@ class HabitDetailController: UITableViewController {
             self.repeatLabel.text = habit.repeat.name()
         }else{
             self.navigationItem.title = "New Habit"
-            self.daysInARowLabel.text = "-"
+            self.daysInARowLabel.hidden = true
+            self.daysInARowTitle.hidden = true
 
             let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "done:")
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Timepiece
 
 public enum Repeat: Int16 {
     case Daily = 0
@@ -43,4 +44,8 @@ public class Habit: NSManagedObject {
     
     @NSManaged var name: String
 
+    public func didToday() -> Bool {
+        return datesCompleted.last >= NSDate.today()
+    }
+    
 }
