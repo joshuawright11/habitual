@@ -17,8 +17,9 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
         super.viewDidLoad()
         
         habits = AuthManager.currentUser!.habits
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshData", name: kNotificationIdentifierRefreshHome, object: nil)
      
+        registerForNotification(self, "refreshData", kNotificationIdentifierRefreshHome)
+        
         var lpgr = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         lpgr.minimumPressDuration = 1.0
         lpgr.delegate = self
@@ -39,9 +40,12 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
             let point = gestureRecognizer.locationInView(self.tableView)
             if let ip = self.tableView.indexPathForRowAtPoint(point){
 
-                if habits[ip.row].didToday() {println("Nice try but no");return}
+                if habits[ip.row].didToday() {return}
                 habits[ip.row].datesCompleted.append(NSDate())
                 self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+                
+                postNotification(kNotificationIdentifierHabitDataChanged)
+                
             }
         }
     }
@@ -49,6 +53,7 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
     @IBAction func clearData(){
         AuthManager.clearHabitsOfCurrentUser()
         self.refreshData()
+        postNotification(kNotificationIdentifierHabitDataChanged)
     }
 
     // MARK: - Table view data source

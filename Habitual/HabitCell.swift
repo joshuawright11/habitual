@@ -9,11 +9,9 @@
 import UIKit
 
 class HabitCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var repeatLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -21,4 +19,22 @@ class HabitCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configureForHabit(habit: Habit) {
+
+        self.titleLabel.text = habit.name
+        self.countLabel.text = "done \(habit.datesCompleted.count) times"
+        self.repeatLabel.text = repeatTextForHabit(habit)
+    }
+    
+    func repeatTextForHabit(habit: Habit) -> String{
+        
+        switch habit.repeat{
+        case .Daily:
+            return "every day"
+        case .Weekly:
+            return "every week"
+        case .Monthly:
+            return "every month"
+        }
+    }
 }

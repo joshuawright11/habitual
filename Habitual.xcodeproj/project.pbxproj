@@ -12,6 +12,8 @@
 		031D280A1B29D1300060263A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 031D28091B29D1300060263A /* Images.xcassets */; };
 		031D280D1B29D1300060263A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031D280B1B29D1300060263A /* LaunchScreen.xib */; };
 		031D28191B29D1300060263A /* HabitualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28181B29D1300060263A /* HabitualTests.swift */; };
+		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
+		0355D1101B5D786D00EA8185 /* MeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* MeTableViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebServices.swift */; };
 		039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */; };
 		039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC071B2AD1F9006EAFD9 /* Constants.swift */; };
@@ -21,6 +23,7 @@
 		03B488131B509C390077E601 /* HabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488111B509C390077E601 /* HabitCell.swift */; };
 		03B488141B509C390077E601 /* HabitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03B488121B509C390077E601 /* HabitCell.xib */; };
 		03B488161B509CAA0077E601 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488151B509CAA0077E601 /* HomeTableViewController.swift */; };
+		03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13441B5DB82900504A63 /* MainTabBarController.swift */; };
 		03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */; };
 		03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2E21B51A23400484DB6 /* Habit.swift */; };
 		03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */; };
@@ -47,6 +50,8 @@
 		031D28121B29D1300060263A /* HabitualTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HabitualTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		031D28171B29D1300060263A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031D28181B29D1300060263A /* HabitualTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitualTests.swift; sourceTree = "<group>"; };
+		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
+		0355D10F1B5D786D00EA8185 /* MeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeTableViewController.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
 		039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		039BFC071B2AD1F9006EAFD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		03B488111B509C390077E601 /* HabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCell.swift; sourceTree = "<group>"; };
 		03B488121B509C390077E601 /* HabitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitCell.xib; sourceTree = "<group>"; };
 		03B488151B509CAA0077E601 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		03BA13441B5DB82900504A63 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		03E6F2D81B51998600484DB6 /* HabitualModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabitualModel.xcdatamodel; sourceTree = "<group>"; };
 		03E6F2E21B51A23400484DB6 /* Habit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitDetailController.swift; sourceTree = "<group>"; };
@@ -171,6 +177,9 @@
 			children = (
 				03B488151B509CAA0077E601 /* HomeTableViewController.swift */,
 				03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */,
+				0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */,
+				0355D10F1B5D786D00EA8185 /* MeTableViewController.swift */,
+				03BA13441B5DB82900504A63 /* MainTabBarController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -363,12 +372,15 @@
 			files = (
 				039BFC0A1B2AD234006EAFD9 /* Utilities.swift in Sources */,
 				03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */,
+				03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */,
 				03B488161B509CAA0077E601 /* HomeTableViewController.swift in Sources */,
 				039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */,
+				0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */,
 				039BFC0C1B2AD4AB006EAFD9 /* PObject.swift in Sources */,
 				03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */,
 				039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */,
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
+				0355D1101B5D786D00EA8185 /* MeTableViewController.swift in Sources */,
 				039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */,
 				031D28031B29D1300060263A /* AppDelegate.swift in Sources */,
 				03B488131B509C390077E601 /* HabitCell.swift in Sources */,

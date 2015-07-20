@@ -39,3 +39,13 @@ public func stringFromDate(date: NSDate) -> String {
     
     return "2000-11-11T11:11:11Z"
 }
+
+public func registerForNotification(object: AnyObject, selector:Selector, name:String){
+    
+    NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: name, object: nil)
+}
+
+public func postNotification(name: String) {
+    
+    NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil)
+}
