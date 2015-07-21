@@ -22,7 +22,7 @@ class HabitCell: UITableViewCell {
     func configureForHabit(habit: Habit) {
 
         self.titleLabel.text = habit.name
-        self.countLabel.text = "done \(habit.datesCompleted.count) times"
+        self.countLabel.text = "\(habit.datesCompleted.count) completions"
         self.repeatLabel.text = repeatTextForHabit(habit)
     }
     

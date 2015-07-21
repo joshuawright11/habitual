@@ -25,27 +25,60 @@ class MeTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func statForIndex(index: Int) -> (String, String){
+        if(index == 0){
+            return ("Habits completed","\(user!.statHabitsCompleted())")
+        }else if(index == 1){
+            return ("Longest streak","\(user!.statLongestStreak())")
+        }else{
+            return ("Most completed habit",user!.statMostCompletedHabit())
+        }
+    }
+    
     // MARK: - Table view data source
 
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2;
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-        if let user = user {
-            return user.habits.count
+        if section == 1 {
+            if let user = user {
+                return user.habits.count
+            }else{
+                return 0
+            }
         }else{
-            return 0
+            return 3
         }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
-        
-        cell.configureForHabit(user!.habits[indexPath.row])
 
-        return cell
+        if indexPath.section == 1{
+            let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
+        
+            cell.configureForHabit(user!.habits[indexPath.row])
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("stat") as! UITableViewCell
+            
+            var statTuple = statForIndex(indexPath.row)
+            
+            cell.textLabel?.text = statTuple.0
+            cell.detailTextLabel?.text = statTuple.1
+            
+            return cell
+        }
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Habits"
+
+        if(section == 0){
+            return "Stats"
+        }else{
+            return "Habits"
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

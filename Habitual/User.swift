@@ -28,4 +28,38 @@ class User: PObject {
         
         return json;
     }
+    
+    func statHabitsCompleted() -> Int{
+        var count = 0;
+
+        for habit:Habit in habits {
+            count += habit.datesCompleted.count
+        }
+        
+        return count
+    }
+    
+    func statLongestStreak() -> Int {
+        var longestStreak = 0
+        for habit:Habit in habits{
+            if habit.longestStreak() > longestStreak {
+                longestStreak = habit.longestStreak()
+            }
+        }
+        return longestStreak
+    }
+    
+    func statMostCompletedHabit() -> String{
+        if habits.count == 0 {
+            return "no habits!"
+        }else{
+            var mostCompletedHabit = habits[0]
+            for habit:Habit in habits {
+                if habit.datesCompleted.count > mostCompletedHabit.datesCompleted.count {
+                    mostCompletedHabit = habit
+                }
+            }
+            return mostCompletedHabit.name
+        }
+    }
 }

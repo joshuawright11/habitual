@@ -48,4 +48,29 @@ public class Habit: NSManagedObject {
         return datesCompleted.last >= NSDate.today()
     }
     
+    public func longestStreak() -> Int {
+        var longestStreak = 0
+        
+        var prevDate: NSDate?
+        for date:NSDate in datesCompleted {
+            if prevDate == nil {
+                prevDate = date
+                longestStreak = 1
+            }else{
+                if date.day - prevDate!.day == 1{
+                    longestStreak += 1
+                }else{
+                    longestStreak = 1
+                }
+                prevDate = date
+            }
+        }
+        
+        return longestStreak
+    }
+    
+    public func currentStreak() -> Int {
+        // TODO incomplete
+        return 0
+    }
 }
