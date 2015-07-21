@@ -43,9 +43,23 @@ public class Habit: NSManagedObject {
     }
     
     @NSManaged var name: String
-
-    public func didToday() -> Bool {
-        return datesCompleted.last >= NSDate.today()
+    
+    public func canDo() -> Bool{
+        
+        if datesCompleted.count == 0 {return true}
+        
+        let last = datesCompleted.last
+        
+        switch repeat {
+        case Repeat.Daily:
+            if(last < NSDate.today()) {return true}
+        case Repeat.Weekly:
+            if(last < NSDate.today().change(weekday: 1)) {return true}
+        case Repeat.Monthly:
+            if(last < NSDate.today().beginningOfMonth) {return true}
+        }
+        
+        return false
     }
     
     public func longestStreak() -> Int {

@@ -40,12 +40,11 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
             let point = gestureRecognizer.locationInView(self.tableView)
             if let ip = self.tableView.indexPathForRowAtPoint(point){
 
-                if habits[ip.row].didToday() {return}
+                if !habits[ip.row].canDo() {return}
                 habits[ip.row].datesCompleted.append(NSDate())
                 self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
                 
                 postNotification(kNotificationIdentifierHabitDataChanged)
-                
             }
         }
     }
@@ -73,7 +72,7 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
         
         cell.textLabel?.text = habit.name
         
-        cell.accessoryType = habit.didToday() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        cell.accessoryType = !habit.canDo() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
         
         return cell
     }
