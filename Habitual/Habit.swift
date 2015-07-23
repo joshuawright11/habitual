@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 import Timepiece
 import SwiftyJSON
-import Parse
 
 public enum Repeat: Int16 {
     case Daily = 0

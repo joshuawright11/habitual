@@ -25,25 +25,11 @@
 		03B488161B509CAA0077E601 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488151B509CAA0077E601 /* HomeTableViewController.swift */; };
 		03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13441B5DB82900504A63 /* MainTabBarController.swift */; };
 		03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */; };
-		03DF8E151B5F18E900C6DC78 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E131B5F18E900C6DC78 /* Bolts.framework */; };
-		03DF8E161B5F18E900C6DC78 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E141B5F18E900C6DC78 /* Parse.framework */; };
-		03DF8E181B5F191B00C6DC78 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E171B5F191B00C6DC78 /* Accounts.framework */; };
-		03DF8E1A1B5F192000C6DC78 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E191B5F192000C6DC78 /* AudioToolbox.framework */; };
-		03DF8E1C1B5F192700C6DC78 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E1B1B5F192700C6DC78 /* CFNetwork.framework */; };
-		03DF8E1E1B5F193100C6DC78 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E1D1B5F193100C6DC78 /* CoreGraphics.framework */; };
-		03DF8E201B5F193500C6DC78 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E1F1B5F193500C6DC78 /* CoreLocation.framework */; };
-		03DF8E221B5F193E00C6DC78 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E211B5F193E00C6DC78 /* QuartzCore.framework */; };
-		03DF8E241B5F194400C6DC78 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E231B5F194400C6DC78 /* Security.framework */; };
-		03DF8E261B5F194800C6DC78 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E251B5F194800C6DC78 /* Social.framework */; };
-		03DF8E281B5F195100C6DC78 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E271B5F195100C6DC78 /* StoreKit.framework */; };
-		03DF8E2A1B5F195700C6DC78 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E291B5F195700C6DC78 /* SystemConfiguration.framework */; };
-		03DF8E2C1B5F196000C6DC78 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E2B1B5F196000C6DC78 /* libz.dylib */; };
-		03DF8E2E1B5F196800C6DC78 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DF8E2D1B5F196800C6DC78 /* libsqlite3.dylib */; };
 		03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */; };
 		03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */; };
 		03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2E21B51A23400484DB6 /* Habit.swift */; };
 		03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */; };
-		16486DEE1964559C11409AFB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37BDF06A9F97547913E3FEF7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		091DD0B7E023F09339B66F0E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37BDF06A9F97547913E3FEF7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,8 +65,6 @@
 		03B488151B509CAA0077E601 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		03BA13441B5DB82900504A63 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
-		03DF8E131B5F18E900C6DC78 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		03DF8E141B5F18E900C6DC78 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		03DF8E171B5F191B00C6DC78 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		03DF8E191B5F192000C6DC78 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		03DF8E1B1B5F192700C6DC78 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -107,21 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03DF8E2E1B5F196800C6DC78 /* libsqlite3.dylib in Frameworks */,
-				03DF8E2C1B5F196000C6DC78 /* libz.dylib in Frameworks */,
-				03DF8E2A1B5F195700C6DC78 /* SystemConfiguration.framework in Frameworks */,
-				03DF8E281B5F195100C6DC78 /* StoreKit.framework in Frameworks */,
-				03DF8E261B5F194800C6DC78 /* Social.framework in Frameworks */,
-				03DF8E241B5F194400C6DC78 /* Security.framework in Frameworks */,
-				03DF8E221B5F193E00C6DC78 /* QuartzCore.framework in Frameworks */,
-				03DF8E1C1B5F192700C6DC78 /* CFNetwork.framework in Frameworks */,
-				03DF8E201B5F193500C6DC78 /* CoreLocation.framework in Frameworks */,
-				03DF8E1E1B5F193100C6DC78 /* CoreGraphics.framework in Frameworks */,
-				03DF8E1A1B5F192000C6DC78 /* AudioToolbox.framework in Frameworks */,
-				03DF8E181B5F191B00C6DC78 /* Accounts.framework in Frameworks */,
-				16486DEE1964559C11409AFB /* Pods.framework in Frameworks */,
-				03DF8E161B5F18E900C6DC78 /* Parse.framework in Frameworks */,
-				03DF8E151B5F18E900C6DC78 /* Bolts.framework in Frameworks */,
+				091DD0B7E023F09339B66F0E /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,8 +243,6 @@
 				03DF8E1B1B5F192700C6DC78 /* CFNetwork.framework */,
 				03DF8E191B5F192000C6DC78 /* AudioToolbox.framework */,
 				03DF8E171B5F191B00C6DC78 /* Accounts.framework */,
-				03DF8E131B5F18E900C6DC78 /* Bolts.framework */,
-				03DF8E141B5F18E900C6DC78 /* Parse.framework */,
 				37BDF06A9F97547913E3FEF7 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -583,6 +551,46 @@
 				INFOPLIST_FILE = Habitual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"Locksmith\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"Timepiece\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -599,6 +607,46 @@
 				INFOPLIST_FILE = Habitual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"Locksmith\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"Timepiece\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
