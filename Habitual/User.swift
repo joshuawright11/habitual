@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Parse
 
 class User: PObject {
     
@@ -14,16 +15,35 @@ class User: PObject {
     
     var habits:[Habit]
     
+    var following:[String]
+    
     required init(json: JSON) {
         username = json["username"].stringValue
         habits = []
+        following = []
         super.init(json: json)
+    }
+    
+    init(parse: PFUser) {
+        username = parse.username!
+        
+        habits = []
+        
+        for json:AnyObject in parse["habits"] as! Array<AnyObject> {
+            let json = JSON(json)
+            habits.append(Habit(json: json))
+        }
+        
+        following = []
+        
+        super.init(json: nil)
     }
     
     func toJSON() -> JSON{
         
         var json: JSON = [
-            "username":username
+            "username":username,
+            "following":following
         ]
         
         return json;

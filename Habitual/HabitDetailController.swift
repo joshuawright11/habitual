@@ -45,8 +45,8 @@ class HabitDetailController: UITableViewController {
         
         AuthManager.addHabitForCurrentUser(self.nameTextField.text, repeat: Repeat(rawValue: index)!)
 
-        postNotification(kNotificationIdentifierRefreshHome)
-        postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(kNotificationIdentifierRefreshHome)
+        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
     }

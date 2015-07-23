@@ -18,7 +18,7 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
         
         habits = AuthManager.currentUser!.habits
      
-        registerForNotification(self, "refreshData", kNotificationIdentifierRefreshHome)
+        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierRefreshHome)
         
         var lpgr = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         lpgr.minimumPressDuration = 1.0
@@ -44,7 +44,7 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
                 habits[ip.row].datesCompleted.append(NSDate())
                 self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
                 
-                postNotification(kNotificationIdentifierHabitDataChanged)
+                Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
             }
         }
     }
@@ -52,7 +52,7 @@ class HomeTableViewController: UITableViewController, UIGestureRecognizerDelegat
     @IBAction func clearData(){
         AuthManager.clearHabitsOfCurrentUser()
         self.refreshData()
-        postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
     }
 
     // MARK: - Table view data source

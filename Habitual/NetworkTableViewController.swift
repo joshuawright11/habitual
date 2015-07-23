@@ -7,91 +7,147 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
+import Parse
 
-class NetworkTableViewController: UITableViewController {
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+/// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
+    var connections:[User]?
+    
+    var loggedIn:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        self.tableView.tableFooterView = UIView()
+        
+        if (PFUser.currentUser() != nil){
+            
+            loggedIn = true
+            WebServices.getConnectionsData({ (users, success) -> () in
+                self.connections = users
+                self.tableView.reloadData()
+            })
+            
+            self.tableView.reloadData()
+        }
+        
+        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
+        
+        var button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
+        self.navigationItem.rightBarButtonItem = button
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: - Empty data set data source
+    
+    func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
+        return UIColor.groupTableViewBackgroundColor()
     }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        var text = loggedIn ? "Press to add a connection!" : "Press to sign up or log in"
+        
+        let font = UIFont.boldSystemFontOfSize(22.0)
+        let attrString = NSAttributedString(
+            string: text,
+            attributes: NSDictionary(
+                object: font,
+                forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        
+        return attrString
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        var text = loggedIn ? "You have no friends :'(" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
+        
+        let font = UIFont.systemFontOfSize(18.0)
+        let attrString = NSAttributedString(
+            string: text,
+            attributes: NSDictionary(
+                object: font,
+                forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        
+        return attrString
+    }
+    
+    func refreshData(){
+        loggedIn = true
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func addConnection() {
+        var alert = UIAlertController(title: "Follow a user", message: "enter their username", preferredStyle: UIAlertControllerStyle.Alert)
 
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
+            let usernameTextField = alert.textFields! [0] as! UITextField
+                WebServices.addConnection("\(usernameTextField.text)", callback: { (success) -> () in
+                    if success {
+                        Utilities.alert("user followed", vc: self)
+                    }else{
+                        Utilities.alert("couldn't find that user", vc: self)
+                    }
+                })
+            })
+        
+        alert.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "username"
+        }
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    // MARK: - Empty data set delegate
+    
+    func emptyDataSetDidTapView(scrollView: UIScrollView!) {
+        
+        if loggedIn {
+            addConnection()
+        }else{
+            var svc:UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("signup") as! UINavigationController
+            
+            presentViewController(svc, animated: true, completion: nil)
+        }
+    }
+    
+    
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+
+        if let connections = connections {
+            return connections.count
+        }else{
+            return 0
+        }
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("user") as! UITableViewCell
+        
+        let user = connections![indexPath.row]
+        
+        cell.textLabel!.text = user.username
+        cell.detailTextLabel!.text = "\(user.habits.count)"
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

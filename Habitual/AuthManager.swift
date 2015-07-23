@@ -56,23 +56,23 @@ public class AuthManager : NSObject{
         :param: callback The closure to call upon completion of the login request. 'valid' is True 
             when the request succeeds and False if it fails.
     */
-    public static func login(username:String, password:String, callback: ((valid:Bool) -> ())?){
-        
-        WebServices.testCredentials(username, password: password) { (user) -> () in
-            
-            if username == user.username{
-                
-                let dict:Dictionary = ["username":username,"password":password]
-                let error = Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
-                
-                self.currentUser = user
-            }
-            
-            if let callback = callback{
-                callback(valid: (username == user.username))
-            }
-        }
-    }
+//    public static func login(username:String, password:String, callback: ((valid:Bool) -> ())?){
+//        
+//        WebServices.login(username, password: password) { (user) -> () in
+//            
+////            if username == user.username{
+////                
+////                let dict:Dictionary = ["username":username,"password":password]
+////                let error = Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
+////                
+////                self.currentUser = user
+////            }
+//            
+//            if let callback = callback{
+//                callback(valid: (username == user.username))
+//            }
+//        }
+//    }
     
     /**
         Logs the current user out, clearing their keychain data and wiping their data from the 

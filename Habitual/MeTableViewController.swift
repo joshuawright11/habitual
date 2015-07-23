@@ -15,7 +15,7 @@ class MeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "HabitCell", bundle: nil), forCellReuseIdentifier: "habit")
-        registerForNotification(self, "refreshData", kNotificationIdentifierHabitDataChanged)
+        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         
         user = AuthManager.currentUser
         tableView.reloadData()

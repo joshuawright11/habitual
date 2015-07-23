@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+        // register for local notifications
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge, categories: nil))
+        
+        // Parse setup
+        Parse.setApplicationId("1qF0PH01jWWL6UeRTTBQAqE81pg2dOd1m1nzRcmu", clientKey: "MqtooBZ1p1ooXsFEw7kULVBEC7Q5JSpDyCdViw48")
+        
         return true
     }
 
@@ -26,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
+        WebServices.syncDataForUser(nil)
         scheduleLocalNotifications()
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.

@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 import Timepiece
+import SwiftyJSON
+import Parse
 
 public enum Repeat: Int16 {
     case Daily = 0
@@ -23,6 +25,17 @@ public enum Repeat: Int16 {
             return "Weekly"
         default:
             return "Monthly"
+        }
+    }
+    
+    public static func repeatForName(name: String) -> Repeat{
+        switch name {
+        case "Daily":
+            return .Daily
+        case "Weekly":
+            return .Weekly
+        default:
+            return .Monthly
         }
     }
 }
@@ -43,6 +56,33 @@ public class Habit: NSManagedObject {
     }
     
     @NSManaged var name: String
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(json: JSON) {
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
+        
+        super.init(entity: ed!, insertIntoManagedObjectContext: nil)
+        
+        datesCompletedData = json["datesCompleted"].arrayObject!
+        
+        repeatInt = Repeat.repeatForName(json["repeat"].stringValue).rawValue
+        
+        name = json["name"].stringValue
+    }
+    
+    public func toJSON() -> JSON {
+        
+        var json:JSON = JSON([
+            "name":name,
+            "repeat":repeat.name(),
+            "datesCompleted":datesCompleted])
+        return json
+    }
     
     public func canDo() -> Bool{
         
