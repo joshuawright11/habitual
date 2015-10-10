@@ -11,10 +11,12 @@ import CoreData
 import Timepiece
 import SwiftyJSON
 
-public enum Repeat: Int16 {
+public enum Frequency: Int16 {
     case Daily = 0
     case Weekly = 1
     case Monthly = 2
+    
+    static let allValues = [Daily, Weekly, Monthly]
     
     public func name() -> String{
         switch self {
@@ -27,7 +29,7 @@ public enum Repeat: Int16 {
         }
     }
     
-    public static func repeatForName(name: String) -> Repeat{
+    public static func frequencyForName(name: String) -> Frequency{
         switch name {
         case "Daily":
             return .Daily
@@ -48,13 +50,15 @@ public class Habit: NSManagedObject {
         set{datesCompletedData = newValue}
     }
     
-    @NSManaged var repeatInt: Int16
-    var repeat:Repeat { // Wrapper because enums can't be saved in Core Data
-        get{return Repeat(rawValue: repeatInt) ?? .Daily}
-        set{repeatInt = newValue.rawValue}
+    @NSManaged var frequencyInt: Int16
+    var frequency:Frequency { // Wrapper because enums can't be saved in Core Data
+        get{return Frequency(rawValue: frequencyInt) ?? .Daily}
+        set{frequencyInt = newValue.rawValue}
     }
     
     @NSManaged var name: String
+    
+    @NSManaged var notificationsEnabled: Bool
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -69,16 +73,16 @@ public class Habit: NSManagedObject {
         
         datesCompletedData = json["datesCompleted"].arrayObject!
         
-        repeatInt = Repeat.repeatForName(json["repeat"].stringValue).rawValue
+        frequencyInt = Frequency.frequencyForName(json["repeat"].stringValue).rawValue
         
         name = json["name"].stringValue
     }
     
     public func toJSON() -> JSON {
         
-        var json:JSON = JSON([
+        let json:JSON = JSON([
             "name":name,
-            "repeat":repeat.name(),
+            "repeat":frequency.name(),
             "datesCompleted":datesCompleted])
         return json
     }
@@ -89,12 +93,12 @@ public class Habit: NSManagedObject {
         
         let last = datesCompleted.last
         
-        switch repeat {
-        case Repeat.Daily:
+        switch frequency {
+        case Frequency.Daily:
             if(last < NSDate.today()) {return true}
-        case Repeat.Weekly:
+        case Frequency.Weekly:
             if(last < NSDate.today().change(weekday: 1)) {return true}
-        case Repeat.Monthly:
+        case Frequency.Monthly:
             if(last < NSDate.today().beginningOfMonth) {return true}
         }
         
@@ -123,7 +127,7 @@ public class Habit: NSManagedObject {
     }
     
     public func currentStreak() -> Int {
-        // TODO incomplete
+        // TODO: incomplete
         return 0
     }
 }

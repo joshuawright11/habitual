@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MeTableViewController: UITableViewController {
+class UserTableViewController: UITableViewController {
 
     var user:User?
     
@@ -17,7 +17,8 @@ class MeTableViewController: UITableViewController {
         tableView.registerNib(UINib(nibName: "HabitCell", bundle: nil), forCellReuseIdentifier: "habit")
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         
-        user = AuthManager.currentUser
+        if user == nil{user = AuthManager.currentUser; self.navigationItem.title = "Me"}
+        else {self.navigationItem.title = user?.username}
         tableView.reloadData()
     }
 
@@ -38,7 +39,7 @@ class MeTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2;
+        return user!.habits.count > 0 ? 2 : 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,9 +62,9 @@ class MeTableViewController: UITableViewController {
             cell.configureForHabit(user!.habits[indexPath.row])
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("stat") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("stat")! as UITableViewCell
             
-            var statTuple = statForIndex(indexPath.row)
+            let statTuple = statForIndex(indexPath.row)
             
             cell.textLabel?.text = statTuple.0
             cell.detailTextLabel?.text = statTuple.1

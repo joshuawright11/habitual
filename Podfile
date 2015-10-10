@@ -1,10 +1,9 @@
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+link_with 'Habitual', 'HabitualTests'
 use_frameworks!
 
-pod 'SwiftyJSON', '>= 2.2'
-pod 'Alamofire', '~> 1.2'
+pod 'SwiftyJSON'
+pod 'Alamofire'
 pod 'Locksmith'
 pod 'Timepiece'
 pod 'DZNEmptyDataSet'
-pod 'Parse', '~> 1.7.5'
+pod 'Parse'

@@ -10,6 +10,7 @@ import Foundation
 import SwiftyJSON
 import Locksmith
 import CoreData
+import Parse
 
 /// A Singleton class to manage the current user. All accesses of the current user should be made through 
 /// this class. Allows for logging in and logging out over the web, as well as storing the currently logged 
@@ -36,7 +37,7 @@ public class AuthManager : NSObject{
         /**
             Sets a new user. Stores that user's information into NSUserDefaults for later access.
         
-            :param: newUser The user to set as the currently logged in user.
+            - parameter newUser: The user to set as the currently logged in user.
         */
         set(newUser){
             
@@ -45,15 +46,18 @@ public class AuthManager : NSObject{
         }
     }
     
+    /// Whether the social features are enabled (currently if the user is logged into an account).
+    static var socialEnabled:Bool {get{return PFUser.currentUser() != nil ? true : false}}
+    
     /// The currently logged in user. Wrapped by currentUser for getting and setting.
     private static var user:User?
     
     /**
         Logs the user in via the WebServices class. The only way a user should be logged in.
         
-        :param: username The username with which to attempt a login.
-        :param: password The password with which to attempt a login.
-        :param: callback The closure to call upon completion of the login request. 'valid' is True 
+        - parameter username: The username with which to attempt a login.
+        - parameter password: The password with which to attempt a login.
+        - parameter callback: The closure to call upon completion of the login request. 'valid' is True 
             when the request succeeds and False if it fails.
     */
 //    public static func login(username:String, password:String, callback: ((valid:Bool) -> ())?){
@@ -80,7 +84,11 @@ public class AuthManager : NSObject{
     */
     public static func logout() {
         user = nil;
-        Locksmith.deleteDataForUserAccount(kKeychainUserAccount)
+        do{
+            try Locksmith.deleteDataForUserAccount(kKeychainUserAccount)
+        }catch {
+            
+        }
         clearUser()
         
     }
@@ -88,7 +96,7 @@ public class AuthManager : NSObject{
     /**
         Checks to see if there is currently a logged in user.
     
-        :returns: True if there is a user logged in, False if not.
+        - returns: True if there is a user logged in, False if not.
     */
     public static func isLoggedIn() -> Bool{
         
@@ -107,6 +115,12 @@ public class AuthManager : NSObject{
         ud.removeObjectForKey("currentUser")
     }
     
+    
+    public static func reloadHabits() -> [Habit]?{
+        user?.habits = getHabitsOfCurrentUser()
+        return user?.habits
+    }
+    
     /**
         Private helper method to load a user that might be logged in from NSUserDefualts to memory.
         To prevent the need to log in again after closing the application.
@@ -119,7 +133,7 @@ public class AuthManager : NSObject{
         if let jsonString = jsonString, dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             
             let json = JSON(data: dataFromString)
-            var loadedUser = User(json: json)
+            let loadedUser = User(json: json)
             loadedUser.habits = getHabitsOfCurrentUser()
             return user
         }else{
@@ -145,7 +159,7 @@ public class AuthManager : NSObject{
         }
     }
     
-    public static func addHabitForCurrentUser(name:String, repeat:Repeat){
+    public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool){
         
         let entityDescription =
         NSEntityDescription.entityForName("Habit",
@@ -155,15 +169,16 @@ public class AuthManager : NSObject{
             insertIntoManagedObjectContext: managedObjectContext)
         
         habit.name = name
-        habit.repeat = repeat
+        habit.frequency = frequency
+        habit.notificationsEnabled = notificationsEnabled
         habit.datesCompleted = []
         
-        var error: NSError?
-        
-        managedObjectContext?.save(&error)
-        
-        if let err = error {println("Aww error: " + err.description)}
-        else {user?.habits.append(habit)}
+        do {
+            try managedObjectContext?.save()
+            user?.habits.append(habit)
+        } catch let error as NSError {
+            print("awww error: " + error.description)
+        }
     }
     
     /**
@@ -180,8 +195,13 @@ public class AuthManager : NSObject{
         
         var error: NSError?
         
-        var objects = managedObjectContext?.executeFetchRequest(request,
-            error: &error)
+        var objects: [AnyObject]?
+        do {
+            objects = try managedObjectContext?.executeFetchRequest(request)
+        } catch let error1 as NSError {
+            error = error1
+            objects = nil
+        }
         
         var habits:[Habit] = []
         
@@ -193,7 +213,7 @@ public class AuthManager : NSObject{
                     let habit = result as! Habit
                     habits.append(habit)
                 }
-            } else {println("u dun messed up now")}
+            }
         }
         return habits;
     }
@@ -208,8 +228,13 @@ public class AuthManager : NSObject{
         
         var error: NSError?
         
-        var objects = managedObjectContext?.executeFetchRequest(request,
-            error: &error)
+        var objects: [AnyObject]?
+        do {
+            objects = try managedObjectContext?.executeFetchRequest(request)
+        } catch let error1 as NSError {
+            error = error1
+            objects = nil
+        }
         
         if let results = objects {
             
@@ -219,9 +244,12 @@ public class AuthManager : NSObject{
                     let habit = result as! Habit
                     managedObjectContext?.deleteObject(habit)
                 }
-                managedObjectContext?.save(nil)
+                do {
+                    try managedObjectContext?.save()
+                } catch _ {
+                }
                 user?.habits = [];
-            } else {println("u dun messed up now")}
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ class PObject {
     
     let objectId:String
  
-    /// TODO CHANGE
+    // TODO: CHANGE
     required init(json: JSON) {
         self.objectId = ""
     }

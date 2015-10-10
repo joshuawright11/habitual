@@ -13,8 +13,8 @@ public class Utilities {
     
     public static func alert(string:String, vc:UIViewController){
         
-        var alert = UIAlertController(title: "Alert", message: string, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+        let alert = UIAlertController(title: "Alert", message: string, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Okie Dokie Artichokie", style: UIAlertActionStyle.Default, handler: nil))
         vc.presentViewController(alert, animated: true, completion: nil)
     }
     

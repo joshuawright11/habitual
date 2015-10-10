@@ -20,7 +20,9 @@ import Parse
 /// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
-    var connections:[User]?
+    var connections:[User]?{
+        didSet{tableView.reloadData()}
+    }
     
     var loggedIn:Bool = false
     
@@ -45,40 +47,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
         
-        var button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
+        let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
         self.navigationItem.rightBarButtonItem = button
-    }
-
-    // MARK: - Empty data set data source
-    
-    func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return UIColor.groupTableViewBackgroundColor()
-    }
-    
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        var text = loggedIn ? "Press to add a connection!" : "Press to sign up or log in"
-        
-        let font = UIFont.boldSystemFontOfSize(22.0)
-        let attrString = NSAttributedString(
-            string: text,
-            attributes: NSDictionary(
-                object: font,
-                forKey: NSFontAttributeName) as [NSObject : AnyObject])
-        
-        return attrString
-    }
-    
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        var text = loggedIn ? "You have no friends :'(" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
-        
-        let font = UIFont.systemFontOfSize(18.0)
-        let attrString = NSAttributedString(
-            string: text,
-            attributes: NSDictionary(
-                object: font,
-                forKey: NSFontAttributeName) as [NSObject : AnyObject])
-        
-        return attrString
     }
     
     func refreshData(){
@@ -86,15 +56,23 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         self.tableView.reloadData()
     }
     
+    func refreshConnections(){
+        WebServices.getConnectionsData({ (users, success) -> () in
+            self.connections = users
+            self.tableView.reloadData()
+        })
+    }
+    
     @IBAction func addConnection() {
-        var alert = UIAlertController(title: "Follow a user", message: "enter their username", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Follow a user", message: "enter their username", preferredStyle: UIAlertControllerStyle.Alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
-            let usernameTextField = alert.textFields! [0] as! UITextField
+            let usernameTextField = alert.textFields! [0] 
                 WebServices.addConnection("\(usernameTextField.text)", callback: { (success) -> () in
                     if success {
                         Utilities.alert("user followed", vc: self)
+                        self.refreshConnections()
                     }else{
                         Utilities.alert("couldn't find that user", vc: self)
                     }
@@ -116,7 +94,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         if loggedIn {
             addConnection()
         }else{
-            var svc:UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("signup") as! UINavigationController
+            let svc:UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("signup") as! UINavigationController
             
             presentViewController(svc, animated: true, completion: nil)
         }
@@ -136,18 +114,59 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("user") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("user")! as UITableViewCell
         
         let user = connections![indexPath.row]
         
         cell.textLabel!.text = user.username
-        cell.detailTextLabel!.text = "\(user.habits.count)"
+        cell.detailTextLabel!.text = "\(user.habits.count) habits"
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // MARK: - View Controller methods
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let vc = segue.destinationViewController as? UserTableViewController {
+            let index = tableView.indexPathForSelectedRow?.row
+            vc.user = connections![index!]
+        }
+    }
+    
+    // MARK: - Empty data set data source
+    
+    func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
+        return UIColor.groupTableViewBackgroundColor()
+    }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = loggedIn ? "Press to add a connection!" : "Press to sign up or log in"
+        
+        let font = UIFont.boldSystemFontOfSize(22.0)
+        let attrString = NSAttributedString(
+            string: text,
+            attributes: NSDictionary(
+                object: font,
+                forKey: NSFontAttributeName) as? [String : AnyObject])
+        
+        return attrString
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = loggedIn ? "You have no friends :'(" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
+        
+        let font = UIFont.systemFontOfSize(18.0)
+        let attrString = NSAttributedString(
+            string: text,
+            attributes: NSDictionary(
+                object: font,
+                forKey: NSFontAttributeName) as? [String : AnyObject])
+        
+        return attrString
     }
 
 }

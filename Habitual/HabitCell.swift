@@ -28,7 +28,7 @@ class HabitCell: UITableViewCell {
     
     func repeatTextForHabit(habit: Habit) -> String{
         
-        switch habit.repeat{
+        switch habit.frequency{
         case .Daily:
             return "every day"
         case .Weekly:

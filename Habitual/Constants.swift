@@ -9,6 +9,6 @@
 import Foundation
 
 let kKeychainUserAccount = "Habitual"
-let kNotificationIdentifierRefreshHome = "RefreshHome"
+let kNotificationIdentifierHabitAddedOrDeleted = "HabitAddedOrDeleted"
 let kNotificationIdentifierHabitDataChanged = "HabitDataChanged"
 let kNotificationIdentifierUserLoggedIn = "UserLoggedIn"

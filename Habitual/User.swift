@@ -15,7 +15,7 @@ class User: PObject {
     
     var habits:[Habit]
     
-    var following:[String]
+    var following:[User]
     
     required init(json: JSON) {
         username = json["username"].stringValue
@@ -41,7 +41,7 @@ class User: PObject {
     
     func toJSON() -> JSON{
         
-        var json: JSON = [
+        let json: JSON = [
             "username":username,
             "following":following
         ]
