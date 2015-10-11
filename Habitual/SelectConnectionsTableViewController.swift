@@ -12,10 +12,22 @@ class SelectConnectionsTableViewController: UITableViewController {
 
     static let reuseIdentifier = "ContactCell"
     
+    var didFinish: (([String]) -> ())!
+    
     var users:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "done")
+        self.navigationItem.rightBarButtonItem = doneButton
+    }
+    
+    func done(){
+        if let didFinish = didFinish {
+            didFinish(users)
+        }
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     // MARK: - Table view data source

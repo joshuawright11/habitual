@@ -159,7 +159,7 @@ public class AuthManager : NSObject{
         }
     }
     
-    public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool){
+    public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool, notificationSetting: NotificationSetting, usernamesToNotify: [String]){
         
         let entityDescription =
         NSEntityDescription.entityForName("Habit",
@@ -170,8 +170,10 @@ public class AuthManager : NSObject{
         
         habit.name = name
         habit.frequency = frequency
-        habit.notificationsEnabled = notificationsEnabled
         habit.datesCompleted = []
+        habit.notificationsEnabled = notificationsEnabled
+        habit.notificationSetting = notificationSetting
+        habit.usernamesToNotify = usernamesToNotify
         
         do {
             try managedObjectContext?.save()

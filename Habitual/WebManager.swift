@@ -91,7 +91,7 @@ public class WebServices: NSObject {
                     callback(users: userArray, success: error == nil)
                 }
             }else{
-                print("failz")
+                print("failz. Error was: " + (error?.description)!)
             }
         })
     }
@@ -105,8 +105,8 @@ public class WebServices: NSObject {
                 array.append(habit.toJSON())
             }
             
-            PFUser.currentUser()!["habits"] = JSON(array).arrayObject
-            PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+            user["habits"] = JSON(array).arrayObject
+            user.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 if let callback = callback {callback(success: success)}
             })
         }

@@ -58,7 +58,17 @@ public class Habit: NSManagedObject {
     
     @NSManaged var name: String
     
+    // Mark: - Notification data
+    
     @NSManaged var notificationsEnabled: Bool
+    
+    @NSManaged var notificationSettingInt: Int16
+    var notificationSetting:NotificationSetting { // Wrapper because enums can't be saved in Core Data
+        get{return NotificationSetting(rawValue: notificationSettingInt) ?? .None}
+        set{notificationSettingInt = newValue.rawValue}
+    }
+    
+    @NSManaged var usernamesToNotify: [String]
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -83,7 +93,10 @@ public class Habit: NSManagedObject {
         let json:JSON = JSON([
             "name":name,
             "repeat":frequency.name(),
-            "datesCompleted":datesCompleted])
+            "datesCompleted":datesCompleted,
+            "notificationsEnabled":notificationsEnabled,
+            "notificationSetting":notificationSetting.toString(),
+            "usernamesToNotify":usernamesToNotify])
         return json
     }
     
@@ -128,6 +141,6 @@ public class Habit: NSManagedObject {
     
     public func currentStreak() -> Int {
         // TODO: incomplete
-        return 0
+        return 8008135
     }
 }

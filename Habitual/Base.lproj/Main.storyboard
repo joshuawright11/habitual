@@ -415,7 +415,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="josh, joshtest, will" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nlP-TO-0Jk">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nlP-TO-0Jk">
                                                     <rect key="frame" x="456" y="12" width="129" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
@@ -446,7 +446,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Weekly Miss" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="et0-2j-IUm">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="EveryMiss" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="et0-2j-IUm">
                                                     <rect key="frame" x="495" y="12" width="90" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
@@ -516,6 +516,7 @@
                     <navigationItem key="navigationItem" id="gl0-ae-11A"/>
                     <connections>
                         <outlet property="connectionsToNotifyLabel" destination="nlP-TO-0Jk" id="G3U-kN-0aY"/>
+                        <outlet property="daysInARowLabel" destination="hyG-ho-wXj" id="zit-6B-jaO"/>
                         <outlet property="eventLabel" destination="et0-2j-IUm" id="Tsg-OH-GoI"/>
                         <outlet property="frequencyLabel" destination="UKb-Qa-KsE" id="5iq-Zs-OsF"/>
                         <outlet property="swltch" destination="8eQ-om-21i" id="uT4-Xt-wEG"/>
@@ -531,13 +532,16 @@
             <objects>
                 <tableViewController id="tsg-5Z-RBr" customClass="SelectConnectionsTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ku3-sB-iKN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" id="LVb-vv-S5I">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LVb-vv-S5I" id="2jg-5M-nDn">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>

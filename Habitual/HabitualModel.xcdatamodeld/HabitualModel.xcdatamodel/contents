@@ -5,8 +5,10 @@
         <attribute name="frequencyInt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notificationsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="notificationSettingInt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="usernamesToNotify" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Habit" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Habit" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

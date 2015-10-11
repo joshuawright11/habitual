@@ -37,10 +37,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         if (PFUser.currentUser() != nil){
             
             loggedIn = true
-            WebServices.getConnectionsData({ (users, success) -> () in
-                self.connections = users
-                self.tableView.reloadData()
-            })
+            
+            refreshConnections()
             
             self.tableView.reloadData()
         }
