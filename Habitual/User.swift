@@ -18,6 +18,7 @@ class User: PObject {
     var following:[User]
     
     required init(json: JSON) {
+
         username = json["username"].stringValue
         habits = []
         following = []
@@ -37,6 +38,12 @@ class User: PObject {
         following = []
         
         super.init(json: nil)
+        
+        WebServices.getConnectionsData { (users, success) -> () in
+            if(success) {
+                self.following = users
+            }
+        }
     }
     
     func toJSON() -> JSON{

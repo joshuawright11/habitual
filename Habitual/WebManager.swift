@@ -16,17 +16,23 @@ import Parse
 */
 public class WebServices: NSObject {
     
-    static func login(username: String, password:String, callback: ((success: Bool) -> ())?) {
+    static func login(username: String, password:String, callback: ((success: Bool, user: User?) -> ())?) {
         PFUser.logInWithUsernameInBackground(username, password: password) { (userLogged: PFUser?, error: NSError?) -> Void in
             if error == nil {
-                if let callback = callback {callback(success: true)}
+                let installation = PFInstallation.currentInstallation()
+                installation["username"] = username
+                installation.saveInBackground()
+                
+                let user: User = User(parse: userLogged!)
+                
+                if let callback = callback {callback(success: true, user: user)}
             }else{
-                if let callback = callback {callback(success: false)}
+                if let callback = callback {callback(success: false, user: nil)}
             }
         }
     }
     
-    static func signup(username: String, password:String, callback:((success: Bool) -> ())?) {
+    static func signup(username: String, password:String, callback:((success: Bool, user: User?) -> ())?) {
         let user = PFUser()
         user.username = username
         user.password = password
@@ -37,9 +43,15 @@ public class WebServices: NSObject {
         
         user.signUpInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
             if error == nil {
-                if let callback = callback {callback(success: true)}
+                let installation = PFInstallation.currentInstallation()
+                installation["username"] = username
+                installation.saveInBackground()
+                
+                let newUser: User = User(parse: user)
+                
+                if let callback = callback {callback(success: true, user: newUser)}
             }else{
-                if let callback = callback {callback(success: false)}
+                if let callback = callback {callback(success: false, user: nil)}
             }
         }
     }

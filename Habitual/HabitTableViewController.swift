@@ -9,6 +9,7 @@
 import UIKit
 import Timepiece
 import DZNEmptyDataSet
+import Parse
 
 class HabitTableViewController: UITableViewController, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
@@ -52,6 +53,14 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
                 self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
                 
                 Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+                
+                let pushQuery = PFInstallation.query()
+                pushQuery?.whereKey("username", equalTo: "josh")
+                
+                let push = PFPush()
+                push.setQuery(pushQuery)
+                push.setMessage("\(AuthManager.currentUser!.username) just completed a habit!")
+                push.sendPushInBackground()
             }
         }
     }

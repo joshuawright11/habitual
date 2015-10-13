@@ -60,23 +60,28 @@ public class AuthManager : NSObject{
         - parameter callback: The closure to call upon completion of the login request. 'valid' is True 
             when the request succeeds and False if it fails.
     */
-//    public static func login(username:String, password:String, callback: ((valid:Bool) -> ())?){
-//        
-//        WebServices.login(username, password: password) { (user) -> () in
-//            
-////            if username == user.username{
-////                
-////                let dict:Dictionary = ["username":username,"password":password]
-////                let error = Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
-////                
-////                self.currentUser = user
-////            }
-//            
-//            if let callback = callback{
-//                callback(valid: (username == user.username))
-//            }
-//        }
-//    }
+    public static func login(username: String, password:String, callback: ((success: Bool) -> ())?) {
+
+        WebServices.login(username, password: password) { (success, user) -> () in
+
+            if username == user!.username{
+            
+                let dict:Dictionary = ["username":username,"password":password]
+                
+                do{
+                    try Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
+                }catch{
+                    
+                }
+            
+                self.currentUser = user
+            }
+            
+            if let callback = callback{
+                callback(success: (username == user!.username))
+            }
+        }
+    }
     
     /**
         Logs the current user out, clearing their keychain data and wiping their data from the 
@@ -131,15 +136,19 @@ public class AuthManager : NSObject{
         let jsonString:String? = ud.objectForKey("currentUser") as? String;
         
         if let jsonString = jsonString, dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            
             let json = JSON(data: dataFromString)
             let loadedUser = User(json: json)
             loadedUser.habits = getHabitsOfCurrentUser()
-            return user
+            
+            WebServices.getConnectionsData({ (users, success) -> () in
+                loadedUser.following = users
+            })
+            
+            return loadedUser
         }else{
-            let user = User(json: JSON("username:name"))
-            user.habits = getHabitsOfCurrentUser()
-            return user
+            let newUser = User(json: JSON("username:name"))
+            newUser.habits = getHabitsOfCurrentUser()
+            return newUser
         }
     }
     

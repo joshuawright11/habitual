@@ -141,7 +141,7 @@ class HabitDetailController: UITableViewController {
             
             frequencyLabel?.text = "\(Frequency.allValues[nextIndex])"
             frequency = Frequency.allValues[nextIndex]
-        }else if indexPath.section == (AuthManager.socialEnabled ? 2 : 1) {
+        }else if indexPath.section == (AuthManager.socialEnabled ? 2 : 2) { // should be 2 : 1
             deletePressed()
         }else if AuthManager.socialEnabled && indexPath.section == 1 {
             if indexPath.row == 1 {
