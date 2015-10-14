@@ -190,6 +190,23 @@ public class AuthManager : NSObject{
         } catch let error as NSError {
             print("awww error: " + error.description)
         }
+        
+        if habit.notificationsEnabled {
+            ForeignNotificationManager.uploadHabitForCurrentUser(habit)
+        }
+    }
+    
+    public static func deleteHabitForCurrentUser(habit: Habit?) {
+        if let habit = habit {
+            let appDel:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDel.managedObjectContext?.deleteObject(habit)
+
+            ForeignNotificationManager.deleteHabitForCurrentUser(habit)
+            
+            if habit.notificationsEnabled {
+                Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
+            }
+        }
     }
     
     /**

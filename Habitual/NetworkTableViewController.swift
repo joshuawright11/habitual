@@ -38,7 +38,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             
             loggedIn = true
             
-            refreshConnections()
+            self.connections = AuthManager.currentUser?.following
             
             self.tableView.reloadData()
         }
@@ -55,6 +55,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func refreshConnections(){
+        
         WebServices.getConnectionsData({ (users, success) -> () in
             self.connections = users
             self.tableView.reloadData()

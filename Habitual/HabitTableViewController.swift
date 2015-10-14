@@ -48,19 +48,17 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
             let point = gestureRecognizer.locationInView(self.tableView)
             if let ip = self.tableView.indexPathForRowAtPoint(point){
 
-                if !habits[ip.row].canDo() {return}
-                habits[ip.row].datesCompleted.append(NSDate())
+                let habit: Habit = habits[ip.row]
+                
+                if !habit.canDo() {return}
+                habit.datesCompleted.append(NSDate())
                 self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
                 
+                if habit.notificationsEnabled {
+                    ForeignNotificationManager.completeHabitForCurrentUser(habit)
+                }
+                
                 Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-                
-                let pushQuery = PFInstallation.query()
-                pushQuery?.whereKey("username", equalTo: "josh")
-                
-                let push = PFPush()
-                push.setQuery(pushQuery)
-                push.setMessage("\(AuthManager.currentUser!.username) just completed a habit!")
-                push.sendPushInBackground()
             }
         }
     }

@@ -86,12 +86,7 @@ class HabitDetailController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) in
-            if let habit = self.habit {
-                let appDel:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                appDel.managedObjectContext?.deleteObject(habit)
-                Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-            }
-            
+            AuthManager.deleteHabitForCurrentUser(self.habit)
             self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         

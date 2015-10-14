@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import Timepiece
 
 public enum NotificationSetting: Int16 {
     case None = 0
@@ -43,6 +45,89 @@ public enum NotificationSetting: Int16 {
     }
 }
 
-class ForeignNotificationManager: NSObject {
+public class ForeignNotificationManager: NSObject {
     
+    public static func uploadHabitForCurrentUser(habit: Habit) {
+
+        guard let user = AuthManager.currentUser else {
+            print("ERROR! User is not loaded!")
+            return
+        }
+        
+        let push = PFObject(className: "Habit")
+        
+        push["owner"] = user.username
+        push["targetUsernames"] = habit.usernamesToNotify
+        push["name"] = habit.name
+
+        var due = NSDate()
+        
+        switch habit.frequency {
+        case .Daily:
+            due = due.endOfDay
+        case .Weekly:
+            due = due.endOfWeek
+        case .Monthly:
+            due = due.endOfMonth
+        }
+        
+        push["due"] = due
+        push["frequency"] = habit.frequency.name()
+        
+        push.saveInBackground()
+    }
+    
+    public static func deleteHabitForCurrentUser(habit: Habit) {
+        
+        guard let user = AuthManager.currentUser else {
+            print("ERROR! User is not loaded!")
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Habit")
+        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("name", equalTo: habit.name)
+        query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
+            
+            print("\(array)")
+            
+            if error == nil {
+                array?.first?.deleteInBackground()
+            }
+        }
+    }
+    
+    public static func completeHabitForCurrentUser(habit: Habit) {
+        
+        guard let user = AuthManager.currentUser else {
+            print("ERROR! User is not loaded!")
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Habit")
+        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("name", equalTo: habit.name)
+        query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
+            
+            if (error == nil) {
+                let object: PFObject = (array?.first)!
+                
+                var due = object["due"] as! NSDate
+                
+                switch habit.frequency {
+                case .Daily:
+                    due = due + 1.day
+                case .Weekly:
+                    due = due + 1.week
+                case .Monthly:
+                    due = due + 1.month
+                }
+                
+                object["due"] = due
+                
+                object.saveInBackground()
+            }
+        }
+        
+    }
 }

@@ -85,7 +85,7 @@ public class WebServices: NSObject {
     static func getConnectionsData(callback:((users: [User], success: Bool) -> ())?) {
         
         let query = PFUser.query()
-
+        
         let array:[String] = PFUser.currentUser()!["following"] as! [String]
 
         query?.whereKey("username", containedIn: array)
