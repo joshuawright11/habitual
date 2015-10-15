@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         // Parse setup
-        Parse.setApplicationId("1qF0PH01jWWL6UeRTTBQAqE81pg2dOd1m1nzRcmu", clientKey: "MqtooBZ1p1ooXsFEw7kULVBEC7Q5JSpDyCdViw48")
+        Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         
         return true
     }

@@ -13,8 +13,9 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBAction func signup(){
-        WebServices.signup(usernameTextField.text!, password: passwordTextField.text!) { (user) -> () in
+        WebServices.signup(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
+            AuthManager.currentUser = user
             Utilities.postNotification(kNotificationIdentifierUserLoggedIn)
         }
     }

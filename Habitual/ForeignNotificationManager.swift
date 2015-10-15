@@ -116,11 +116,11 @@ public class ForeignNotificationManager: NSObject {
                 
                 switch habit.frequency {
                 case .Daily:
-                    due = due + 1.day
+                    due = NSDate().endOfDay + 1.day
                 case .Weekly:
-                    due = due + 1.week
+                    due = NSDate().endOfWeek + 1.week
                 case .Monthly:
-                    due = due + 1.month
+                    due = NSDate().endOfMonth + 1.month
                 }
                 
                 object["due"] = due

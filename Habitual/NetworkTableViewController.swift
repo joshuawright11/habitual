@@ -68,7 +68,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
             let usernameTextField = alert.textFields! [0] 
-                WebServices.addConnection("\(usernameTextField.text)", callback: { (success) -> () in
+                WebServices.addConnection("\(usernameTextField.text!)", callback: { (success) -> () in
                     if success {
                         Utilities.alert("user followed", vc: self)
                         self.refreshConnections()
