@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import Parse
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        // register for local notifications
-        //
-        // application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
+        // Crashlytics setup
+        Fabric.with([Crashlytics.self])
         
         // Register for Push Notitications
         if application.applicationState != UIApplicationState.Background {
