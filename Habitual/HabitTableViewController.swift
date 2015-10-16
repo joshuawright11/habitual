@@ -71,6 +71,10 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
 
     // MARK: - Table view data source
 
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        print("Hello")   
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

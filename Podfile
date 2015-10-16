@@ -1,4 +1,4 @@
-link_with 'Habitual', 'HabitualTests'
+link_with 'Ignite', 'IgniteTests'
 use_frameworks!
 
 pod 'SwiftyJSON'

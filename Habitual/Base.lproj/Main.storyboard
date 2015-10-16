@@ -9,7 +9,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="BOe-df-opT">
             <objects>
-                <tabBarController id="0kD-fU-pCp" customClass="MainTabBarController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="0kD-fU-pCp" customClass="MainTabBarController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="cpL-TF-gip">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -48,7 +48,7 @@
         <!--Network-->
         <scene sceneID="p4w-YL-tf7">
             <objects>
-                <tableViewController id="gV9-M3-lsf" customClass="NetworkTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="gV9-M3-lsf" customClass="NetworkTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Yla-un-g2v">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,7 +118,7 @@
         <!--Signup-->
         <scene sceneID="WQy-fh-M5H">
             <objects>
-                <viewController id="83v-GV-iKW" customClass="SignupViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="83v-GV-iKW" customClass="SignupViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wcF-29-IjD"/>
                         <viewControllerLayoutGuide type="bottom" id="ADv-9m-sLl"/>
@@ -225,7 +225,7 @@
         <!--Habitual-->
         <scene sceneID="6Py-9e-47k">
             <objects>
-                <tableViewController id="zKE-sh-bPH" customClass="HabitTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="zKE-sh-bPH" customClass="HabitTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3I9-dY-4sc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -263,7 +263,7 @@
         <!--Habit Detail Controller-->
         <scene sceneID="46a-Cq-vB8">
             <objects>
-                <tableViewController storyboardIdentifier="HabitDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cNZ-D4-bs0" customClass="HabitDetailController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HabitDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cNZ-D4-bs0" customClass="HabitDetailController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="1xG-EH-9mE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -286,7 +286,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Poop" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDE-5f-GXy">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Go for a run" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDE-5f-GXy">
                                                     <rect key="frame" x="190" y="7" width="202" height="30"/>
                                                     <animations/>
                                                     <constraints>
@@ -375,7 +375,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Notify connections on event?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxA-wm-Kca">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Notify connections on miss?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxA-wm-Kca">
                                                     <rect key="frame" x="15" y="11" width="303" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -416,7 +416,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nlP-TO-0Jk">
-                                                    <rect key="frame" x="456" y="12" width="129" height="20"/>
+                                                    <rect key="frame" x="543" y="12" width="42" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -438,8 +438,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="When what happens?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="34i-9b-pDj">
-                                                    <rect key="frame" x="15" y="12" width="157" height="20"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="When what happens? [not working]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="34i-9b-pDj">
+                                                    <rect key="frame" x="15" y="12" width="257" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -447,7 +447,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="EveryMiss" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="et0-2j-IUm">
-                                                    <rect key="frame" x="495" y="12" width="90" height="20"/>
+                                                    <rect key="frame" x="511" y="12" width="74" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -530,7 +530,7 @@
         <!--Connections-->
         <scene sceneID="CY8-pe-C2s">
             <objects>
-                <tableViewController id="tsg-5Z-RBr" customClass="SelectConnectionsTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="tsg-5Z-RBr" customClass="SelectConnectionsTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ku3-sB-iKN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -562,7 +562,7 @@
         <!--Me-->
         <scene sceneID="OEd-Mg-a7m">
             <objects>
-                <tableViewController id="b5e-bP-Vbe" customClass="UserTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="b5e-bP-Vbe" customClass="UserTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="aUe-bw-rXg">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -784,7 +784,7 @@
         <!--You-->
         <scene sceneID="Rdq-eM-7Ob">
             <objects>
-                <tableViewController id="l8d-Wb-0sx" customClass="UserTableViewController" customModule="Habitual" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="l8d-Wb-0sx" customClass="UserTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="XBm-V9-Z2j">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

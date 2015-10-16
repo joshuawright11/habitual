@@ -140,7 +140,31 @@ public class Habit: NSManagedObject {
     }
     
     public func currentStreak() -> Int {
-        // TODO: incomplete
-        return 8008135
+
+        if datesCompleted.count == 0 {
+            return 0
+        } else {
+            
+            let today: NSDate = (NSDate().beginningOfDay - 1.day)
+            var nextDate = datesCompleted.last!
+            
+            if nextDate < today {
+                return 0;
+            }else{
+                var streak = 1
+                for var i = datesCompleted.count - 2; i > 0; i-- {
+                    
+                    let dateToCheck = datesCompleted[i]
+                    
+                    if(dateToCheck < nextDate.beginningOfDay - 1.day) {
+                        return streak
+                    }else{
+                        streak++
+                        nextDate = dateToCheck
+                    }
+                }
+                return streak
+            }
+        }
     }
 }

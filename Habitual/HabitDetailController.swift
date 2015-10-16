@@ -12,8 +12,6 @@ class HabitDetailController: UITableViewController {
     
     var habit:Habit?
     
-//    var notificationsEnabled: Bool = false
-    
     // UI Controls
     @IBOutlet var swltch: UISwitch?
     @IBOutlet var textField: UITextField?
@@ -25,6 +23,8 @@ class HabitDetailController: UITableViewController {
     var connectionsToNotify:[String] = []
     var notificationSetting: NotificationSetting = .None
     var frequency: Frequency = .Daily
+    
+    var editingState = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +40,20 @@ class HabitDetailController: UITableViewController {
             self.connectionsToNotifyLabel?.text = habit.usernamesToNotify.joinWithSeparator(", ")
             self.eventLabel?.text = "\(habit.notificationSetting)"
             self.daysInARowLabel?.text = "\(habit.currentStreak())"
+
+            self.swltch?.userInteractionEnabled = false
+            self.textField?.userInteractionEnabled = false
+            
+            let button = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit:")
+            self.navigationItem.rightBarButtonItem = button
             
             self.tableView.reloadData()
         }else{
             self.navigationItem.title = "New Habit"
 
+            editingState = true
+            
             let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "done:")
-
             self.navigationItem.rightBarButtonItem = button
 
         }
@@ -60,6 +67,33 @@ class HabitDetailController: UITableViewController {
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func edit(sender: UIBarButtonItem){
+        
+        editingState = !editingState
+        
+        if editingState {
+            self.navigationItem.rightBarButtonItem?.title = "Save"
+            
+            self.swltch?.userInteractionEnabled = true
+            self.textField?.userInteractionEnabled = true
+            
+        } else {
+            self.navigationItem.rightBarButtonItem?.title = "Edit"
+            
+            self.swltch?.userInteractionEnabled = false
+            self.textField?.userInteractionEnabled = false
+            
+            habit?.name = (self.textField?.text!)!
+            habit?.frequency = frequency
+            habit?.notificationsEnabled = (swltch?.on)!
+            habit?.notificationSetting = notificationSetting
+            habit?.usernamesToNotify = connectionsToNotify
+            
+            Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
+            Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        }
     }
     
     func detailForIndex(index: Int) -> String{
@@ -113,7 +147,7 @@ class HabitDetailController: UITableViewController {
                     return 0
                 }
             }else{
-                return 44
+                return 0
             }
         case 2:
             if habit == nil {
@@ -129,6 +163,10 @@ class HabitDetailController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        defer { tableView.deselectRowAtIndexPath(indexPath, animated: true) }
+        
+        if !editingState && indexPath.section != 2 { return }
         
         if indexPath.section == 0 && indexPath.row == 1{
             let currentFreq = Frequency.frequencyForName(frequencyLabel!.text!)
@@ -148,8 +186,6 @@ class HabitDetailController: UITableViewController {
                 notificationSetting = NotificationSetting.allValues[nextIndex]
             }
         }
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true);
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -30,6 +30,9 @@ public class AuthManager : NSObject{
         
             if (self.user == nil){
                 self.user = loadUser();
+                if socialEnabled {
+                    reloadConnectionsData(nil)
+                }
             }
             return self.user
         }
@@ -140,10 +143,6 @@ public class AuthManager : NSObject{
             let loadedUser = User(json: json)
             loadedUser.habits = getHabitsOfCurrentUser()
             
-            WebServices.getConnectionsData({ (users, success) -> () in
-                loadedUser.following = users
-            })
-            
             return loadedUser
         }else{
             let newUser = User(json: JSON("username:name"))
@@ -165,6 +164,13 @@ public class AuthManager : NSObject{
             if let string = string {
                 ud.setObject(string, forKey: "currentUser")
             }
+        }
+    }
+    
+    public static func reloadConnectionsData(callback: ((success: Bool) ->())?) {
+        WebServices.getConnectionsData { (users, success) -> () in
+            self.user?.following = users
+            if let callback = callback { callback(success: success) }
         }
     }
     

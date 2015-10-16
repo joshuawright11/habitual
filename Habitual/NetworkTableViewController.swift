@@ -51,15 +51,13 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func refreshData(){
         loggedIn = true
-        self.tableView.reloadData()
-    }
-    
-    func refreshConnections(){
         
-        WebServices.getConnectionsData({ (users, success) -> () in
-            self.connections = users
-            self.tableView.reloadData()
-        })
+        AuthManager.reloadConnectionsData { (success) -> () in
+            if success {
+                self.connections = AuthManager.currentUser?.following
+                self.tableView.reloadData()
+            }
+        }
     }
     
     @IBAction func addConnection() {
@@ -71,7 +69,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
                 WebServices.addConnection("\(usernameTextField.text!)", callback: { (success) -> () in
                     if success {
                         Utilities.alert("user followed", vc: self)
-                        self.refreshConnections()
+                        self.refreshData()
                     }else{
                         Utilities.alert("couldn't find that user", vc: self)
                     }
