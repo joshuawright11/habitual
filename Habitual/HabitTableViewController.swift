@@ -10,6 +10,7 @@ import UIKit
 import Timepiece
 import DZNEmptyDataSet
 import Parse
+import MCSwipeTableViewCell
 
 class HabitTableViewController: UITableViewController, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
@@ -70,10 +71,6 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
     }
 
     // MARK: - Table view data source
-
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        print("Hello")   
-    }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -84,15 +81,49 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) 
+        var cell:MCSwipeTableViewCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? MCSwipeTableViewCell
+        
+        if (cell == nil) {
+            cell = MCSwipeTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "habit")
+        
+            if cell!.respondsToSelector("setSeparatorInset:") {
+                cell?.separatorInset = UIEdgeInsetsZero
+            }
+            
+        }
+        
+        cell?.defaultColor = UIColor.groupTableViewBackgroundColor()
+        
+        cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State1, completionBlock:
+        { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in
+            
+            let ip = self.tableView.indexPathForCell(cell)!
+            
+            let habit: Habit = self.habits[ip.row]
+            
+            if !habit.canDo() {return}
+            habit.datesCompleted.append(NSDate())
+            self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            
+            if habit.notificationsEnabled {
+                ForeignNotificationManager.completeHabitForCurrentUser(habit)
+            }
+            
+            Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+            
+        })
+        
+        cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State3, completionBlock:
+            { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in print("NOT COMPLETED");
+        })
         
         let habit = habits[indexPath.row]
         
-        cell.textLabel?.text = habit.name
+        cell?.textLabel?.text = habit.name
         
-        cell.accessoryType = !habit.canDo() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        cell!.accessoryType = !habit.canDo() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
         
-        return cell
+        return cell!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
