@@ -11,23 +11,39 @@ import Timepiece
 import DZNEmptyDataSet
 import Parse
 import MCSwipeTableViewCell
+import JTCalendar
 
-class HabitTableViewController: UITableViewController, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, JTCalendarDelegate {
     
     var habits:[Habit] = []
     
+    @IBOutlet var tableView: UITableView!
+    
+    @IBOutlet var calendarMenuView: JTCalendarMenuView!
+    @IBOutlet var calendarContentView: JTHorizontalCalendarView!
+    
+    var calendarManager: JTCalendarManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        calendarManager = JTCalendarManager()
+        calendarManager.delegate = self
+        
+        calendarManager.menuView = calendarMenuView
+        calendarManager.contentView = calendarContentView
+        calendarManager.setDate(NSDate())
+        
         
         habits = AuthManager.currentUser!.habits
      
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
-        let lpgr = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        lpgr.minimumPressDuration = 1.0
-        lpgr.delegate = self
-
-        self.tableView.addGestureRecognizer(lpgr)
+//        let lpgr = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+//        lpgr.minimumPressDuration = 1.0
+//        lpgr.delegate = self
+//        self.tableView.addGestureRecognizer(lpgr)
 
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
@@ -72,15 +88,15 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
 
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return habits.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:MCSwipeTableViewCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? MCSwipeTableViewCell
         
         if (cell == nil) {
@@ -126,15 +142,15 @@ class HabitTableViewController: UITableViewController, UIGestureRecognizerDelega
         return cell!
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let hdvc:HabitDetailController = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
         hdvc.habit = habits[indexPath.row]
         self.navigationController?.pushViewController(hdvc, animated: true)
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return habits.count > 0 ? "Press and Hold to Complete a Habit" : ""
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return habits.count > 0 ? "Swipe to Complete a Habit" : ""
     }
     
     // MARK: - View Controller methods

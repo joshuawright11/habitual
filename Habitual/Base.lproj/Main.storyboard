@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -38,7 +39,7 @@
                         <animations/>
                     </navigationBar>
                     <connections>
-                        <segue destination="zKE-sh-bPH" kind="relationship" relationship="rootViewController" id="Mil-0A-tj0"/>
+                        <segue destination="oTK-IX-oA7" kind="relationship" relationship="rootViewController" id="zyX-nX-784"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vVC-qR-pA7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -222,43 +223,134 @@
             </objects>
             <point key="canvasLocation" x="-513" y="-356.99999999999989"/>
         </scene>
-        <!--Habitual-->
-        <scene sceneID="6Py-9e-47k">
+        <!--Empty Data Set Delegate-->
+        <scene sceneID="FtP-Fv-KHr">
             <objects>
-                <tableViewController id="zKE-sh-bPH" customClass="HabitTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3I9-dY-4sc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <viewController id="oTK-IX-oA7" customClass="CalendarViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="586-x8-uCj"/>
+                        <viewControllerLayoutGuide type="bottom" id="3wA-U3-3wm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DVo-d7-Uw1">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cce-sF-n6W">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="oTK-IX-oA7" id="bfQ-fd-i97"/>
+                                    <outlet property="delegate" destination="oTK-IX-oA7" id="g0W-qz-rkf"/>
+                                    <outlet property="emptyDataSetDelegate" destination="oTK-IX-oA7" id="NAz-7K-wcF"/>
+                                    <outlet property="emptyDataSetSource" destination="oTK-IX-oA7" id="5Fp-wK-nbF"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvl-HN-I1z" customClass="JTCalendarMenuView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="qyn-O2-dFg"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="qyn-O2-dFg"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="qyn-O2-dFg"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Lm-DA-olA" customClass="JTHorizontalCalendarView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="8Lm-DA-olA" secondAttribute="height" multiplier="400:231" id="4Qk-Vf-tmb"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="4Qk-Vf-tmb"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="4Qk-Vf-tmb"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="habit" id="CWb-e8-wPD">
-                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CWb-e8-wPD" id="5Ss-CP-f0A">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
-                                </tableViewCellContentView>
-                                <animations/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="zKE-sh-bPH" id="ZVF-Du-dIF"/>
-                            <outlet property="delegate" destination="zKE-sh-bPH" id="S23-Zd-puO"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Habitual" id="rJ0-3W-Taj">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="brP-iz-BVz">
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="8Lm-DA-olA" secondAttribute="trailing" constant="-20" id="0DO-Gt-7r4"/>
+                            <constraint firstItem="kvl-HN-I1z" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="69h-nB-GF9"/>
+                            <constraint firstItem="8Lm-DA-olA" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="9nX-dD-RXn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cce-sF-n6W" secondAttribute="trailing" constant="-20" id="Mtz-9a-uUx"/>
+                            <constraint firstItem="Cce-sF-n6W" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="OJi-5j-UWl"/>
+                            <constraint firstItem="8Lm-DA-olA" firstAttribute="top" secondItem="kvl-HN-I1z" secondAttribute="bottom" id="RuC-lh-8O5"/>
+                            <constraint firstItem="3wA-U3-3wm" firstAttribute="top" secondItem="Cce-sF-n6W" secondAttribute="bottom" id="Vmp-3h-X4g"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kvl-HN-I1z" secondAttribute="trailing" constant="-20" id="d6e-8S-I1z"/>
+                            <constraint firstItem="Cce-sF-n6W" firstAttribute="top" secondItem="8Lm-DA-olA" secondAttribute="bottom" id="eDV-3c-sh7"/>
+                            <constraint firstItem="kvl-HN-I1z" firstAttribute="top" secondItem="586-x8-uCj" secondAttribute="bottom" id="pk0-iH-AtR"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Cce-sF-n6W"/>
+                                <exclude reference="kvl-HN-I1z"/>
+                                <exclude reference="8Lm-DA-olA"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="69h-nB-GF9"/>
+                                <exclude reference="d6e-8S-I1z"/>
+                                <exclude reference="pk0-iH-AtR"/>
+                                <exclude reference="0DO-Gt-7r4"/>
+                                <exclude reference="9nX-dD-RXn"/>
+                                <exclude reference="RuC-lh-8O5"/>
+                                <exclude reference="Mtz-9a-uUx"/>
+                                <exclude reference="OJi-5j-UWl"/>
+                                <exclude reference="eDV-3c-sh7"/>
+                                <exclude reference="Vmp-3h-X4g"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Cce-sF-n6W"/>
+                                <include reference="kvl-HN-I1z"/>
+                                <include reference="8Lm-DA-olA"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="69h-nB-GF9"/>
+                                <include reference="d6e-8S-I1z"/>
+                                <include reference="pk0-iH-AtR"/>
+                                <include reference="0DO-Gt-7r4"/>
+                                <include reference="9nX-dD-RXn"/>
+                                <include reference="RuC-lh-8O5"/>
+                                <include reference="Mtz-9a-uUx"/>
+                                <include reference="OJi-5j-UWl"/>
+                                <include reference="eDV-3c-sh7"/>
+                                <include reference="Vmp-3h-X4g"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Ignite" id="LcY-8m-Ylv">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="VU5-l7-Avs">
                             <connections>
-                                <segue destination="cNZ-D4-bs0" kind="show" id="agn-37-Cr3"/>
+                                <segue destination="cNZ-D4-bs0" kind="show" id="4FT-aq-aMQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1g4-En-gBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    <connections>
+                        <outlet property="calendarContentView" destination="8Lm-DA-olA" id="Tes-0C-bCo"/>
+                        <outlet property="calendarMenuView" destination="kvl-HN-I1z" id="g9c-p8-6wd"/>
+                        <outlet property="tableView" destination="Cce-sF-n6W" id="4Kc-3w-F15"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lpo-jc-jKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="334.5" y="298.49999999999989"/>
+            <point key="canvasLocation" x="334.5" y="297.75"/>
         </scene>
         <!--Habit Detail Controller-->
         <scene sceneID="46a-Cq-vB8">
