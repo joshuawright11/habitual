@@ -7,4 +7,3 @@
 //
 
 #import <MCSwipeTableViewCell/MCSwipeTableViewCell.h>
-#import <JTCalendar/JTCalendar.h>

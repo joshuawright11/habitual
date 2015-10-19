@@ -223,7 +223,7 @@
             </objects>
             <point key="canvasLocation" x="-513" y="-356.99999999999989"/>
         </scene>
-        <!--Empty Data Set Delegate-->
+        <!--Calendar Delegate-->
         <scene sceneID="FtP-Fv-KHr">
             <objects>
                 <viewController id="oTK-IX-oA7" customClass="CalendarViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
@@ -239,13 +239,13 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="oTK-IX-oA7" id="bfQ-fd-i97"/>
-                                    <outlet property="delegate" destination="oTK-IX-oA7" id="g0W-qz-rkf"/>
-                                    <outlet property="emptyDataSetDelegate" destination="oTK-IX-oA7" id="NAz-7K-wcF"/>
-                                    <outlet property="emptyDataSetSource" destination="oTK-IX-oA7" id="5Fp-wK-nbF"/>
+                                    <outlet property="dataSource" destination="oTK-IX-oA7" id="0eP-du-XUJ"/>
+                                    <outlet property="delegate" destination="oTK-IX-oA7" id="Aua-uA-aTe"/>
+                                    <outlet property="emptyDataSetDelegate" destination="oTK-IX-oA7" id="Lsr-5B-6sq"/>
+                                    <outlet property="emptyDataSetSource" destination="oTK-IX-oA7" id="Fd3-sZ-1nL"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvl-HN-I1z" customClass="JTCalendarMenuView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvl-HN-I1z" customClass="CVCalendarMenuView" customModule="CVCalendar">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -262,56 +262,61 @@
                                         <include reference="qyn-O2-dFg"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="menuViewDelegate" destination="oTK-IX-oA7" id="4pA-CO-y6z"/>
+                                </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Lm-DA-olA" customClass="JTHorizontalCalendarView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JFK-6S-EZg" customClass="CVCalendarView" customModule="CVCalendar">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="8Lm-DA-olA" secondAttribute="height" multiplier="400:231" id="4Qk-Vf-tmb"/>
+                                    <constraint firstAttribute="width" secondItem="JFK-6S-EZg" secondAttribute="height" multiplier="400:231" id="qOt-SP-qby"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="4Qk-Vf-tmb"/>
+                                        <exclude reference="qOt-SP-qby"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="4Qk-Vf-tmb"/>
+                                        <include reference="qOt-SP-qby"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="calendarDelegate" destination="oTK-IX-oA7" id="0q6-mv-lcm"/>
+                                </connections>
                             </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="8Lm-DA-olA" secondAttribute="trailing" constant="-20" id="0DO-Gt-7r4"/>
+                            <constraint firstItem="Cce-sF-n6W" firstAttribute="top" secondItem="JFK-6S-EZg" secondAttribute="bottom" id="0c6-iu-sDC"/>
+                            <constraint firstItem="JFK-6S-EZg" firstAttribute="top" secondItem="kvl-HN-I1z" secondAttribute="bottom" id="4de-TY-6mh"/>
+                            <constraint firstItem="JFK-6S-EZg" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leading" id="53O-xX-8X9"/>
                             <constraint firstItem="kvl-HN-I1z" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="69h-nB-GF9"/>
-                            <constraint firstItem="8Lm-DA-olA" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="9nX-dD-RXn"/>
+                            <constraint firstAttribute="trailing" secondItem="JFK-6S-EZg" secondAttribute="trailing" id="IKV-lH-LIm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Cce-sF-n6W" secondAttribute="trailing" constant="-20" id="Mtz-9a-uUx"/>
                             <constraint firstItem="Cce-sF-n6W" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leadingMargin" constant="-20" id="OJi-5j-UWl"/>
-                            <constraint firstItem="8Lm-DA-olA" firstAttribute="top" secondItem="kvl-HN-I1z" secondAttribute="bottom" id="RuC-lh-8O5"/>
                             <constraint firstItem="3wA-U3-3wm" firstAttribute="top" secondItem="Cce-sF-n6W" secondAttribute="bottom" id="Vmp-3h-X4g"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kvl-HN-I1z" secondAttribute="trailing" constant="-20" id="d6e-8S-I1z"/>
-                            <constraint firstItem="Cce-sF-n6W" firstAttribute="top" secondItem="8Lm-DA-olA" secondAttribute="bottom" id="eDV-3c-sh7"/>
                             <constraint firstItem="kvl-HN-I1z" firstAttribute="top" secondItem="586-x8-uCj" secondAttribute="bottom" id="pk0-iH-AtR"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Cce-sF-n6W"/>
                                 <exclude reference="kvl-HN-I1z"/>
-                                <exclude reference="8Lm-DA-olA"/>
+                                <exclude reference="JFK-6S-EZg"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="69h-nB-GF9"/>
                                 <exclude reference="d6e-8S-I1z"/>
                                 <exclude reference="pk0-iH-AtR"/>
-                                <exclude reference="0DO-Gt-7r4"/>
-                                <exclude reference="9nX-dD-RXn"/>
-                                <exclude reference="RuC-lh-8O5"/>
+                                <exclude reference="4de-TY-6mh"/>
+                                <exclude reference="53O-xX-8X9"/>
+                                <exclude reference="IKV-lH-LIm"/>
+                                <exclude reference="0c6-iu-sDC"/>
                                 <exclude reference="Mtz-9a-uUx"/>
                                 <exclude reference="OJi-5j-UWl"/>
-                                <exclude reference="eDV-3c-sh7"/>
                                 <exclude reference="Vmp-3h-X4g"/>
                             </mask>
                         </variation>
@@ -319,18 +324,18 @@
                             <mask key="subviews">
                                 <include reference="Cce-sF-n6W"/>
                                 <include reference="kvl-HN-I1z"/>
-                                <include reference="8Lm-DA-olA"/>
+                                <include reference="JFK-6S-EZg"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="69h-nB-GF9"/>
                                 <include reference="d6e-8S-I1z"/>
                                 <include reference="pk0-iH-AtR"/>
-                                <include reference="0DO-Gt-7r4"/>
-                                <include reference="9nX-dD-RXn"/>
-                                <include reference="RuC-lh-8O5"/>
+                                <include reference="4de-TY-6mh"/>
+                                <include reference="53O-xX-8X9"/>
+                                <include reference="IKV-lH-LIm"/>
+                                <include reference="0c6-iu-sDC"/>
                                 <include reference="Mtz-9a-uUx"/>
                                 <include reference="OJi-5j-UWl"/>
-                                <include reference="eDV-3c-sh7"/>
                                 <include reference="Vmp-3h-X4g"/>
                             </mask>
                         </variation>
@@ -343,9 +348,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="calendarContentView" destination="8Lm-DA-olA" id="Tes-0C-bCo"/>
-                        <outlet property="calendarMenuView" destination="kvl-HN-I1z" id="g9c-p8-6wd"/>
-                        <outlet property="tableView" destination="Cce-sF-n6W" id="4Kc-3w-F15"/>
+                        <outlet property="calendarView" destination="JFK-6S-EZg" id="5RL-eo-QT6"/>
+                        <outlet property="menuView" destination="kvl-HN-I1z" id="dAV-GM-bcg"/>
+                        <outlet property="tableView" destination="Cce-sF-n6W" id="6JN-D0-xdS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lpo-jc-jKS" userLabel="First Responder" sceneMemberID="firstResponder"/>

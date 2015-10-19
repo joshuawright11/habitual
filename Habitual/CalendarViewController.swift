@@ -11,30 +11,19 @@ import Timepiece
 import DZNEmptyDataSet
 import Parse
 import MCSwipeTableViewCell
-import JTCalendar
+import CVCalendar
 
-class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, JTCalendarDelegate {
+class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
     var habits:[Habit] = []
     
     @IBOutlet var tableView: UITableView!
     
-    @IBOutlet var calendarMenuView: JTCalendarMenuView!
-    @IBOutlet var calendarContentView: JTHorizontalCalendarView!
-    
-    var calendarManager: JTCalendarManager!
+    @IBOutlet weak var calendarView: CVCalendarView!
+    @IBOutlet weak var menuView: CVCalendarMenuView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        calendarManager = JTCalendarManager()
-        calendarManager.delegate = self
-        
-        calendarManager.menuView = calendarMenuView
-        calendarManager.contentView = calendarContentView
-        calendarManager.setDate(NSDate())
-        
         
         habits = AuthManager.currentUser!.habits
      
@@ -51,6 +40,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.tableFooterView = UIView()
         
         self.tableView.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        calendarView.commitCalendarViewUpdate()
+        menuView.commitMenuViewUpdate()
     }
     
     func refreshData(){
@@ -200,5 +196,14 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         // TODO: add a habit
+    }
+    
+    // MARK: - CVCalendarViewDelegate methods
+    func presentationMode() -> CalendarMode {
+        return .MonthView
+    }
+    
+    func firstWeekday() -> Weekday {
+        return .Sunday
     }
 }
