@@ -121,7 +121,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - View Controller methods
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? UserTableViewController {
+        if let vc = segue.destinationViewController as? UserViewController {
             let index = tableView.indexPathForSelectedRow?.row
             vc.user = connections![index!]
         }

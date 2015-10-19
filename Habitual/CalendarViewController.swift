@@ -13,7 +13,7 @@ import Parse
 import MCSwipeTableViewCell
 import CVCalendar
 
-class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
+class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
     var habits:[Habit] = []
     
@@ -21,6 +21,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var calendarView: CVCalendarView!
     @IBOutlet weak var menuView: CVCalendarMenuView!
+    
+    @IBOutlet weak var monthLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
 //        lpgr.delegate = self
 //        self.tableView.addGestureRecognizer(lpgr)
 
+        self.calendarView.changeDaysOutShowingState(false)
+        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         
@@ -205,5 +209,19 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func firstWeekday() -> Weekday {
         return .Sunday
+    }
+    
+    func shouldShowWeekdaysOut() -> Bool {
+        return true
+    }
+    
+    func presentedDateUpdated(date: Date) {
+        struct Months {
+            static let months = ["January","February","March","April",
+                "May","June","July","August","September","October",
+                "November","December"]
+        }
+        
+        self.monthLabel.text = Months.months[(date.convertedDate()?.month)!-1]
     }
 }

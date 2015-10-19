@@ -14,7 +14,7 @@
 		031D28191B29D1300060263A /* HabitualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28181B29D1300060263A /* HabitualTests.swift */; };
 		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
-		0355D1101B5D786D00EA8185 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserTableViewController.swift */; };
+		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
 		039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */; };
 		039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC071B2AD1F9006EAFD9 /* Constants.swift */; };
@@ -66,7 +66,7 @@
 		031D28181B29D1300060263A /* HabitualTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitualTests.swift; sourceTree = "<group>"; };
 		0336741D1BCF477500AA87C2 /* SecretConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretConstants.swift; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
-		0355D10F1B5D786D00EA8185 /* UserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
+		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebManager.swift; sourceTree = "<group>"; };
 		039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		039BFC071B2AD1F9006EAFD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 				03B488151B509CAA0077E601 /* CalendarViewController.swift */,
 				03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */,
 				0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */,
-				0355D10F1B5D786D00EA8185 /* UserTableViewController.swift */,
+				0355D10F1B5D786D00EA8185 /* UserViewController.swift */,
 				03BA13441B5DB82900504A63 /* MainTabBarController.swift */,
 				03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */,
 				03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */,
@@ -464,7 +464,7 @@
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
 				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */,
-				0355D1101B5D786D00EA8185 /* UserTableViewController.swift in Sources */,
+				0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */,
 				03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */,
 				039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */,
 				031D28031B29D1300060263A /* AppDelegate.swift in Sources */,

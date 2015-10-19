@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Charts
 
-class UserTableViewController: UITableViewController {
+class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var user:User?
     
+    @IBOutlet weak var chartView: BarChartView!
+    
+    @IBOutlet var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "HabitCell", bundle: nil), forCellReuseIdentifier: "habit")
@@ -19,6 +24,10 @@ class UserTableViewController: UITableViewController {
         
         if user == nil{user = AuthManager.currentUser; self.navigationItem.title = "Me"}
         else {self.navigationItem.title = user?.username}
+        
+        chartView.data = BarChartData(xVals: ["1","2"], dataSet: BarChartDataSet(yVals: [BarChartDataEntry(value: 1.0, xIndex: 0),BarChartDataEntry(value: 2.0, xIndex: 1)], label: "Ducks"))
+        chartView.notifyDataSetChanged()
+        
         tableView.reloadData()
     }
 
@@ -38,11 +47,11 @@ class UserTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return user!.habits.count > 0 ? 2 : 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
             if let user = user {
                 return user.habits.count
@@ -54,7 +63,7 @@ class UserTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         if indexPath.section == 1{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
@@ -73,7 +82,7 @@ class UserTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         if(section == 0){
             return "Stats"
@@ -82,7 +91,7 @@ class UserTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
