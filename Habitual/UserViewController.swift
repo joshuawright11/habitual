@@ -25,20 +25,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         if user == nil{user = AuthManager.currentUser; self.navigationItem.title = "Me"}
         else {self.navigationItem.title = user?.username}
         
-        let ds1 = BarChartDataSet(yVals: [BarChartDataEntry(value: 45, xIndex: 0)], label: "Go for a run")
-        ds1.setColor(UIColor.blueColor())
-        let ds2 = BarChartDataSet(yVals: [BarChartDataEntry(value: 56, xIndex: 0)], label: "Go for a run")
-        ds2.setColor(UIColor.greenColor())
-        let ds3 = BarChartDataSet(yVals: [BarChartDataEntry(value: 32, xIndex: 0)], label: "Go for a run")
-        ds3.setColor(UIColor.purpleColor())
-        let ds4 = BarChartDataSet(yVals: [BarChartDataEntry(value: 100, xIndex: 0)], label: "Go for a run")
-        ds4.setColor(UIColor.yellowColor())
-        let ds5 = BarChartDataSet(yVals: [BarChartDataEntry(value: 76, xIndex: 0)], label: "Go for a run")
-        ds5.setColor(UIColor.redColor())
-        let ds6 = BarChartDataSet(yVals: [BarChartDataEntry(value: 85, xIndex: 0)], label: "Go for a run")
-        ds6.setColor(UIColor.orangeColor())
-        
-        chartView.data = BarChartData(xVals: ["Habit Completion Rate"], dataSets: [ds1,ds2,ds3,ds4,ds5,ds6])
+        chartView.data = getChartData()
         
         chartView.drawGridBackgroundEnabled = false
         chartView.drawBordersEnabled = false
@@ -55,12 +42,49 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.leftAxis.drawAxisLineEnabled = false
         
         chartView.descriptionText = ""
-        chartView.drawValueAboveBarEnabled = false
+        chartView.drawValueAboveBarEnabled = true
     
         chartView.notifyDataSetChanged()
         tableView.reloadData()
     }
 
+    func getChartData() -> BarChartData {
+        
+        var dataSets: [BarChartDataSet] = []
+        
+        let today = NSDate()
+        
+        for habit: Habit in (user?.habits)! {
+            let startOfFirstInterval: NSDate
+            switch habit.frequency {
+            case .Daily:
+                startOfFirstInterval = habit.createdAt.beginningOfDay
+            case .Weekly:
+                startOfFirstInterval = habit.createdAt.beginningOfWeek
+            case .Monthly:
+                startOfFirstInterval = habit.createdAt.beginningOfMonth
+            }
+            let daysSinceBegan = (today.endOfDay.timeIntervalSinceDate(startOfFirstInterval))/86400
+            let unitsSinceBegan: Double
+            
+            switch habit.frequency {
+            case .Daily:
+                unitsSinceBegan = daysSinceBegan
+            case .Weekly:
+                unitsSinceBegan = daysSinceBegan/7
+            case .Monthly:
+                unitsSinceBegan = daysSinceBegan/30.417
+            }
+            
+            
+            
+            dataSets.append(BarChartDataSet(yVals: [BarChartDataEntry(value: (Double(habit.datesCompleted.count)/unitsSinceBegan)*100, xIndex: 0)], label: habit.name))
+        }
+        
+        return BarChartData(xVals: ["Habit Completion Percentage"], dataSets: dataSets)
+        
+    }
+    
     func refreshData(){
         tableView.reloadData()
     }

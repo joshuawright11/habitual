@@ -58,6 +58,8 @@ public class Habit: NSManagedObject {
     
     @NSManaged var name: String
     
+    @NSManaged var createdAt: NSDate
+    
     // Mark: - Notification data
     
     @NSManaged var notificationsEnabled: Bool
@@ -86,6 +88,12 @@ public class Habit: NSManagedObject {
         frequencyInt = Frequency.frequencyForName(json["repeat"].stringValue).rawValue
         
         name = json["name"].stringValue
+        
+        let string = json["createdAt"].stringValue
+        
+        print("string was \(string)")
+        
+        createdAt = Utilities.dateFromString(string)
     }
     
     public func toJSON() -> JSON {
@@ -96,7 +104,8 @@ public class Habit: NSManagedObject {
             "datesCompleted":datesCompleted,
             "notificationsEnabled":notificationsEnabled,
             "notificationSetting":notificationSetting.toString(),
-            "usernamesToNotify":usernamesToNotify])
+            "usernamesToNotify":usernamesToNotify,
+            "createdAt":Utilities.stringFromDate(createdAt)])
         return json
     }
     

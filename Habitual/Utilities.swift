@@ -23,11 +23,11 @@ public class Utilities {
         let dateFormatter = NSDateFormatter()
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "YYYY-MM-DDTHH:MM:SSZ"
+        dateFormatter.dateFormat = "YYYY-MM-DD:hh:mm:ss:ZZZZ"
         
-        let date: NSDate? = dateFormatter.dateFromString(string);
+        let date: NSDate = dateFormatter.dateFromString(string)!;
         
-        return NSDate()
+        return date
     }
     
     public static func stringFromDate(date: NSDate) -> String {
@@ -35,11 +35,11 @@ public class Utilities {
         let dateFormatter = NSDateFormatter()
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "YYYY-MM-DDTHH:MM:SSZ"
+        dateFormatter.dateFormat = "YYYY-MM-DD:hh:mm:ss:ZZZZ"
         
-        let string: String? = dateFormatter.stringFromDate(date);
+        let string: String = dateFormatter.stringFromDate(date);
         
-        return "2000-11-11T11:11:11Z"
+        return string
     }
     
     public static func registerForNotification(object: AnyObject, selector:Selector, name:String){

@@ -185,6 +185,7 @@ public class AuthManager : NSObject{
         
         habit.name = name
         habit.frequency = frequency
+        habit.createdAt = NSDate()
         habit.datesCompleted = []
         habit.notificationsEnabled = notificationsEnabled
         habit.notificationSetting = notificationSetting
