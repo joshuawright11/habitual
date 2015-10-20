@@ -15,7 +15,9 @@ import CVCalendar
 
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
-    var habits:[Habit] = []
+    var habits: [Habit] = []
+    
+    var selectedDate: NSDate = NSDate()
     
     @IBOutlet var tableView: UITableView!
     
@@ -30,11 +32,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         habits = AuthManager.currentUser!.habits
      
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
-        
-//        let lpgr = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-//        lpgr.minimumPressDuration = 1.0
-//        lpgr.delegate = self
-//        self.tableView.addGestureRecognizer(lpgr)
 
         self.calendarView.changeDaysOutShowingState(false)
         
@@ -56,28 +53,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     func refreshData(){
         habits = AuthManager.reloadHabits()!
         self.tableView.reloadData()
-    }
-    
-    func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer){
-
-        if gestureRecognizer.state == UIGestureRecognizerState.Began{
-
-            let point = gestureRecognizer.locationInView(self.tableView)
-            if let ip = self.tableView.indexPathForRowAtPoint(point){
-
-                let habit: Habit = habits[ip.row]
-                
-                if !habit.canDo() {return}
-                habit.datesCompleted.append(NSDate())
-                self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
-                
-                if habit.notificationsEnabled {
-                    ForeignNotificationManager.completeHabitForCurrentUser(habit)
-                }
-                
-                Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-            }
-        }
     }
     
     @IBAction func clearData(){
@@ -117,11 +92,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let habit: Habit = self.habits[ip.row]
             
-            if !habit.canDo() {return}
-            habit.datesCompleted.append(NSDate())
+            if habit.completedOn(self.selectedDate) {return}
+            habit.datesCompleted.append(self.selectedDate)
             self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
             
-            if habit.notificationsEnabled {
+            if habit.notificationsEnabled && habit.dateInCurrentFrequency(self.selectedDate) {
                 ForeignNotificationManager.completeHabitForCurrentUser(habit)
             }
             
@@ -137,7 +112,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell?.textLabel?.text = habit.name
         
-        cell!.accessoryType = !habit.canDo() ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        cell!.accessoryType = habit.completedOn(selectedDate) ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
         
         return cell!
     }
@@ -224,4 +199,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.monthLabel.text = Months.months[(date.convertedDate()?.month)!-1]
     }
+    
+    func didSelectDayView(dayView: DayView) {
+        self.selectedDate = dayView.date.convertedDate()!
+        self.tableView.reloadData()
+    }
+    
+    func shouldAutoSelectDayOnMonthChange() -> Bool {
+        return false
+    }
+    
+    
 }

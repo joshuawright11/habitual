@@ -100,7 +100,7 @@ public class Habit: NSManagedObject {
         return json
     }
     
-    public func canDo() -> Bool{
+    public func canDo() -> Bool {
         
         if datesCompleted.count == 0 {return true}
         
@@ -165,6 +165,33 @@ public class Habit: NSManagedObject {
                 }
                 return streak
             }
+        }
+    }
+    
+    
+    // return true if the habit was completed that day
+    public func completedOn(date: NSDate) -> Bool {
+        
+        for completion: NSDate in datesCompleted {
+            if(completion.beginningOfDay...completion.endOfDay).contains(date) {return true}
+        }
+        
+        return false
+    }
+    
+    // return true if completing a habit on this date would alter future push notifications
+    // based on frequency
+    public func dateInCurrentFrequency(date: NSDate) -> Bool {
+
+        let now = NSDate()
+        
+        switch frequency {
+        case .Daily:
+            return date >= now.beginningOfDay
+        case .Weekly:
+            return date >= now.beginningOfWeek
+        case .Monthly:
+            return date >= now.beginningOfMonth
         }
     }
 }

@@ -25,9 +25,39 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         if user == nil{user = AuthManager.currentUser; self.navigationItem.title = "Me"}
         else {self.navigationItem.title = user?.username}
         
-        chartView.data = BarChartData(xVals: ["1","2"], dataSet: BarChartDataSet(yVals: [BarChartDataEntry(value: 1.0, xIndex: 0),BarChartDataEntry(value: 2.0, xIndex: 1)], label: "Ducks"))
-        chartView.notifyDataSetChanged()
+        let ds1 = BarChartDataSet(yVals: [BarChartDataEntry(value: 45, xIndex: 0)], label: "Go for a run")
+        ds1.setColor(UIColor.blueColor())
+        let ds2 = BarChartDataSet(yVals: [BarChartDataEntry(value: 56, xIndex: 0)], label: "Go for a run")
+        ds2.setColor(UIColor.greenColor())
+        let ds3 = BarChartDataSet(yVals: [BarChartDataEntry(value: 32, xIndex: 0)], label: "Go for a run")
+        ds3.setColor(UIColor.purpleColor())
+        let ds4 = BarChartDataSet(yVals: [BarChartDataEntry(value: 100, xIndex: 0)], label: "Go for a run")
+        ds4.setColor(UIColor.yellowColor())
+        let ds5 = BarChartDataSet(yVals: [BarChartDataEntry(value: 76, xIndex: 0)], label: "Go for a run")
+        ds5.setColor(UIColor.redColor())
+        let ds6 = BarChartDataSet(yVals: [BarChartDataEntry(value: 85, xIndex: 0)], label: "Go for a run")
+        ds6.setColor(UIColor.orangeColor())
         
+        chartView.data = BarChartData(xVals: ["Habit Completion Rate"], dataSets: [ds1,ds2,ds3,ds4,ds5,ds6])
+        
+        chartView.drawGridBackgroundEnabled = false
+        chartView.drawBordersEnabled = false
+        
+        chartView.pinchZoomEnabled = false
+        
+        chartView.legend.form = .Circle
+        
+        let xaxis = chartView.xAxis
+        xaxis.drawGridLinesEnabled = false
+        xaxis.labelPosition = .Bottom
+        
+        chartView.rightAxis.enabled = false
+        chartView.leftAxis.drawAxisLineEnabled = false
+        
+        chartView.descriptionText = ""
+        chartView.drawValueAboveBarEnabled = false
+    
+        chartView.notifyDataSetChanged()
         tableView.reloadData()
     }
 
