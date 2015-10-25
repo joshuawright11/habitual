@@ -91,8 +91,6 @@ public class Habit: NSManagedObject {
         
         let string = json["createdAt"].stringValue
         
-        print("string was \(string)")
-        
         createdAt = Utilities.dateFromString(string)
     }
     
@@ -113,7 +111,7 @@ public class Habit: NSManagedObject {
         
         if datesCompleted.count == 0 {return true}
         
-        let last = datesCompleted.last
+        let last = datesCompleted.sort().last
         
         switch frequency {
         case Frequency.Daily:
@@ -186,6 +184,17 @@ public class Habit: NSManagedObject {
         }
         
         return false
+    }
+    
+    // uncomplete a habit on a certain date
+    public func uncompleteOn(date: NSDate) {
+        for completion: NSDate in datesCompleted {
+            if(completion.beginningOfDay...completion.endOfDay).contains(date) {
+                if let index = datesCompleted.indexOf(completion) {
+                    datesCompleted.removeAtIndex(index)
+                }
+            }
+        }
     }
     
     // return true if completing a habit on this date would alter future push notifications

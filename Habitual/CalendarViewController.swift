@@ -105,7 +105,22 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         })
         
         cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State3, completionBlock:
-            { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in print("NOT COMPLETED");
+            { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in
+                
+                let ip = self.tableView.indexPathForCell(cell)!
+                
+                let habit: Habit = self.habits[ip.row]
+                
+                if !habit.completedOn(self.selectedDate) {return}
+                habit.uncompleteOn(self.selectedDate)
+                self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.None
+                
+                if habit.notificationsEnabled && habit.canDo() {
+                    ForeignNotificationManager.uncompleteHabitForCurrentUser(habit)
+                }
+                
+                Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+                
         })
         
         let habit = habits[indexPath.row]
@@ -125,7 +140,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return habits.count > 0 ? "Swipe to Complete a Habit" : ""
+
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        
+        return habits.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
     }
     
     // MARK: - View Controller methods
@@ -202,6 +222,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func didSelectDayView(dayView: DayView) {
         self.selectedDate = dayView.date.convertedDate()!
+        
         self.tableView.reloadData()
     }
     

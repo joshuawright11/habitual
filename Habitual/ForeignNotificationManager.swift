@@ -130,4 +130,49 @@ public class ForeignNotificationManager: NSObject {
         }
         
     }
+    
+    public static func uncompleteHabitForCurrentUser(habit: Habit) {
+        
+        guard let user = AuthManager.currentUser else {
+            print("ERROR! User is not loaded!")
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Habit")
+        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("name", equalTo: habit.name)
+        query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
+            
+            if (error == nil) {
+                let object: PFObject = (array?.first)!
+                
+                var due = object["due"] as! NSDate
+                
+                var lastCompletion: NSDate
+                
+                if habit.datesCompleted.count < 1 {
+                    lastCompletion = habit.createdAt - 1.day
+                }else{
+                    lastCompletion = habit.datesCompleted.sort().last!
+                }
+                
+                
+                switch habit.frequency {
+                case .Daily:
+                    due = lastCompletion.endOfDay + 1.day
+                case .Weekly:
+                    due = lastCompletion.endOfWeek + 1.week
+                case .Monthly:
+                    due = lastCompletion.endOfMonth + 1.month
+                }
+                
+                object["due"] = due
+                
+                object.saveInBackground()
+            }
+        }
+        
+    }
+
+
 }

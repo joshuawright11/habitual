@@ -8,6 +8,7 @@
 
 import UIKit
 import Charts
+import ChameleonFramework
 
 class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -50,10 +51,15 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func getChartData() -> BarChartData {
         
+        struct ChartColors {
+            static let colors = [ChameleonFramework.FlatMint(), ChameleonFramework.FlatPurple(), ChameleonFramework.FlatOrange(), ChameleonFramework.FlatSkyBlue(),ChameleonFramework.FlatTeal(), ChameleonFramework.FlatPowderBlue()]
+        }
+        
         var dataSets: [BarChartDataSet] = []
         
         let today = NSDate()
         
+        var count = 0
         for habit: Habit in (user?.habits)! {
             let startOfFirstInterval: NSDate
             switch habit.frequency {
@@ -76,9 +82,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
                 unitsSinceBegan = daysSinceBegan/30.417
             }
             
+            let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: (Double(habit.datesCompleted.count)/unitsSinceBegan)*100, xIndex: 0)], label: habit.name)
+            dataSet.colors = [ChartColors.colors[count%6]]
+            count++
             
-            
-            dataSets.append(BarChartDataSet(yVals: [BarChartDataEntry(value: (Double(habit.datesCompleted.count)/unitsSinceBegan)*100, xIndex: 0)], label: habit.name))
+            dataSets.append(dataSet)
         }
         
         return BarChartData(xVals: ["Habit Completion Percentage"], dataSets: dataSets)
@@ -86,6 +94,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func refreshData(){
+        chartView.data = getChartData()
+        chartView.notifyDataSetChanged()
         tableView.reloadData()
     }
     
