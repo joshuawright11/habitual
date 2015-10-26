@@ -17,6 +17,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var habits: [Habit] = []
     
+    var habitsOfDate: [Habit] {
+        get{
+            return habits.filter({$0.createdAt < selectedDate.endOfDay})
+        }
+        set{
+            self.habitsOfDate = newValue
+        }
+    }
+    
     var selectedDate: NSDate = NSDate()
     
     @IBOutlet var tableView: UITableView!
@@ -33,6 +42,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
      
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
 
+        
+        let months = ["January","February","March","April",
+            "May","June","July","August","September","October",
+            "November","December"]
+        self.monthLabel.text = months[selectedDate.month-1]
+        
         self.calendarView.changeDaysOutShowingState(false)
         
         self.tableView.emptyDataSetSource = self
@@ -68,7 +83,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return habits.count
+        return habitsOfDate.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -85,12 +100,22 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell?.defaultColor = UIColor.groupTableViewBackgroundColor()
         
+        let habit = habitsOfDate[indexPath.row]
+        
+        cell?.textLabel?.text = habit.name
+        
+        cell!.accessoryType = habit.completedOn(selectedDate) ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        
+        if(selectedDate.beginningOfDay > NSDate()) {
+            return cell!
+        }
+        
         cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State1, completionBlock:
         { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in
             
             let ip = self.tableView.indexPathForCell(cell)!
             
-            let habit: Habit = self.habits[ip.row]
+            let habit: Habit = self.habitsOfDate[ip.row]
             
             if habit.completedOn(self.selectedDate) {return}
             habit.datesCompleted.append(self.selectedDate)
@@ -109,7 +134,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 let ip = self.tableView.indexPathForCell(cell)!
                 
-                let habit: Habit = self.habits[ip.row]
+                let habit: Habit = self.habitsOfDate[ip.row]
                 
                 if !habit.completedOn(self.selectedDate) {return}
                 habit.uncompleteOn(self.selectedDate)
@@ -123,18 +148,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 
         })
         
-        let habit = habits[indexPath.row]
-        
-        cell?.textLabel?.text = habit.name
-        
-        cell!.accessoryType = habit.completedOn(selectedDate) ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
-        
         return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let hdvc:HabitDetailController = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
-        hdvc.habit = habits[indexPath.row]
+        hdvc.habit = habitsOfDate[indexPath.row]
         self.navigationController?.pushViewController(hdvc, animated: true)
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -145,7 +164,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
         
-        return habits.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
+        return habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
     }
     
     // MARK: - View Controller methods
@@ -154,7 +173,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.destinationViewController is HabitDetailController {
             let vc = segue.destinationViewController as! HabitDetailController
             if let indexPath = tableView.indexPathForSelectedRow{
-                vc.habit = habits[indexPath.row]
+                vc.habit = habitsOfDate[indexPath.row]
             }
         }
     }
@@ -166,7 +185,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "Press to add a Habit!"
+        let text = "No Habits today!"
         
         let font = UIFont.boldSystemFontOfSize(22.0)
         let attrString = NSAttributedString(
@@ -179,7 +198,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "You have no habits!"
+        let text = "Press to add a habit."
         
         let font = UIFont.systemFontOfSize(18.0)
         let attrString = NSAttributedString(
@@ -222,7 +241,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func didSelectDayView(dayView: DayView) {
         self.selectedDate = dayView.date.convertedDate()!
-        
         self.tableView.reloadData()
     }
     
