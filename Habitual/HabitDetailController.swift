@@ -13,12 +13,12 @@ class HabitDetailController: UITableViewController {
     var habit:Habit?
     
     // UI Controls
-    @IBOutlet var swltch: UISwitch?
-    @IBOutlet var textField: UITextField?
-    @IBOutlet var frequencyLabel: UILabel?
-    @IBOutlet var connectionsToNotifyLabel: UILabel?
-    @IBOutlet var eventLabel: UILabel?
-    @IBOutlet var daysInARowLabel: UILabel?
+    @IBOutlet var swltch: UISwitch!
+    @IBOutlet var textField: UITextField!
+    @IBOutlet var frequencyLabel: UILabel!
+    @IBOutlet var connectionsToNotifyLabel: UILabel!
+    @IBOutlet var eventLabel: UILabel!
+    @IBOutlet var daysInARowLabel: UILabel!
     
     var connectionsToNotify:[String] = []
     var notificationSetting: NotificationSetting = .None
@@ -82,6 +82,9 @@ class HabitDetailController: UITableViewController {
         } else {
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
+            let originalHabitState = habit!.notificationsEnabled
+            let originalHabitName = habit?.name
+            
             self.swltch?.userInteractionEnabled = false
             self.textField?.userInteractionEnabled = false
             
@@ -90,6 +93,15 @@ class HabitDetailController: UITableViewController {
             habit?.notificationsEnabled = (swltch?.on)!
             habit?.notificationSetting = notificationSetting
             habit?.usernamesToNotify = connectionsToNotify
+            
+            if originalHabitState && !swltch.on {
+                ForeignNotificationManager.deleteHabitForCurrentUser(habit!)
+                connectionsToNotifyLabel.text = ""
+            }else if !originalHabitState && swltch.on {
+                ForeignNotificationManager.uploadHabitForCurrentUser(habit!)
+            }else if habit!.notificationsEnabled {
+                ForeignNotificationManager.updateHabitForCurrentUser(habit!, originalName: originalHabitName!)
+            }
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
             Utilities.postNotification(kNotificationIdentifierHabitDataChanged)

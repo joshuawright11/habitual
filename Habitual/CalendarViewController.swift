@@ -41,7 +41,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         habits = AuthManager.currentUser!.habits
      
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
-
         
         let months = ["January","February","March","April",
             "May","June","July","August","September","October",

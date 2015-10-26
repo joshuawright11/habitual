@@ -129,7 +129,7 @@ public class Habit: NSManagedObject {
         var longestStreak = 0
         
         var prevDate: NSDate?
-        for date:NSDate in datesCompleted {
+        for date:NSDate in datesCompleted.sort() {
             if prevDate == nil {
                 prevDate = date
                 longestStreak = 1
@@ -210,6 +210,30 @@ public class Habit: NSManagedObject {
             return date >= now.beginningOfWeek
         case .Monthly:
             return date >= now.beginningOfMonth
+        }
+    }
+    
+    public func dueOn() -> NSDate {
+        if datesCompleted.count < 1 {
+            switch frequency {
+            case .Daily:
+                return createdAt.endOfDay
+            case .Weekly:
+                return createdAt.endOfWeek
+            case .Monthly:
+                return createdAt.endOfMonth
+            }
+        }
+        
+        let lastCompletedOn = datesCompleted.sort().last!
+        
+        switch frequency {
+        case .Daily:
+            return lastCompletedOn.endOfDay + 1.day
+        case .Weekly:
+            return lastCompletedOn.endOfWeek + 1.week
+        case .Monthly:
+            return lastCompletedOn.endOfMonth + 1.month
         }
     }
 }

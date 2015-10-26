@@ -77,6 +77,33 @@ public class ForeignNotificationManager: NSObject {
         push.saveInBackground()
     }
     
+    public static func updateHabitForCurrentUser(habit: Habit, originalName: String) {
+
+        guard let user = AuthManager.currentUser else {
+            print("ERROR! User is not loaded!")
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Habit")
+        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("name", equalTo: originalName)
+        query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
+            
+            if error == nil {
+                let push: PFObject = (array?.first)!
+                
+                push["owner"] = user.username
+                push["targetUsernames"] = habit.usernamesToNotify
+                push["name"] = habit.name
+                push["due"] = habit.dueOn()
+                push["frequency"] = habit.frequency.name()
+                
+                push.saveInBackground()
+            }
+        }
+        
+    }
+    
     public static func deleteHabitForCurrentUser(habit: Habit) {
         
         guard let user = AuthManager.currentUser else {
@@ -88,9 +115,7 @@ public class ForeignNotificationManager: NSObject {
         query.whereKey("owner", equalTo: user.username)
         query.whereKey("name", equalTo: habit.name)
         query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
-            
-            print("\(array)")
-            
+
             if error == nil {
                 array?.first?.deleteInBackground()
             }
@@ -146,27 +171,7 @@ public class ForeignNotificationManager: NSObject {
             if (error == nil) {
                 let object: PFObject = (array?.first)!
                 
-                var due = object["due"] as! NSDate
-                
-                var lastCompletion: NSDate
-                
-                if habit.datesCompleted.count < 1 {
-                    lastCompletion = habit.createdAt - 1.day
-                }else{
-                    lastCompletion = habit.datesCompleted.sort().last!
-                }
-                
-                
-                switch habit.frequency {
-                case .Daily:
-                    due = lastCompletion.endOfDay + 1.day
-                case .Weekly:
-                    due = lastCompletion.endOfWeek + 1.week
-                case .Monthly:
-                    due = lastCompletion.endOfMonth + 1.month
-                }
-                
-                object["due"] = due
+                object["due"] = habit.dueOn()
                 
                 object.saveInBackground()
             }
