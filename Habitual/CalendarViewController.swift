@@ -184,7 +184,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "No Habits today!"
+        let text = "No Habits today! Press to add."
         
         let font = UIFont.boldSystemFontOfSize(22.0)
         let attrString = NSAttributedString(
@@ -197,7 +197,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "Press to add a habit."
+
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        
+        let text = dateFormatter.stringFromDate(selectedDate)
         
         let font = UIFont.systemFontOfSize(18.0)
         let attrString = NSAttributedString(

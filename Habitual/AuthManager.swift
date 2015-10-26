@@ -210,9 +210,7 @@ public class AuthManager : NSObject{
 
             ForeignNotificationManager.deleteHabitForCurrentUser(habit)
             
-            if habit.notificationsEnabled {
-                Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-            }
+            Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
         }
     }
     

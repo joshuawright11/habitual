@@ -1110,9 +1110,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Me" id="RVX-vg-iaz">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="4bM-6j-WgX"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Me" id="RVX-vg-iaz"/>
                     <connections>
                         <outlet property="chartView" destination="UMw-1G-FWg" id="9QO-z6-T9e"/>
                         <outlet property="tableView" destination="ZAr-GT-HVC" id="c5X-7g-rvk"/>

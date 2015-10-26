@@ -12,7 +12,7 @@
 		031D280A1B29D1300060263A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 031D28091B29D1300060263A /* Images.xcassets */; };
 		031D280D1B29D1300060263A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031D280B1B29D1300060263A /* LaunchScreen.xib */; };
 		031D28191B29D1300060263A /* HabitualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28181B29D1300060263A /* HabitualTests.swift */; };
-		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
@@ -27,7 +27,7 @@
 		03B6905F1B62C4B90040D924 /* ForeignNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B6905E1B62C4B90040D924 /* ForeignNotificationManager.swift */; };
 		03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13441B5DB82900504A63 /* MainTabBarController.swift */; };
 		03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */; };
-		03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */; };
 		03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */; };
 		03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */; };
 		03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2E21B51A23400484DB6 /* Habit.swift */; };
