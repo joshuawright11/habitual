@@ -357,6 +357,7 @@
 					};
 					031D28111B29D1300060263A = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 7943G7Y9QA;
 						TestTargetID = 031D27FC1B29D1300060263A;
 					};
 				};
@@ -730,6 +731,8 @@
 			baseConfigurationReference = 6ED6887B71D38F447EA56028 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -742,6 +745,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshwright.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ignite;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ignite.app/Ignite";
 			};
 			name = Debug;
@@ -751,6 +755,8 @@
 			baseConfigurationReference = 965D8D446238EB043DB02938 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -759,6 +765,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshwright.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ignite;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ignite.app/Ignite";
 			};
 			name = Release;

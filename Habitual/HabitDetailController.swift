@@ -19,6 +19,11 @@ class HabitDetailController: UITableViewController {
     @IBOutlet var connectionsToNotifyLabel: UILabel!
     @IBOutlet var eventLabel: UILabel!
     @IBOutlet var daysInARowLabel: UILabel!
+    @IBOutlet weak var daysLabel: UILabel!
+    @IBOutlet weak var stepper: UIStepper!
+    
+    @IBOutlet weak var timesTitleLabel: UILabel!
+    @IBOutlet weak var timesLabel: UILabel!
     
     var connectionsToNotify:[String] = []
     var notificationSetting: NotificationSetting = .None
@@ -144,7 +149,7 @@ class HabitDetailController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            if indexPath.row == 2 && habit == nil {
+            if indexPath.row == 4 && habit == nil {
                 return 0
             }else{
                 return 44
