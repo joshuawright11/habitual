@@ -181,7 +181,7 @@
                         <constraints>
                             <constraint firstItem="gS0-WU-BVu" firstAttribute="top" secondItem="VUg-9r-Rmo" secondAttribute="bottom" constant="5" id="02s-GP-rBq"/>
                             <constraint firstAttribute="centerX" secondItem="psv-Mf-DQc" secondAttribute="centerX" constant="-1" id="5U0-vl-uD5"/>
-                            <constraint firstItem="ZvK-xB-vfC" firstAttribute="top" secondItem="wcF-29-IjD" secondAttribute="bottom" constant="168" id="C6w-yx-4et"/>
+                            <constraint firstItem="ZvK-xB-vfC" firstAttribute="top" secondItem="wcF-29-IjD" secondAttribute="bottom" constant="50" id="C6w-yx-4et"/>
                             <constraint firstItem="ZvK-xB-vfC" firstAttribute="top" secondItem="vsU-4D-drT" secondAttribute="top" constant="-4" id="DZ6-5g-RI6"/>
                             <constraint firstItem="psv-Mf-DQc" firstAttribute="top" secondItem="gS0-WU-BVu" secondAttribute="bottom" constant="5" id="HPb-JS-4zf"/>
                             <constraint firstItem="ZvK-xB-vfC" firstAttribute="leading" secondItem="vsU-4D-drT" secondAttribute="trailing" constant="8" id="Ieg-OL-p1B"/>
@@ -540,11 +540,11 @@
                                                 <mask key="constraints">
                                                     <exclude reference="0TZ-z3-7jQ"/>
                                                     <exclude reference="XfO-ni-JhG"/>
-                                                    <exclude reference="FEo-Wl-4bJ"/>
                                                     <exclude reference="BaW-2K-pOG"/>
                                                     <exclude reference="WG9-GB-hvo"/>
                                                     <exclude reference="grp-Uq-aFM"/>
                                                     <exclude reference="qiA-70-7kK"/>
+                                                    <exclude reference="FEo-Wl-4bJ"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -556,11 +556,11 @@
                                                 <mask key="constraints">
                                                     <include reference="0TZ-z3-7jQ"/>
                                                     <include reference="XfO-ni-JhG"/>
-                                                    <include reference="FEo-Wl-4bJ"/>
                                                     <include reference="BaW-2K-pOG"/>
                                                     <include reference="WG9-GB-hvo"/>
                                                     <include reference="grp-Uq-aFM"/>
                                                     <include reference="qiA-70-7kK"/>
+                                                    <include reference="FEo-Wl-4bJ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
