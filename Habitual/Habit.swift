@@ -165,26 +165,17 @@ public class Habit: NSManagedObject {
         
         if datesCompleted.count == 0 {return true}
         
-        let dsotw = ["M","T","W","R","F","Sa","Su"]
-        
-        let dayOfWeek = dsotw[date.weekday]
-        
-        if !daysToComplete.contains(dayOfWeek) {return false}
-        
-        let last = datesCompleted.sort().last
-        
-        let timesLeft = countDoneInDate(NSDate()) < timesToComplete
-        
-        switch frequency {
-        case Frequency.Daily:
-            if(last < NSDate.today() && timesLeft) {return true}
-        case Frequency.Weekly:
-            if(last < NSDate.today().change(weekday: 1) && timesLeft) {return true}
-        case Frequency.Monthly:
-            if(last < NSDate.today().beginningOfMonth && timesLeft) {return true}
+        if(frequency == .Daily) {
+            let dsotw = ["Su","M","T","W","R","F","Sa"]
+            
+            let dayOfWeek = dsotw[date.weekday-1]
+            
+            if !daysToComplete.contains(dayOfWeek) {return false}
         }
         
-        return false
+        let timesLeft = countDoneInDate(date) < timesToComplete
+        
+        return timesLeft
     }
     
     public func countDoneInDate(date: NSDate) -> Int {
@@ -402,9 +393,9 @@ public class Habit: NSManagedObject {
                 unitsSinceBegan = ceil(daysSinceBegan)
             }
         case .Weekly:
-            unitsSinceBegan = ceil(daysSinceBegan/7)
+            unitsSinceBegan = round(daysSinceBegan/7)
         case .Monthly:
-            unitsSinceBegan = ceil(daysSinceBegan/30.417)
+            unitsSinceBegan = round(daysSinceBegan/30.417)
         }
         
         let perc = (Double(datesCompleted.count)/unitsSinceBegan)*100.0

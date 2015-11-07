@@ -59,6 +59,9 @@ public class ForeignNotificationManager: NSObject {
         push["owner"] = user.username
         push["targetUsernames"] = habit.usernamesToNotify
         push["name"] = habit.name
+        
+        push["daysToComplete"] = habit.daysToComplete
+        push["timesToComplete"] = habit.timesToComplete
 
         var due = NSDate()
         
@@ -98,10 +101,12 @@ public class ForeignNotificationManager: NSObject {
                 push["due"] = habit.dueOn()
                 push["frequency"] = habit.frequency.name()
                 
+                push["daysToComplete"] = habit.daysToComplete
+                push["timesToComplete"] = habit.timesToComplete
+                
                 push.saveInBackground()
             }
         }
-        
     }
     
     public static func deleteHabitForCurrentUser(habit: Habit) {
@@ -137,18 +142,7 @@ public class ForeignNotificationManager: NSObject {
             if (error == nil) {
                 let object: PFObject = (array?.first)!
                 
-                var due = object["due"] as! NSDate
-                
-                switch habit.frequency {
-                case .Daily:
-                    due = NSDate().endOfDay + 1.day
-                case .Weekly:
-                    due = NSDate().endOfWeek + 1.week
-                case .Monthly:
-                    due = NSDate().endOfMonth + 1.month
-                }
-                
-                object["due"] = due
+                object["due"] = habit.dueOn()
                 
                 object.saveInBackground()
             }

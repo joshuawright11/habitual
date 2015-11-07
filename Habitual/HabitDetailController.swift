@@ -54,6 +54,8 @@ class HabitDetailController: UITableViewController {
                 }
             }
             
+            connectionsToNotify = habit.usernamesToNotify
+            
             self.frequencyLabel?.text = "\(habit.frequency)"
             frequency = habit.frequency
             
@@ -131,6 +133,9 @@ class HabitDetailController: UITableViewController {
             habit?.notificationsEnabled = (swltch?.on)!
             habit?.notificationSetting = notificationSetting
             habit?.usernamesToNotify = connectionsToNotify
+            
+            habit?.daysToComplete = daysOfTheWeek
+            habit?.timesToComplete = Int(stepper.value)
             
             if originalHabitState && !swltch.on {
                 ForeignNotificationManager.deleteHabitForCurrentUser(habit!)
