@@ -238,6 +238,7 @@ public class AuthManager : NSObject{
             objects = try managedObjectContext?.executeFetchRequest(request)
         } catch let error1 as NSError {
             error = error1
+            print("Error: \(error?.description)")
             objects = nil
         }
         
@@ -271,6 +272,7 @@ public class AuthManager : NSObject{
             objects = try managedObjectContext?.executeFetchRequest(request)
         } catch let error1 as NSError {
             error = error1
+            print("Error: \(error?.description)")
             objects = nil
         }
         

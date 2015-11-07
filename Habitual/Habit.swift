@@ -113,7 +113,7 @@ public class Habit: NSManagedObject {
         
         createdAt = Utilities.dateFromString(string)
         
-        privat = json["private"].boolValue
+//        privat = json["private"].boolValue
         
         remindAt = json["remindAt"].stringValue
         
