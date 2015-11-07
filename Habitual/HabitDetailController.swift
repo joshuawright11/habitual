@@ -51,6 +51,8 @@ class HabitDetailController: UITableViewController {
                 let text:String = (button.titleLabel?.text!)!
                 if habit.daysToComplete.contains(text) {
                     button.backgroundColor = UIColor.flatWhiteColorDark()
+                }else{
+                    button.backgroundColor = UIColor.clearColor()
                 }
             }
             
