@@ -30,11 +30,11 @@ class HabitCell: UITableViewCell {
         
         switch habit.frequency{
         case .Daily:
-            return "every day"
+            return "\(habit.timesToComplete) per day"
         case .Weekly:
-            return "every week"
+            return "\(habit.timesToComplete) per week"
         case .Monthly:
-            return "every month"
+            return "\(habit.timesToComplete) per month"
         }
     }
 }

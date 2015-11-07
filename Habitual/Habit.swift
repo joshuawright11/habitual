@@ -362,4 +362,53 @@ public class Habit: NSManagedObject {
             return lastCompletedOn.endOfMonth + 1.month
         }
     }
+    
+    public func getCompletionPercentage() -> Double{
+        // calculate number of units
+        
+        let today = NSDate()
+        
+        let startOfFirstInterval: NSDate
+        switch frequency {
+        case .Daily:
+            startOfFirstInterval = createdAt.beginningOfDay
+        case .Weekly:
+            startOfFirstInterval = createdAt.beginningOfWeek
+        case .Monthly:
+            startOfFirstInterval = createdAt.beginningOfMonth
+        }
+        
+        let daysSinceBegan = (today.endOfDay.timeIntervalSinceDate(startOfFirstInterval))/86400
+        let unitsSinceBegan: Double
+        
+        switch frequency {
+        case .Daily:
+            
+            if daysToComplete.count < 7 {
+                var days = 0
+                var date = createdAt.beginningOfDay
+                
+                let dsotw = ["Su","M","T","W","T","F","Sa"]
+                
+                while(date < NSDate()) {
+                    if(daysToComplete.contains(dsotw[date.weekday-1])) {
+                        days++
+                    }
+                    date = date + 1.day
+                }
+                unitsSinceBegan = days == 0 ? Double(1) : Double(days)
+                
+            }else{
+                unitsSinceBegan = ceil(daysSinceBegan)
+            }
+        case .Weekly:
+            unitsSinceBegan = ceil(daysSinceBegan/7)
+        case .Monthly:
+            unitsSinceBegan = ceil(daysSinceBegan/30.417)
+        }
+        
+        let perc = (Double(datesCompleted.count)/unitsSinceBegan)*100.0
+        
+        return perc/Double(timesToComplete)
+    }
 }

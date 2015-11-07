@@ -58,32 +58,10 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var dataSets: [BarChartDataSet] = []
         
-        let today = NSDate()
-        
         var count = 0
         for habit: Habit in (user?.habits)! {
-            let startOfFirstInterval: NSDate
-            switch habit.frequency {
-            case .Daily:
-                startOfFirstInterval = habit.createdAt.beginningOfDay
-            case .Weekly:
-                startOfFirstInterval = habit.createdAt.beginningOfWeek
-            case .Monthly:
-                startOfFirstInterval = habit.createdAt.beginningOfMonth
-            }
-            let daysSinceBegan = (today.endOfDay.timeIntervalSinceDate(startOfFirstInterval))/86400
-            let unitsSinceBegan: Double
             
-            switch habit.frequency {
-            case .Daily:
-                unitsSinceBegan = daysSinceBegan
-            case .Weekly:
-                unitsSinceBegan = daysSinceBegan/7
-            case .Monthly:
-                unitsSinceBegan = daysSinceBegan/30.417
-            }
-            
-            let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: (Double(habit.datesCompleted.count)/unitsSinceBegan)*100, xIndex: 0)], label: habit.name)
+            let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: habit.getCompletionPercentage(), xIndex: 0)], label: habit.name)
             dataSet.colors = [ChartColors.colors[count%6]]
             count++
             
