@@ -25,7 +25,10 @@ class HabitDetailController: UITableViewController {
     @IBOutlet weak var timesTitleLabel: UILabel!
     @IBOutlet weak var timesLabel: UILabel!
     
+    @IBOutlet var dotwButtons: [UIButton]!
+    
     var connectionsToNotify:[String] = []
+    var daysOfTheWeek:[String] = ["Su","M","T","W","R","F","Sa","Su"]
     var notificationSetting: NotificationSetting = .None
     var frequency: Frequency = .Daily
     
@@ -40,7 +43,20 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.title = habit.name
             
             self.textField?.text = habit.name
+ 
+            self.stepper.value = Double(habit.timesToComplete)
+            self.timesLabel.text = "\(habit.timesToComplete)"
+            
+            for button: UIButton in dotwButtons {
+                let text:String = (button.titleLabel?.text!)!
+                if habit.daysToComplete.contains(text) {
+                    button.backgroundColor = UIColor.flatWhiteColorDark()
+                }
+            }
+            
             self.frequencyLabel?.text = "\(habit.frequency)"
+            frequency = habit.frequency
+            
             self.swltch?.on = habit.notificationsEnabled
             self.connectionsToNotifyLabel?.text = habit.usernamesToNotify.joinWithSeparator(", ")
             self.eventLabel?.text = "\(habit.notificationSetting)"
@@ -66,12 +82,29 @@ class HabitDetailController: UITableViewController {
     
     func done(sender: UIBarButtonItem){
         
-        AuthManager.addHabitForCurrentUser(self.textField!.text!, frequency: frequency, notificationsEnabled: (swltch?.on)!, notificationSetting: notificationSetting, usernamesToNotify: connectionsToNotify)
+        AuthManager.addHabitForCurrentUser(self.textField!.text!, frequency: frequency, notificationsEnabled: (swltch?.on)!, notificationSetting: notificationSetting, usernamesToNotify: connectionsToNotify, daysOfTheWeek: self.daysOfTheWeek, times: Int(stepper.value))
 
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    @IBAction func dotwButtonPressed(sender: UIButton) {
+
+        let dotw:String = (sender.titleLabel?.text!)!
+        
+        if !daysOfTheWeek.contains(dotw){
+            sender.backgroundColor = UIColor.flatWhiteColorDark()
+            daysOfTheWeek.append(dotw)
+        }else{
+            sender.backgroundColor = UIColor.clearColor()
+            daysOfTheWeek.removeAtIndex(daysOfTheWeek.indexOf(dotw)!)
+        }
+    }
+    
+    @IBAction func stepperChanged(sender: UIStepper) {
+        self.timesLabel.text = "\(Int(sender.value))"
     }
     
     func edit(sender: UIBarButtonItem){
@@ -151,6 +184,8 @@ class HabitDetailController: UITableViewController {
         case 0:
             if indexPath.row == 4 && habit == nil {
                 return 0
+            }else if indexPath.row == 2 && frequency != .Daily{
+                return 0
             }else{
                 return 44
             }
@@ -191,6 +226,9 @@ class HabitDetailController: UITableViewController {
             
             frequencyLabel?.text = "\(Frequency.allValues[nextIndex])"
             frequency = Frequency.allValues[nextIndex]
+            
+            tableView.reloadData()
+            
         }else if indexPath.section == (AuthManager.socialEnabled ? 2 : 2) { // should be 2 : 1
             deletePressed()
         }else if AuthManager.socialEnabled && indexPath.section == 1 {

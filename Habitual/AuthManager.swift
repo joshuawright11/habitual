@@ -174,7 +174,7 @@ public class AuthManager : NSObject{
         }
     }
     
-    public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool, notificationSetting: NotificationSetting, usernamesToNotify: [String]){
+    public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool, notificationSetting: NotificationSetting, usernamesToNotify: [String], daysOfTheWeek: [String], times: Int){
         
         let entityDescription =
         NSEntityDescription.entityForName("Habit",
@@ -185,6 +185,11 @@ public class AuthManager : NSObject{
         
         habit.name = name
         habit.frequency = frequency
+        
+        habit.daysToComplete = daysOfTheWeek
+        
+        habit.timesToComplete = times
+        
         habit.createdAt = NSDate()
         habit.datesCompleted = []
         habit.notificationsEnabled = notificationsEnabled

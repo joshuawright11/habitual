@@ -41,6 +41,16 @@ public enum Frequency: Int16 {
     }
 }
 
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩CLEAN  ME💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
 @objc(Habit)
 public class Habit: NSManagedObject {
     
@@ -59,6 +69,16 @@ public class Habit: NSManagedObject {
     @NSManaged var name: String
     
     @NSManaged var createdAt: NSDate
+    
+    @NSManaged var privat: Bool
+    
+    @NSManaged var remindAt: String
+    
+    @NSManaged var timeOfDay: Int16
+    
+    @NSManaged var timesToComplete: Int
+    
+    @NSManaged var daysToComplete: [String]
     
     // Mark: - Notification data
     
@@ -92,6 +112,16 @@ public class Habit: NSManagedObject {
         let string = json["createdAt"].stringValue
         
         createdAt = Utilities.dateFromString(string)
+        
+        privat = json["private"].boolValue
+        
+        remindAt = json["remindAt"].stringValue
+        
+        timeOfDay = json["timeOfDay"].int16Value
+        
+        timesToComplete = json["timesToComplete"].intValue
+        
+        daysToComplete = json["daysToComplete"].arrayObject as! [String]
     }
     
     public func toJSON() -> JSON {
@@ -103,26 +133,83 @@ public class Habit: NSManagedObject {
             "notificationsEnabled":notificationsEnabled,
             "notificationSetting":notificationSetting.toString(),
             "usernamesToNotify":usernamesToNotify,
-            "createdAt":Utilities.stringFromDate(createdAt)])
+            "createdAt":Utilities.stringFromDate(createdAt),
+            "private":false,
+            "remindAt":"",
+            "timeOfDay":0,
+            "timesToComplete":timesToComplete,
+            "daysToComplete":daysToComplete])
         return json
     }
     
-    public func canDo() -> Bool {
+    public func availableOn(date: NSDate) -> Bool {
+        
+        if createdAt.beginningOfDay > date {return false}
+        
+        if(frequency == .Daily) {
+            let dsotw = ["Su","M","T","W","R","F","Sa"]
+            
+            let dayOfWeek = dsotw[date.weekday-1]
+            
+            if !daysToComplete.contains(dayOfWeek) {return false}
+        }
+        
+        return true
+    }
+    
+    public func canDo() -> Bool { return canDoOn(NSDate()) }
+    
+    public func canDoOn(date: NSDate) -> Bool {
+        
+        if createdAt.endOfDay < date.beginningOfDay {return false}
         
         if datesCompleted.count == 0 {return true}
         
+        let dsotw = ["M","T","W","R","F","Sa","Su"]
+        
+        let dayOfWeek = dsotw[date.weekday]
+        
+        if !daysToComplete.contains(dayOfWeek) {return false}
+        
         let last = datesCompleted.sort().last
+        
+        let timesLeft = countDoneInDate(NSDate()) < timesToComplete
         
         switch frequency {
         case Frequency.Daily:
-            if(last < NSDate.today()) {return true}
+            if(last < NSDate.today() && timesLeft) {return true}
         case Frequency.Weekly:
-            if(last < NSDate.today().change(weekday: 1)) {return true}
+            if(last < NSDate.today().change(weekday: 1) && timesLeft) {return true}
         case Frequency.Monthly:
-            if(last < NSDate.today().beginningOfMonth) {return true}
+            if(last < NSDate.today().beginningOfMonth && timesLeft) {return true}
         }
         
         return false
+    }
+    
+    public func countDoneInDate(date: NSDate) -> Int {
+        
+        var count = 0
+        
+        let first: NSDate, last: NSDate
+        
+        switch frequency {
+        case .Daily:
+            first = date.beginningOfDay
+            last = date.endOfDay
+        case .Weekly:
+            first = date.beginningOfWeek
+            last = date.endOfWeek
+        case .Monthly:
+            first = date.beginningOfMonth
+            last = date.endOfMonth
+        }
+        
+        for completion: NSDate in datesCompleted {
+            if(first...last).contains(completion) {count++}
+        }
+        
+        return count
     }
     
     public func longestStreak() -> Int {
@@ -175,15 +262,40 @@ public class Habit: NSManagedObject {
         }
     }
     
-    
-    // return true if the habit was completed that day
-    public func completedOn(date: NSDate) -> Bool {
+    public func countCompletedOn(date: NSDate) -> Int {
+        
+        var count = 0
         
         for completion: NSDate in datesCompleted {
-            if(completion.beginningOfDay...completion.endOfDay).contains(date) {return true}
+            if(completion.beginningOfDay...completion.endOfDay).contains(date) {count++}
         }
         
-        return false
+        return count
+    }
+    
+    public func countCompletedIn(date: NSDate, freq: Frequency) -> Int {
+        
+        var count = 0
+        
+        for completion: NSDate in datesCompleted {
+            
+            let first: NSDate, last: NSDate
+            switch frequency {
+            case .Daily:
+                first = completion.beginningOfDay
+                last = completion.endOfDay
+            case .Weekly:
+                first = completion.beginningOfWeek
+                last = completion.endOfWeek
+            case .Monthly:
+                first = completion.beginningOfMonth
+                last = completion.endOfMonth
+            }
+            
+            if(first...last).contains(date) {count++}
+        }
+        
+        return count
     }
     
     // uncomplete a habit on a certain date
@@ -192,6 +304,7 @@ public class Habit: NSManagedObject {
             if(completion.beginningOfDay...completion.endOfDay).contains(date) {
                 if let index = datesCompleted.indexOf(completion) {
                     datesCompleted.removeAtIndex(index)
+                    return
                 }
             }
         }
@@ -226,6 +339,19 @@ public class Habit: NSManagedObject {
         }
         
         let lastCompletedOn = datesCompleted.sort().last!
+        
+        let countDone = countCompletedIn(lastCompletedOn, freq: frequency)
+        
+        if countDone < timesToComplete {
+            switch frequency {
+            case .Daily:
+                return lastCompletedOn.endOfDay
+            case .Weekly:
+                return lastCompletedOn.endOfWeek
+            case .Monthly:
+                return lastCompletedOn.endOfMonth
+            }
+        }
         
         switch frequency {
         case .Daily:

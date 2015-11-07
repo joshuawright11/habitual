@@ -19,7 +19,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var habitsOfDate: [Habit] {
         get{
-            return habits.filter({$0.createdAt < selectedDate.endOfDay})
+            return habits.filter({$0.availableOn(selectedDate)})
         }
         set{
             self.habitsOfDate = newValue
@@ -89,7 +89,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         var cell:MCSwipeTableViewCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? MCSwipeTableViewCell
         
         if (cell == nil) {
-            cell = MCSwipeTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "habit")
+            cell = MCSwipeTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit")
         
             if cell!.respondsToSelector("setSeparatorInset:") {
                 cell?.separatorInset = UIEdgeInsetsZero
@@ -103,7 +103,9 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell?.textLabel?.text = habit.name
         
-        cell!.accessoryType = habit.completedOn(selectedDate) ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        cell!.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
+        
+        cell!.accessoryType = habit.countCompletedIn(selectedDate, freq: habit.frequency) == habit.timesToComplete ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
         
         if(selectedDate.beginningOfDay > NSDate()) {
             return cell!
@@ -116,9 +118,16 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let habit: Habit = self.habitsOfDate[ip.row]
             
-            if habit.completedOn(self.selectedDate) {return}
+            if habit.countCompletedIn(self.selectedDate, freq: habit.frequency) >= habit.timesToComplete {return}
             habit.datesCompleted.append(self.selectedDate)
-            self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            
+            let cell = self.tableView.cellForRowAtIndexPath(ip)
+            
+            cell?.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
+            
+            if habit.countDoneInDate(self.selectedDate) == habit.timesToComplete {
+                cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            }
             
             if habit.notificationsEnabled && habit.dateInCurrentFrequency(self.selectedDate) {
                 ForeignNotificationManager.completeHabitForCurrentUser(habit)
@@ -135,9 +144,14 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 let habit: Habit = self.habitsOfDate[ip.row]
                 
-                if !habit.completedOn(self.selectedDate) {return}
+                if !(habit.countCompletedIn(self.selectedDate, freq: habit.frequency) > 0) {return}
                 habit.uncompleteOn(self.selectedDate)
-                self.tableView.cellForRowAtIndexPath(ip)?.accessoryType = UITableViewCellAccessoryType.None
+                
+                let cell = self.tableView.cellForRowAtIndexPath(ip)
+                
+                cell?.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
+                
+                cell?.accessoryType = UITableViewCellAccessoryType.None
                 
                 if habit.notificationsEnabled && habit.canDo() {
                     ForeignNotificationManager.uncompleteHabitForCurrentUser(habit)
