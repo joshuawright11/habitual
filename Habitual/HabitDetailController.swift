@@ -37,6 +37,8 @@ class HabitDetailController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        doAppearance()
+        
         if let habit = habit {
             swltch?.on = habit.notificationsEnabled
             
@@ -82,6 +84,10 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.rightBarButtonItem = button
 
         }
+    }
+    
+    func doAppearance() {
+        self.tableView.backgroundColor = kColorBackground
     }
     
     func done(sender: UIBarButtonItem){

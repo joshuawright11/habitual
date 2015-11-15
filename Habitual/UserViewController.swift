@@ -20,7 +20,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        doAppearance()
+        
         tableView.registerNib(UINib(nibName: "HabitCell", bundle: nil), forCellReuseIdentifier: "habit")
+        
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
@@ -42,6 +46,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         chartView.rightAxis.enabled = false
         chartView.leftAxis.drawAxisLineEnabled = false
+        chartView.leftAxis.enabled = false
         
         chartView.descriptionText = ""
         chartView.drawValueAboveBarEnabled = true
@@ -49,11 +54,19 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.notifyDataSetChanged()
         tableView.reloadData()
     }
+    
+    func doAppearance() {
+        self.tableView.backgroundColor = kColorBackground
+        
+        self.chartView.backgroundColor = kColorBackground
+        
+        
+    }
 
     func getChartData() -> BarChartData {
         
         struct ChartColors {
-            static let colors = [ChameleonFramework.FlatMint(), ChameleonFramework.FlatPurple(), ChameleonFramework.FlatOrange(), ChameleonFramework.FlatSkyBlue(),ChameleonFramework.FlatTeal(), ChameleonFramework.FlatPowderBlue()]
+            static let colors = [kColorPurple, kColorOrange, kColorBlue, kColorRed,kColorYellow, kColorGreen]
         }
         
         var dataSets: [BarChartDataSet] = []
@@ -111,7 +124,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         if indexPath.section == 1{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
         
-            cell.configureForHabit(user!.habits[indexPath.row])
+//            cell.configureForHabit(user!.habits[indexPath.row])
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("stat")! as UITableViewCell

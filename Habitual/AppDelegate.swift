@@ -47,7 +47,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Parse setup
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         
+        doDesign()
+        
         return true
+    }
+    
+    func doDesign() {
+        
+        UITableView.appearance().backgroundColor = kColorBackground
+        UITableView.appearance().separatorColor = UIColor.clearColor()
+        
+        UINavigationBar.appearance().barTintColor = kColorBackground
+        UINavigationBar.appearance().tintColor = kColorAccent
+        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().titleTextAttributes =
+            [NSForegroundColorAttributeName: kColorTextMain, NSFontAttributeName: kFontNavTitle]
+        
+        
+        
+        UITableViewCell.appearance().backgroundColor = kColorBackground
+        
+        UITabBar.appearance().barTintColor = kColorBackground
+        UITabBar.appearance().tintColor = kColorAccent
+        UIBarButtonItem.appearance().tintColor = kColorAccent
+        
+        UITabBarItem.appearance().setTitleTextAttributes(
+            [NSFontAttributeName: iFontTabBarTitle],
+            forState: .Normal)
+        
+        
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
+        
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeader
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -22,6 +22,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        doAppearance()
+        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         
@@ -40,6 +42,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
         self.navigationItem.rightBarButtonItem = button
+    }
+    
+    func doAppearance() {
+        self.tableView.backgroundColor = kColorBackground
     }
     
     func refreshData(){

@@ -7,3 +7,4 @@
 //
 
 #import <MCSwipeTableViewCell/MCSwipeTableViewCell.h>
+#import "UIAppearance+Swift.h"

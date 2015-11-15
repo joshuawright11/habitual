@@ -15,6 +15,8 @@ import CVCalendar
 
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
+    @IBOutlet weak var calendarHeight: NSLayoutConstraint!
+    
     var habits: [Habit] = []
     
     var habitsOfDate: [Habit] {
@@ -55,6 +57,20 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.tableFooterView = UIView()
         
         self.tableView.reloadData()
+        
+        tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
+        
+        doAppearance()
+    }
+    
+    func doAppearance(){
+        self.calendarView.backgroundColor = kColorBackground
+        self.monthLabel.backgroundColor = kColorBackground
+        self.menuView.backgroundColor = kColorBackground
+        
+        self.tableView.backgroundColor = kColorBackground
+        Styler.styleTitleLabel(self.monthLabel)
+        monthLabel.textColor = kColorTextSecondary
     }
     
     override func viewDidLayoutSubviews() {
@@ -86,80 +102,18 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:MCSwipeTableViewCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? MCSwipeTableViewCell
+        let habit = habitsOfDate[indexPath.row]
         
+        var cell:HabitHomeCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? HabitHomeCell
         if (cell == nil) {
-            cell = MCSwipeTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit")
+            cell = HabitHomeCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit", habit: habit, date: self.selectedDate)
         
             if cell!.respondsToSelector("setSeparatorInset:") {
                 cell?.separatorInset = UIEdgeInsetsZero
             }
-            
-        }
+        }else{ cell?.data = (habit, self.selectedDate) }
         
-        cell?.defaultColor = UIColor.groupTableViewBackgroundColor()
-        
-        let habit = habitsOfDate[indexPath.row]
-        
-        cell?.textLabel?.text = habit.name
-        
-        cell!.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
-        
-        cell!.accessoryType = habit.countCompletedIn(selectedDate, freq: habit.frequency) == habit.timesToComplete ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
-        
-        if(selectedDate.beginningOfDay > NSDate()) {
-            return cell!
-        }
-        
-        cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State1, completionBlock:
-        { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in
-            
-            let ip = self.tableView.indexPathForCell(cell)!
-            
-            let habit: Habit = self.habitsOfDate[ip.row]
-            
-            if habit.countCompletedIn(self.selectedDate, freq: habit.frequency) >= habit.timesToComplete {return}
-            habit.datesCompleted.append(self.selectedDate)
-            
-            let cell = self.tableView.cellForRowAtIndexPath(ip)
-            
-            cell?.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
-            
-            if habit.countDoneInDate(self.selectedDate) == habit.timesToComplete {
-                cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
-            }
-            
-            if habit.notificationsEnabled && habit.dateInCurrentFrequency(self.selectedDate) {
-                ForeignNotificationManager.completeHabitForCurrentUser(habit)
-            }
-            
-            Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-            
-        })
-        
-        cell?.setSwipeGestureWithView(UIView(), color: UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), mode: MCSwipeTableViewCellMode.Switch, state: MCSwipeTableViewCellState.State3, completionBlock:
-            { (cell : MCSwipeTableViewCell!, state: MCSwipeTableViewCellState, mode: MCSwipeTableViewCellMode) in
-                
-                let ip = self.tableView.indexPathForCell(cell)!
-                
-                let habit: Habit = self.habitsOfDate[ip.row]
-                
-                if !(habit.countCompletedIn(self.selectedDate, freq: habit.frequency) > 0) {return}
-                habit.uncompleteOn(self.selectedDate)
-                
-                let cell = self.tableView.cellForRowAtIndexPath(ip)
-                
-                cell?.detailTextLabel?.text = "\(habit.countDoneInDate(self.selectedDate))/\(habit.timesToComplete)"
-                
-                cell?.accessoryType = UITableViewCellAccessoryType.None
-                
-                if habit.notificationsEnabled && habit.canDo() {
-                    ForeignNotificationManager.uncompleteHabitForCurrentUser(habit)
-                }
-                
-                Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-                
-        })
+        cell?.configure()
         
         return cell!
     }
@@ -178,6 +132,25 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
         
         return habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 99.0
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
+        header.textAlignment = .Center
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        let string = habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
+        
+        header.text = string
+        header.font = kFontSectionHeader
+        header.textColor = kColorTextSecondary
+        
+        return header
     }
     
     // MARK: - View Controller methods
@@ -236,7 +209,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - CVCalendarViewDelegate methods
     func presentationMode() -> CalendarMode {
-        return .MonthView
+        return .WeekView
     }
     
     func firstWeekday() -> Weekday {
@@ -266,5 +239,45 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return false
     }
     
+    // MARK: - CVCalendarAppearanceDelegate methods
+    func dayLabelWeekdayInTextColor() -> UIColor {
+        return kColorAccent
+    }
+    
+    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
+        return kColorAccentSecondary
+    }
+    
+    func dayLabelWeekdayHighlightedTextColor() -> UIColor {
+        return kColorAccent
+    }
+    
+    func dayLabelPresentWeekdayFont() -> UIFont {
+        return kFontSecondary
+    }
+    
+    func dayLabelWeekdayFont() -> UIFont {
+        return kFontCalendar
+    }
+    
+    func dayLabelPresentWeekdayTextColor() -> UIColor {
+        return kColorAccentSecondary
+    }
+    
+    func dayLabelPresentWeekdayInitallyBold() -> Bool {
+        return false
+    }
+    
+    func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {
+        return kColorAccentSecondary
+    }
+    
+    func dayOfWeekTextColor() -> UIColor {
+        return kColorTextSecondary
+    }
+    
+    func dayOfWeekFont() -> UIFont {
+        return kFontSecondary
+    }
     
 }

@@ -48,9 +48,9 @@
             </tableViewCellContentView>
             <animations/>
             <connections>
-                <outlet property="countLabel" destination="Ew9-aq-MJV" id="Nbg-yB-lex"/>
-                <outlet property="repeatLabel" destination="jAm-Ua-IFC" id="oJn-Pd-E6b"/>
-                <outlet property="titleLabel" destination="SpC-s8-Nnt" id="nXE-5P-lrd"/>
+                <outlet property="countLabel" destination="Ew9-aq-MJV" id="VZa-VX-MxW"/>
+                <outlet property="repeatLabel" destination="jAm-Ua-IFC" id="9aY-Pu-eCx"/>
+                <outlet property="titleLabel" destination="SpC-s8-Nnt" id="evs-BM-qAD"/>
             </connections>
         </tableViewCell>
     </objects>

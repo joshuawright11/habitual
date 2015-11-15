@@ -13,3 +13,4 @@ pod 'MCSwipeTableViewCell', '~> 2.1.4'
 pod 'CVCalendar', '~> 1.2.7'
 pod 'Charts'
 pod 'ChameleonFramework/Swift'
+pod "DKChainableAnimationKit", "~> 1.6.0"
