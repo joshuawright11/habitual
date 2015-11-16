@@ -12,21 +12,6 @@ class HabitDetailController: UITableViewController {
     
     var habit:Habit?
     
-    // UI Controls
-    @IBOutlet var swltch: UISwitch!
-    @IBOutlet var textField: UITextField!
-    @IBOutlet var frequencyLabel: UILabel!
-    @IBOutlet var connectionsToNotifyLabel: UILabel!
-    @IBOutlet var eventLabel: UILabel!
-    @IBOutlet var daysInARowLabel: UILabel!
-    @IBOutlet weak var daysLabel: UILabel!
-    @IBOutlet weak var stepper: UIStepper!
-    
-    @IBOutlet weak var timesTitleLabel: UILabel!
-    @IBOutlet weak var timesLabel: UILabel!
-    
-    @IBOutlet var dotwButtons: [UIButton]!
-    
     var connectionsToNotify:[String] = []
     var daysOfTheWeek:[String] = ["Su","M","T","W","R","F","Sa","Su"]
     var notificationSetting: NotificationSetting = .None
@@ -40,36 +25,11 @@ class HabitDetailController: UITableViewController {
         doAppearance()
         
         if let habit = habit {
-            swltch?.on = habit.notificationsEnabled
-            
             self.navigationItem.title = habit.name
             
-            self.textField?.text = habit.name
- 
-            self.stepper.value = Double(habit.timesToComplete)
-            self.timesLabel.text = "\(habit.timesToComplete)"
-            
-            for button: UIButton in dotwButtons {
-                let text:String = (button.titleLabel?.text!)!
-                if habit.daysToComplete.contains(text) {
-                    button.backgroundColor = UIColor.flatWhiteColorDark()
-                }else{
-                    button.backgroundColor = UIColor.clearColor()
-                }
-            }
-            
             connectionsToNotify = habit.usernamesToNotify
-            
-            self.frequencyLabel?.text = "\(habit.frequency)"
-            frequency = habit.frequency
-            
-            self.swltch?.on = habit.notificationsEnabled
-            self.connectionsToNotifyLabel?.text = habit.usernamesToNotify.joinWithSeparator(", ")
-            self.eventLabel?.text = "\(habit.notificationSetting)"
-            self.daysInARowLabel?.text = "\(habit.currentStreak())"
 
-            self.swltch?.userInteractionEnabled = false
-            self.textField?.userInteractionEnabled = false
+            frequency = habit.frequency
             
             let button = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit:")
             self.navigationItem.rightBarButtonItem = button
@@ -77,12 +37,11 @@ class HabitDetailController: UITableViewController {
             self.tableView.reloadData()
         }else{
             self.navigationItem.title = "New Habit"
-
-            editingState = true
             
             let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "done:")
             self.navigationItem.rightBarButtonItem = button
-
+            
+            habit = Habit()
         }
     }
     
@@ -91,30 +50,11 @@ class HabitDetailController: UITableViewController {
     }
     
     func done(sender: UIBarButtonItem){
-        
-        AuthManager.addHabitForCurrentUser(self.textField!.text!, frequency: frequency, notificationsEnabled: (swltch?.on)!, notificationSetting: notificationSetting, usernamesToNotify: connectionsToNotify, daysOfTheWeek: self.daysOfTheWeek, times: Int(stepper.value))
 
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    @IBAction func dotwButtonPressed(sender: UIButton) {
-
-        let dotw:String = (sender.titleLabel?.text!)!
-        
-        if !daysOfTheWeek.contains(dotw){
-            sender.backgroundColor = UIColor.flatWhiteColorDark()
-            daysOfTheWeek.append(dotw)
-        }else{
-            sender.backgroundColor = UIColor.clearColor()
-            daysOfTheWeek.removeAtIndex(daysOfTheWeek.indexOf(dotw)!)
-        }
-    }
-    
-    @IBAction func stepperChanged(sender: UIStepper) {
-        self.timesLabel.text = "\(Int(sender.value))"
     }
     
     func edit(sender: UIBarButtonItem){
@@ -123,36 +63,25 @@ class HabitDetailController: UITableViewController {
         
         if editingState {
             self.navigationItem.rightBarButtonItem?.title = "Save"
-            
-            self.swltch?.userInteractionEnabled = true
-            self.textField?.userInteractionEnabled = true
-            
         } else {
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
-            let originalHabitState = habit!.notificationsEnabled
-            let originalHabitName = habit?.name
+//            let originalHabitState = habit!.notificationsEnabled
+//            let originalHabitName = habit?.name
             
-            self.swltch?.userInteractionEnabled = false
-            self.textField?.userInteractionEnabled = false
-            
-            habit?.name = (self.textField?.text!)!
             habit?.frequency = frequency
-            habit?.notificationsEnabled = (swltch?.on)!
             habit?.notificationSetting = notificationSetting
             habit?.usernamesToNotify = connectionsToNotify
             
             habit?.daysToComplete = daysOfTheWeek
-            habit?.timesToComplete = Int(stepper.value)
             
-            if originalHabitState && !swltch.on {
-                ForeignNotificationManager.deleteHabitForCurrentUser(habit!)
-                connectionsToNotifyLabel.text = ""
-            }else if !originalHabitState && swltch.on {
-                ForeignNotificationManager.uploadHabitForCurrentUser(habit!)
-            }else if habit!.notificationsEnabled {
-                ForeignNotificationManager.updateHabitForCurrentUser(habit!, originalName: originalHabitName!)
-            }
+//            if originalHabitState && !swltch.on {
+//                ForeignNotificationManager.deleteHabitForCurrentUser(habit!)
+//            }else if !originalHabitState && swltch.on {
+//                ForeignNotificationManager.uploadHabitForCurrentUser(habit!)
+//            }else if habit!.notificationsEnabled {
+//                ForeignNotificationManager.updateHabitForCurrentUser(habit!, originalName: originalHabitName!)
+//            }
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
             Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
@@ -170,12 +99,6 @@ class HabitDetailController: UITableViewController {
         }
     }
     
-    @IBAction func switchChanged() {
-        swltch?.on = (swltch?.on)!
-        
-        self.tableView.reloadData()
-    }
-    
     func deletePressed(){
         let alert = UIAlertController(title: "Danger Zone", message: "You sure you want to delete? Can't be undone.", preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
@@ -191,37 +114,79 @@ class HabitDetailController: UITableViewController {
     }
     
     // MARK: - Table view data source
-
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 3
+        case 1:
+            return 3
+        case 2:
+            return 3
+        case 3:
+            return 1
+        default:
+            return 3
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let id = cellIdentifierForIndexPath(indexPath)
+        
+        let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
+        cell.configure(habit!)
+        return cell as! UITableViewCell
+    }
+    
+    func cellIdentifierForIndexPath(ip: NSIndexPath) -> String {
+        switch ip.section {
+        case 0:
+            switch ip.row {
+            case 0: return "name"
+            case 1: return "icon"
+            default: return "color"}
+        case 1:
+            switch ip.row {
+            case 0: return "repeat"
+            case 1: return "days"
+            default: return "times"}
+        default:
+            switch ip.row {
+            case 0: return "accountability"
+            case 1: return "connections_header"
+            default: return "connection"}
+        }
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            if indexPath.row == 4 && habit == nil {
-                return 0
-            }else if indexPath.row == 2 && frequency != .Daily{
-                return 0
-            }else{
-                return 44
-            }
+            switch indexPath.row {
+            case 0: return 44
+            case 1: return 218
+            default: return 89}
         case 1:
-            if AuthManager.socialEnabled {
-                if (swltch?.on)! {
-                    return 44
-                } else if indexPath.row == 0 {
-                    return 44
-                } else {
-                    return 0
-                }
-            }else{
-                return 0
-            }
-        case 2:
-            if habit == nil {
-                return 0
-            } else {
-                return 44
-            }
+            switch indexPath.row {
+            case 0: return 80
+            case 1: return 83
+            default: return 102}
         default:
-            return 44
+            switch indexPath.row {
+            case 0: return 72
+            case 1: return 44
+            default: return 58}
+        }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0: return "Basic Info"
+        case 1: return "Scheduling"
+        default: return "Accountability"
         }
     }
     
@@ -230,30 +195,7 @@ class HabitDetailController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         defer { tableView.deselectRowAtIndexPath(indexPath, animated: true) }
-        
-        if !editingState && indexPath.section != 2 { return }
-        
-        if indexPath.section == 0 && indexPath.row == 1{
-            let currentFreq = Frequency.frequencyForName(frequencyLabel!.text!)
-            let nextIndex = (Frequency.allValues.indexOf(currentFreq)!+1) % Frequency.allValues.count
-            
-            frequencyLabel?.text = "\(Frequency.allValues[nextIndex])"
-            frequency = Frequency.allValues[nextIndex]
-            
-            tableView.reloadData()
-            
-        }else if indexPath.section == (AuthManager.socialEnabled ? 2 : 2) { // should be 2 : 1
-            deletePressed()
-        }else if AuthManager.socialEnabled && indexPath.section == 1 {
-            if indexPath.row == 1 {
-            }else if indexPath.row == 2{
-                let currentSett = NotificationSetting.notificationSettingForName(eventLabel!.text!)
-                let nextIndex = (NotificationSetting.allValues.indexOf(currentSett)!+1) % NotificationSetting.allValues.count
-                
-                eventLabel?.text = "\(NotificationSetting.allValues[nextIndex])"
-                notificationSetting = NotificationSetting.allValues[nextIndex]
-            }
-        }
+    
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -261,7 +203,6 @@ class HabitDetailController: UITableViewController {
         
         vc.didFinish = {(usernames: [String]) in
             self.connectionsToNotify = usernames
-            self.connectionsToNotifyLabel?.text = usernames.joinWithSeparator(", ")
         }
         
     }

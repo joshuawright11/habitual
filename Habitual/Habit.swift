@@ -80,6 +80,10 @@ public class Habit: NSManagedObject {
     
     @NSManaged var daysToComplete: [String]
     
+    @NSManaged var icon: String
+    
+    @NSManaged var color: String
+    
     // Mark: - Notification data
     
     @NSManaged var notificationsEnabled: Bool
@@ -122,6 +126,29 @@ public class Habit: NSManagedObject {
         timesToComplete = json["timesToComplete"].intValue
         
         daysToComplete = json["daysToComplete"].arrayObject as! [String]
+    }
+    
+    init() {
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
+        super.init(entity: ed!, insertIntoManagedObjectContext: nil)
+        
+        createdAt = NSDate()
+        icon = ""
+        color = ""
+        name = ""
+        frequency = .Daily
+        daysToComplete = ["M","T","W","R","F","Sa","Su"]
+        timesToComplete = 1
+        datesCompleted = []
+        notificationsEnabled = false
+        notificationSetting = .EveryMiss
+        usernamesToNotify = []
+    }
+    
+    static func deleteHabit(habit: Habit) {
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        managedObjectContext?.deleteObject(habit)
     }
     
     public func toJSON() -> JSON {

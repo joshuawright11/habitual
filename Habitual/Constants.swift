@@ -48,6 +48,9 @@ let kColorGreen = UIColor(hexString: "0BD318");
 let kColorYellow = UIColor(hexString: "FFF200");
 let kColorOrange = UIColor(hexString: "FF9500");
 let kColorRed = UIColor(hexString: "FF0F03");
+let kColorTeal = UIColor(hexString: "10C0DF");
+
+let kColorArray = [kColorPurple, kColorBlue, kColorGreen, kColorYellow, kColorOrange, kColorRed, kColorTeal]
 
 /// **********
 /// *  FONTS *
@@ -71,7 +74,7 @@ let iFontTabBarTitle = UIFont(name: kFontName+"-Heavy", size: 10.0)!
 // Table Views
 let kFontCellTitle = UIFont(name: kFontName+"-Light", size: 20.0)!
 let kFontCellSubtitle = UIFont(name: kFontName+"-Light", size: 15.0)!
-let kFontSectionHeader = UIFont(name: kFontName+"-Heavy", size: 15.0)!
+let kFontSectionHeader = UIFont(name: kFontName+"-Heavy", size: 16.0)!
 
 
 
