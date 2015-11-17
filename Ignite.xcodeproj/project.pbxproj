@@ -19,6 +19,7 @@
 		033DE6561BF1BA5900842C03 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE6541BF1BA5900842C03 /* UserCell.xib */; };
 		033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */; };
 		033DE6601BF1BEB800842C03 /* HabitHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */; };
+		034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0B1BFAC6F700593C4E /* StatCell.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
@@ -89,6 +90,7 @@
 		033DE6541BF1BA5900842C03 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitHomeCell.swift; sourceTree = "<group>"; };
 		033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitHomeCell.xib; sourceTree = "<group>"; };
+		034ADC0B1BFAC6F700593C4E /* StatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebManager.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		031D28231B29D4C10060263A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				034ADC081BFAC6AD00593C4E /* StatCells */,
 				03ECDE361BF9695000B9F9E7 /* HabitDetailCells */,
 				03B488111B509C390077E601 /* HabitCell.swift */,
 				03B488121B509C390077E601 /* HabitCell.xib */,
@@ -295,6 +298,14 @@
 				03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		034ADC081BFAC6AD00593C4E /* StatCells */ = {
+			isa = PBXGroup;
+			children = (
+				034ADC0B1BFAC6F700593C4E /* StatCell.swift */,
+			);
+			name = StatCells;
 			sourceTree = "<group>";
 		};
 		039BFC061B2AD1E3006EAFD9 /* Helpers */ = {
@@ -555,6 +566,7 @@
 				031D28031B29D1300060263A /* AppDelegate.swift in Sources */,
 				03B488131B509C390077E601 /* HabitCell.swift in Sources */,
 				03ECDE3E1BF969CD00B9F9E7 /* RepeatCell.swift in Sources */,
+				034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */,
 				039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */,
 				0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */,
 				033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */,

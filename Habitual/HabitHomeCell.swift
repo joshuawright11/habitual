@@ -32,12 +32,16 @@ class HabitHomeCell: UITableViewCell {
             habit = new.0
             date = new.1
             
+            color = UIColor(hexString: habit.color)
+            
             doAppearance()
         }
     }
     
     private var date: NSDate!
     private var habit: Habit!
+    
+    private var color: UIColor!
     
     init(style: UITableViewCellStyle, reuseIdentifier: String?, habit: Habit, date: NSDate) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,9 +68,9 @@ class HabitHomeCell: UITableViewCell {
         if(date.beginningOfDay < NSDate()) { setupHandlers() }
         
         if habit.countDoneInDate(date) == habit.timesToComplete {
-            animateComplete()
+            instantComplete()
         }else{
-            animateUncomplete()
+            instantUncomplete()
         }
     }
     
@@ -122,8 +126,8 @@ class HabitHomeCell: UITableViewCell {
                 
                 borderView.frame.origin.x += translation.x
                 
-                let color = percent > 0 ? "C644FC" : "FFFFFF"
-                borderView.backgroundColor = UIColor(hexString: color, withAlpha: abs(percent))
+                let bgColor = percent > 0 ? color.hexString : "FFFFFF"
+                borderView.backgroundColor = UIColor(hexString: bgColor, withAlpha: abs(percent))
                 recognizer.setTranslation(CGPointZero, inView: self)
             }
         }
@@ -157,10 +161,23 @@ class HabitHomeCell: UITableViewCell {
         }
     }
     
+    func instantComplete() {
+        let moveTo = UIScreen.mainScreen().bounds.width - 70
+        
+        borderView.backgroundColor = color
+        borderView.frame.origin.x = moveTo
+        self.borderConstraint.constant = moveTo
+        self.refreshLabels()
+        
+        iv.backgroundColor = kColorTextSecondary
+        
+        self.titleLabel.textColor = kColorTextSecondary
+        self.subtitleLabel.textColor = kColorTextSecondary
+    }
     func animateComplete() {
         let moveTo = UIScreen.mainScreen().bounds.width - 70
         
-        borderView.animation.makeX(moveTo).easeOut.makeBackground(kColorPurple).animateWithCompletion(kAnimationLength) {
+        borderView.animation.makeX(moveTo).easeOut.makeBackground(color).animateWithCompletion(kAnimationLength) {
             self.borderConstraint.constant = moveTo
             self.refreshLabels()
             
@@ -190,12 +207,24 @@ class HabitHomeCell: UITableViewCell {
         }
     }
     
+    func instantUncomplete() {
+        borderView.backgroundColor = kColorBackground
+        borderView.frame.origin.x = 14
+        self.borderConstraint.constant = 14
+        self.refreshLabels()
+        
+        iv.backgroundColor = color
+        
+        self.titleLabel.textColor = kColorTextMain
+        self.subtitleLabel.textColor = kColorTextMain
+    }
+    
     func animateUncomplete() {
         borderView.animation.makeX(14).easeInOut.makeBackground(kColorBackground).animateWithCompletion(kAnimationLength) {
             self.borderConstraint.constant = 14
             self.refreshLabels()
         }
-        iv.animation.makeBackground(kColorPurple).animate(kAnimationLength)
+        iv.animation.makeBackground(color).animate(kAnimationLength)
         
         self.titleLabel.textColor = kColorTextMain
         self.subtitleLabel.textColor = kColorTextMain
@@ -212,7 +241,9 @@ class HabitHomeCell: UITableViewCell {
             unit = "this month"
         }
         
-        let text = "\(habit.timesToComplete - habit.countDoneInDate(date)) more times \(unit)"
+        var text = "\(habit.timesToComplete - habit.countDoneInDate(date)) more times \(unit)"
+        if((habit.timesToComplete - habit.countDoneInDate(date)) == 0) {text = "Complete!"}
+        
         return text
     }
     
@@ -222,7 +253,7 @@ class HabitHomeCell: UITableViewCell {
         subtitleLabel.textColor = kColorTextMain
         subtitleLabel.font = kFontCellSubtitle
         
-        iv.backgroundColor = kColorPurple
+        iv.backgroundColor = color
         
         backgroundColor = kColorBackground
         
@@ -233,6 +264,6 @@ class HabitHomeCell: UITableViewCell {
         
         borderView.layer.cornerRadius = 30.0
         borderView.layer.borderWidth = 2.0
-        borderView.layer.borderColor = kColorPurple.CGColor
+        borderView.layer.borderColor = color.CGColor
     }
 }

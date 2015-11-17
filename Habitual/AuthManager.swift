@@ -245,7 +245,6 @@ public class AuthManager : NSObject{
         var habits:[Habit] = []
         
         if let results = objects {
-            
             if results.count > 0 {
                 
                 for result in results{

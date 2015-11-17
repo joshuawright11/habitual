@@ -25,6 +25,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.registerNib(UINib(nibName: "HabitCell", bundle: nil), forCellReuseIdentifier: "habit")
         
+        tableView.contentInset = UIEdgeInsets(top: -30, left: 0, bottom: 0, right: 0)
+        
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
@@ -38,7 +40,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         chartView.pinchZoomEnabled = false
         
-        chartView.legend.form = .Circle
+        chartView.legend.enabled = false
         
         let xaxis = chartView.xAxis
         xaxis.drawGridLinesEnabled = false
@@ -48,26 +50,28 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.leftAxis.drawAxisLineEnabled = false
         chartView.leftAxis.enabled = false
         
+        chartView.xAxis.labelFont = kFontSectionHeader
+        chartView.xAxis.labelTextColor = kColorTextMain
+        
         chartView.descriptionText = ""
         chartView.drawValueAboveBarEnabled = true
-    
+        
+        chartView.noDataText = "No habits created yet!"
+        
         chartView.notifyDataSetChanged()
+        
+        chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
+        
         tableView.reloadData()
     }
     
     func doAppearance() {
         self.tableView.backgroundColor = kColorBackground
-        
         self.chartView.backgroundColor = kColorBackground
-        
-        
+        self.view.backgroundColor = kColorBackground
     }
 
     func getChartData() -> BarChartData {
-        
-        struct ChartColors {
-            static let colors = [kColorPurple, kColorOrange, kColorBlue, kColorRed,kColorYellow, kColorGreen]
-        }
         
         var dataSets: [BarChartDataSet] = []
         
@@ -75,13 +79,23 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         for habit: Habit in (user?.habits)! {
             
             let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: habit.getCompletionPercentage(), xIndex: 0)], label: habit.name)
-            dataSet.colors = [ChartColors.colors[count%6]]
+            dataSet.colors = [UIColor(hexString: habit.color)]
             count++
             
             dataSets.append(dataSet)
         }
         
-        return BarChartData(xVals: ["Habit Completion Percentage"], dataSets: dataSets)
+        let data = BarChartData(xVals: ["Habit Completion Percentage"], dataSets: dataSets)
+        data.setValueFont(kFontBody)
+        data.setValueTextColor(kColorTextMain)
+        
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .PercentStyle
+        nf.maximumFractionDigits = 0
+        nf.multiplier = 1
+        data.setValueFormatter(nf)
+        
+        return data
         
     }
     
@@ -93,11 +107,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func statForIndex(index: Int) -> (String, String){
         if(index == 0){
-            return ("Habits completed","\(user!.statHabitsCompleted())")
+            return ("Habits completed:","\(user!.statHabitsCompleted())")
         }else if(index == 1){
-            return ("Longest streak","\(user!.statLongestStreak())")
+            return ("Longest streak:","\(user!.statLongestStreak())")
         }else{
-            return ("Most completed habit",user!.statMostCompletedHabit())
+            return ("Most completed habit:",user!.statMostCompletedHabit())
         }
     }
     
@@ -108,7 +122,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
+        if section == 0 {
             if let user = user {
                 return user.habits.count
             }else{
@@ -121,29 +135,35 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        if indexPath.section == 1{
+        if indexPath.section == 0{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
         
-//            cell.configureForHabit(user!.habits[indexPath.row])
+            cell.configureForHabit(user!.habits[indexPath.row])
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("stat")! as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("stat") as! StatCell
             
             let statTuple = statForIndex(indexPath.row)
             
-            cell.textLabel?.text = statTuple.0
-            cell.detailTextLabel?.text = statTuple.1
+            cell.configure(statTuple)
             
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0: return 56
+        default: return 44
         }
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         if(section == 0){
-            return "Stats"
-        }else{
             return "Habits"
+        }else{
+            return "Stats"
         }
     }
     

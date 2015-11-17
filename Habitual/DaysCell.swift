@@ -41,18 +41,23 @@ class DaysCell: UITableViewCell, HabitDetailCell {
     
     func buttonPressed(button: UIButton) {
         let string: String = (button.titleLabel?.text)!
-        if habit?.daysToComplete.contains(string) != nil {
-            habit?.daysToComplete.removeAtIndex((habit?.daysToComplete.indexOf(string))!)
-            button.tintColor = kColorAccent
+        if habit!.daysToComplete.contains(string) {
+            habit!.daysToComplete.removeAtIndex((habit!.daysToComplete.indexOf(string))!)
+            button.setTitleColor(kColorAccent, forState: .Normal)
         }else{
             habit?.daysToComplete.append(string)
-            button.tintColor = kColorAccentSecondary
+            button.setTitleColor(kColorAccentSecondary, forState: .Normal)
         }
     }
     
     func configure(habit: Habit) {
         self.habit = habit
         doAppearance()
+        for bt in dayButtons {
+            if self.habit!.daysToComplete.contains((bt.titleLabel?.text)!) {
+                bt.setTitleColor(kColorAccentSecondary, forState: .Normal)
+            }
+        }
     }
     
 }

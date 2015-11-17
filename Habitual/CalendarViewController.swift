@@ -40,6 +40,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         habits = AuthManager.currentUser!.habits
      
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
@@ -67,7 +69,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.calendarView.backgroundColor = kColorBackground
         self.monthLabel.backgroundColor = kColorBackground
         self.menuView.backgroundColor = kColorBackground
-        
+        self.view.backgroundColor = kColorBackground
         self.tableView.backgroundColor = kColorBackground
         Styler.styleTitleLabel(self.monthLabel)
         monthLabel.textColor = kColorTextSecondary
@@ -167,7 +169,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return UIColor.groupTableViewBackgroundColor()
+        return kColorBackground
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {

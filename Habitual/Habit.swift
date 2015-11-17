@@ -131,11 +131,11 @@ public class Habit: NSManagedObject {
     init() {
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
-        super.init(entity: ed!, insertIntoManagedObjectContext: nil)
+        super.init(entity: ed!, insertIntoManagedObjectContext: managedObjectContext)
         
         createdAt = NSDate()
         icon = ""
-        color = ""
+        color = "ffffff"
         name = ""
         frequency = .Daily
         daysToComplete = ["M","T","W","R","F","Sa","Su"]
@@ -420,13 +420,26 @@ public class Habit: NSManagedObject {
                 unitsSinceBegan = ceil(daysSinceBegan)
             }
         case .Weekly:
-            unitsSinceBegan = round(daysSinceBegan/7)
+            unitsSinceBegan = ceil(daysSinceBegan/7)
         case .Monthly:
-            unitsSinceBegan = round(daysSinceBegan/30.417)
+            unitsSinceBegan = ceil(daysSinceBegan/30.417)
         }
         
         let perc = (Double(datesCompleted.count)/unitsSinceBegan)*100.0
-        
         return perc/Double(timesToComplete)
+    }
+    
+    func save() {
+        do {
+            try managedObjectContext?.save()
+        } catch let error as NSError {
+            print("awww error: " + error.description)
+        }
+    }
+    
+    func delete() {
+        managedObjectContext?.deleteObject(self)
+        ForeignNotificationManager.deleteHabitForCurrentUser(self)
+        Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
     }
 }

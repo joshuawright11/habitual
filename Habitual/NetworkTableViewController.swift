@@ -136,7 +136,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return UIColor.groupTableViewBackgroundColor()
+        return kColorBackground
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {

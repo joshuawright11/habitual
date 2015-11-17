@@ -52,7 +52,16 @@ class ColorCell: UITableViewCell, HabitDetailCell {
     
     func configure(habit: Habit) {
         self.habit = habit
+        
         doAppearance()
+        
+        for bt in colorButtons {
+            if bt.backgroundColor!.hexString == habit.color {
+                selectedButton = bt
+                bt.layer.borderWidth = 3.0
+                bt.layer.borderColor = kColorAccentSecondary.CGColor
+            }
+        }
     }
     
 }

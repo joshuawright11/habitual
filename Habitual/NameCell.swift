@@ -34,6 +34,9 @@ class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
     func configure(habit: Habit) {
         self.habit = habit
         textField.delegate = self
+        
+        textField.text = habit.name
+        
         doAppearance()
     }
     

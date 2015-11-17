@@ -37,11 +37,13 @@ class TimesCell: UITableViewCell, HabitDetailCell {
     func configure(habit: Habit) {
         self.habit = habit
         doAppearance()
+        stepper.value = Double(habit.timesToComplete)
+        self.timesLabel.text = "\(Int(stepper.value))"
         stepper.addTarget(self, action: Selector("stepperChanged:"), forControlEvents: .ValueChanged)
     }
     
     func stepperChanged(stepper: UIStepper) {
         habit?.timesToComplete = Int(stepper.value)
-        timesLabel.text = "\(habit?.timesToComplete)"
+        timesLabel.text = "\(habit!.timesToComplete)"
     }
 }

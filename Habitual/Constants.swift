@@ -23,6 +23,9 @@ let kNotificationIdentifierHabitAddedOrDeleted = "HabitAddedOrDeleted"
 let kNotificationIdentifierHabitDataChanged = "HabitDataChanged"
 let kNotificationIdentifierUserLoggedIn = "UserLoggedIn"
 
+let kNotificationIdentifierToggleDOTW = "ToggleDotw"
+let kNotificationIdentifierToggleAccountability = "ToggleAccountability"
+
 /// **********
 /// * COLORS *
 /// **********

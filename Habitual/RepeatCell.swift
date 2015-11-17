@@ -37,21 +37,41 @@ class RepeatCell: UITableViewCell, HabitDetailCell {
         monthButton.tintColor = kColorAccent
         
         dayButton.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+        weekButton.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+        monthButton.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
     }
     
     func buttonPressed(button: UIButton) {
         let string:String = (button.titleLabel?.text)!
+        
+        let initialFreq = habit?.frequency
+        
         switch string {
         case "DAY": habit?.frequency = .Daily
         case "WEEK": habit?.frequency = .Weekly
         case "MONTH": habit?.frequency = .Monthly
         default: habit?.frequency = .Daily
         }
+        
+        dayButton.setTitleColor(kColorAccent, forState: .Normal)
+        weekButton.setTitleColor(kColorAccent, forState: .Normal)
+        monthButton.setTitleColor(kColorAccent, forState: .Normal)
+        
+        button.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        
+        if(initialFreq == .Daily && habit?.frequency != .Daily)
+            || (initialFreq != .Daily && habit?.frequency == .Daily)
+        {Utilities.postNotification(kNotificationIdentifierToggleDOTW)}
     }
     
     func configure(habit: Habit) {
         self.habit = habit
         doAppearance()
+        switch habit.frequency {
+        case .Daily: dayButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        case .Weekly: weekButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        case .Monthly: monthButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        }
     }
     
 }
