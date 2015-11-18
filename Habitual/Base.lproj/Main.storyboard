@@ -1230,6 +1230,111 @@
                                     <outletCollection property="iconivs" destination="7rw-XL-I3S" collectionClass="NSMutableArray" id="hbX-aO-yNZ"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connection" rowHeight="58" id="3kV-Ra-5mU" customClass="ConnectionCell" customModule="Ignite" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="847" width="600" height="58"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3kV-Ra-5mU" id="dii-vh-Zj7">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark_small" translatesAutoresizingMaskIntoConstraints="NO" id="y2p-S9-0AG">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="5uT-zf-OQ0"/>
+                                                <constraint firstAttribute="width" constant="22" id="gDs-hZ-9xt"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5uT-zf-OQ0"/>
+                                                    <exclude reference="gDs-hZ-9xt"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="5uT-zf-OQ0"/>
+                                                    <include reference="gDs-hZ-9xt"/>
+                                                </mask>
+                                            </variation>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Wright" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gs-HS-6Wr">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wbV-mG-aWY">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="fl4-K9-HBU"/>
+                                                <constraint firstAttribute="width" constant="44" id="wuw-q4-T7j"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="fl4-K9-HBU"/>
+                                                    <exclude reference="wuw-q4-T7j"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="fl4-K9-HBU"/>
+                                                    <include reference="wuw-q4-T7j"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstItem="y2p-S9-0AG" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="9U4-J3-YHM"/>
+                                        <constraint firstItem="6Gs-HS-6Wr" firstAttribute="leading" secondItem="wbV-mG-aWY" secondAttribute="trailing" constant="14" id="If3-V8-eMU"/>
+                                        <constraint firstItem="wbV-mG-aWY" firstAttribute="leading" secondItem="y2p-S9-0AG" secondAttribute="trailing" constant="14" id="QA4-3l-PoI"/>
+                                        <constraint firstItem="wbV-mG-aWY" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="Qid-fa-i8e"/>
+                                        <constraint firstItem="6Gs-HS-6Wr" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="ZoX-el-HY3"/>
+                                        <constraint firstItem="y2p-S9-0AG" firstAttribute="leading" secondItem="dii-vh-Zj7" secondAttribute="leading" constant="14" id="gWW-cP-kiy"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="y2p-S9-0AG"/>
+                                            <exclude reference="6Gs-HS-6Wr"/>
+                                            <exclude reference="wbV-mG-aWY"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="9U4-J3-YHM"/>
+                                            <exclude reference="gWW-cP-kiy"/>
+                                            <exclude reference="QA4-3l-PoI"/>
+                                            <exclude reference="Qid-fa-i8e"/>
+                                            <exclude reference="If3-V8-eMU"/>
+                                            <exclude reference="ZoX-el-HY3"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="y2p-S9-0AG"/>
+                                            <include reference="6Gs-HS-6Wr"/>
+                                            <include reference="wbV-mG-aWY"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="9U4-J3-YHM"/>
+                                            <include reference="gWW-cP-kiy"/>
+                                            <include reference="QA4-3l-PoI"/>
+                                            <include reference="Qid-fa-i8e"/>
+                                            <include reference="If3-V8-eMU"/>
+                                            <include reference="ZoX-el-HY3"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <connections>
+                                    <outlet property="checkiv" destination="y2p-S9-0AG" id="FaT-VO-9T7"/>
+                                    <outlet property="initialsLabel" destination="wbV-mG-aWY" id="nl5-NC-Hxm"/>
+                                    <outlet property="nameLabel" destination="6Gs-HS-6Wr" id="HPq-C1-gX8"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="color" rowHeight="89" id="dBb-cz-iKP" customClass="ColorCell" customModule="Ignite" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="551" width="600" height="89"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -1903,109 +2008,6 @@
                                     <outletCollection property="dayButtons" destination="RwT-23-bYr" collectionClass="NSMutableArray" id="0zt-mJ-O19"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connection" rowHeight="58" id="3kV-Ra-5mU" customClass="ConnectionCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="847" width="600" height="58"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3kV-Ra-5mU" id="dii-vh-Zj7">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark_small" translatesAutoresizingMaskIntoConstraints="NO" id="y2p-S9-0AG">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="5uT-zf-OQ0"/>
-                                                <constraint firstAttribute="width" constant="22" id="gDs-hZ-9xt"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="5uT-zf-OQ0"/>
-                                                    <exclude reference="gDs-hZ-9xt"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="5uT-zf-OQ0"/>
-                                                    <include reference="gDs-hZ-9xt"/>
-                                                </mask>
-                                            </variation>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6TU-bo-1zP">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                            <animations/>
-                                            <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="7H0-du-eTD"/>
-                                                <constraint firstAttribute="width" constant="44" id="iNb-Ya-DGP"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="7H0-du-eTD"/>
-                                                    <exclude reference="iNb-Ya-DGP"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="7H0-du-eTD"/>
-                                                    <include reference="iNb-Ya-DGP"/>
-                                                </mask>
-                                            </variation>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Wright" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gs-HS-6Wr">
-                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <animations/>
-                                    <constraints>
-                                        <constraint firstItem="y2p-S9-0AG" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="9U4-J3-YHM"/>
-                                        <constraint firstItem="6TU-bo-1zP" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="ItH-9Z-buT"/>
-                                        <constraint firstItem="6TU-bo-1zP" firstAttribute="leading" secondItem="y2p-S9-0AG" secondAttribute="trailing" constant="18" id="MBG-im-kUE"/>
-                                        <constraint firstItem="6Gs-HS-6Wr" firstAttribute="centerY" secondItem="dii-vh-Zj7" secondAttribute="centerY" id="ZoX-el-HY3"/>
-                                        <constraint firstItem="y2p-S9-0AG" firstAttribute="leading" secondItem="dii-vh-Zj7" secondAttribute="leading" constant="14" id="gWW-cP-kiy"/>
-                                        <constraint firstItem="6Gs-HS-6Wr" firstAttribute="leading" secondItem="6TU-bo-1zP" secondAttribute="trailing" constant="14" id="wzr-Wb-A29"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="y2p-S9-0AG"/>
-                                            <exclude reference="6TU-bo-1zP"/>
-                                            <exclude reference="6Gs-HS-6Wr"/>
-                                        </mask>
-                                        <mask key="constraints">
-                                            <exclude reference="ZoX-el-HY3"/>
-                                            <exclude reference="wzr-Wb-A29"/>
-                                            <exclude reference="ItH-9Z-buT"/>
-                                            <exclude reference="MBG-im-kUE"/>
-                                            <exclude reference="9U4-J3-YHM"/>
-                                            <exclude reference="gWW-cP-kiy"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="subviews">
-                                            <include reference="y2p-S9-0AG"/>
-                                            <include reference="6TU-bo-1zP"/>
-                                            <include reference="6Gs-HS-6Wr"/>
-                                        </mask>
-                                        <mask key="constraints">
-                                            <include reference="ZoX-el-HY3"/>
-                                            <include reference="wzr-Wb-A29"/>
-                                            <include reference="ItH-9Z-buT"/>
-                                            <include reference="MBG-im-kUE"/>
-                                            <include reference="9U4-J3-YHM"/>
-                                            <include reference="gWW-cP-kiy"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <animations/>
-                                <connections>
-                                    <outlet property="checkiv" destination="y2p-S9-0AG" id="FaT-VO-9T7"/>
-                                    <outlet property="nameLabel" destination="6Gs-HS-6Wr" id="HPq-C1-gX8"/>
-                                    <outlet property="piciv" destination="6TU-bo-1zP" id="rE0-qk-ClY"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="times" rowHeight="102" id="ZA3-fJ-fbC" customClass="TimesCell" customModule="Ignite" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="905" width="600" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -2662,7 +2664,7 @@ I don't get this done on time</string>
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark_small" width="12" height="12"/>
+        <image name="checkmark_small" width="23" height="23"/>
         <image name="ignite_icon192" width="148" height="205"/>
         <image name="tab_check" width="30" height="30"/>
     </resources>

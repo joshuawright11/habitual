@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ConnectionCell: UITableViewCell, HabitDetailCell {
+class ConnectionCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var piciv: UIImageView!
+
+    @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var checkiv: UIImageView!
 
     var habit:Habit?
+    var username:String?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,14 +26,39 @@ class ConnectionCell: UITableViewCell, HabitDetailCell {
         super.init(coder: aDecoder)
     }
     
+    override func setSelected(selected: Bool, animated: Bool) {
+        if selected {
+            if habit!.usernamesToNotify.contains(username!) {
+                habit!.usernamesToNotify.removeAtIndex(habit!.usernamesToNotify.indexOf(username!)!)
+                checkiv.tintColor = kColorBackground
+            }else{
+                habit!.usernamesToNotify.append(username!)
+                checkiv.tintColor = kColorAccent
+            }
+        }
+    }
+    
     func doAppearance() {
         selectionStyle = UITableViewCellSelectionStyle.None
         nameLabel.font = kFontSectionHeader
         nameLabel.textColor = kColorTextMain
+        nameLabel.text = username!
+        initialsLabel.text = String(username!.capitalizedString.characters.first!)
+        
+        initialsLabel.font = kFontInitials
+        initialsLabel.textColor = kColorRed
+        
+        initialsLabel.layer.cornerRadius = 22.0
+        initialsLabel.layer.borderWidth = 2.0
+        initialsLabel.layer.borderColor = kColorRed.CGColor
+        
+        checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
+        checkiv.tintColor = habit!.usernamesToNotify.contains(username!) ? kColorAccent : kColorBackground
     }
     
-    func configure(habit: Habit) {
+    func configure(habit: Habit, index: Int) {
         self.habit = habit
+        self.username = AuthManager.currentUser?.following[index].username
         doAppearance()
     }
 }

@@ -268,7 +268,7 @@ class HabitHomeCell: UITableViewCell {
         
         self.borderView.backgroundColor = kColorBackground
         
-        checkmark.image = UIImage(named: "checkmark")
+        checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
         checkmark.tintColor = kColorBackground
         
         borderView.layer.cornerRadius = 30.0

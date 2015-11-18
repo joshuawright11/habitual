@@ -76,7 +76,12 @@ public class Habit: NSManagedObject {
     
     @NSManaged var timeOfDay: Int16
     
-    @NSManaged var timesToComplete: Int
+    var timesToComplete: Int {
+        get{ return Int(timesToCompleteInt)}
+        set(newVal){timesToCompleteInt = Int64(newVal)}
+    }
+    
+    @NSManaged var timesToCompleteInt: Int64
     
     @NSManaged var daysToComplete: [String]
     
@@ -137,7 +142,6 @@ public class Habit: NSManagedObject {
         let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
         super.init(entity: ed!, insertIntoManagedObjectContext: managedObjectContext)
         
-        createdAt = NSDate()
         icon = "flash"
         color = kColorPurple.hexString
         name = ""

@@ -33,6 +33,7 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.title = habit.name
 
             canInteract = false
+            accountabilityOn = habit.notificationsEnabled
             self.tableView.reloadData()
             
             let button = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit:")
@@ -56,6 +57,7 @@ class HabitDetailController: UITableViewController {
     
     func done(sender: UIBarButtonItem){
 
+        habit?.createdAt = NSDate()
         habit?.save()
         
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
@@ -124,13 +126,13 @@ class HabitDetailController: UITableViewController {
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
             
             for var i = 0; i < (AuthManager.currentUser?.following.count)!; i++ {
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2, inSection: 2+i)], withRowAnimation: .Automatic)
+                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
         }else{
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
             
             for var i = 0; i < (AuthManager.currentUser?.following.count)!; i++ {
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2, inSection: 2+i)], withRowAnimation: .Automatic)
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
         }
         self.tableView.endUpdates()
@@ -189,7 +191,15 @@ class HabitDetailController: UITableViewController {
         
         if(indexPath.section == (AuthManager.socialEnabled ? 3 : 2)) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
-        }else{
+        }else if indexPath.section == 2 && indexPath.row > 1 {
+            let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
+            cell.configure(habit!, index: indexPath.row - 2)
+            
+            if !canInteract {cell.userInteractionEnabled = false}
+            else {cell.userInteractionEnabled = true}
+            
+            return cell
+        }else{    
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
             cell.configure(habit!)
             
@@ -266,5 +276,15 @@ class HabitDetailController: UITableViewController {
         default: return
         }
     
+    }
+    
+    // MARK: - View Controller methods
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
+        
+        if habit?.createdAt == nil && parent == nil{
+            habit?.delete()
+        }
     }
 }

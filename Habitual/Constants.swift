@@ -47,11 +47,11 @@ let kColorTextSecondary = UIColor(hexString: "A3B0B7")
 // Rainbow
 let kColorPurple = UIColor(hexString: "C644FC");
 let kColorBlue = UIColor(hexString: "007AFF");
-let kColorGreen = UIColor(hexString: "0BD318");
-let kColorYellow = UIColor(hexString: "FFF200");
-let kColorOrange = UIColor(hexString: "FF9500");
-let kColorRed = UIColor(hexString: "FF0F03");
-let kColorTeal = UIColor(hexString: "10C0DF");
+let kColorGreen = UIColor(hexString: "17EB00");
+let kColorYellow = UIColor(hexString: "E5FF00");
+let kColorOrange = UIColor(hexString: "FF8300");
+let kColorRed = UIColor(hexString: "FF2D55");
+let kColorTeal = UIColor(hexString: "00DFFC");
 
 let kColorArray = [kColorPurple, kColorBlue, kColorGreen, kColorYellow, kColorOrange, kColorRed, kColorTeal]
 

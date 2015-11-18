@@ -13,7 +13,7 @@
         <attribute name="private" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="remindAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeOfDay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="timesToComplete" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timesToCompleteInt" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="usernamesToNotify" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>

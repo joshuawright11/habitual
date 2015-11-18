@@ -34,10 +34,12 @@ class AccountabilityCell: UITableViewCell, HabitDetailCell {
     func configure(habit: Habit) {
         self.habit = habit
         swich.addTarget(self, action: Selector("swichChanged:"), forControlEvents: .ValueChanged)
+        swich.setOn(habit.notificationsEnabled, animated: false)
         doAppearance()
     }
     
     func swichChanged(swich: UISwitch) {
+        habit?.notificationsEnabled = !habit!.notificationsEnabled
         Utilities.postNotification(kNotificationIdentifierToggleAccountability)
     }
 }
