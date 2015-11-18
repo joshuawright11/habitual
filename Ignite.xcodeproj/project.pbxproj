@@ -20,6 +20,7 @@
 		033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */; };
 		033DE6601BF1BEB800842C03 /* HabitHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */; };
 		034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0B1BFAC6F700593C4E /* StatCell.swift */; };
+		034ADC0E1BFC365500593C4E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0D1BFC365500593C4E /* SettingsViewController.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
@@ -91,6 +92,7 @@
 		033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitHomeCell.swift; sourceTree = "<group>"; };
 		033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitHomeCell.xib; sourceTree = "<group>"; };
 		034ADC0B1BFAC6F700593C4E /* StatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
+		034ADC0D1BFC365500593C4E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebManager.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				03BA13441B5DB82900504A63 /* MainTabBarController.swift */,
 				03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */,
 				03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */,
+				034ADC0D1BFC365500593C4E /* SettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */,
 				0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */,
+				034ADC0E1BFC365500593C4E /* SettingsViewController.swift in Sources */,
 				03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */,
 				039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */,
 				03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */,

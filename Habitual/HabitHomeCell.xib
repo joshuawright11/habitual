@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -26,7 +27,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go for a run!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaS-Qb-hv0">
-                        <rect key="frame" x="87" y="27" width="96" height="21"/>
+                        <rect key="frame" x="87" y="28" width="96" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,15 +65,21 @@
                     <constraint firstAttribute="trailing" secondItem="3fo-iP-3Mx" secondAttribute="trailing" constant="-400" id="8nB-RC-PcD"/>
                     <constraint firstItem="Qbh-1u-pUC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="26" id="C3E-0M-OlB"/>
                     <constraint firstItem="Qbh-1u-pUC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DGZ-lB-nfb"/>
+                    <constraint firstItem="JYn-VZ-Npc" firstAttribute="top" secondItem="Qbh-1u-pUC" secondAttribute="centerY" id="JmX-wO-daP"/>
                     <constraint firstItem="JYn-VZ-Npc" firstAttribute="leading" secondItem="MaS-Qb-hv0" secondAttribute="leading" id="MMb-Ai-1eF"/>
                     <constraint firstItem="Knn-SW-WOg" firstAttribute="leading" secondItem="JYn-VZ-Npc" secondAttribute="trailing" constant="8" id="PIg-zp-MIJ"/>
-                    <constraint firstItem="MaS-Qb-hv0" firstAttribute="top" secondItem="Qbh-1u-pUC" secondAttribute="top" id="RjW-Nu-T0x"/>
+                    <constraint firstItem="MaS-Qb-hv0" firstAttribute="bottom" secondItem="Qbh-1u-pUC" secondAttribute="centerY" id="WIU-i5-zbG"/>
                     <constraint firstItem="MaS-Qb-hv0" firstAttribute="leading" secondItem="Qbh-1u-pUC" secondAttribute="trailing" constant="9" id="Xhs-V0-eLC"/>
                     <constraint firstItem="Knn-SW-WOg" firstAttribute="centerY" secondItem="3fo-iP-3Mx" secondAttribute="centerY" id="lRf-VN-f0E"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Knn-SW-WOg" secondAttribute="trailing" constant="7" id="npW-Cj-8Bq"/>
                     <constraint firstItem="JYn-VZ-Npc" firstAttribute="top" secondItem="MaS-Qb-hv0" secondAttribute="bottom" constant="1" id="oX3-1d-CqR"/>
                     <constraint firstItem="3fo-iP-3Mx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="xCO-tb-RPc"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="oX3-1d-CqR"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <animations/>
             <connections>

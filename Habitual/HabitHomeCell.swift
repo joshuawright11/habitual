@@ -182,7 +182,7 @@ class HabitHomeCell: UITableViewCell {
             self.refreshLabels()
             
         }
-        iv.animation.makeBackground(kColorTextSecondary).animate(kAnimationLength)
+        iv.tintColor = kColorTextSecondary
         
         self.titleLabel.textColor = kColorTextSecondary
         self.subtitleLabel.textColor = kColorTextSecondary
@@ -224,7 +224,7 @@ class HabitHomeCell: UITableViewCell {
             self.borderConstraint.constant = 14
             self.refreshLabels()
         }
-        iv.animation.makeBackground(color).animate(kAnimationLength)
+        iv.tintColor = color
         
         self.titleLabel.textColor = kColorTextMain
         self.subtitleLabel.textColor = kColorTextMain

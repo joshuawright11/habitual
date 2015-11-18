@@ -30,7 +30,13 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
-        if user == nil{user = AuthManager.currentUser; self.navigationItem.title = "Me"}
+        if user == nil{
+            user = AuthManager.currentUser;
+            self.navigationItem.title = "Me"
+            
+            let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settings")
+            self.navigationItem.rightBarButtonItem = button
+        }
         else {self.navigationItem.title = user?.username}
         
         chartView.data = getChartData()
@@ -63,6 +69,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
         
         tableView.reloadData()
+    }
+    
+    func settings() {
+        let svc = storyboard?.instantiateViewControllerWithIdentifier("Settings") as! SettingsViewController
+        navigationController?.pushViewController(svc, animated: true)
     }
     
     func doAppearance() {

@@ -29,6 +29,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.tableView.tableFooterView = UIView()
         
+        self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")
+        
         if (PFUser.currentUser() != nil){
             
             let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
@@ -107,19 +109,17 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("user")! as UITableViewCell
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
         let user = connections![indexPath.row]
-        
-        cell.textLabel!.text = user.username
-        cell.detailTextLabel!.text = "\(user.habits.count) habits"
-        
+        cell.configure(user)
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
+        uvc.user = connections![indexPath.row]
+        navigationController?.pushViewController(uvc, animated: true)
+        
     }
     
     // MARK: - View Controller methods

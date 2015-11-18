@@ -10,15 +10,46 @@ import UIKit
 
 class UserCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    @IBOutlet weak var borderView: UIView!
+    @IBOutlet weak var initialsLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    func configure(user: User) {
+        initialsLabel.text = String(user.username.characters.first!).capitalizedString
+        titleLabel.text = user.username
+        subtitleLabel.text = "\(user.statHabitsCompleted()) habits completed"
+        infoLabel.text = "\(user.habits.count) habits"
+        
+        doAppearance()
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func doAppearance() {
+        backgroundColor = kColorBackground
+        selectionStyle = UITableViewCellSelectionStyle.None
+        
+        titleLabel.textColor = kColorTextMain
+        titleLabel.font = kFontCellTitle
+        
+        subtitleLabel.textColor = kColorTextMain
+        subtitleLabel.font = kFontCellSubtitle
+        
+        infoLabel.textColor = kColorTextSecondary
+        infoLabel.font = kFontSectionHeader
+        
+        initialsLabel.font = kFontInitials
+        initialsLabel.textColor = kColorRed
+        
+        initialsLabel.layer.cornerRadius = 25.0
+        initialsLabel.layer.borderWidth = 2.0
+        initialsLabel.layer.borderColor = kColorRed.CGColor
+        
+        borderView.backgroundColor = kColorBackground
+        borderView.layer.cornerRadius = 30.0
+        borderView.layer.borderWidth = 2.0
+        borderView.layer.borderColor = kColorRed.CGColor
     }
     
 }

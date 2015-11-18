@@ -107,6 +107,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         let habit = habitsOfDate[indexPath.row]
         
         var cell:HabitHomeCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? HabitHomeCell
+        
         if (cell == nil) {
             cell = HabitHomeCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit", habit: habit, date: self.selectedDate)
         

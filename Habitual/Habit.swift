@@ -170,8 +170,8 @@ public class Habit: NSManagedObject {
             "timeOfDay":0,
             "timesToComplete":timesToComplete,
             "daysToComplete":daysToComplete,
-            "":"",
-            "":""])
+            "color":color,
+            "icon":icon])
         return json
     }
     

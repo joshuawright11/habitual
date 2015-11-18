@@ -67,6 +67,7 @@ let kFontMainTitle = UIFont(name: kFontName+"-Light", size: 32.0)!
 let kFontBody = UIFont(name: kFontName, size: 16.0)!
 let kFontSecondary = UIFont(name: kFontName+"-Heavy", size: 12.0)!
 let kFontCalendar = UIFont(name: kFontName+"-Heavy", size: 18.0)!
+let kFontInitials = UIFont(name: kFontName, size: 24.0)!
 
 // Navigation Bar
 let kFontNavTitle = UIFont(name: kFontName+"-Heavy", size: 20.0)!

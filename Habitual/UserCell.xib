@@ -1,21 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="UserCell" customModule="Ignite" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="99" id="KGk-i7-Jjw" customClass="UserCell" customModule="Ignite" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhL-1W-Cxq">
+                        <rect key="frame" x="14" y="7" width="292" height="85"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Wright" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-d0-6eL">
+                                <rect key="frame" x="67" y="22" width="93" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 Habits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lss-02-PBi">
+                                <rect key="frame" x="200" y="32" width="64" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Habits Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph8-rL-AzW">
+                                <rect key="frame" x="67" y="43" width="170" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QMX-5U-USJ">
+                                <rect key="frame" x="10" y="18" width="50" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="QQ8-v7-S2E"/>
+                                    <constraint firstAttribute="height" constant="50" id="h7s-Gi-706"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QMX-5U-USJ" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="leading" constant="10" id="DJ7-EB-cl9"/>
+                            <constraint firstItem="QMX-5U-USJ" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="GKd-kJ-Vbt"/>
+                            <constraint firstAttribute="trailing" secondItem="lss-02-PBi" secondAttribute="trailing" constant="28" id="R92-Kh-CCh"/>
+                            <constraint firstItem="g3n-d0-6eL" firstAttribute="leading" secondItem="QMX-5U-USJ" secondAttribute="trailing" constant="7" id="V3a-0l-Klb"/>
+                            <constraint firstItem="ph8-rL-AzW" firstAttribute="top" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cLY-fN-MVh"/>
+                            <constraint firstItem="g3n-d0-6eL" firstAttribute="bottom" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cfc-72-otd"/>
+                            <constraint firstItem="ph8-rL-AzW" firstAttribute="leading" secondItem="g3n-d0-6eL" secondAttribute="leading" id="g84-Ki-42d"/>
+                            <constraint firstAttribute="height" constant="85" id="ie9-DZ-2R2"/>
+                            <constraint firstItem="lss-02-PBi" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="j1I-tI-kmz"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="30"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
                 <animations/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="YhL-1W-Cxq" secondAttribute="trailing" constant="14" id="0Rv-jG-0Zj"/>
+                    <constraint firstItem="YhL-1W-Cxq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Wyo-6t-dYX"/>
+                    <constraint firstItem="YhL-1W-Cxq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xBH-Jy-aHP"/>
+                </constraints>
             </tableViewCellContentView>
             <animations/>
+            <connections>
+                <outlet property="borderView" destination="YhL-1W-Cxq" id="AcJ-HD-6CS"/>
+                <outlet property="infoLabel" destination="lss-02-PBi" id="pmg-Px-fdm"/>
+                <outlet property="initialsLabel" destination="QMX-5U-USJ" id="Ldf-rW-kJS"/>
+                <outlet property="subtitleLabel" destination="ph8-rL-AzW" id="hf3-bg-dxe"/>
+                <outlet property="titleLabel" destination="g3n-d0-6eL" id="Aqt-e6-EbU"/>
+            </connections>
+            <point key="canvasLocation" x="245" y="310.5"/>
         </tableViewCell>
     </objects>
 </document>
