@@ -126,6 +126,10 @@ public class Habit: NSManagedObject {
         timesToComplete = json["timesToComplete"].intValue
         
         daysToComplete = json["daysToComplete"].arrayObject as! [String]
+        
+        color = json["color"].stringValue
+        
+        icon = json["icon"].stringValue
     }
     
     init() {
@@ -134,8 +138,8 @@ public class Habit: NSManagedObject {
         super.init(entity: ed!, insertIntoManagedObjectContext: managedObjectContext)
         
         createdAt = NSDate()
-        icon = ""
-        color = "ffffff"
+        icon = "flash"
+        color = kColorPurple.hexString
         name = ""
         frequency = .Daily
         daysToComplete = ["M","T","W","R","F","Sa","Su"]
@@ -165,7 +169,9 @@ public class Habit: NSManagedObject {
             "remindAt":"",
             "timeOfDay":0,
             "timesToComplete":timesToComplete,
-            "daysToComplete":daysToComplete])
+            "daysToComplete":daysToComplete,
+            "":"",
+            "":""])
         return json
     }
     

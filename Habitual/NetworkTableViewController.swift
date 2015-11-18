@@ -31,17 +31,15 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         if (PFUser.currentUser() != nil){
             
+            let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
+            self.navigationItem.rightBarButtonItem = button
+            
             loggedIn = true
-            
             self.connections = AuthManager.currentUser?.following
-            
             self.tableView.reloadData()
         }
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
-        
-        let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
-        self.navigationItem.rightBarButtonItem = button
     }
     
     func doAppearance() {

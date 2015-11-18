@@ -229,7 +229,7 @@ class HabitDetailController: UITableViewController {
         case 0:
             switch indexPath.row {
             case 0: return 44
-            case 1: return 218
+            case 1: return 393
             default: return 89}
         case 1:
             switch indexPath.row {

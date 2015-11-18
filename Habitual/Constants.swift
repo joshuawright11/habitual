@@ -79,5 +79,30 @@ let kFontCellTitle = UIFont(name: kFontName+"-Light", size: 20.0)!
 let kFontCellSubtitle = UIFont(name: kFontName+"-Light", size: 15.0)!
 let kFontSectionHeader = UIFont(name: kFontName+"-Heavy", size: 16.0)!
 
+/// **********
+/// *  ICONS *
+/// **********
 
+let iIconList = [
+    "flash",
+    "headphone",
+    "heart",
+    "ios-at-outline",
+    "ios-basketball-outline",
+    "ios-body-outline",
+    "ios-bookmarks-outline",
+    "ios-box-outline",
+    "ios-cloudy-night-outline",
+    "ios-flask-outline",
+    "ios-flower-outline",
+    "ios-lightbulb-outline",
+    "ios-list-outline",
+    "ios-location-outline",
+    "ios-paw-outline",
+    "ios-people-outline",
+    "ios-pulse",
+    "ios-stopwatch-outline",
+    "ios-sunny-outline",
+    "ios-telephone-outline",
+    "laptop"]
 

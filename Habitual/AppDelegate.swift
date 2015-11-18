@@ -70,6 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = kColorBackground
         UITabBar.appearance().tintColor = kColorAccent
         UIBarButtonItem.appearance().tintColor = kColorAccent
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontSectionHeader], forState: UIControlState.Normal)
+
+        
         
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSFontAttributeName: iFontTabBarTitle],

@@ -169,7 +169,7 @@ class HabitHomeCell: UITableViewCell {
         self.borderConstraint.constant = moveTo
         self.refreshLabels()
         
-        iv.backgroundColor = kColorTextSecondary
+        iv.tintColor = kColorTextSecondary
         
         self.titleLabel.textColor = kColorTextSecondary
         self.subtitleLabel.textColor = kColorTextSecondary
@@ -213,7 +213,7 @@ class HabitHomeCell: UITableViewCell {
         self.borderConstraint.constant = 14
         self.refreshLabels()
         
-        iv.backgroundColor = color
+        iv.tintColor = color
         
         self.titleLabel.textColor = kColorTextMain
         self.subtitleLabel.textColor = kColorTextMain
@@ -247,13 +247,22 @@ class HabitHomeCell: UITableViewCell {
         return text
     }
     
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let velocity = pgr?.velocityInView(self)
+        return fabs(velocity!.y) < fabs(velocity!.x)
+    }
+    
     func doAppearance() {
         titleLabel.textColor = kColorTextMain
         titleLabel.font = kFontCellTitle
         subtitleLabel.textColor = kColorTextMain
         subtitleLabel.font = kFontCellSubtitle
         
-        iv.backgroundColor = color
+        let image = UIImage(named: habit.icon)
+        iv.backgroundColor = UIColor.clearColor()
+        iv.contentMode = .ScaleAspectFit
+        iv.tintColor = UIColor(hexString: habit.color)
+        iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
         backgroundColor = kColorBackground
         
