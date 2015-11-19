@@ -30,14 +30,21 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
-        if user == nil{
+        // this is gross because you can follow yourself when I wrote this
+        if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
             user = AuthManager.currentUser;
             self.navigationItem.title = "Me"
+            self.navigationController?.navigationBar.topItem?.title = "Me"
             
             let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settings")
             self.navigationItem.rightBarButtonItem = button
         }
-        else {self.navigationItem.title = user?.username}
+        else {
+            self.navigationItem.title = user?.username
+            
+            let button = UIBarButtonItem(title: "Chat", style: .Plain, target: self, action: "chat")
+            self.navigationItem.rightBarButtonItem = button
+        }
         
         chartView.data = getChartData()
         
@@ -71,9 +78,21 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.reloadData()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        // this is gross because you can follow yourself when I wrote this
+        if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
+            self.navigationItem.title = "Me"
+            self.navigationController?.navigationBar.topItem?.title = "Me"
+        }
+    }
+    
     func settings() {
         let svc = storyboard?.instantiateViewControllerWithIdentifier("Settings") as! SettingsViewController
         navigationController?.pushViewController(svc, animated: true)
+    }
+    
+    func chat() {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func doAppearance() {

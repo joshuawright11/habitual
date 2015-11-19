@@ -10,7 +10,6 @@ import UIKit
 import Timepiece
 import DZNEmptyDataSet
 import Parse
-import MCSwipeTableViewCell
 import CVCalendar
 
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
@@ -63,6 +62,10 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
         
         doAppearance()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.navigationBar.topItem?.title = "Habits"
     }
     
     func doAppearance(){

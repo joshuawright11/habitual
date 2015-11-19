@@ -9,7 +9,6 @@
 import UIKit
 import DZNEmptyDataSet
 import Parse
-import MCSwipeTableViewCell
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
@@ -42,6 +41,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         }
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.navigationBar.topItem?.title = "Connections"
     }
     
     func doAppearance() {
@@ -116,21 +119,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
-        uvc.user = connections![indexPath.row]
-        navigationController?.pushViewController(uvc, animated: true)
         
+        let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
+        ccvc.user = connections![indexPath.row]
+        navigationController?.pushViewController(ccvc, animated: true)
     }
-    
-    // MARK: - View Controller methods
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? UserViewController {
-            let index = tableView.indexPathForSelectedRow?.row
-            vc.user = connections![index!]
-        }
-    }
-    
+
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
