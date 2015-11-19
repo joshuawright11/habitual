@@ -136,9 +136,10 @@ public class AuthManager : NSObject{
         
         if socialEnabled {
             let loadedUser = User()
+            loadedUser.parseObject = PFUser.currentUser()
             loadedUser.habits = getHabitsOfCurrentUser()
             loadedUser.getConnections(nil)
-            loadedUser.parseObject = PFUser.currentUser()
+            
             
             return loadedUser
         }else{

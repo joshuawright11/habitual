@@ -12,10 +12,10 @@ extension User
 {
     func getConnections(callback:((success: Bool) -> ())?){
         let sender = PFQuery(className: "Connection")
-        sender.whereKey("sender.username", equalTo: username)
+        sender.whereKey("sender", equalTo: parseObject!)
         
         let receiver = PFQuery(className: "Connection")
-        receiver.whereKey("receiver.username", equalTo: username)
+        receiver.whereKey("receiver", equalTo: parseObject!)
         
         let or = PFQuery.orQueryWithSubqueries([sender, receiver])
         or.includeKey("sender")
@@ -29,6 +29,8 @@ extension User
                 if let callback = callback {
                     callback(success: true)
                 }
+            }else {
+
             }
         }
     }
