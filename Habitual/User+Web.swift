@@ -29,8 +29,6 @@ extension User
                 if let callback = callback {
                     callback(success: true)
                 }
-            }else {
-
             }
         }
     }

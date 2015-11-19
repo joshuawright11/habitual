@@ -30,6 +30,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")
         
+        self.navigationItem.title = "Connections"
+        
         if (PFUser.currentUser() != nil){
             
             let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
@@ -41,10 +43,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         }
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "Connections"
     }
     
     func doAppearance() {

@@ -15,8 +15,8 @@ class StatCell: UITableViewCell {
     
     func configure(stat: (String, String)) {
         
-        titleLabel.text = "DUCKS"
-        descriptionLabel.text = "DUCKS"
+        titleLabel.text = stat.0
+        descriptionLabel.text = stat.1
         selectionStyle = .None
         
         doAppearance()

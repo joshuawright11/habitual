@@ -34,10 +34,9 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
             user = AuthManager.currentUser;
             self.navigationItem.title = "Me"
-            self.navigationController?.navigationBar.topItem?.title = "Me"
             
             let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settings")
-            self.navigationController?.navigationItem.rightBarButtonItem = button
+            self.navigationItem.rightBarButtonItem = button
         }
         else {
             self.navigationItem.title = user?.username
@@ -76,14 +75,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
         
         tableView.reloadData()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        // this is gross because you can follow yourself when I wrote this
-        if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
-            self.navigationItem.title = "Me"
-            self.navigationController?.navigationBar.topItem?.title = "Me"
-        }
     }
     
     func settings() {

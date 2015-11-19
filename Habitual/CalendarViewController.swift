@@ -39,7 +39,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        self.navigationItem.title = "Habits"
         
         habits = AuthManager.currentUser!.habits
      
@@ -62,10 +62,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
         
         doAppearance()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "Habits"
     }
     
     func doAppearance(){
