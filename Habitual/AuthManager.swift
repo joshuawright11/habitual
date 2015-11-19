@@ -76,7 +76,6 @@ public class AuthManager : NSObject{
                 }catch{
                     
                 }
-            
                 self.currentUser = user
             }
             
@@ -135,18 +134,17 @@ public class AuthManager : NSObject{
     */
     private static func loadUser() -> User?{
         
-        let ud = NSUserDefaults.standardUserDefaults()
-        let jsonString:String? = ud.objectForKey("currentUser") as? String;
-        
-        if let jsonString = jsonString, dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            let json = JSON(data: dataFromString)
-            let loadedUser = User(json: json)
+        if socialEnabled {
+            let loadedUser = User()
             loadedUser.habits = getHabitsOfCurrentUser()
+            loadedUser.getConnections(nil)
+            loadedUser.parseObject = PFUser.currentUser()
             
             return loadedUser
         }else{
-            let newUser = User(json: JSON("username:name"))
+            let newUser = User()
             newUser.habits = getHabitsOfCurrentUser()
+            
             return newUser
         }
     }
@@ -168,10 +166,10 @@ public class AuthManager : NSObject{
     }
     
     public static func reloadConnectionsData(callback: ((success: Bool) ->())?) {
-        WebServices.getConnectionsData { (users, success) -> () in
-            self.user?.following = users
-            if let callback = callback { callback(success: success) }
-        }
+        
+        self.user?.getConnections({ (success) -> () in
+            if let callback = callback { callback(success: success)}
+        })
     }
     
     public static func addHabitForCurrentUser(name:String, frequency:Frequency, notificationsEnabled: Bool, notificationSetting: NotificationSetting, usernamesToNotify: [String], daysOfTheWeek: [String], times: Int){

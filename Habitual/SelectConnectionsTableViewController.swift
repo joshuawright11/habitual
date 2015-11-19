@@ -33,14 +33,14 @@ class SelectConnectionsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AuthManager.currentUser!.following.count
+        return AuthManager.currentUser!.connections.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(SelectConnectionsTableViewController.reuseIdentifier, forIndexPath: indexPath)
         
-        cell.textLabel?.text = AuthManager.currentUser!.following[indexPath.row].username
+        cell.textLabel?.text = AuthManager.currentUser!.connections[indexPath.row].user.username
 
         return cell
     }

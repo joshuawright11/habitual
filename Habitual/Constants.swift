@@ -71,6 +71,7 @@ let kFontInitials = UIFont(name: kFontName, size: 24.0)!
 
 // Navigation Bar
 let kFontNavTitle = UIFont(name: kFontName+"-Heavy", size: 20.0)!
+let kFontNavButtons = UIFont(name: kFontName, size: 17.0)!
 
 // Tab Bar
 let iFontTabBarTitle = UIFont(name: kFontName+"-Heavy", size: 10.0)!

@@ -22,13 +22,16 @@
 		034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0B1BFAC6F700593C4E /* StatCell.swift */; };
 		034ADC0E1BFC365500593C4E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0D1BFC365500593C4E /* SettingsViewController.swift */; };
 		034ADC101BFD444D00593C4E /* ConnectionChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0F1BFD444D00593C4E /* ConnectionChatViewController.swift */; };
+		034ADC121BFD77E600593C4E /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC111BFD77E600593C4E /* Connection.swift */; };
+		034ADC141BFD77F100593C4E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC131BFD77F100593C4E /* Message.swift */; };
+		034ADC161BFD804300593C4E /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC151BFD804300593C4E /* ParseObject.swift */; };
+		034ADC181BFD828700593C4E /* User+Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC171BFD828700593C4E /* User+Web.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
 		039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */; };
 		039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC071B2AD1F9006EAFD9 /* Constants.swift */; };
 		039BFC0A1B2AD234006EAFD9 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC091B2AD234006EAFD9 /* Utilities.swift */; };
-		039BFC0C1B2AD4AB006EAFD9 /* PObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC0B1B2AD4AB006EAFD9 /* PObject.swift */; };
 		039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC0D1B2AE10B006EAFD9 /* User.swift */; };
 		03B488131B509C390077E601 /* HabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488111B509C390077E601 /* HabitCell.swift */; };
 		03B488141B509C390077E601 /* HabitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03B488121B509C390077E601 /* HabitCell.xib */; };
@@ -95,13 +98,16 @@
 		034ADC0B1BFAC6F700593C4E /* StatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		034ADC0D1BFC365500593C4E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		034ADC0F1BFD444D00593C4E /* ConnectionChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionChatViewController.swift; sourceTree = "<group>"; };
+		034ADC111BFD77E600593C4E /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		034ADC131BFD77F100593C4E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		034ADC151BFD804300593C4E /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
+		034ADC171BFD828700593C4E /* User+Web.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Web.swift"; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebManager.swift; sourceTree = "<group>"; };
 		039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		039BFC071B2AD1F9006EAFD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		039BFC091B2AD234006EAFD9 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		039BFC0B1B2AD4AB006EAFD9 /* PObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PObject.swift; sourceTree = "<group>"; };
 		039BFC0D1B2AE10B006EAFD9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		03B488111B509C390077E601 /* HabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCell.swift; sourceTree = "<group>"; };
 		03B488121B509C390077E601 /* HabitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitCell.xib; sourceTree = "<group>"; };
@@ -250,8 +256,10 @@
 			isa = PBXGroup;
 			children = (
 				03E6F2E21B51A23400484DB6 /* Habit.swift */,
-				039BFC0B1B2AD4AB006EAFD9 /* PObject.swift */,
 				039BFC0D1B2AE10B006EAFD9 /* User.swift */,
+				034ADC111BFD77E600593C4E /* Connection.swift */,
+				034ADC131BFD77F100593C4E /* Message.swift */,
+				034ADC151BFD804300593C4E /* ParseObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -292,6 +300,7 @@
 			children = (
 				039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */,
 				039BFC021B2AD1C7006EAFD9 /* WebManager.swift */,
+				034ADC171BFD828700593C4E /* User+Web.swift */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -552,8 +561,9 @@
 				03ECDE401BF969D700B9F9E7 /* DaysCell.swift in Sources */,
 				039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */,
 				0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */,
-				039BFC0C1B2AD4AB006EAFD9 /* PObject.swift in Sources */,
 				03ECDE3C1BF969C200B9F9E7 /* ColorCell.swift in Sources */,
+				034ADC181BFD828700593C4E /* User+Web.swift in Sources */,
+				034ADC121BFD77E600593C4E /* Connection.swift in Sources */,
 				03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */,
 				03ECDE551BF99BDA00B9F9E7 /* UIColor+Hex.swift in Sources */,
 				033DE6551BF1BA5900842C03 /* UserCell.swift in Sources */,
@@ -566,6 +576,7 @@
 				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */,
 				034ADC101BFD444D00593C4E /* ConnectionChatViewController.swift in Sources */,
+				034ADC161BFD804300593C4E /* ParseObject.swift in Sources */,
 				0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */,
 				034ADC0E1BFC365500593C4E /* SettingsViewController.swift in Sources */,
 				03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */,
@@ -577,6 +588,7 @@
 				034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */,
 				039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */,
 				0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */,
+				034ADC141BFD77F100593C4E /* Message.swift in Sources */,
 				033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */,
 				03ECDE441BF96A0000B9F9E7 /* ConnectionCell.swift in Sources */,
 			);

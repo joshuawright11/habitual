@@ -9,42 +9,40 @@
 import SwiftyJSON
 import Parse
 
-class User: PObject {
+class User: ParseObject {
     
     let username:String
     
     var habits:[Habit]
     
-    var following:[User]
+    var connections:[Connection]
     
-    required init(json: JSON) {
-
-        username = json["username"].stringValue
+    init(){
+        username = "0xdeadbeef"
         habits = []
-        following = []
-        super.init(json: json)
+        connections = []
+        super.init(parseObject: nil)
     }
     
-    init(parse: PFUser) {
-        username = parse.username!
+    init(parseUser: PFUser) {
+        username = parseUser.username!
         
         habits = []
         
-        for json:AnyObject in parse["habits"] as! Array<AnyObject> {
+        for json:AnyObject in parseUser["habits"] as! Array<AnyObject> {
             let json = JSON(json)
             habits.append(Habit(json: json))
         }
         
-        following = []
+        connections = []
         
-        super.init(json: nil)
+        super.init(parseObject: parseUser)
     }
     
     func toJSON() -> JSON{
         
         let json: JSON = [
             "username":username,
-            "following":following
         ]
         
         return json;
@@ -62,7 +60,7 @@ class User: PObject {
     
     func statLongestStreak() -> Int {
         var longestStreak = 0
-        for habit:Habit in habits{
+        for habit:Habit in habits {
             if habit.longestStreak() > longestStreak {
                 longestStreak = habit.longestStreak()
             }

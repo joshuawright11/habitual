@@ -63,16 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes =
             [NSForegroundColorAttributeName: kColorTextMain, NSFontAttributeName: kFontNavTitle]
         
-        
-        
         UITableViewCell.appearance().backgroundColor = kColorBackground
         
         UITabBar.appearance().barTintColor = kColorBackground
         UITabBar.appearance().tintColor = kColorAccent
         UIBarButtonItem.appearance().tintColor = kColorAccent
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontSectionHeader], forState: UIControlState.Normal)
-
-        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontNavButtons], forState: UIControlState.Normal)
         
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSFontAttributeName: iFontTabBarTitle],
@@ -80,7 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
-        
         UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeader
         
     }

@@ -125,13 +125,13 @@ class HabitDetailController: UITableViewController {
         if(!accountabilityOn){
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
             
-            for var i = 0; i < (AuthManager.currentUser?.following.count)!; i++ {
+            for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
         }else{
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
             
-            for var i = 0; i < (AuthManager.currentUser?.following.count)!; i++ {
+            for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
         }
@@ -178,7 +178,7 @@ class HabitDetailController: UITableViewController {
         case 1:
             return dotwOn ? 3 : 2
         case 2:
-            return accountabilityOn ? 2+(AuthManager.currentUser?.following.count)! : 1
+            return accountabilityOn ? 2+(AuthManager.currentUser?.connections.count)! : 1
         case 3:
             return 1
         default:

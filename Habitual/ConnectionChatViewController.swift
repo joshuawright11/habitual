@@ -46,8 +46,15 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.inputToolbar?.contentView!.backgroundColor = kColorBackground
         self.inputToolbar?.contentView?.textView?.backgroundColor = kColorBackground.lightenByPercentage(0.03)
         
-        self.inputToolbar?.contentView?.textView?.textColor = kColorTextMain
-        self.inputToolbar?.contentView?.textView?.tintColor = kColorTextMain
+        let bt = self.inputToolbar?.contentView?.rightBarButtonItem!
+        bt?.setTitleColor(kColorAccent, forState: .Normal)
+        bt?.titleLabel?.font = kFontSectionHeader
+        
+        let tf = self.inputToolbar!.contentView!.textView!
+        
+        tf.textColor = kColorTextMain
+        tf.tintColor = kColorTextMain
+        tf.font = kFontSectionHeader
         
     }
     

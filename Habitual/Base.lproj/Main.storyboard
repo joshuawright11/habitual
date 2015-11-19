@@ -78,6 +78,7 @@
                         <viewControllerLayoutGuide type="bottom" id="mn4-sn-zQM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Bh6-WS-R19">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1233,7 +1234,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connection" rowHeight="58" id="3kV-Ra-5mU" customClass="ConnectionCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="847" width="600" height="58"/>
+                                <rect key="frame" x="0.0" y="551" width="600" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3kV-Ra-5mU" id="dii-vh-Zj7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
@@ -1306,12 +1307,12 @@
                                             <exclude reference="wbV-mG-aWY"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="9U4-J3-YHM"/>
-                                            <exclude reference="gWW-cP-kiy"/>
-                                            <exclude reference="QA4-3l-PoI"/>
-                                            <exclude reference="Qid-fa-i8e"/>
                                             <exclude reference="If3-V8-eMU"/>
                                             <exclude reference="ZoX-el-HY3"/>
+                                            <exclude reference="QA4-3l-PoI"/>
+                                            <exclude reference="Qid-fa-i8e"/>
+                                            <exclude reference="9U4-J3-YHM"/>
+                                            <exclude reference="gWW-cP-kiy"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -1321,12 +1322,12 @@
                                             <include reference="wbV-mG-aWY"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="9U4-J3-YHM"/>
-                                            <include reference="gWW-cP-kiy"/>
-                                            <include reference="QA4-3l-PoI"/>
-                                            <include reference="Qid-fa-i8e"/>
                                             <include reference="If3-V8-eMU"/>
                                             <include reference="ZoX-el-HY3"/>
+                                            <include reference="QA4-3l-PoI"/>
+                                            <include reference="Qid-fa-i8e"/>
+                                            <include reference="9U4-J3-YHM"/>
+                                            <include reference="gWW-cP-kiy"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -1338,7 +1339,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="color" rowHeight="89" id="dBb-cz-iKP" customClass="ColorCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="551" width="600" height="89"/>
+                                <rect key="frame" x="0.0" y="609" width="600" height="89"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dBb-cz-iKP" id="ecz-GS-hLB">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
@@ -1620,7 +1621,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="repeat" rowHeight="80" id="c1T-CM-X2d" customClass="RepeatCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="640" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="698" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c1T-CM-X2d" id="Bic-Sr-vgN">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
@@ -1708,7 +1709,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="delete" id="7he-x5-X3P">
-                                <rect key="frame" x="0.0" y="720" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="778" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7he-x5-X3P" id="tKA-xl-0fJ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1750,7 +1751,7 @@
                                 <animations/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="days" rowHeight="83" id="jn8-c1-CA2" customClass="DaysCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="764" width="600" height="83"/>
+                                <rect key="frame" x="0.0" y="822" width="600" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jn8-c1-CA2" id="Wvh-hf-Ik3">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
@@ -2192,7 +2193,7 @@ I don't get this done on time</string>
                             <tableViewSection headerTitle="These don't work yet" id="4Uy-nI-GTc">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oXU-Kw-A7v">
-                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oXU-Kw-A7v" id="kms-4d-g92">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -2221,7 +2222,7 @@ I don't get this done on time</string>
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Xm0-bC-zLM">
-                                        <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="94" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xm0-bC-zLM" id="LAQ-6s-puf">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -2254,7 +2255,7 @@ I don't get this done on time</string>
                             <tableViewSection headerTitle="These don't either :'(" id="rT8-B3-vrx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="KTu-1b-SyX" style="IBUITableViewCellStyleDefault" id="EcL-ZW-zEy">
-                                        <rect key="frame" x="0.0" y="245" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="181" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EcL-ZW-zEy" id="dDj-cF-ApZ">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -2274,7 +2275,7 @@ I don't get this done on time</string>
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Smo-tM-wHR" style="IBUITableViewCellStyleDefault" id="kQn-U3-dDH">
-                                        <rect key="frame" x="0.0" y="289" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="225" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQn-U3-dDH" id="7Ed-Zv-Wfw">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -2294,7 +2295,7 @@ I don't get this done on time</string>
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vTz-wZ-l4B" style="IBUITableViewCellStyleDefault" id="D4F-IT-E6v">
-                                        <rect key="frame" x="0.0" y="333" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="269" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D4F-IT-E6v" id="ock-Bt-iaj">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -2448,8 +2449,8 @@ I don't get this done on time</string>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <outlet property="descriptionLabel" destination="KJ7-wx-4QM" id="Ilo-Hn-EYz"/>
-                                            <outlet property="titleLabel" destination="UaB-Xu-B9Z" id="Vxu-fI-0B0"/>
+                                            <outlet property="descriptionLabel" destination="KJ7-wx-4QM" id="a1W-nE-kMi"/>
+                                            <outlet property="titleLabel" destination="UaB-Xu-B9Z" id="kQh-fq-KgG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

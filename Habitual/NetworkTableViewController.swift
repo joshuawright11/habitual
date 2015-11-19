@@ -12,7 +12,7 @@ import Parse
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
-    var connections:[User]?{
+    var connections:[Connection]?{
         didSet{tableView.reloadData()}
     }
     
@@ -36,7 +36,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             self.navigationItem.rightBarButtonItem = button
             
             loggedIn = true
-            self.connections = AuthManager.currentUser?.following
+            self.connections = AuthManager.currentUser?.connections
             self.tableView.reloadData()
         }
         
@@ -56,7 +56,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         AuthManager.reloadConnectionsData { (success) -> () in
             if success {
-                self.connections = AuthManager.currentUser?.following
+                self.connections = AuthManager.currentUser?.connections
                 self.tableView.reloadData()
             }
         }
@@ -68,13 +68,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
             let usernameTextField = alert.textFields! [0] 
-                WebServices.addConnection("\(usernameTextField.text!)", callback: { (success) -> () in
-                    if success {
-                        Utilities.alert("user followed", vc: self)
-                        self.refreshData()
-                    }else{
-                        Utilities.alert("couldn't find that user", vc: self)
-                    }
+                AuthManager.currentUser?.addConnection(usernameTextField.text!, callback: { (success) -> () in
+                    self.connections = AuthManager.currentUser?.connections
                 })
             })
         
@@ -113,7 +108,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
-        let user = connections![indexPath.row]
+        let user = connections![indexPath.row].user
         cell.configure(user)
         return cell
     }
@@ -121,7 +116,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
-        ccvc.user = connections![indexPath.row]
+        ccvc.user = connections![indexPath.row].user
         navigationController?.pushViewController(ccvc, animated: true)
     }
 

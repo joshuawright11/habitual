@@ -37,7 +37,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationController?.navigationBar.topItem?.title = "Me"
             
             let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settings")
-            self.navigationItem.rightBarButtonItem = button
+            self.navigationController?.navigationItem.rightBarButtonItem = button
         }
         else {
             self.navigationItem.title = user?.username
@@ -167,16 +167,12 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
-        
             cell.configureForHabit(user!.habits[indexPath.row])
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("stat") as! StatCell
-            
             let statTuple = statForIndex(indexPath.row)
-            
             cell.configure(statTuple)
-            
             return cell
         }
     }

@@ -14,15 +14,18 @@ class StatCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     func configure(stat: (String, String)) {
-        titleLabel.text = stat.0
-        descriptionLabel.text = stat.1
+        
+        titleLabel.text = "DUCKS"
+        descriptionLabel.text = "DUCKS"
         selectionStyle = .None
+        
         doAppearance()
     }
     
     func doAppearance() {
         titleLabel.font = kFontSectionHeader
         titleLabel.textColor = kColorTextMain
+        
         descriptionLabel.font = kFontSectionHeader
         descriptionLabel.textColor = kColorAccentSecondary
     }

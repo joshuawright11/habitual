@@ -23,7 +23,7 @@ public class WebServices: NSObject {
                 installation["username"] = username
                 installation.saveInBackground()
                 
-                let user: User = User(parse: userLogged!)
+                let user: User = User(parseUser: userLogged!)
                 
                 if let callback = callback {callback(success: true, user: user)}
             }else{
@@ -47,65 +47,13 @@ public class WebServices: NSObject {
                 installation["username"] = username
                 installation.saveInBackground()
                 
-                let newUser: User = User(parse: user)
+                let newUser: User = User(parseUser: user)
                 
                 if let callback = callback {callback(success: true, user: newUser)}
             }else{
                 if let callback = callback {callback(success: false, user: nil)}
             }
         }
-    }
-    
-    static func addConnection(username: String, callback:((success: Bool) -> ())?) {
-        
-        let query = PFUser.query()
-        query!.whereKey("username", equalTo: username)
-        
-        query!.findObjectsInBackgroundWithBlock({ (user: [PFObject]?, error: NSError?) -> Void in
-            if user!.count == 1 {
-                var following:[String] = PFUser.currentUser()!["following"] as! [String]
-                following.append(username)
-                PFUser.currentUser()!["following"] = following
-                PFUser.currentUser()!.saveInBackgroundWithBlock(nil)
-                if let callback = callback {callback(success: true)}
-            }else{
-                if let callback = callback {callback(success: false)}
-            }
-        })
-    }
-    
-    static func getPendingConnections(username: String, callback:((success: Bool) -> ())?) {
-        // TODO: - Not now chief I'm in the zone
-    }
-    
-    static func approveConnection(username: String, callback:((success: Bool) -> ())?) {
-        // TODO: - Not now chief I'm in the zone
-    }
-    
-    static func getConnectionsData(callback:((users: [User], success: Bool) -> ())?) {
-        
-        let query = PFUser.query()
-        
-        let array:[String] = PFUser.currentUser()!["following"] as! [String]
-
-        query?.whereKey("username", containedIn: array)
-        
-        query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                
-                var userArray:[User] = []
-                for user:PFUser in users! as! [PFUser] {
-                    userArray.append(User(parse: user))
-                }
-                
-                if let callback = callback {
-                    AuthManager.currentUser?.following = userArray
-                    callback(users: userArray, success: error == nil)
-                }
-            }else{
-                print("failz. Error was: " + (error?.description)!)
-            }
-        })
     }
     
     static func syncDataForUser(callback: ((success: Bool) -> ())?) {

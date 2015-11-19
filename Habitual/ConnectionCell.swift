@@ -58,7 +58,7 @@ class ConnectionCell: UITableViewCell {
     
     func configure(habit: Habit, index: Int) {
         self.habit = habit
-        self.username = AuthManager.currentUser?.following[index].username
+        self.username = AuthManager.currentUser?.connections[index].user.username
         doAppearance()
     }
 }
