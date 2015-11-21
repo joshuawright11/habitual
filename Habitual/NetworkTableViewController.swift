@@ -23,6 +23,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         doAppearance()
         
+        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
+        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         
@@ -42,7 +44,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             self.tableView.reloadData()
         }
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierUserLoggedIn)
+        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
     }
     
     func doAppearance() {
@@ -106,15 +108,22 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
-        let user = connections![indexPath.row].user
-        cell.configure(user)
+        cell.configure(connections![indexPath.row])
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 99
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let connection = connections![indexPath.row]
+        
+        if(!connection.approved) {return}
+        
         let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
-        ccvc.user = connections![indexPath.row].user
+        ccvc.connection = connections![indexPath.row]
         navigationController?.pushViewController(ccvc, animated: true)
     }
 

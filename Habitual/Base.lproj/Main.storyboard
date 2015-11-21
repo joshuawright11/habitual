@@ -15,7 +15,7 @@
                 <tabBarController id="0kD-fU-pCp" customClass="MainTabBarController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="eXu-tP-zIe"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="cpL-TF-gip">
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="cpL-TF-gip">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -328,7 +328,7 @@
         <!--Calendar Appearance Delegate-->
         <scene sceneID="FtP-Fv-KHr">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="oTK-IX-oA7" customClass="CalendarViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="oTK-IX-oA7" customClass="CalendarViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="586-x8-uCj"/>
                         <viewControllerLayoutGuide type="bottom" id="3wA-U3-3wm"/>
@@ -414,6 +414,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cce-sF-n6W" firstAttribute="top" secondItem="JFK-6S-EZg" secondAttribute="bottom" id="0c6-iu-sDC"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Cce-sF-n6W" secondAttribute="bottom" id="45h-Sn-eYN"/>
                             <constraint firstItem="JFK-6S-EZg" firstAttribute="top" secondItem="kvl-HN-I1z" secondAttribute="bottom" id="4de-TY-6mh"/>
                             <constraint firstItem="JFK-6S-EZg" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leading" id="53O-xX-8X9"/>
                             <constraint firstItem="kvl-HN-I1z" firstAttribute="leading" secondItem="DVo-d7-Uw1" secondAttribute="leading" id="69h-nB-GF9"/>
@@ -435,19 +436,20 @@
                                 <exclude reference="s0l-cp-ZLE"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Vmp-3h-X4g"/>
                                 <exclude reference="CFo-Ay-ASy"/>
                                 <exclude reference="hrA-sM-QHw"/>
                                 <exclude reference="qsa-0C-H2l"/>
-                                <exclude reference="0c6-iu-sDC"/>
-                                <exclude reference="Mtz-9a-uUx"/>
-                                <exclude reference="OJi-5j-UWl"/>
-                                <exclude reference="4de-TY-6mh"/>
-                                <exclude reference="53O-xX-8X9"/>
-                                <exclude reference="IKV-lH-LIm"/>
                                 <exclude reference="69h-nB-GF9"/>
                                 <exclude reference="d6e-8S-I1z"/>
                                 <exclude reference="pk0-iH-AtR"/>
+                                <exclude reference="4de-TY-6mh"/>
+                                <exclude reference="53O-xX-8X9"/>
+                                <exclude reference="IKV-lH-LIm"/>
+                                <exclude reference="0c6-iu-sDC"/>
+                                <exclude reference="45h-Sn-eYN"/>
+                                <exclude reference="Mtz-9a-uUx"/>
+                                <exclude reference="OJi-5j-UWl"/>
+                                <exclude reference="Vmp-3h-X4g"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -458,19 +460,20 @@
                                 <include reference="s0l-cp-ZLE"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Vmp-3h-X4g"/>
                                 <include reference="CFo-Ay-ASy"/>
                                 <include reference="hrA-sM-QHw"/>
                                 <include reference="qsa-0C-H2l"/>
-                                <include reference="0c6-iu-sDC"/>
-                                <include reference="Mtz-9a-uUx"/>
-                                <include reference="OJi-5j-UWl"/>
-                                <include reference="4de-TY-6mh"/>
-                                <include reference="53O-xX-8X9"/>
-                                <include reference="IKV-lH-LIm"/>
                                 <include reference="69h-nB-GF9"/>
                                 <include reference="d6e-8S-I1z"/>
                                 <include reference="pk0-iH-AtR"/>
+                                <include reference="4de-TY-6mh"/>
+                                <include reference="53O-xX-8X9"/>
+                                <include reference="IKV-lH-LIm"/>
+                                <include reference="0c6-iu-sDC"/>
+                                <include reference="45h-Sn-eYN"/>
+                                <include reference="Mtz-9a-uUx"/>
+                                <include reference="OJi-5j-UWl"/>
+                                <exclude reference="Vmp-3h-X4g"/>
                             </mask>
                         </variation>
                     </view>
@@ -2332,13 +2335,18 @@ I don't get this done on time</string>
         <!--Item-->
         <scene sceneID="Nu7-CZ-3lQ">
             <objects>
-                <navigationController id="oT0-3T-3A0" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" id="oT0-3T-3A0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="c2l-pD-jxP"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iLp-5C-xYR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="7Wi-F7-t5A">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </toolbar>
                     <connections>
                         <segue destination="oTK-IX-oA7" kind="relationship" relationship="rootViewController" id="5ZN-KC-kqV"/>
                     </connections>
@@ -2412,6 +2420,9 @@ I don't get this done on time</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="-26" y="11" width="172" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drink glass of water" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-wx-4QM">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -2419,6 +2430,9 @@ I don't get this done on time</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="150" y="11" width="152" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWr-xJ-KuD">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -2436,7 +2450,8 @@ I don't get this done on time</string>
                                                             <exclude reference="aSZ-k3-6Ka"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="146" y="21" width="4" height="1"/>
                                                         <mask key="constraints">
                                                             <include reference="PlW-i0-sf2"/>
                                                             <include reference="aSZ-k3-6Ka"/>

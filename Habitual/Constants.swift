@@ -21,10 +21,11 @@ let kKeychainUserAccount = "Habitual"
 
 let kNotificationIdentifierHabitAddedOrDeleted = "HabitAddedOrDeleted"
 let kNotificationIdentifierHabitDataChanged = "HabitDataChanged"
-let kNotificationIdentifierUserLoggedIn = "UserLoggedIn"
 
 let kNotificationIdentifierToggleDOTW = "ToggleDotw"
 let kNotificationIdentifierToggleAccountability = "ToggleAccountability"
+
+let kNotificationIdentifierReloadConnections = "ReloadConnections"
 
 /// **********
 /// * COLORS *
@@ -80,6 +81,7 @@ let iFontTabBarTitle = UIFont(name: kFontName+"-Heavy", size: 10.0)!
 let kFontCellTitle = UIFont(name: kFontName+"-Light", size: 20.0)!
 let kFontCellSubtitle = UIFont(name: kFontName+"-Light", size: 15.0)!
 let kFontSectionHeader = UIFont(name: kFontName+"-Heavy", size: 16.0)!
+let kFontMessageTextView = UIFont(name: kFontName, size: 16.0)!
 
 /// **********
 /// *  ICONS *

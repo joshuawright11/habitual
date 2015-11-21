@@ -36,6 +36,12 @@ class MainTabBarController: UITabBarController {
         tb3.selectedImage = t3imageSelected?.imageWithRenderingMode(.AlwaysTemplate)
         tb3.title = "Pulse"
         
+//        let blur = UIBlurEffect(style: .Dark)
+//        let bv = UIVisualEffectView(effect: blur)
+//        bv.frame = self.view.frame
+//        
+//        self.tabBar.addSubview(bv)
+        
         self.selectedIndex = 1
     }
 }

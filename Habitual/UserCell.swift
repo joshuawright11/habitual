@@ -16,40 +16,67 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var acceptButton: UIButton!
     
-    func configure(user: User) {
+    var connection:Connection!
+    
+    func configure(connection: Connection) {
+        self.connection = connection
+        let user = connection.user
         initialsLabel.text = String(user.username.characters.first!).capitalizedString
         titleLabel.text = user.username
-        subtitleLabel.text = "\(user.statHabitsCompleted()) habits completed"
-        infoLabel.text = "\(user.habits.count) habits"
-        
         doAppearance()
     }
     
     func doAppearance() {
+        
+        infoLabel.text = "\(connection.user.habits.count) habits"
+        if connection.approved {
+            subtitleLabel.text = "\(connection.user.statHabitsCompleted()) habits completed"
+        }else{
+            subtitleLabel.text = connection.sentByCurrentUser ? "Pending acception" : "Wants to connect"
+        }
+        
+        let color = connection.approved ? kColorAccentSecondary : kColorTextSecondary
+        let textColor = connection.approved ? kColorTextMain : kColorTextSecondary
+        
+        if connection.approved || connection.sentByCurrentUser {
+            acceptButton.hidden = true
+        }else{
+            acceptButton.backgroundColor = kColorGreen
+            acceptButton.titleLabel?.font = kFontSectionHeader
+            acceptButton.tintColor = kColorTextMain
+            acceptButton.addTarget(self, action: Selector("approve"), forControlEvents: .TouchUpInside)
+        }
+        
         backgroundColor = kColorBackground
         selectionStyle = UITableViewCellSelectionStyle.None
         
-        titleLabel.textColor = kColorTextMain
+        titleLabel.textColor = textColor
         titleLabel.font = kFontCellTitle
         
-        subtitleLabel.textColor = kColorTextMain
+        subtitleLabel.textColor = textColor
         subtitleLabel.font = kFontCellSubtitle
         
         infoLabel.textColor = kColorTextSecondary
         infoLabel.font = kFontSectionHeader
         
         initialsLabel.font = kFontInitials
-        initialsLabel.textColor = kColorRed
+        initialsLabel.textColor = color
         
         initialsLabel.layer.cornerRadius = 25.0
         initialsLabel.layer.borderWidth = 2.0
-        initialsLabel.layer.borderColor = kColorRed.CGColor
+        initialsLabel.layer.borderColor = color.CGColor
         
         borderView.backgroundColor = kColorBackground
         borderView.layer.cornerRadius = 30.0
         borderView.layer.borderWidth = 2.0
-        borderView.layer.borderColor = kColorRed.CGColor
+        borderView.layer.borderColor = color.CGColor
+    }
+    
+    func approve() {
+        connection.approve()
+        doAppearance()
     }
     
 }

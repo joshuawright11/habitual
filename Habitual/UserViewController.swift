@@ -94,6 +94,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func getChartData() -> BarChartData {
         
+        
+        
         var dataSets: [BarChartDataSet] = []
         
         var count = 0
@@ -106,7 +108,13 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             dataSets.append(dataSet)
         }
         
-        let data = BarChartData(xVals: ["Habit Completion Percentage"], dataSets: dataSets)
+        var xvals: [String] = []
+        
+        if count != 0 {
+            xvals = ["Habit Completion Percentage"]
+        }
+        
+        let data = BarChartData(xVals: xvals, dataSets: dataSets)
         data.setValueFont(kFontBody)
         data.setValueTextColor(kColorTextMain)
         

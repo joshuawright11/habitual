@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhL-1W-Cxq">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhL-1W-Cxq">
                         <rect key="frame" x="14" y="7" width="292" height="85"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Wright" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-d0-6eL">
@@ -50,19 +50,36 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IEx-B5-Fpi">
+                                <rect key="frame" x="192" y="0.0" width="100" height="85"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="NnI-DL-tPX"/>
+                                </constraints>
+                                <state key="normal" title="Accept"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NnI-DL-tPX"/>
+                                    </mask>
+                                </variation>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="IEx-B5-Fpi" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="trailing" constant="-100" id="4cm-hg-9ee"/>
                             <constraint firstItem="QMX-5U-USJ" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="leading" constant="10" id="DJ7-EB-cl9"/>
                             <constraint firstItem="QMX-5U-USJ" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="GKd-kJ-Vbt"/>
+                            <constraint firstAttribute="trailing" secondItem="IEx-B5-Fpi" secondAttribute="trailing" id="KBc-V3-LAZ"/>
                             <constraint firstAttribute="trailing" secondItem="lss-02-PBi" secondAttribute="trailing" constant="28" id="R92-Kh-CCh"/>
                             <constraint firstItem="g3n-d0-6eL" firstAttribute="leading" secondItem="QMX-5U-USJ" secondAttribute="trailing" constant="7" id="V3a-0l-Klb"/>
                             <constraint firstItem="ph8-rL-AzW" firstAttribute="top" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cLY-fN-MVh"/>
                             <constraint firstItem="g3n-d0-6eL" firstAttribute="bottom" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cfc-72-otd"/>
                             <constraint firstItem="ph8-rL-AzW" firstAttribute="leading" secondItem="g3n-d0-6eL" secondAttribute="leading" id="g84-Ki-42d"/>
+                            <constraint firstItem="IEx-B5-Fpi" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="iAm-Hi-RoZ"/>
                             <constraint firstAttribute="height" constant="85" id="ie9-DZ-2R2"/>
                             <constraint firstItem="lss-02-PBi" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="j1I-tI-kmz"/>
+                            <constraint firstItem="IEx-B5-Fpi" firstAttribute="height" secondItem="YhL-1W-Cxq" secondAttribute="height" id="vNQ-er-SYy"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -80,6 +97,7 @@
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="acceptButton" destination="IEx-B5-Fpi" id="icB-Dg-217"/>
                 <outlet property="borderView" destination="YhL-1W-Cxq" id="AcJ-HD-6CS"/>
                 <outlet property="infoLabel" destination="lss-02-PBi" id="pmg-Px-fdm"/>
                 <outlet property="initialsLabel" destination="QMX-5U-USJ" id="Ldf-rW-kJS"/>

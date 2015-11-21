@@ -13,7 +13,13 @@ import Parse
 class Connection: ParseObject {
     let sender:User
     let receiver:User
-    let approved:Bool
+    var approved:Bool
+    
+    var sentByCurrentUser: Bool {
+        get{return AuthManager.currentUser?.username == sender.username}
+    }
+    
+    var messages:[Message]?
     
     var user:User {
         get{
@@ -43,7 +49,39 @@ class Connection: ParseObject {
         sender = User(parseUser: parseObject!["sender"] as! PFUser)
         receiver = User(parseUser: parseObject!["receiver"] as! PFUser)
         approved = parseObject!["approved"] as! Bool
+
         super.init(parseObject: parseObject)
+        
+        loadMessages(nil)
+    }
+    
+    func sendMessage(text: String) -> Message {
+        let message = Message(text: text, connection: self)
+        message.send()
+        messages?.append(message)
+        return message
+    }
+    
+    func loadMessages(callback:((success: Bool) -> ())?) {
+        let query = PFQuery(className: "Message")
+        query.whereKey("connection", equalTo: self.parseObject!)
+        query.orderByAscending("timeStamp")
+        query.includeKey("sender")
+        query.findObjectsInBackgroundWithBlock { (parseObjects, error) -> Void in
+            if let parseObjects = parseObjects {
+                var messages: [Message] = []
+                for parseObject in parseObjects {
+                    let message = Message(parseObject: parseObject)
+                    messages.append(message)
+                }
+                
+                self.messages = messages
+                
+                if let callback = callback {
+                    callback(success: true)
+                }
+            }
+        }
     }
     
     func saveToServer() {
@@ -52,6 +90,7 @@ class Connection: ParseObject {
     
     func approve() {
         parseObject!["approved"] = true
+        approved = true
         parseObject!.saveEventually()
     }
     

@@ -132,11 +132,10 @@ public class AuthManager : NSObject{
         Private helper method to load a user that might be logged in from NSUserDefualts to memory.
         To prevent the need to log in again after closing the application.
     */
-    private static func loadUser() -> User?{
+    private static func loadUser() -> User? {
         
         if socialEnabled {
-            let loadedUser = User()
-            loadedUser.parseObject = PFUser.currentUser()
+            let loadedUser = User(parseUser: PFUser.currentUser()!)
             loadedUser.habits = getHabitsOfCurrentUser()
             loadedUser.getConnections(nil)
             

@@ -99,7 +99,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         WebServices.signup(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
             AuthManager.currentUser = user
-            Utilities.postNotification(kNotificationIdentifierUserLoggedIn)
+            Utilities.postNotification(kNotificationIdentifierReloadConnections)
         }
     }
     
@@ -107,7 +107,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
             AuthManager.currentUser = user
-            Utilities.postNotification(kNotificationIdentifierUserLoggedIn)
+            Utilities.postNotification(kNotificationIdentifierReloadConnections)
         }
     }
     

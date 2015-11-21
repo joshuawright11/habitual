@@ -11,7 +11,7 @@ import JSQMessagesViewController
 
 class ConnectionChatViewController: JSQMessagesViewController {
     
-    var user:User!
+    var connection:Connection!
     
     var outgoingBubbleImageData:JSQMessageBubbleImageDataSource!
     var incomingBubbleImageData:JSQMessageBubbleImageDataSource!
@@ -21,28 +21,28 @@ class ConnectionChatViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        senderId = "josh"
-        senderDisplayName = "Josh"
-        
-        self.navigationItem.title = user.username
-        
-        self.collectionView!.backgroundColor = kColorBackground.lightenByPercentage(0.02)
+
+        senderId = AuthManager.currentUser?.username
+        senderDisplayName = AuthManager.currentUser?.username
+
+        self.navigationItem.title = connection.user.username
         
         let bif = JSQMessagesBubbleImageFactory()
-        
         outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorRed)
         incomingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorAccentSecondary)
-        
+    
+        doAppearance()
+    }
+    
+    func doAppearance() {
+        self.collectionView!.backgroundColor = kColorBackground.lightenByPercentage(0.02)
         self.collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
         self.collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: Selector("pulse"))
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;
-
         self.inputToolbar?.tintColor = kColorBackground
-
         self.inputToolbar?.contentView!.backgroundColor = kColorBackground
         self.inputToolbar?.contentView?.textView?.backgroundColor = kColorBackground.lightenByPercentage(0.03)
         
@@ -50,17 +50,17 @@ class ConnectionChatViewController: JSQMessagesViewController {
         bt?.setTitleColor(kColorAccent, forState: .Normal)
         bt?.titleLabel?.font = kFontSectionHeader
         
-        let tf = self.inputToolbar!.contentView!.textView!
+        self.inputToolbar?.contentView?.leftBarButtonItem = nil
         
+        let tf = self.inputToolbar!.contentView!.textView!
         tf.textColor = kColorTextMain
         tf.tintColor = kColorTextMain
-        tf.font = kFontSectionHeader
-        
+        tf.font = kFontMessageTextView
     }
     
     func pulse() {
         let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
-        uvc.user = user
+        uvc.user = connection.user
         
         let nav = UINavigationController(rootViewController: uvc)
         nav.modalTransitionStyle = .FlipHorizontal
@@ -69,7 +69,9 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
-        return JSQMessage(senderId: senderId, displayName: "Josh", text: "Hello")
+        
+        let message = connection.messages![indexPath.row]
+        return JSQMessage(senderId: message.sender.username, displayName: message.sender.username, text: message.text)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
@@ -77,7 +79,9 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-        return incomingBubbleImageData
+
+        let message = connection.messages![indexPath.row]
+        return message.sentByCurrentUser() ? incomingBubbleImageData : outgoingBubbleImageData
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
@@ -85,11 +89,13 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return connection.messages!.count
     }
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        
+        JSQSystemSoundPlayer.jsq_playMessageSentSound()
+        connection.sendMessage(text)
+        finishSendingMessage()
     }
-    
 }

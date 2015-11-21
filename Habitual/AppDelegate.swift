@@ -67,13 +67,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITabBar.appearance().barTintColor = kColorBackground
         UITabBar.appearance().tintColor = kColorAccent
+        UITabBar.appearance().translucent = true
+        
         UIBarButtonItem.appearance().tintColor = kColorAccent
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontNavButtons], forState: UIControlState.Normal)
         
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSFontAttributeName: iFontTabBarTitle],
             forState: .Normal)
-        
         
         UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
         UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeader
