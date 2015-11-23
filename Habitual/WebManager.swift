@@ -32,12 +32,13 @@ public class WebServices: NSObject {
         }
     }
     
-    static func signup(username: String, password:String, callback:((success: Bool, user: User?) -> ())?) {
+    static func signup(username: String, password: String, name: String, callback:((success: Bool, user: User?) -> ())?) {
         let user = PFUser()
         user.username = username
         user.password = password
         user.email = "\(username)@false.com"
         
+        user["name"] = name
         user["following"] = []
         user["habits"] = []
         

@@ -11,6 +11,7 @@ import UIKit
 class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
@@ -65,6 +66,19 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.textColor = kColorBackground
         passwordTextField.font = kFontSectionHeader
         
+        nameTextField.delegate = self
+        nameTextField.layer.cornerRadius = 15
+        nameTextField.backgroundColor = kColorTextViewBackground
+        let spacer3 = UIView(frame: CGRectMake(0, 0, 21, 21))
+        nameTextField.leftViewMode = .Always
+        nameTextField.leftView = spacer3
+        
+        let str3 = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName:kColorTextSecondary, NSFontAttributeName:kFontSectionHeader])
+        nameTextField.attributedPlaceholder = str3
+        
+        nameTextField.textColor = kColorBackground
+        nameTextField.font = kFontSectionHeader
+        
         loginButton.layer.cornerRadius = 15
         loginButton.setTitleColor(kColorTextMain, forState: .Normal)
         loginButton.titleLabel?.font = kFontCellTitle
@@ -72,31 +86,33 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         signupButton.setTitleColor(kColorTextSecondary, forState: .Normal)
         signupButton.titleLabel?.font = kFontSectionHeader
         
-        gradientView.backgroundColor = UIColor.clearColor()
+        
+        
+//        gradientView.backgroundColor = UIColor.clearColor()
     }
     
-    @IBOutlet weak var gradientView: UIView!
-    func doGradient() {
-        gradientView.backgroundColor = UIColor.clearColor()
-        loginButton.backgroundColor = UIColor.clearColor()
-
-        gradientView.frame = loginButton.frame
-        
-        let gl = CAGradientLayer()
-        gl.colors = [kColorLogoOrange.CGColor, kColorLogoRed.CGColor]
-        gl.locations = [0.0, 1.0]
-        gl.frame = gradientView.frame
-        
-        gradientView.layer.insertSublayer(gl, atIndex: 0)
-        gradientView.layer.cornerRadius = 15
-    }
+//    @IBOutlet weak var gradientView: UIView!
+//    func doGradient() {
+//        gradientView.backgroundColor = UIColor.clearColor()
+//        loginButton.backgroundColor = UIColor.clearColor()
+//
+//        gradientView.frame = loginButton.frame
+//        
+//        let gl = CAGradientLayer()
+//        gl.colors = [kColorLogoOrange.CGColor, kColorLogoRed.CGColor]
+//        gl.locations = [0.0, 1.0]
+//        gl.frame = gradientView.frame
+//        
+//        gradientView.layer.insertSublayer(gl, atIndex: 0)
+//        gradientView.layer.cornerRadius = 15
+//    }
     
     func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func signup(){
-        WebServices.signup(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
+        WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
             AuthManager.currentUser = user
             Utilities.postNotification(kNotificationIdentifierReloadConnections)

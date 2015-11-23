@@ -107,33 +107,20 @@ public class Habit: NSManagedObject {
     
     init(json: JSON) {
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        
         let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
-        
         super.init(entity: ed!, insertIntoManagedObjectContext: nil)
-        
+
         datesCompletedData = json["datesCompleted"].arrayObject!
-        
         frequencyInt = Frequency.frequencyForName(json["repeat"].stringValue).rawValue
-        
         name = json["name"].stringValue
-        
         let string = json["createdAt"].stringValue
-        
         createdAt = Utilities.dateFromString(string)
-        
 //        privat = json["private"].boolValue
-        
         remindAt = json["remindAt"].stringValue
-        
         timeOfDay = json["timeOfDay"].int16Value
-        
         timesToComplete = json["timesToComplete"].intValue
-        
         daysToComplete = json["daysToComplete"].arrayObject as! [String]
-        
         color = json["color"].stringValue
-        
         icon = json["icon"].stringValue
     }
     
@@ -332,6 +319,7 @@ public class Habit: NSManagedObject {
             if(completion.beginningOfDay...completion.endOfDay).contains(date) {
                 if let index = datesCompleted.indexOf(completion) {
                     datesCompleted.removeAtIndex(index)
+                    save()
                     return
                 }
             }

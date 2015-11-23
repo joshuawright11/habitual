@@ -17,10 +17,13 @@ class User: ParseObject {
     
     var connections:[Connection]
     
+    var name:String
+    
     init(){
         username = "0xdeadbeef"
         habits = []
         connections = []
+        name = ""
         super.init(parseObject: nil)
     }
     
@@ -35,6 +38,8 @@ class User: ParseObject {
         }
         
         connections = []
+        
+        name = parseUser["name"] as! String
         
         super.init(parseObject: parseUser)
     }

@@ -147,6 +147,7 @@ class HabitHomeCell: UITableViewCell {
         if habit.countCompletedIn(date, freq: habit.frequency) >= habit.timesToComplete {return}
 
         habit.datesCompleted.append(date)
+        habit.save()
         detailTextLabel?.text = subtitleText()
 
         if habit.countCompletedIn(date, freq: habit.frequency) == habit.timesToComplete {

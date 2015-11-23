@@ -39,7 +39,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationItem.rightBarButtonItem = button
         }
         else {
-            self.navigationItem.title = user?.username
+            self.navigationItem.title = user?.name.componentsSeparatedByString(" ")[0]
             
             let button = UIBarButtonItem(title: "Chat", style: .Plain, target: self, action: "chat")
             self.navigationItem.rightBarButtonItem = button
@@ -93,8 +93,6 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func getChartData() -> BarChartData {
-        
-        
         
         var dataSets: [BarChartDataSet] = []
         

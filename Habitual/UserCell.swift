@@ -24,7 +24,7 @@ class UserCell: UITableViewCell {
         self.connection = connection
         let user = connection.user
         initialsLabel.text = String(user.username.characters.first!).capitalizedString
-        titleLabel.text = user.username
+        titleLabel.text = user.name
         doAppearance()
     }
     

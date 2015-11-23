@@ -56,7 +56,7 @@ public class ForeignNotificationManager: NSObject {
         
         let push = PFObject(className: "Habit")
         
-        push["owner"] = user.username
+        push["owner"] = user.parseObject
         push["targetUsernames"] = habit.usernamesToNotify
         push["name"] = habit.name
         
@@ -95,7 +95,7 @@ public class ForeignNotificationManager: NSObject {
             if error == nil {
                 let push: PFObject = (array?.first)!
                 
-                push["owner"] = user.username
+                push["owner"] = user.parseObject!
                 push["targetUsernames"] = habit.usernamesToNotify
                 push["name"] = habit.name
                 push["due"] = habit.dueOn()
@@ -117,7 +117,7 @@ public class ForeignNotificationManager: NSObject {
         }
         
         let query: PFQuery = PFQuery(className: "Habit")
-        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("owner", equalTo: user.parseObject!)
         query.whereKey("name", equalTo: habit.name)
         query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
 
@@ -135,7 +135,7 @@ public class ForeignNotificationManager: NSObject {
         }
         
         let query: PFQuery = PFQuery(className: "Habit")
-        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("owner", equalTo: user.parseObject!)
         query.whereKey("name", equalTo: habit.name)
         query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
             
@@ -158,7 +158,7 @@ public class ForeignNotificationManager: NSObject {
         }
         
         let query: PFQuery = PFQuery(className: "Habit")
-        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("owner", equalTo: user.parseObject!)
         query.whereKey("name", equalTo: habit.name)
         query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
             

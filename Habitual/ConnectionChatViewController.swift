@@ -25,7 +25,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         senderId = AuthManager.currentUser?.username
         senderDisplayName = AuthManager.currentUser?.username
 
-        self.navigationItem.title = connection.user.username
+        self.navigationItem.title = connection.user.name.componentsSeparatedByString(" ")[0]
         
         let bif = JSQMessagesBubbleImageFactory()
         outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorRed)
@@ -38,6 +38,8 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.collectionView!.backgroundColor = kColorBackground.lightenByPercentage(0.02)
         self.collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
         self.collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+        
+        self.collectionView?.collectionViewLayout.messageBubbleFont = kFontMessage
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: Selector("pulse"))
         
@@ -55,7 +57,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         let tf = self.inputToolbar!.contentView!.textView!
         tf.textColor = kColorTextMain
         tf.tintColor = kColorTextMain
-        tf.font = kFontMessageTextView
+        tf.font = kFontMessage
     }
     
     func pulse() {
