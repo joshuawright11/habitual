@@ -88,12 +88,14 @@ public class ForeignNotificationManager: NSObject {
         }
         
         let query: PFQuery = PFQuery(className: "Habit")
-        query.whereKey("owner", equalTo: user.username)
+        query.whereKey("owner", equalTo: user.parseObject!)
         query.whereKey("name", equalTo: originalName)
         query.findObjectsInBackgroundWithBlock { (array, error) -> Void in
             
             if error == nil {
                 let push: PFObject = (array?.first)!
+                
+                print("hey")
                 
                 push["owner"] = user.parseObject!
                 push["targetUsernames"] = habit.usernamesToNotify

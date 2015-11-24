@@ -315,8 +315,25 @@ public class Habit: NSManagedObject {
     
     // uncomplete a habit on a certain date
     public func uncompleteOn(date: NSDate) {
+        
         for completion: NSDate in datesCompleted {
-            if(completion.beginningOfDay...completion.endOfDay).contains(date) {
+            
+            var beginning:NSDate
+            var end:NSDate
+            
+            switch frequency{
+            case .Daily:
+                beginning = completion.beginningOfDay
+                end = completion.endOfDay
+            case .Weekly:
+                beginning = completion.beginningOfWeek
+                end = completion.endOfWeek
+            case .Monthly:
+                beginning = completion.beginningOfMonth
+                end = completion.endOfMonth
+            }
+            
+            if(beginning...end).contains(date) {
                 if let index = datesCompleted.indexOf(completion) {
                     datesCompleted.removeAtIndex(index)
                     save()

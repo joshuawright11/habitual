@@ -27,6 +27,8 @@ let kNotificationIdentifierToggleAccountability = "ToggleAccountability"
 
 let kNotificationIdentifierReloadConnections = "ReloadConnections"
 
+let kNotificationChatReceived = "ChatReceived"
+
 /// **********
 /// * COLORS *
 /// **********

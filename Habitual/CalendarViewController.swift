@@ -65,6 +65,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func doAppearance(){
+        tableView.contentInset = UIEdgeInsets(top: 110, left: 0, bottom: 0, right: 0)
+        
         self.calendarView.backgroundColor = kColorBackground
         self.monthLabel.backgroundColor = kColorBackground
         self.menuView.backgroundColor = kColorBackground

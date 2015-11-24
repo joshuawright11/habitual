@@ -9,6 +9,7 @@
 import UIKit
 import JSQMessagesViewController
 import Parse
+import Timepiece
 
 class ConnectionChatViewController: JSQMessagesViewController {
     
@@ -24,17 +25,31 @@ class ConnectionChatViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Utilities.registerForNotification(self, selector: "chatReceived", name: kNotificationChatReceived)
+        
         senderId = AuthManager.currentUser?.username
         senderDisplayName = AuthManager.currentUser?.username
 
         self.navigationItem.title = connection.user.name.componentsSeparatedByString(" ")[0]
         
         let bif = JSQMessagesBubbleImageFactory()
-        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorAccentSecondary)
-        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(kColorGreen)
+        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorBlue)
+        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(kColorPurple)
         emptyBubbleImageData = JSQMessagesBubbleImage(messageBubbleImage: UIImage(), highlightedImage: UIImage())
         
         doAppearance()
+    }
+    
+    func chatReceived() {
+        self.connection.loadMessages { (success) -> () in
+            if success {
+                self.collectionView?.reloadData()
+                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                self.scrollToBottomAnimated(true)
+            }else{
+                print("error :(")
+            }
+        }
     }
     
     func doAppearance() {
@@ -122,14 +137,14 @@ class ConnectionChatViewController: JSQMessagesViewController {
     override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
         
         let message = connection.messages![indexPath.row]
-        return message.habit != nil ? attributedStringForHeaderWithMessage(message) : NSAttributedString(string: "jkkkfkds")
+        return message.habit != nil ? attributedStringForHeaderWithMessage(message) : NSAttributedString(string: "0xdeadbeef")
     }
     
     func attributedStringForHeaderWithMessage(message: Message) -> NSMutableAttributedString {
 
         let firstName = message.sender.name.componentsSeparatedByString(" ")[0]
         let habitName = message.habit!["name"] as! String
-        let due = Utilities.monthDayStringFromDate(message.habit!["due"] as! NSDate)
+        let due = Utilities.monthDayStringFromDate(message.timeStamp - 1.day)
         let goal = message.habit!["frequency"] as! String
         let timesMissed = "123"
         

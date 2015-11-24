@@ -16,7 +16,7 @@ class NotificationHandler: NSObject {
             PFPush.handlePush(userInfo)
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }else{
-            
+            Utilities.postNotification(kNotificationChatReceived)
         }
     }
 }
