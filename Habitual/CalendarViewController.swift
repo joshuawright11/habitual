@@ -71,7 +71,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.view.backgroundColor = kColorBackground
         self.tableView.backgroundColor = kColorBackground
         Styler.styleTitleLabel(self.monthLabel)
-        monthLabel.textColor = kColorTextSecondary
+        monthLabel.textColor = kColorTextMain
     }
     
     override func viewDidLayoutSubviews() {

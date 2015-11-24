@@ -77,7 +77,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             mail.mailComposeDelegate = self
             mail.setSubject("Ignite Feedback")
             mail.setToRecipients(["joshuawright11@gmail.com"])
+            self.presentViewController(mail, animated: true, completion: nil)
         }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func rateOnAppStore() {
