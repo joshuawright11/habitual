@@ -80,6 +80,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkmark_small" width="12" height="12"/>
+        <image name="checkmark_small" width="23" height="23"/>
     </resources>
 </document>

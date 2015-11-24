@@ -69,7 +69,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
             let usernameTextField = alert.textFields! [0] 
                 AuthManager.currentUser?.addConnection(usernameTextField.text!, callback: { (success) -> () in
-                    self.connections = AuthManager.currentUser?.connections
+                    if success {
+                        self.connections = AuthManager.currentUser?.connections
+                        Utilities.alert("User followed", vc: self)
+                    }else{
+                        Utilities.alert("User not found", vc: self)
+                    }
                 })
             })
         

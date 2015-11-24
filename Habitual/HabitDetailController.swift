@@ -55,8 +55,13 @@ class HabitDetailController: UITableViewController {
         self.tableView.backgroundColor = kColorBackground
     }
     
-    func done(sender: UIBarButtonItem){
+    func done(sender: UIBarButtonItem) {
 
+        if habit?.name == "" {
+            Utilities.alert("Your habit needs a name!", vc: self)
+            return
+        }
+        
         habit?.createdAt = NSDate()
         habit?.save()
         

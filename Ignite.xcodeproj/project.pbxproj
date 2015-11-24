@@ -28,6 +28,7 @@
 		034ADC181BFD828700593C4E /* User+Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC171BFD828700593C4E /* User+Web.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
+		039437741C04264800E8566D /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039437731C04264800E8566D /* NotificationHandler.swift */; };
 		039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC021B2AD1C7006EAFD9 /* WebManager.swift */; };
 		039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */; };
 		039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC071B2AD1F9006EAFD9 /* Constants.swift */; };
@@ -104,6 +105,7 @@
 		034ADC171BFD828700593C4E /* User+Web.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Web.swift"; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		039437731C04264800E8566D /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		039BFC021B2AD1C7006EAFD9 /* WebManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebManager.swift; sourceTree = "<group>"; };
 		039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		039BFC071B2AD1F9006EAFD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				03B6905E1B62C4B90040D924 /* ForeignNotificationManager.swift */,
 				03C8A3491BD1F2C3006E16B2 /* Ignite-Bridging-Header.h */,
 				033DE64D1BF1A94C00842C03 /* Styler.swift */,
+				039437731C04264800E8566D /* NotificationHandler.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				03ECDE3E1BF969CD00B9F9E7 /* RepeatCell.swift in Sources */,
 				034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */,
 				039BFC031B2AD1C7006EAFD9 /* WebManager.swift in Sources */,
+				039437741C04264800E8566D /* NotificationHandler.swift in Sources */,
 				0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */,
 				034ADC141BFD77F100593C4E /* Message.swift in Sources */,
 				033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */,

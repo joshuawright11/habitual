@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var notificationsLabel: UILabel!
     @IBOutlet weak var appBadgeLabel: UILabel!
@@ -71,7 +72,12 @@ class SettingsViewController: UITableViewController {
     }
     
     func submitFeedBack() {
-        
+        if(MFMailComposeViewController.canSendMail()) {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setSubject("Ignite Feedback")
+            mail.setToRecipients(["joshuawright11@gmail.com"])
+        }
     }
     
     func rateOnAppStore() {

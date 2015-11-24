@@ -107,11 +107,30 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
 //        gradientView.layer.cornerRadius = 15
 //    }
     
+    func inputIsValid(signup: Bool) -> Bool {
+        if(usernameTextField.text?.characters.count < 5){
+            Utilities.alert("Username must be at least 5 characters", vc: self)
+            return false
+        }else if(passwordTextField.text?.characters.count < 5){
+            Utilities.alert("Password must be at least 5 characters", vc: self)
+            return false
+        }else if(signup && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
+            Utilities.alert("Please enter your full name", vc: self)
+            return false
+        }
+        return true
+    }
+    
     func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func signup(){
+        
+        if !inputIsValid(true) {
+            return
+        }
+        
         WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
             AuthManager.currentUser = user
@@ -120,6 +139,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func login(){
+        
+        if !inputIsValid(false) {
+            return
+        }
+        
         WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
             AuthManager.currentUser = user

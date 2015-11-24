@@ -37,7 +37,13 @@ class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
         
         textField.text = habit.name
         
+        textField.addTarget(self, action: "textFieldChanged:", forControlEvents: .EditingChanged)
+        
         doAppearance()
+    }
+    
+    func textFieldChanged(textField: UITextField) {
+        habit?.name = textField.text!
     }
     
     // MARK - UITextFieldDelegate methods
