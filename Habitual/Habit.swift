@@ -29,7 +29,7 @@ public enum Frequency: Int16 {
         }
     }
     
-    public static func frequencyForName(name: String) -> Frequency{
+    public static func frequencyForName(name: String) -> Frequency {
         switch name {
         case "Daily":
             return .Daily

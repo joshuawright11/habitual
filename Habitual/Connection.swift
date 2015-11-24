@@ -67,6 +67,7 @@ class Connection: ParseObject {
         query.whereKey("connection", equalTo: self.parseObject!)
         query.orderByAscending("timeStamp")
         query.includeKey("sender")
+        query.includeKey("habit")
         query.findObjectsInBackgroundWithBlock { (parseObjects, error) -> Void in
             if let parseObjects = parseObjects {
                 var messages: [Message] = []

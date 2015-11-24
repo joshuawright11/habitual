@@ -43,7 +43,7 @@ let kColorLogoRed = UIColor(hexString: "FF0000")
 
 // Text Colors
 let kColorTextMain = UIColor(hexString: "FFFFFF")
-let kColorTextSecondary = UIColor(hexString: "A3B0B7")
+let kColorTextSecondary = UIColor(hexString: "717B80")
 
 // Rainbow
 let kColorPurple = UIColor(hexString: "C644FC");
@@ -66,7 +66,8 @@ let kFontName = "Avenir"
 // Main Fonts
 let kFontMainTitle = UIFont(name: kFontName+"-Light", size: 32.0)!
 let kFontBody = UIFont(name: kFontName, size: 16.0)!
-let kFontSecondary = UIFont(name: kFontName+"-Heavy", size: 12.0)!
+let kFontSecondary = UIFont(name: kFontName+"-Black", size: 12.0)!
+let kFontSecondaryLight = UIFont(name: kFontName, size: 12.0)!
 let kFontCalendar = UIFont(name: kFontName+"-Heavy", size: 18.0)!
 let kFontInitials = UIFont(name: kFontName, size: 24.0)!
 

@@ -12,12 +12,18 @@ import Parse
 class Message: ParseObject {
     var text: String
     var timeStamp: NSDate
-    var sender:User
+    var sender: User
+    var habit: PFObject?
     
     override init(parseObject: PFObject?) {
         text = parseObject!["text"] as! String
-        timeStamp = parseObject!["timeStamp"] as! NSDate
+        timeStamp = parseObject!.createdAt!
         sender = User(parseUser: parseObject!["sender"] as! PFUser)
+        if let po = parseObject!["habit"] {
+            habit = po as? PFObject
+        }else{
+            habit = nil
+        }
         
         super.init(parseObject: parseObject)
     }
@@ -26,11 +32,11 @@ class Message: ParseObject {
         self.text = text
         self.timeStamp = NSDate()
         self.sender = AuthManager.currentUser!
+        self.habit = nil
         
         let parseObject = PFObject(className: "Message")
         parseObject["connection"] = connection.parseObject
         parseObject["text"] = self.text
-        parseObject["timeStamp"] = self.timeStamp
         parseObject["sender"] = self.sender.parseObject
         
         super.init(parseObject: parseObject)

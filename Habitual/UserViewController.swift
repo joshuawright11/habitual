@@ -79,7 +79,9 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func settings() {
         let svc = storyboard?.instantiateViewControllerWithIdentifier("Settings") as! SettingsViewController
-        navigationController?.pushViewController(svc, animated: true)
+        let nvc = UINavigationController(rootViewController: svc)
+        nvc.modalTransitionStyle = .FlipHorizontal
+        presentViewController(nvc, animated: true, completion: nil)
     }
     
     func chat() {

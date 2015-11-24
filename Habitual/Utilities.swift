@@ -42,6 +42,14 @@ public class Utilities {
         return string
     }
     
+    public static func monthDayStringFromDate(date: NSDate) -> String {
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .LongStyle
+        
+        return dateFormatter.stringFromDate(date).componentsSeparatedByString(",")[0]
+    }
+    
     public static func registerForNotification(object: AnyObject, selector:Selector, name:String){
         
         NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: name, object: nil)

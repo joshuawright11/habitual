@@ -263,6 +263,7 @@
                             <constraint firstItem="psv-Mf-DQc" firstAttribute="leading" secondItem="GiE-q7-a0E" secondAttribute="leading" constant="35" id="nWD-mO-bui"/>
                             <constraint firstAttribute="trailing" secondItem="vsU-4D-drT" secondAttribute="trailing" constant="48" id="riE-DD-gLZ"/>
                             <constraint firstItem="vsU-4D-drT" firstAttribute="leading" secondItem="GiE-q7-a0E" secondAttribute="leading" constant="48" id="sH8-sO-EK5"/>
+                            <constraint firstItem="TVr-P9-QwZ" firstAttribute="width" secondItem="GiE-q7-a0E" secondAttribute="height" multiplier="37:200" id="sWB-oz-BQL"/>
                             <constraint firstAttribute="trailing" secondItem="psv-Mf-DQc" secondAttribute="trailing" constant="35" id="zWP-CD-b4V"/>
                         </constraints>
                         <variation key="default">
@@ -273,6 +274,7 @@
                             <mask key="constraints">
                                 <exclude reference="LHs-1x-lAo"/>
                                 <exclude reference="l5b-to-HHJ"/>
+                                <exclude reference="sWB-oz-BQL"/>
                                 <exclude reference="7gF-7U-B6w"/>
                                 <exclude reference="cYB-Lw-KZD"/>
                                 <exclude reference="riE-DD-gLZ"/>
@@ -303,6 +305,7 @@
                             <mask key="constraints">
                                 <include reference="LHs-1x-lAo"/>
                                 <include reference="l5b-to-HHJ"/>
+                                <include reference="sWB-oz-BQL"/>
                                 <include reference="7gF-7U-B6w"/>
                                 <include reference="cYB-Lw-KZD"/>
                                 <include reference="riE-DD-gLZ"/>
@@ -543,7 +546,7 @@
                                     <animations/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="wDE-5f-GXy" secondAttribute="centerY" constant="-0.5" id="LtH-Xj-Zve"/>
-                                        <constraint firstItem="wDE-5f-GXy" firstAttribute="leading" secondItem="cFh-68-zEj" secondAttribute="leading" constant="28" id="fUe-KW-R0O"/>
+                                        <constraint firstItem="wDE-5f-GXy" firstAttribute="leading" secondItem="cFh-68-zEj" secondAttribute="leading" constant="14" id="fUe-KW-R0O"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -2127,6 +2130,7 @@ I don't get this done on time</string>
                                         <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wcZ-nZ-XJq">
                                             <rect key="frame" x="343" y="6" width="51" height="31"/>
                                             <animations/>
+                                            <color key="onTintColor" red="0.94117647058823528" green="0.59607843137254901" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                                         </switch>
                                     </subviews>
                                     <animations/>
@@ -2210,7 +2214,7 @@ I don't get this done on time</string>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="These don't work yet" id="4Uy-nI-GTc">
+                            <tableViewSection headerTitle="Options" id="4Uy-nI-GTc">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oXU-Kw-A7v">
                                         <rect key="frame" x="0.0" y="50" width="600" height="44"/>
@@ -2229,6 +2233,7 @@ I don't get this done on time</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBk-GI-EPZ">
                                                     <rect key="frame" x="343" y="6" width="51" height="31"/>
                                                     <animations/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.59607843140000005" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                             </subviews>
                                             <animations/>
@@ -2258,6 +2263,7 @@ I don't get this done on time</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="800-YV-IXv">
                                                     <rect key="frame" x="343" y="6" width="51" height="31"/>
                                                     <animations/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.59607843140000005" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                             </subviews>
                                             <animations/>
@@ -2272,48 +2278,8 @@ I don't get this done on time</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="These don't either :'(" id="rT8-B3-vrx">
+                            <tableViewSection headerTitle="Social" id="rT8-B3-vrx">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="KTu-1b-SyX" style="IBUITableViewCellStyleDefault" id="EcL-ZW-zEy">
-                                        <rect key="frame" x="0.0" y="181" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EcL-ZW-zEy" id="dDj-cF-ApZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share on Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KTu-1b-SyX">
-                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Smo-tM-wHR" style="IBUITableViewCellStyleDefault" id="kQn-U3-dDH">
-                                        <rect key="frame" x="0.0" y="225" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQn-U3-dDH" id="7Ed-Zv-Wfw">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share via Text Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Smo-tM-wHR">
-                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vTz-wZ-l4B" style="IBUITableViewCellStyleDefault" id="D4F-IT-E6v">
                                         <rect key="frame" x="0.0" y="269" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -2321,7 +2287,91 @@ I don't get this done on time</string>
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share by Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vTz-wZ-l4B">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share on Twitter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vTz-wZ-l4B">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="eeI-67-Qsh" style="IBUITableViewCellStyleDefault" id="Vfd-IP-57L">
+                                        <rect key="frame" x="0.0" y="269" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vfd-IP-57L" id="8xs-5v-ABk">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share on Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eeI-67-Qsh">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="2jW-uG-cM9" style="IBUITableViewCellStyleDefault" id="dTK-7q-VH5">
+                                        <rect key="frame" x="0.0" y="269" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dTK-7q-VH5" id="srQ-Wa-nmn">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share by Text Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2jW-uG-cM9">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Feedback" id="4Jo-Wf-E55">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="UCw-mP-3qt" style="IBUITableViewCellStyleDefault" id="6Wo-ks-uN9">
+                                        <rect key="frame" x="0.0" y="269" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Wo-ks-uN9" id="8vc-4u-Qb2">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Submit feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UCw-mP-3qt">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="du2-yx-Scq" style="IBUITableViewCellStyleDefault" id="c35-q5-Crl">
+                                        <rect key="frame" x="0.0" y="269" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c35-q5-Crl" id="lMr-tn-RS2">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Rate on the App Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="du2-yx-Scq">
                                                     <rect key="frame" x="15" y="0.0" width="550" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
@@ -2343,10 +2393,14 @@ I don't get this done on time</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="R9a-5B-5c3"/>
+                    <connections>
+                        <outlet property="appBadgeLabel" destination="gEo-9b-7sK" id="at7-V2-Xg5"/>
+                        <outlet property="notificationsLabel" destination="hXP-54-Sr3" id="M2t-xq-wu2"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2In-JT-zIV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="1005.75"/>
+            <point key="canvasLocation" x="1059" y="1035.75"/>
         </scene>
         <!--Item-->
         <scene sceneID="Nu7-CZ-3lQ">
