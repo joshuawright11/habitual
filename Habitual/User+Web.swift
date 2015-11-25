@@ -34,22 +34,27 @@ extension User
     }
     
     func addConnection(username: String, callback:((success: Bool) -> ())?) {
-
-        let query = PFUser.query()
-        query!.whereKey("username", equalTo: username)
         
-        query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
+        let test = self.connections.filter({$0.user.username == username})
+        if test.count != 0 {
+            if let callback = callback { callback(success: false) }
+        }else{
+            let query = PFUser.query()
+            query!.whereKey("username", equalTo: username)
             
-            if let user = user{
-                let connection = Connection(user: User(parseUser: user as! PFUser))
-                connection.saveToServer()
+            query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
                 
-                self.connections.append(connection)
-                
-                if let callback = callback {callback(success: true)}
-            }else{
-                if let callback = callback {callback(success: false)}
-            }
-        })
+                if let user = user{
+                    let connection = Connection(user: User(parseUser: user as! PFUser))
+                    connection.saveToServer()
+                    
+                    self.connections.append(connection)
+                    
+                    if let callback = callback {callback(success: true)}
+                }else{
+                    if let callback = callback {callback(success: false)}
+                }
+            })
+        }
     }
 }

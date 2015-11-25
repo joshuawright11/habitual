@@ -13,13 +13,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
-
+    
     override func viewDidLoad() {
         doAppearance()
+        
+        setupKeyboardNotifications()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
@@ -28,9 +31,32 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = button
     }
     
+    func setupKeyboardNotifications() {
+        Utilities.registerForNotification(self, selector: "keyboardWasShown:", name: UIKeyboardDidShowNotification)
+        Utilities.registerForNotification(self, selector: "keyboardWillBeHidden:", name: UIKeyboardDidHideNotification)
+    }
+    
+    func keyboardWasShown(notification: NSNotification) {
+        let info = notification.userInfo!
+        let kbSize = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
+        let insets = UIEdgeInsetsMake(0, 0, kbSize!.height, 0)
+        scrollView.contentInset = insets
+        scrollView.scrollIndicatorInsets = insets
+        
+        
+        self.scrollView.scrollRectToVisible(passwordTextField.frame, animated: true)
+    }
+    
+    func keyboardWillBeHidden(notification: NSNotification) {
+        let insets = UIEdgeInsetsZero
+        scrollView.contentInset = insets
+        scrollView.scrollIndicatorInsets = insets
+    }
+    
     func dismissKeyboard() {
         usernameTextField.endEditing(true)
         passwordTextField.endEditing(true)
+        nameTextField.endEditing(true)
     }
     
     func doAppearance() {
@@ -85,27 +111,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         signupButton.setTitleColor(kColorTextSecondary, forState: .Normal)
         signupButton.titleLabel?.font = kFontSectionHeader
-        
-        
-        
-//        gradientView.backgroundColor = UIColor.clearColor()
     }
-    
-//    @IBOutlet weak var gradientView: UIView!
-//    func doGradient() {
-//        gradientView.backgroundColor = UIColor.clearColor()
-//        loginButton.backgroundColor = UIColor.clearColor()
-//
-//        gradientView.frame = loginButton.frame
-//        
-//        let gl = CAGradientLayer()
-//        gl.colors = [kColorLogoOrange.CGColor, kColorLogoRed.CGColor]
-//        gl.locations = [0.0, 1.0]
-//        gl.frame = gradientView.frame
-//        
-//        gradientView.layer.insertSublayer(gl, atIndex: 0)
-//        gradientView.layer.cornerRadius = 15
-//    }
     
     func inputIsValid(signup: Bool) -> Bool {
         if(usernameTextField.text?.characters.count < 5){
@@ -132,9 +138,14 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         }
         
         WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
-            self.dismissViewControllerAnimated(true, completion: nil)
-            AuthManager.currentUser = user
-            Utilities.postNotification(kNotificationIdentifierReloadConnections)
+            
+            if success {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                AuthManager.currentUser = user
+                Utilities.postNotification(kNotificationIdentifierReloadConnections)
+            }else{
+                Utilities.alert("There was a problem signing up", vc: self)
+            }
         }
     }
     
@@ -145,9 +156,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         }
         
         WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
-            self.dismissViewControllerAnimated(true, completion: nil)
-            AuthManager.currentUser = user
-            Utilities.postNotification(kNotificationIdentifierReloadConnections)
+            if success {
+                AuthManager.currentUser = user
+                Utilities.postNotification(kNotificationIdentifierReloadConnections)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }else{
+                Utilities.alert("There was a problem logging in", vc: self)
+            }
         }
     }
     

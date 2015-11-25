@@ -65,7 +65,7 @@ class UserCell: UITableViewCell {
         initialsLabel.font = kFontInitials
         initialsLabel.textColor = color
         
-//        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
+        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
         
         initialsLabel.layer.cornerRadius = 25.0
         initialsLabel.layer.borderWidth = 2.0

@@ -25,9 +25,13 @@ public class Utilities {
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.dateFormat = "YYYY-MM-DD:hh:mm:ss:ZZZZ"
         
-        let date: NSDate = dateFormatter.dateFromString(string)!;
+        let date: NSDate? = dateFormatter.dateFromString(string);
         
-        return date
+        if let date = date {
+            return date
+        }else{
+            return NSDate()
+        }
     }
     
     public static func stringFromDate(date: NSDate) -> String {
