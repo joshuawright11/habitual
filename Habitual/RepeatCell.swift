@@ -29,11 +29,11 @@ class RepeatCell: UITableViewCell, HabitDetailCell {
         selectionStyle = UITableViewCellSelectionStyle.None
         titleLabel.font = kFontSectionHeader
         titleLabel.textColor = kColorTextMain
-        dayButton.titleLabel!.font = kFontSectionHeader
+        dayButton.titleLabel!.font = kFontSectionHeaderBold
         dayButton.tintColor = kColorAccent
-        weekButton.titleLabel!.font = kFontSectionHeader
+        weekButton.titleLabel!.font = kFontSectionHeaderBold
         weekButton.tintColor = kColorAccent
-        monthButton.titleLabel!.font = kFontSectionHeader
+        monthButton.titleLabel!.font = kFontSectionHeaderBold
         monthButton.tintColor = kColorAccent
         
         dayButton.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)

@@ -28,7 +28,7 @@ class TimesCell: UITableViewCell, HabitDetailCell {
         selectionStyle = UITableViewCellSelectionStyle.None
         titleLabel.font = kFontSectionHeader
         titleLabel.textColor = kColorTextMain
-        timesLabel.font = kFontSectionHeader
+        timesLabel.font = kFontSectionHeaderBold
         timesLabel.textColor = kColorAccent
         
         stepper.tintColor = kColorAccent

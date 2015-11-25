@@ -18,11 +18,15 @@ class HabitHomeCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var checkmark: UIImageView!
-    
-    
     @IBOutlet weak var borderConstraint: NSLayoutConstraint!
     
     var pgr:UIPanGestureRecognizer? = nil
+    
+    private var date: NSDate!
+    private var habit: Habit!
+    
+    private var color: UIColor!
+    private var bgColor: UIColor!
     
     internal var data: (Habit, NSDate)!{
         get{
@@ -33,15 +37,11 @@ class HabitHomeCell: UITableViewCell {
             date = new.1
             
             color = UIColor(hexString: habit.color)
+            bgColor = color.colorWithAlphaComponent(0.1)
             
             doAppearance()
         }
     }
-    
-    private var date: NSDate!
-    private var habit: Habit!
-    
-    private var color: UIColor!
     
     init(style: UITableViewCellStyle, reuseIdentifier: String?, habit: Habit, date: NSDate) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -170,6 +170,8 @@ class HabitHomeCell: UITableViewCell {
         self.borderConstraint.constant = moveTo
         self.refreshLabels()
         
+        checkmark.alpha = 1.0
+        
         iv.tintColor = kColorTextSecondary
         
         self.titleLabel.textColor = kColorTextSecondary
@@ -183,6 +185,9 @@ class HabitHomeCell: UITableViewCell {
             self.refreshLabels()
             
         }
+        
+        checkmark.animation.makeAlpha(1.0).animate(kAnimationLength)
+        
         iv.tintColor = kColorTextSecondary
         
         self.titleLabel.textColor = kColorTextSecondary
@@ -209,10 +214,12 @@ class HabitHomeCell: UITableViewCell {
     }
     
     func instantUncomplete() {
-        borderView.backgroundColor = kColorBackground
+        borderView.backgroundColor = bgColor
         borderView.frame.origin.x = 14
         self.borderConstraint.constant = 14
         self.refreshLabels()
+        
+        checkmark.alpha = 0.0
         
         iv.tintColor = color
         
@@ -221,10 +228,13 @@ class HabitHomeCell: UITableViewCell {
     }
     
     func animateUncomplete() {
-        borderView.animation.makeX(14).easeInOut.makeBackground(kColorBackground).animateWithCompletion(kAnimationLength) {
+        borderView.animation.makeX(14).easeInOut.makeBackground(bgColor).animateWithCompletion(kAnimationLength) {
             self.borderConstraint.constant = 14
             self.refreshLabels()
         }
+        
+        checkmark.animation.makeAlpha(0.0).animate(kAnimationLength)
+        
         iv.tintColor = color
         
         self.titleLabel.textColor = kColorTextMain
@@ -254,6 +264,7 @@ class HabitHomeCell: UITableViewCell {
     }
     
     func doAppearance() {
+        
         titleLabel.textColor = kColorTextMain
         titleLabel.font = kFontCellTitle
         subtitleLabel.textColor = kColorTextMain
@@ -262,17 +273,18 @@ class HabitHomeCell: UITableViewCell {
         let image = UIImage(named: habit.icon)
         iv.backgroundColor = UIColor.clearColor()
         iv.contentMode = .ScaleAspectFit
-        iv.tintColor = UIColor(hexString: habit.color)
+        iv.tintColor = color
         iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
         backgroundColor = kColorBackground
         
-        self.borderView.backgroundColor = kColorBackground
+        self.borderView.backgroundColor = color
         
         checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
         checkmark.tintColor = kColorBackground
+        checkmark.alpha = 0.0
         
-        borderView.layer.cornerRadius = 30.0
+        borderView.layer.cornerRadius = 14.0
         borderView.layer.borderWidth = 2.0
         borderView.layer.borderColor = color.CGColor
     }

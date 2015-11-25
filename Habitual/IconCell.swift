@@ -48,11 +48,13 @@ class IconCell: UITableViewCell, HabitDetailCell {
             iv.addGestureRecognizer(tgr)
             dict[iv] = tgr
             
-            let path = iIconList[count++]
+            let path = iIconList[count%20]
             let image = UIImage(named: path)
             
+            count++
+            
             iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
-            iv.tintColor = kColorArray[count%7]
+            iv.tintColor = kColorArray[count%6]
             
             iv.accessibilityIdentifier = path
         }

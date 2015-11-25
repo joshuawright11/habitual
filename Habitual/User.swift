@@ -12,11 +12,8 @@ import Parse
 class User: ParseObject {
     
     let username:String
-    
     var habits:[Habit]
-    
     var connections:[Connection]
-    
     var name:String
     
     init(){

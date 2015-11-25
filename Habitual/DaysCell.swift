@@ -33,7 +33,7 @@ class DaysCell: UITableViewCell, HabitDetailCell {
             bt.backgroundColor = kColorBackground
             bt.layer.cornerRadius = 4.0
             bt.setTitleColor(kColorAccent, forState: .Normal)
-            bt.titleLabel?.font = kFontSectionHeader
+            bt.titleLabel?.font = kFontSectionHeaderBold
             
             bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
         }

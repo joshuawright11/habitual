@@ -35,6 +35,8 @@ let kNotificationChatReceived = "ChatReceived"
 
 // Main Colors
 let kColorBackground = UIColor(hexString: "242C33");
+let kColorBarBackground = UIColor(hexString: "1F262B")
+
 let kColorAccent = UIColor(hexString: "F09819");
 let kColorAccentSecondary = UIColor(hexString: "34AADC");
 let kColorTextViewBackground = UIColor(hexString: "E6E6E6")
@@ -63,28 +65,29 @@ let kColorArray = [kColorPurple, kColorBlue, kColorGreen, kColorYellow, kColorOr
 /// **********
 
 // Font Name
-let kFontName = "Avenir"
+let kFontName = "SanFranciscoDisplay"
 
 // Main Fonts
-let kFontMainTitle = UIFont(name: kFontName+"-Light", size: 32.0)!
-let kFontBody = UIFont(name: kFontName, size: 16.0)!
-let kFontSecondary = UIFont(name: kFontName+"-Black", size: 12.0)!
-let kFontSecondaryLight = UIFont(name: kFontName, size: 12.0)!
-let kFontCalendar = UIFont(name: kFontName+"-Heavy", size: 18.0)!
-let kFontInitials = UIFont(name: kFontName, size: 24.0)!
+let kFontMainTitle = UIFont.systemFontOfSize(32.0, weight: UIFontWeightUltraLight)
+let kFontBody = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
+let kFontSecondary = UIFont.systemFontOfSize(12.0, weight: UIFontWeightBold)
+let kFontSecondaryLight = UIFont.systemFontOfSize(12.0, weight: UIFontWeightRegular)
+let kFontCalendar = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
+let kFontInitials = UIFont.systemFontOfSize(24.0, weight: UIFontWeightLight)
 
 // Navigation Bar
-let kFontNavTitle = UIFont(name: kFontName+"-Heavy", size: 20.0)!
-let kFontNavButtons = UIFont(name: kFontName, size: 17.0)!
+let kFontNavTitle = UIFont.systemFontOfSize(22.0, weight: UIFontWeightLight)
+let kFontNavButtons = UIFont.systemFontOfSize(17.0, weight: UIFontWeightRegular)
 
 // Tab Bar
-let iFontTabBarTitle = UIFont(name: kFontName+"-Heavy", size: 10.0)!
+let iFontTabBarTitle = UIFont.systemFontOfSize(10.0, weight: UIFontWeightMedium)
 
 // Table Views
-let kFontCellTitle = UIFont(name: kFontName+"-Light", size: 20.0)!
-let kFontCellSubtitle = UIFont(name: kFontName+"-Light", size: 15.0)!
-let kFontSectionHeader = UIFont(name: kFontName+"-Heavy", size: 16.0)!
-let kFontMessage = UIFont(name: kFontName, size: 16.0)!
+let kFontCellTitle = UIFont.systemFontOfSize(20.0, weight: UIFontWeightRegular)
+let kFontCellSubtitle = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
+let kFontSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightRegular)
+let kFontSectionHeaderBold = UIFont.systemFontOfSize(18.0, weight: UIFontWeightMedium)
+let kFontMessage = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
 
 /// **********
 /// *  ICONS *

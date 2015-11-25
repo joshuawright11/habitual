@@ -454,7 +454,9 @@ public class Habit: NSManagedObject {
     
     func delete() {
         managedObjectContext?.deleteObject(self)
-        ForeignNotificationManager.deleteHabitForCurrentUser(self)
+        if(notificationsEnabled){
+            ForeignNotificationManager.deleteHabitForCurrentUser(self)
+        }
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
     }
 }

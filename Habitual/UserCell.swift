@@ -19,6 +19,7 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var acceptButton: UIButton!
     
     var connection:Connection!
+    var color: UIColor!
     
     func configure(connection: Connection) {
         self.connection = connection
@@ -37,7 +38,7 @@ class UserCell: UITableViewCell {
             subtitleLabel.text = connection.sentByCurrentUser ? "Pending acception" : "Wants to connect"
         }
         
-        let color = connection.approved ? kColorAccentSecondary : kColorTextSecondary
+        color = connection.approved ? kColorBlue : kColorTextSecondary
         let textColor = connection.approved ? kColorTextMain : kColorTextSecondary
         
         if connection.approved || connection.sentByCurrentUser {
@@ -64,12 +65,14 @@ class UserCell: UITableViewCell {
         initialsLabel.font = kFontInitials
         initialsLabel.textColor = color
         
+//        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
+        
         initialsLabel.layer.cornerRadius = 25.0
         initialsLabel.layer.borderWidth = 2.0
         initialsLabel.layer.borderColor = color.CGColor
         
-        borderView.backgroundColor = kColorBackground
-        borderView.layer.cornerRadius = 30.0
+        borderView.backgroundColor = color.colorWithAlphaComponent(0.3)
+        borderView.layer.cornerRadius = 15.0
         borderView.layer.borderWidth = 2.0
         borderView.layer.borderColor = color.CGColor
     }

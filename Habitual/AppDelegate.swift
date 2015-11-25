@@ -65,9 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITableViewCell.appearance().backgroundColor = kColorBackground
         
-        UITabBar.appearance().barTintColor = kColorBackground
+        UITabBar.appearance().barTintColor = kColorBarBackground
         UITabBar.appearance().tintColor = kColorAccent
-        UITabBar.appearance().translucent = true
+        UITabBar.appearance().translucent = false
         
         UIBarButtonItem.appearance().tintColor = kColorAccent
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontNavButtons], forState: UIControlState.Normal)
