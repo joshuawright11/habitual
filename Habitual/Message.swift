@@ -19,10 +19,10 @@ class Message: ParseObject {
     var sender: User
     var habit: PFObject?
     
-    override init(parseObject: PFObject?) {
-        text = parseObject!["text"] as! String
-        sender = User(parseUser: parseObject!["sender"] as! PFUser)
-        if let po = parseObject!["habit"] {
+    override init(parseObject: PFObject) {
+        text = parseObject["text"] as! String
+        sender = User(parseUser: parseObject["sender"] as! PFUser)
+        if let po = parseObject["habit"] {
             habit = po as? PFObject
         }else{
             habit = nil

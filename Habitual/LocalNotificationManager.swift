@@ -22,11 +22,8 @@ public func scheduleLocalNotifications() {
     if count > 0 && NSDate() < (NSDate.today() + 18.hours){
         let notification = UILocalNotification()
         notification.fireDate = NSDate.today() + 17.hours + 35.minutes
-        if #available(iOS 8.2, *) {
-            notification.alertTitle = "Habitual"
-        } else {
-            // Fallback on earlier versions
-        }
+        notification.alertTitle = "Habitual"
+
         notification.alertBody = "Don't forget you have habits to do today!"
         notification.repeatInterval = NSCalendarUnit.Day
         

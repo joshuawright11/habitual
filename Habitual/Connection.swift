@@ -14,6 +14,8 @@ class Connection: ParseObject {
     let sender:User
     let receiver:User
     var approved:Bool
+
+    var color: UIColor?
     
     var sentByCurrentUser: Bool {
         get{return AuthManager.currentUser?.username == sender.username}
@@ -45,10 +47,10 @@ class Connection: ParseObject {
         super.init(parseObject: parseObject)
     }
     
-    override init(parseObject: PFObject?) {
-        sender = User(parseUser: parseObject!["sender"] as! PFUser)
-        receiver = User(parseUser: parseObject!["receiver"] as! PFUser)
-        approved = parseObject!["approved"] as! Bool
+    override init(parseObject: PFObject) {
+        sender = User(parseUser: parseObject["sender"] as! PFUser)
+        receiver = User(parseUser: parseObject["receiver"] as! PFUser)
+        approved = parseObject["approved"] as! Bool
 
         super.init(parseObject: parseObject)
         

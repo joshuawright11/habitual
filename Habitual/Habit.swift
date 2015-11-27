@@ -1,170 +1,120 @@
 //
 //  Habit.swift
-//  Habitual
+//  Ignite
 //
-//  Created by Josh Wright on 7/11/15.
-//  Copyright (c) 2015 Josh Wright. All rights reserved.
+//  Created by Josh Wright on 11/25/15.
+//  Copyright © 2015 Josh Wright. All rights reserved.
 //
 
-import Foundation
-import CoreData
 import Timepiece
 import SwiftyJSON
+import Parse
 
-public enum Frequency: Int16 {
-    case Daily = 0
-    case Weekly = 1
-    case Monthly = 2
-    
-    static let allValues = [Daily, Weekly, Monthly]
-    
-    public func name() -> String{
-        switch self {
-        case .Daily:
-            return "Daily"
-        case .Weekly:
-            return "Weekly"
-        default:
-            return "Monthly"
-        }
-    }
-    
-    public static func frequencyForName(name: String) -> Frequency {
-        switch name {
-        case "Daily":
-            return .Daily
-        case "Weekly":
-            return .Weekly
-        default:
-            return .Monthly
-        }
-    }
-}
+public class Habit: ParseObject {
 
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩CLEAN  ME💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-// 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-@objc(Habit)
-public class Habit: NSManagedObject {
-    
-    @NSManaged var datesCompletedData: AnyObject
-    var datesCompleted: [NSDate] {
-        get{return datesCompletedData as? [NSDate] ?? []}
-        set{datesCompletedData = newValue}
-    }
-    
-    @NSManaged var frequencyInt: Int16
-    var frequency:Frequency { // Wrapper because enums can't be saved in Core Data
-        get{return Frequency(rawValue: frequencyInt) ?? .Daily}
-        set{frequencyInt = newValue.rawValue}
-    }
-    
-    @NSManaged var name: String
-    
-    @NSManaged var createdAt: NSDate
-    
-    @NSManaged var privat: Bool
-    
-    @NSManaged var remindAt: String
-    
-    @NSManaged var timeOfDay: Int16
-    
-    var timesToComplete: Int {
-        get{ return Int(timesToCompleteInt)}
-        set(newVal){timesToCompleteInt = Int64(newVal)}
-    }
-    
-    @NSManaged var timesToCompleteInt: Int64
-    
-    @NSManaged var daysToComplete: [String]
-    
-    @NSManaged var icon: String
-    
-    @NSManaged var color: String
-    
-    // Mark: - Notification data
-    
-    @NSManaged var notificationsEnabled: Bool
-    
-    @NSManaged var notificationSettingInt: Int16
-    var notificationSetting:NotificationSetting { // Wrapper because enums can't be saved in Core Data
-        get{return NotificationSetting(rawValue: notificationSettingInt) ?? .None}
-        set{notificationSettingInt = newValue.rawValue}
-    }
-    
-    @NSManaged var usernamesToNotify: [String]
-    
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-    }
-    
-    init(json: JSON) {
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
-        super.init(entity: ed!, insertIntoManagedObjectContext: nil)
+    var coreDataObject:HabitCoreData?
 
-        datesCompletedData = json["datesCompleted"].arrayObject!
-        frequencyInt = Frequency.frequencyForName(json["repeat"].stringValue).rawValue
-        name = json["name"].stringValue
-        let string = json["createdAt"].stringValue
-        createdAt = Utilities.dateFromString(string)
-//        privat = json["private"].boolValue
-        remindAt = json["remindAt"].stringValue
-        timeOfDay = json["timeOfDay"].int16Value
-        timesToComplete = json["timesToComplete"].intValue
-        daysToComplete = json["daysToComplete"].arrayObject as! [String]
-        color = json["color"].stringValue
-        icon = json["icon"].stringValue
-    }
+    var objectId: String
     
-    init() {
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let ed = NSEntityDescription.entityForName("Habit", inManagedObjectContext: managedObjectContext!)
-        super.init(entity: ed!, insertIntoManagedObjectContext: managedObjectContext)
+    var datesCompleted: [NSDate]
+    var frequency:Frequency
+    var name: String
+    var createdAt: NSDate
+    var privat: Bool
+    var remindUserAt: String
+    var notifyConnectionsAt: String
+    var timeOfDay: TimeOfDay
+    var timesToComplete: Int
+    var daysToComplete: [String]
+    var icon: String
+    var color: String
+    var notificationsEnabled: Bool
+    var notificationSettings:[NotificationSetting]
+    var usersToNotify: [User]
+    
+    override init() {
+        self.coreDataObject = nil
+        objectId = ""
         
+        datesCompleted = []
+        frequency = .Daily
+        name = ""
+        createdAt = NSDate()
+        privat = false
+        remindUserAt = ""
+        notifyConnectionsAt = ""
+        timeOfDay = .Morning
+        timesToComplete = 1
+        daysToComplete = ["M","T","W","R","F","Sa","Su"]
         icon = "flash"
         color = kColorPurple.hexString
-        name = ""
-        frequency = .Daily
-        daysToComplete = ["M","T","W","R","F","Sa","Su"]
-        timesToComplete = 1
-        datesCompleted = []
         notificationsEnabled = false
-        notificationSetting = .EveryMiss
-        usernamesToNotify = []
-    }
-    
-    static func deleteHabit(habit: Habit) {
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        managedObjectContext?.deleteObject(habit)
-    }
-    
-    public func toJSON() -> JSON {
+        notificationSettings = [.None]
+        usersToNotify = []
         
-        let json:JSON = JSON([
-            "name":name,
-            "repeat":frequency.name(),
-            "datesCompleted":datesCompleted,
-            "notificationsEnabled":notificationsEnabled,
-            "notificationSetting":notificationSetting.toString(),
-            "usernamesToNotify":usernamesToNotify,
-            "createdAt":Utilities.stringFromDate(createdAt),
-            "private":false,
-            "remindAt":"",
-            "timeOfDay":0,
-            "timesToComplete":timesToComplete,
-            "daysToComplete":daysToComplete,
-            "color":color,
-            "icon":icon])
-        return json
+        super.init()
     }
+    
+    override init(parseObject: PFObject) {
+        coreDataObject = nil
+        objectId = parseObject.objectId!
+        
+        datesCompleted = parseObject["datesCompleted"] as! [NSDate]
+        frequency = Frequency(rawValue: parseObject["frequency"] as! Int16)!
+        name = parseObject["name"] as! String
+        createdAt = parseObject["creationDate"] as! NSDate
+        privat = parseObject["private"] as! Bool
+        remindUserAt = ""
+        notifyConnectionsAt = ""
+        timeOfDay = .Morning
+        timesToComplete = parseObject["timesToComplete"] as! Int
+        daysToComplete = parseObject["daysToComplete"] as! [String]
+        icon = parseObject["icon"] as! String
+        color = parseObject["color"] as! String
+        notificationsEnabled = parseObject["notificationsEnabled"] as! Bool
+        notificationSettings = [.None]
+        usersToNotify = []
+        for userPO in parseObject["usersToNotify"] as! [PFUser] {
+            usersToNotify.append(User(parseUser: userPO))
+        }
+        
+        super.init(parseObject: parseObject)
+    }
+    
+    init(coreDataObject: HabitCoreData) {
+        self.coreDataObject = coreDataObject
+        objectId = coreDataObject.objectId
+        
+        datesCompleted = coreDataObject.datesCompleted
+        frequency = coreDataObject.frequency
+        name = coreDataObject.name
+        createdAt = coreDataObject.createdAt
+        privat = coreDataObject.privat
+        remindUserAt = coreDataObject.remindUserAt
+        notifyConnectionsAt = coreDataObject.notifyConnectionsAt
+        timeOfDay = TimeOfDay(rawValue: coreDataObject.timeOfDayInt)!
+        timesToComplete = coreDataObject.timesToComplete
+        daysToComplete = coreDataObject.daysToComplete
+        icon = coreDataObject.icon
+        color = coreDataObject.color
+        notificationsEnabled = coreDataObject.notificationsEnabled
+        notificationSettings = coreDataObject.notificationSettings
+        usersToNotify = []
+        
+        super.init()
+    }
+    
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩 CLEAN ME    💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
+    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
     
     public func availableOn(date: NSDate) -> Bool {
         
@@ -249,7 +199,7 @@ public class Habit: NSManagedObject {
     }
     
     public func currentStreak() -> Int {
-
+        
         if datesCompleted.count == 0 {
             return 0
         } else {
@@ -336,7 +286,7 @@ public class Habit: NSManagedObject {
             if(beginning...end).contains(date) {
                 if let index = datesCompleted.indexOf(completion) {
                     datesCompleted.removeAtIndex(index)
-                    save()
+                    saveToCoreData()
                     return
                 }
             }
@@ -346,7 +296,7 @@ public class Habit: NSManagedObject {
     // return true if completing a habit on this date would alter future push notifications
     // based on frequency
     public func dateInCurrentFrequency(date: NSDate) -> Bool {
-
+        
         let now = NSDate()
         
         switch frequency {
@@ -442,21 +392,5 @@ public class Habit: NSManagedObject {
         
         let perc = (Double(datesCompleted.count)/unitsSinceBegan)*100.0
         return perc/Double(timesToComplete)
-    }
-    
-    func save() {
-        do {
-            try managedObjectContext?.save()
-        } catch let error as NSError {
-            print("awww error: " + error.description)
-        }
-    }
-    
-    func delete() {
-        managedObjectContext?.deleteObject(self)
-        if(notificationsEnabled){
-            ForeignNotificationManager.deleteHabitForCurrentUser(self)
-        }
-        Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
     }
 }

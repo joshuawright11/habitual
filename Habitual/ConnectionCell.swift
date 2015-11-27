@@ -16,7 +16,7 @@ class ConnectionCell: UITableViewCell {
     @IBOutlet weak var checkiv: UIImageView!
 
     var habit:Habit?
-    var username:String?
+    var user:User!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,11 +28,11 @@ class ConnectionCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         if selected {
-            if habit!.usernamesToNotify.contains(username!) {
-                habit!.usernamesToNotify.removeAtIndex(habit!.usernamesToNotify.indexOf(username!)!)
+            if habit!.usersToNotify.contains(user) {
+                habit!.usersToNotify.removeAtIndex(habit!.usersToNotify.indexOf(user)!)
                 checkiv.tintColor = kColorBackground
             }else{
-                habit!.usernamesToNotify.append(username!)
+                habit!.usersToNotify.append(user)
                 checkiv.tintColor = kColorAccent
             }
         }
@@ -42,8 +42,11 @@ class ConnectionCell: UITableViewCell {
         selectionStyle = UITableViewCellSelectionStyle.None
         nameLabel.font = kFontSectionHeader
         nameLabel.textColor = kColorTextMain
-        nameLabel.text = username!
-        initialsLabel.text = String(username!.capitalizedString.characters.first!)
+        nameLabel.text = user?.name
+        
+        let names:[String] = user!.name.componentsSeparatedByString(" ")
+        
+        initialsLabel.text = String(names[0].characters.first) + String(names[1].characters.first)
         
         initialsLabel.font = kFontInitials
         initialsLabel.textColor = kColorRed
@@ -53,12 +56,12 @@ class ConnectionCell: UITableViewCell {
         initialsLabel.layer.borderColor = kColorRed.CGColor
         
         checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        checkiv.tintColor = habit!.usernamesToNotify.contains(username!) ? kColorAccent : kColorBackground
+        checkiv.tintColor = habit!.usersToNotify.contains(user) ? kColorAccent : kColorBackground
     }
     
     func configure(habit: Habit, index: Int) {
         self.habit = habit
-        self.username = AuthManager.currentUser?.connections[index].user.username
+        self.user = AuthManager.currentUser?.connections[index].user
         doAppearance()
     }
 }

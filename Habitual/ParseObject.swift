@@ -9,10 +9,16 @@
 import UIKit
 import Parse
 
-class ParseObject: NSObject {
+public class ParseObject: NSObject {
     var parseObject: PFObject?
     
-    init(parseObject: PFObject?) {
+    override init() {
+        self.parseObject = nil
+        super.init()
+    }
+    
+    init(parseObject: PFObject) {
         self.parseObject = parseObject
+        super.init()
     }
 }

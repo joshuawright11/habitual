@@ -20,6 +20,8 @@ extension User
         let or = PFQuery.orQueryWithSubqueries([sender, receiver])
         or.includeKey("sender")
         or.includeKey("receiver")
+        or.includeKey("sender.habits")
+        or.includeKey("receiver.habits")
         or.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let objects = objects {
                 self.connections = []

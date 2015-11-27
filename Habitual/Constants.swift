@@ -19,6 +19,10 @@ let kKeychainUserAccount = "Habitual"
 /// * Notifications *
 /// *****************
 
+struct Notifications {
+    
+}
+
 let kNotificationIdentifierHabitAddedOrDeleted = "HabitAddedOrDeleted"
 let kNotificationIdentifierHabitDataChanged = "HabitDataChanged"
 
@@ -32,6 +36,10 @@ let kNotificationChatReceived = "ChatReceived"
 /// **********
 /// * COLORS *
 /// **********
+
+struct Colors {
+    
+}
 
 // Main Colors
 let kColorBackground = UIColor(hexString: "242C33");
@@ -64,6 +72,10 @@ let kColorArray = [kColorPurple, kColorBlue, kColorGreen, kColorYellow, kColorOr
 /// *  FONTS *
 /// **********
 
+struct Fonts {
+    
+}
+
 // Font Name
 let kFontName = "SanFranciscoDisplay"
 
@@ -92,6 +104,10 @@ let kFontMessage = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
 /// **********
 /// *  ICONS *
 /// **********
+
+struct Icons {
+    
+}
 
 let iIconList = [
     "flash",

@@ -54,7 +54,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     func refreshData(){
         loggedIn = true
         
-        AuthManager.reloadConnectionsData { (success) -> () in
+        let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
+        self.navigationItem.rightBarButtonItem = button
+        
+        AuthManager.currentUser?.getConnections() { (success) -> () in
             if success {
                 self.connections = AuthManager.currentUser?.connections
                 self.tableView.reloadData()
@@ -113,7 +116,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
-        cell.configure(connections![indexPath.row])
+        let connection = connections![indexPath.row]
+        connection.color = kColorArray[indexPath.row % 6]
+        cell.configure(connection)
         return cell
     }
     

@@ -63,7 +63,7 @@ class HabitDetailController: UITableViewController {
         }
         
         habit?.createdAt = NSDate()
-        habit?.save()
+        habit?.saveToCoreData()
         
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
@@ -90,7 +90,11 @@ class HabitDetailController: UITableViewController {
             
         } else {
             
-            habit?.save()
+            if habit?.coreDataObject == nil {
+                AuthManager.currentUser?.habits.append(habit!)
+            }
+            
+            habit?.saveToCoreData()
             
             self.tableView.deleteSections(NSIndexSet(index: AuthManager.socialEnabled ? 3 : 2), withRowAnimation: .Automatic)
             
@@ -100,11 +104,11 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
             if originalHabitState! && !habit!.notificationsEnabled {
-                ForeignNotificationManager.deleteHabitForCurrentUser(habit!)
+                habit?.deleteFromServer()
             }else if !originalHabitState! && habit!.notificationsEnabled {
-                ForeignNotificationManager.uploadHabitForCurrentUser(habit!)
+                habit?.uploadToServer()
             }else if habit!.notificationsEnabled {
-                ForeignNotificationManager.updateHabitForCurrentUser(habit!, originalName: originalHabitName!)
+                habit?.uploadToServer()
             }
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
@@ -161,7 +165,8 @@ class HabitDetailController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) in
-            self.habit?.delete()
+            AuthManager.currentUser!.habits.removeAtIndex(AuthManager.currentUser!.habits.indexOf(self.habit!)!)
+            self.habit?.deleteFromCoreData()
             self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         
@@ -289,7 +294,7 @@ class HabitDetailController: UITableViewController {
         super.willMoveToParentViewController(parent)
         
         if habit?.createdAt == nil && parent == nil{
-            habit?.delete()
+            habit?.deleteFromCoreData()
         }
     }
 }

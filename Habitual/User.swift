@@ -16,28 +16,26 @@ class User: ParseObject {
     var connections:[Connection]
     var name:String
     
-    init(){
+    override init(){
         username = "0xdeadbeef"
         habits = []
         connections = []
         name = ""
-        super.init(parseObject: nil)
+        
+        super.init()
     }
     
     init(parseUser: PFUser) {
         username = parseUser.username!
-        
         habits = []
         
-        for json:AnyObject in parseUser["habits"] as! Array<AnyObject> {
-            let json = JSON(json)
-            habits.append(Habit(json: json))
+        if PFUser.currentUser()!.objectId != parseUser.objectId {
+            for parseObject in parseUser["habits"] as! [PFObject] {
+                habits.append(Habit(parseObject: parseObject))
+            }
         }
-        
         connections = []
-        
         name = parseUser["name"] as! String
-        
         super.init(parseObject: parseUser)
     }
     

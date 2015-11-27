@@ -24,6 +24,11 @@ public class WebServices: NSObject {
                 installation.saveInBackground()
                 
                 let user: User = User(parseUser: userLogged!)
+                user.habits = AuthManager.currentUser!.habits
+                
+                AuthManager.currentUser = user
+                
+                syncDataForCurrentUser(nil)
                 
                 if let callback = callback {callback(success: true, user: user)}
             }else{
@@ -49,6 +54,11 @@ public class WebServices: NSObject {
                 installation.saveInBackground()
                 
                 let newUser: User = User(parseUser: user)
+                newUser.habits = AuthManager.currentUser!.habits
+                
+                AuthManager.currentUser = newUser
+                
+                syncDataForCurrentUser(nil)
                 
                 if let callback = callback {callback(success: true, user: newUser)}
             }else{
@@ -57,19 +67,10 @@ public class WebServices: NSObject {
         }
     }
     
-    static func syncDataForUser(callback: ((success: Bool) -> ())?) {
+    static func syncDataForCurrentUser(callback: ((success: Bool) -> ())?) {
         
-        if let user = PFUser.currentUser(){
-            var array:[JSON] = []
-            
-            for habit:Habit in AuthManager.currentUser!.habits {
-                array.append(habit.toJSON())
-            }
-            
-            user["habits"] = JSON(array).arrayObject
-            user.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                if let callback = callback {callback(success: success)}
-            })
+        for habit:Habit in AuthManager.currentUser!.habits {
+            habit.uploadToServer()
         }
     }
 }
