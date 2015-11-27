@@ -25,8 +25,11 @@ extension User
         or.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let objects = objects {
                 self.connections = []
+                var count = 0
                 for o in objects {
-                    self.connections.append(Connection(parseObject: o))
+                    let connection = Connection(parseObject: o)
+                    connection.color = kColorArray[count++ % 6]
+                    self.connections.append(connection)
                 }
                 if let callback = callback {
                     callback(success: true)

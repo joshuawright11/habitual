@@ -116,9 +116,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
-        let connection = connections![indexPath.row]
-        connection.color = kColorArray[indexPath.row % 6]
-        cell.configure(connection)
+        cell.configure(connections![indexPath.row])
         return cell
     }
     
