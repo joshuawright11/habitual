@@ -24,7 +24,10 @@ class UserCell: UITableViewCell {
     func configure(connection: Connection) {
         self.connection = connection
         let user = connection.user
-        initialsLabel.text = String(user.username.characters.first!).capitalizedString
+        
+        let names = user.name.componentsSeparatedByString(" ")
+        
+        initialsLabel.text = (String(names[0].characters.first!) + String(names[1].characters.first!)).uppercaseString
         titleLabel.text = user.name
         doAppearance()
     }
@@ -38,7 +41,7 @@ class UserCell: UITableViewCell {
             subtitleLabel.text = connection.sentByCurrentUser ? "Pending acception" : "Wants to connect"
         }
         
-        color = connection.approved ? kColorBlue : kColorTextSecondary
+        color = connection.approved ? connection.color : kColorTextSecondary
         let textColor = connection.approved ? kColorTextMain : kColorTextSecondary
         
         if connection.approved || connection.sentByCurrentUser {

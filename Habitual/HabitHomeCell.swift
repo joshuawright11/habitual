@@ -147,7 +147,7 @@ class HabitHomeCell: UITableViewCell {
         if habit.countCompletedIn(date, freq: habit.frequency) >= habit.timesToComplete {return}
 
         habit.datesCompleted.append(date)
-        habit.save()
+        habit.saveToCoreData()
         detailTextLabel?.text = subtitleText()
 
         if habit.countCompletedIn(date, freq: habit.frequency) == habit.timesToComplete {
@@ -158,7 +158,7 @@ class HabitHomeCell: UITableViewCell {
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         if habit.notificationsEnabled && habit.dateInCurrentFrequency(date) {
-            ForeignNotificationManager.completeHabitForCurrentUser(habit)
+            habit.uploadToServer()
         }
     }
     
@@ -209,7 +209,7 @@ class HabitHomeCell: UITableViewCell {
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         if habit.notificationsEnabled && habit.canDo() {
-            ForeignNotificationManager.uncompleteHabitForCurrentUser(habit)
+            habit.uploadToServer()
         }
     }
     

@@ -9,14 +9,16 @@
         <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notificationsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="notificationSettingInt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="private" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="remindAt" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timeOfDay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="notificationSettingsInts" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="notifyConnectionsAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="privat" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="remindUserAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeOfDayInt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timesToCompleteInt" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="usernamesToNotify" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Habit" positionX="-63" positionY="-18" width="128" height="255"/>
+        <element name="Habit" positionX="-63" positionY="-18" width="128" height="285"/>
     </elements>
 </model>

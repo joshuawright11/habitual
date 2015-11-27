@@ -42,21 +42,17 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationItem.title = "Habits"
         
         habits = AuthManager.currentUser!.habits
-     
+        
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
         let months = ["January","February","March","April",
             "May","June","July","August","September","October",
             "November","December"]
         self.monthLabel.text = months[selectedDate.month-1]
-        
         self.calendarView.changeDaysOutShowingState(false)
-        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
-        
         self.tableView.tableFooterView = UIView()
-        
         self.tableView.reloadData()
         
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
@@ -84,12 +80,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func refreshData(){
-        habits = AuthManager.reloadHabits()!
+        habits = AuthManager.currentUser!.habits
         self.tableView.reloadData()
     }
     
     @IBAction func clearData(){
-        AuthManager.clearHabitsOfCurrentUser()
+        CoreDataManager.clearHabitsOfCurrentUser()
         self.refreshData()
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
     }

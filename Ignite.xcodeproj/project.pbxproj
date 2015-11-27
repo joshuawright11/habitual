@@ -26,6 +26,11 @@
 		034ADC141BFD77F100593C4E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC131BFD77F100593C4E /* Message.swift */; };
 		034ADC161BFD804300593C4E /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC151BFD804300593C4E /* ParseObject.swift */; };
 		034ADC181BFD828700593C4E /* User+Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC171BFD828700593C4E /* User+Web.swift */; };
+		034E13251C07E61F00EC3BCC /* Habit+Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13241C07E61F00EC3BCC /* Habit+Web.swift */; };
+		034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13281C07E68F00EC3BCC /* NotificationSetting.swift */; };
+		034E132D1C07E6F400EC3BCC /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132C1C07E6F400EC3BCC /* Frequency.swift */; };
+		034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */; };
+		034E13311C07F1E100EC3BCC /* Habit+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		039437741C04264800E8566D /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039437731C04264800E8566D /* NotificationHandler.swift */; };
@@ -37,13 +42,14 @@
 		03B488131B509C390077E601 /* HabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488111B509C390077E601 /* HabitCell.swift */; };
 		03B488141B509C390077E601 /* HabitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03B488121B509C390077E601 /* HabitCell.xib */; };
 		03B488161B509CAA0077E601 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488151B509CAA0077E601 /* CalendarViewController.swift */; };
-		03B6905F1B62C4B90040D924 /* ForeignNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B6905E1B62C4B90040D924 /* ForeignNotificationManager.swift */; };
 		03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13441B5DB82900504A63 /* MainTabBarController.swift */; };
 		03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */; };
 		03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */; };
+		03DD15DD1C059BBF0099C497 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD15DC1C059BBF0099C497 /* CoreDataManager.swift */; };
+		03DD15DF1C05A1780099C497 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD15DE1C05A1780099C497 /* Habit.swift */; };
 		03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */; };
 		03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */; };
-		03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2E21B51A23400484DB6 /* Habit.swift */; };
+		03E6F2E31B51A23400484DB6 /* HabitCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6F2E21B51A23400484DB6 /* HabitCoreData.swift */; };
 		03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */; };
 		03EBFE551BC9972600F0777C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE4D1BC9972600F0777C /* Alamofire.framework */; };
 		03EBFE561BC9972600F0777C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE4E1BC9972600F0777C /* Bolts.framework */; };
@@ -103,6 +109,11 @@
 		034ADC131BFD77F100593C4E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		034ADC151BFD804300593C4E /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		034ADC171BFD828700593C4E /* User+Web.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Web.swift"; sourceTree = "<group>"; };
+		034E13241C07E61F00EC3BCC /* Habit+Web.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Habit+Web.swift"; sourceTree = "<group>"; };
+		034E13281C07E68F00EC3BCC /* NotificationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
+		034E132C1C07E6F400EC3BCC /* Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
+		034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
+		034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Habit+CoreData.swift"; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		039437731C04264800E8566D /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
@@ -114,11 +125,12 @@
 		03B488111B509C390077E601 /* HabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCell.swift; sourceTree = "<group>"; };
 		03B488121B509C390077E601 /* HabitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitCell.xib; sourceTree = "<group>"; };
 		03B488151B509CAA0077E601 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		03B6905E1B62C4B90040D924 /* ForeignNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignNotificationManager.swift; sourceTree = "<group>"; };
 		03BA13441B5DB82900504A63 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		03C8A3491BD1F2C3006E16B2 /* Ignite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Ignite-Bridging-Header.h"; sourceTree = "<group>"; };
 		03CB427D1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectConnectionsTableViewController.swift; sourceTree = "<group>"; };
+		03DD15DC1C059BBF0099C497 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		03DD15DE1C05A1780099C497 /* Habit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		03DF8E171B5F191B00C6DC78 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		03DF8E191B5F192000C6DC78 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		03DF8E1B1B5F192700C6DC78 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -133,7 +145,7 @@
 		03DF8E2D1B5F196800C6DC78 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		03DF8E2F1B602A3000C6DC78 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		03E6F2D81B51998600484DB6 /* HabitualModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabitualModel.xcdatamodel; sourceTree = "<group>"; };
-		03E6F2E21B51A23400484DB6 /* Habit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		03E6F2E21B51A23400484DB6 /* HabitCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCoreData.swift; sourceTree = "<group>"; };
 		03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitDetailController.swift; sourceTree = "<group>"; };
 		03EBFE3B1BC9943800F0777C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		03EBFE3D1BC9949800F0777C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
@@ -218,7 +230,7 @@
 				031D28231B29D4C10060263A /* Views */,
 				031D28241B29D4C60060263A /* Controllers */,
 				031D28251B29D57F0060263A /* Stores */,
-				032EEBE61BF81BA40094F179 /* Extensions */,
+				034E13271C07E66500EC3BCC /* Enums */,
 				039BFC061B2AD1E3006EAFD9 /* Helpers */,
 				03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */,
 				031D28061B29D1300060263A /* Main.storyboard */,
@@ -257,11 +269,12 @@
 		031D28221B29D4BA0060263A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				03E6F2E21B51A23400484DB6 /* Habit.swift */,
+				03E6F2E21B51A23400484DB6 /* HabitCoreData.swift */,
 				039BFC0D1B2AE10B006EAFD9 /* User.swift */,
 				034ADC111BFD77E600593C4E /* Connection.swift */,
 				034ADC131BFD77F100593C4E /* Message.swift */,
 				034ADC151BFD804300593C4E /* ParseObject.swift */,
+				03DD15DE1C05A1780099C497 /* Habit.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -302,19 +315,12 @@
 			children = (
 				039BFC041B2AD1DF006EAFD9 /* AuthManager.swift */,
 				039BFC021B2AD1C7006EAFD9 /* WebManager.swift */,
+				03DD15DC1C059BBF0099C497 /* CoreDataManager.swift */,
 				034ADC171BFD828700593C4E /* User+Web.swift */,
+				034E13241C07E61F00EC3BCC /* Habit+Web.swift */,
+				034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */,
 			);
 			name = Stores;
-			sourceTree = "<group>";
-		};
-		032EEBE61BF81BA40094F179 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				032EEBE71BF81C3C0094F179 /* UIAppearance+Swift.h */,
-				032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */,
-				03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */,
-			);
-			name = Extensions;
 			sourceTree = "<group>";
 		};
 		034ADC081BFAC6AD00593C4E /* StatCells */ = {
@@ -325,14 +331,34 @@
 			name = StatCells;
 			sourceTree = "<group>";
 		};
+		034E13271C07E66500EC3BCC /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				034E13281C07E68F00EC3BCC /* NotificationSetting.swift */,
+				034E132C1C07E6F400EC3BCC /* Frequency.swift */,
+				034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */,
+			);
+			name = Enums;
+			sourceTree = "<group>";
+		};
+		034E13321C07F2B500EC3BCC /* Helper Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				032EEBE71BF81C3C0094F179 /* UIAppearance+Swift.h */,
+				032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */,
+				03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */,
+			);
+			name = "Helper Extensions";
+			sourceTree = "<group>";
+		};
 		039BFC061B2AD1E3006EAFD9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				034E13321C07F2B500EC3BCC /* Helper Extensions */,
 				039BFC071B2AD1F9006EAFD9 /* Constants.swift */,
 				0336741D1BCF477500AA87C2 /* SecretConstants.swift */,
 				039BFC091B2AD234006EAFD9 /* Utilities.swift */,
 				03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */,
-				03B6905E1B62C4B90040D924 /* ForeignNotificationManager.swift */,
 				03C8A3491BD1F2C3006E16B2 /* Ignite-Bridging-Header.h */,
 				033DE64D1BF1A94C00842C03 /* Styler.swift */,
 				039437731C04264800E8566D /* NotificationHandler.swift */,
@@ -556,36 +582,42 @@
 				03ECDE421BF969F700B9F9E7 /* TimesCell.swift in Sources */,
 				039BFC0A1B2AD234006EAFD9 /* Utilities.swift in Sources */,
 				03ECDE4E1BF96F1900B9F9E7 /* HabitDetailCell.swift in Sources */,
-				03E6F2E31B51A23400484DB6 /* Habit.swift in Sources */,
-				03B6905F1B62C4B90040D924 /* ForeignNotificationManager.swift in Sources */,
+				03E6F2E31B51A23400484DB6 /* HabitCoreData.swift in Sources */,
 				033DE64E1BF1A94C00842C03 /* Styler.swift in Sources */,
+				034E13311C07F1E100EC3BCC /* Habit+CoreData.swift in Sources */,
 				03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */,
 				03B488161B509CAA0077E601 /* CalendarViewController.swift in Sources */,
 				03ECDE401BF969D700B9F9E7 /* DaysCell.swift in Sources */,
 				039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */,
 				0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */,
 				03ECDE3C1BF969C200B9F9E7 /* ColorCell.swift in Sources */,
+				034E132D1C07E6F400EC3BCC /* Frequency.swift in Sources */,
 				034ADC181BFD828700593C4E /* User+Web.swift in Sources */,
 				034ADC121BFD77E600593C4E /* Connection.swift in Sources */,
 				03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */,
 				03ECDE551BF99BDA00B9F9E7 /* UIColor+Hex.swift in Sources */,
 				033DE6551BF1BA5900842C03 /* UserCell.swift in Sources */,
+				034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */,
 				03ECDE4A1BF96A5800B9F9E7 /* NameCell.swift in Sources */,
 				03ECDE481BF96A3400B9F9E7 /* ConnectionsHeaderCell.swift in Sources */,
 				039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */,
 				032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */,
 				03ECDE461BF96A2300B9F9E7 /* AccountabilityCell.swift in Sources */,
+				03DD15DD1C059BBF0099C497 /* CoreDataManager.swift in Sources */,
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
 				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */,
 				034ADC101BFD444D00593C4E /* ConnectionChatViewController.swift in Sources */,
+				034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */,
 				034ADC161BFD804300593C4E /* ParseObject.swift in Sources */,
 				0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */,
 				034ADC0E1BFC365500593C4E /* SettingsViewController.swift in Sources */,
 				03CB427E1BC9C76D00B13DE7 /* SelectConnectionsTableViewController.swift in Sources */,
 				039BFC051B2AD1DF006EAFD9 /* AuthManager.swift in Sources */,
 				03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */,
+				034E13251C07E61F00EC3BCC /* Habit+Web.swift in Sources */,
 				031D28031B29D1300060263A /* AppDelegate.swift in Sources */,
+				03DD15DF1C05A1780099C497 /* Habit.swift in Sources */,
 				03B488131B509C390077E601 /* HabitCell.swift in Sources */,
 				03ECDE3E1BF969CD00B9F9E7 /* RepeatCell.swift in Sources */,
 				034ADC0C1BFAC6F700593C4E /* StatCell.swift in Sources */,
