@@ -42,11 +42,12 @@ struct Colors {
 }
 
 // Main Colors
-let kColorBackground = UIColor(hexString: "242C33");
-let kColorBarBackground = UIColor(hexString: "1F262B")
+let kColorBarBackground = UIColor(hexString: "242C33")
+let kColorBackground = kColorBarBackground.lightenByPercentage(0.04)
+let kColorShadow = UIColor.blackColor()
 
-let kColorAccent = UIColor(hexString: "F09819");
-let kColorAccentSecondary = UIColor(hexString: "34AADC");
+let kColorAccent = UIColor(hexString: "F09819").colorWithAlphaComponent(0.7)
+let kColorAccentSecondary = UIColor(hexString: "34AADC")
 let kColorTextViewBackground = UIColor(hexString: "E6E6E6")
 
 // Logo Colors
@@ -131,4 +132,12 @@ let iIconList = [
     "ios-sunny-outline",
     "ios-telephone-outline",
     "laptop"]
+
+/// **********
+/// * FLOATS *
+/// **********
+
+struct Floats {
+    static let colorAlpha: CGFloat = 0.3
+}
 

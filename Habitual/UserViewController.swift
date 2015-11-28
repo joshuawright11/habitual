@@ -92,6 +92,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.backgroundColor = kColorBackground
         self.chartView.backgroundColor = kColorBackground
         self.view.backgroundColor = kColorBackground
+        
+        Styler.navBarShader(self)
     }
 
     func getChartData() -> BarChartData {

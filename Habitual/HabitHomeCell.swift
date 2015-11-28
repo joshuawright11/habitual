@@ -37,7 +37,7 @@ class HabitHomeCell: UITableViewCell {
             date = new.1
             
             color = UIColor(hexString: habit.color)
-            bgColor = color.colorWithAlphaComponent(0.1)
+            bgColor = color.colorWithAlphaComponent(Floats.colorAlpha)
             
             doAppearance()
         }
@@ -54,6 +54,11 @@ class HabitHomeCell: UITableViewCell {
     
     override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        Styler.viewShader(borderView)
     }
     
     func configure() {
@@ -285,7 +290,7 @@ class HabitHomeCell: UITableViewCell {
         checkmark.alpha = 0.0
         
         borderView.layer.cornerRadius = 14.0
-        borderView.layer.borderWidth = 2.0
-        borderView.layer.borderColor = color.CGColor
+//        borderView.layer.borderWidth = 0.5
+//        borderView.layer.borderColor = color.CGColor
     }
 }

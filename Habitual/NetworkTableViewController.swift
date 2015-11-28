@@ -8,7 +8,6 @@
 
 import UIKit
 import DZNEmptyDataSet
-import Parse
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
@@ -34,7 +33,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.navigationItem.title = "Connections"
         
-        if (PFUser.currentUser() != nil){
+        if AuthManager.socialEnabled {
             
             let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
             self.navigationItem.rightBarButtonItem = button
@@ -49,13 +48,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func doAppearance() {
         self.tableView.backgroundColor = kColorBackground
+        
+        Styler.navBarShader(self)
     }
     
     func refreshData(){
         loggedIn = true
-        
-        let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
-        self.navigationItem.rightBarButtonItem = button
         
         AuthManager.currentUser?.getConnections() { (success) -> () in
             if success {
@@ -141,10 +139,19 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         return kColorBackground
     }
     
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        let image = UIImage(named: "ios-people-outline")?.imageWithRenderingMode(.AlwaysTemplate)
+        return image
+    }
+    
+    func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
+        return kColorAccent
+    }
+    
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection!" : "Press to sign up or log in"
+        let text = loggedIn ? "You aren't connected yet!" : "Press to sign up or log in"
         
-        let font = UIFont.boldSystemFontOfSize(22.0)
+        let font = kFontNavTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -155,9 +162,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "You have no friends :'(" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
+        let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
         
-        let font = UIFont.systemFontOfSize(18.0)
+        let font = kFontCellTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(

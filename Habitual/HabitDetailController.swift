@@ -53,6 +53,8 @@ class HabitDetailController: UITableViewController {
     
     func doAppearance() {
         self.tableView.backgroundColor = kColorBackground
+        
+        Styler.navBarShader(self)
     }
     
     func done(sender: UIBarButtonItem) {

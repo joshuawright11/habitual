@@ -230,7 +230,6 @@
 				031D28231B29D4C10060263A /* Views */,
 				031D28241B29D4C60060263A /* Controllers */,
 				031D28251B29D57F0060263A /* Stores */,
-				034E13271C07E66500EC3BCC /* Enums */,
 				039BFC061B2AD1E3006EAFD9 /* Helpers */,
 				03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */,
 				031D28061B29D1300060263A /* Main.storyboard */,
@@ -269,6 +268,7 @@
 		031D28221B29D4BA0060263A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				034E13271C07E66500EC3BCC /* Enums */,
 				03E6F2E21B51A23400484DB6 /* HabitCoreData.swift */,
 				039BFC0D1B2AE10B006EAFD9 /* User.swift */,
 				034ADC111BFD77E600593C4E /* Connection.swift */,

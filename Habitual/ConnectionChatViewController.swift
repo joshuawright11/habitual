@@ -8,7 +8,6 @@
 
 import UIKit
 import JSQMessagesViewController
-import Parse
 import Timepiece
 
 class ConnectionChatViewController: JSQMessagesViewController {
@@ -33,8 +32,8 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.navigationItem.title = connection.user.name.componentsSeparatedByString(" ")[0]
         
         let bif = JSQMessagesBubbleImageFactory()
-        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorBlue)
-        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(kColorPurple)
+        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorBlue.colorWithAlphaComponent(0.7))
+        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(kColorPurple.colorWithAlphaComponent(0.7))
         emptyBubbleImageData = JSQMessagesBubbleImage(messageBubbleImage: UIImage(), highlightedImage: UIImage())
         
         doAppearance()

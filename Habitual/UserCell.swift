@@ -21,6 +21,11 @@ class UserCell: UITableViewCell {
     var connection:Connection!
     var color: UIColor!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        Styler.viewShader(borderView)
+    }
+    
     func configure(connection: Connection) {
         self.connection = connection
         let user = connection.user
@@ -76,8 +81,8 @@ class UserCell: UITableViewCell {
         
         borderView.backgroundColor = color.colorWithAlphaComponent(0.3)
         borderView.layer.cornerRadius = 15.0
-        borderView.layer.borderWidth = 2.0
-        borderView.layer.borderColor = color.CGColor
+//        borderView.layer.borderWidth = 2.0
+//        borderView.layer.borderColor = color.CGColor
     }
     
     func approve() {

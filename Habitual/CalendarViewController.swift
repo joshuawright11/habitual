@@ -9,9 +9,7 @@
 import UIKit
 import Timepiece
 import DZNEmptyDataSet
-import Parse
 import CVCalendar
-import LTMorphingLabel
 
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
@@ -46,10 +44,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
         
-        let months = ["January","February","March","April",
-            "May","June","July","August","September","October",
-            "November","December"]
-        self.monthLabel.text = months[selectedDate.month-1]
+        self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.calendarView.changeDaysOutShowingState(false)
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
@@ -61,12 +56,20 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         doAppearance()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.layer.shadowColor = UIColor.clearColor().CGColor
+    }
+    
     func doAppearance(){
-        tableView.contentInset = UIEdgeInsets(top: 110, left: 0, bottom: 0, right: 0)
         
-        self.calendarView.backgroundColor = kColorBackground
-        self.monthLabel.backgroundColor = kColorBackground
-        self.menuView.backgroundColor = kColorBackground
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        
+        Styler.viewBottomShader(calendarView)
+        
+        self.calendarView.backgroundColor = kColorBarBackground
+        self.monthLabel.backgroundColor = kColorBarBackground
+        self.menuView.backgroundColor = kColorBarBackground
         self.view.backgroundColor = kColorBackground
         self.tableView.backgroundColor = kColorBackground
         Styler.styleTitleLabel(self.monthLabel)
@@ -144,15 +147,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         let header = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
         header.textAlignment = .Center
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
-        let string = habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
-        
-        header.text = string
+        header.text = habitsOfDate.count > 0 ? "Habits for today" : ""
         header.font = kFontSectionHeader
         header.textColor = kColorTextSecondary
         
         return header
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50.0
     }
     
     // MARK: - View Controller methods
@@ -173,9 +176,9 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "No Habits today! Press to add."
+        let text = "No Habits today!"
         
-        let font = UIFont.boldSystemFontOfSize(22.0)
+        let font = kFontNavTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -183,6 +186,10 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 forKey: NSFontAttributeName) as? [String : AnyObject])
         
         return attrString
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "checkmark_large")
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
@@ -193,7 +200,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let text = dateFormatter.stringFromDate(selectedDate)
         
-        let font = UIFont.systemFontOfSize(18.0)
+        let font = kFontCellTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -228,12 +235,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 "May","June","July","August","September","October",
                 "November","December"]
         }
-        
-        self.monthLabel.text = Months.months[(date.convertedDate()?.month)!-1]
     }
     
     func didSelectDayView(dayView: DayView) {
         self.selectedDate = dayView.date.convertedDate()!
+        self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.tableView.reloadData()
     }
     

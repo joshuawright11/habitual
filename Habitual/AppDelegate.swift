@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().backgroundColor = kColorBackground
         UITableView.appearance().separatorColor = UIColor.clearColor()
         
-        UINavigationBar.appearance().barTintColor = kColorBackground
+        UINavigationBar.appearance().barTintColor = kColorBarBackground
         UINavigationBar.appearance().tintColor = kColorAccent
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().titleTextAttributes =

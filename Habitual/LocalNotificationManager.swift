@@ -28,10 +28,7 @@ public func scheduleLocalNotifications() {
         notification.repeatInterval = NSCalendarUnit.Day
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        print("Scheduled")
     }
-    
-    print("Done with local")
 }
 
 public func cancelAllLocalNotifications() {
