@@ -11,10 +11,9 @@ import Parse
 extension User
 {
     func getConnections(callback:((success: Bool) -> ())?){
-        print("getting connections")
+        
         let sender = PFQuery(className: "Connection")
         sender.whereKey("sender", equalTo: parseObject!)
-        
         let receiver = PFQuery(className: "Connection")
         receiver.whereKey("receiver", equalTo: parseObject!)
         

@@ -19,6 +19,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
+    var signupEnabled = true
+    
     override func viewDidLoad() {
         doAppearance()
         
@@ -109,18 +111,21 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         loginButton.setTitleColor(kColorTextMain, forState: .Normal)
         loginButton.titleLabel?.font = kFontCellTitle
         
-        signupButton.setTitleColor(kColorTextSecondary, forState: .Normal)
+        signupButton.setTitleColor(kColorAccent, forState: .Normal)
         signupButton.titleLabel?.font = kFontSectionHeader
+        
+        self.loginButton.setTitle("Sign up", forState: .Normal)
+        self.signupButton.setTitle("Already have an account?", forState: .Normal)
     }
     
-    func inputIsValid(signup: Bool) -> Bool {
+    func inputIsValid() -> Bool {
         if(usernameTextField.text?.characters.count < 5){
             Utilities.alert("Username must be at least 5 characters", vc: self)
             return false
         }else if(passwordTextField.text?.characters.count < 5){
             Utilities.alert("Password must be at least 5 characters", vc: self)
             return false
-        }else if(signup && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
+        }else if(signupEnabled && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
             Utilities.alert("Please enter your full name", vc: self)
             return false
         }
@@ -131,37 +136,49 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func signup(){
+    @IBAction func toggleSignup(){
         
-        if !inputIsValid(true) {
-            return
-        }
+        signupEnabled = !signupEnabled
         
-        WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
-            
-            if success {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                AuthManager.currentUser = user
-                Utilities.postNotification(kNotificationIdentifierReloadConnections)
-            }else{
-                Utilities.alert("There was a problem signing up", vc: self)
-            }
+        if signupEnabled {
+            self.nameTextField.hidden = false
+            self.loginButton.setTitle("Sign up", forState: .Normal)
+            self.signupButton.setTitle("Already have an account?", forState: .Normal)
+        } else {
+            self.nameTextField.hidden = true
+            self.loginButton.setTitle("Login", forState: .Normal)
+            self.signupButton.setTitle("Don't have an account?", forState: .Normal)
         }
     }
     
-    @IBAction func login(){
+    
+    
+    @IBAction func complete(){
         
-        if !inputIsValid(false) {
+        if !inputIsValid() {
             return
         }
         
-        WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
-            if success {
-                AuthManager.currentUser = user
-                Utilities.postNotification(kNotificationIdentifierReloadConnections)
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }else{
-                Utilities.alert("There was a problem logging in", vc: self)
+        if signupEnabled {
+            WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
+                
+                if success {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    AuthManager.currentUser = user
+                    Utilities.postNotification(kNotificationIdentifierReloadConnections)
+                }else{
+                    Utilities.alert("An account with that username already exists", vc: self)
+                }
+            }
+        } else {
+            WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
+                if success {
+                    AuthManager.currentUser = user
+                    Utilities.postNotification(kNotificationIdentifierReloadConnections)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    Utilities.alert("Invalid username or password", vc: self)
+                }
             }
         }
     }

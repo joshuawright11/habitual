@@ -29,9 +29,8 @@ let kNotificationIdentifierHabitDataChanged = "HabitDataChanged"
 let kNotificationIdentifierToggleDOTW = "ToggleDotw"
 let kNotificationIdentifierToggleAccountability = "ToggleAccountability"
 
-let kNotificationIdentifierReloadConnections = "ReloadConnections"
-
-let kNotificationChatReceived = "ChatReceived"
+let kNotificationIdentifierReloadConnections = "ReloadNetwork"
+let kNotificationChatReceived = "ReloadChat"
 
 /// **********
 /// * COLORS *
@@ -56,7 +55,7 @@ let kColorLogoRed = UIColor(hexString: "FF0000")
 
 // Text Colors
 let kColorTextMain = UIColor(hexString: "FFFFFF")
-let kColorTextSecondary = UIColor(hexString: "717B80")
+let kColorTextSecondary = kColorBackground.lightenByPercentage(0.2)
 
 // Rainbow
 let kColorPurple = UIColor(hexString: "C644FC");
@@ -83,13 +82,13 @@ let kFontName = "SanFranciscoDisplay"
 // Main Fonts
 let kFontMainTitle = UIFont.systemFontOfSize(32.0, weight: UIFontWeightUltraLight)
 let kFontBody = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
-let kFontSecondary = UIFont.systemFontOfSize(12.0, weight: UIFontWeightBold)
+let kFontSecondary = UIFont.systemFontOfSize(12.0, weight: UIFontWeightUltraLight)
 let kFontSecondaryLight = UIFont.systemFontOfSize(12.0, weight: UIFontWeightRegular)
 let kFontCalendar = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
 let kFontInitials = UIFont.systemFontOfSize(24.0, weight: UIFontWeightLight)
 
 // Navigation Bar
-let kFontNavTitle = UIFont.systemFontOfSize(22.0, weight: UIFontWeightLight)
+let kFontNavTitle = UIFont.systemFontOfSize(20.0, weight: UIFontWeightSemibold)
 let kFontNavButtons = UIFont.systemFontOfSize(17.0, weight: UIFontWeightRegular)
 
 // Tab Bar

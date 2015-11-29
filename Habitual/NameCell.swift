@@ -11,6 +11,7 @@ import TextFieldEffects
 
 class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     
     var habit:Habit?
@@ -25,10 +26,13 @@ class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
     
     func doAppearance() {
         selectionStyle = UITableViewCellSelectionStyle.None
-        let str = NSAttributedString(string: "The name of my habit is...", attributes: [NSForegroundColorAttributeName:kColorTextSecondary, NSFontAttributeName:kFontSectionHeader])
+        let str = NSAttributedString(string: "Go for a run...", attributes: [NSForegroundColorAttributeName:kColorAccent, NSFontAttributeName:kFontSectionHeader])
         textField.attributedPlaceholder = str
         
-        textField.textColor = kColorTextMain
+        titleLabel.font = kFontSectionHeader
+        titleLabel.textColor = kColorTextMain
+        
+        textField.textColor = kColorAccentSecondary
         textField.font = kFontSectionHeader
     }
     

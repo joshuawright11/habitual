@@ -244,7 +244,7 @@ class HabitDetailController: UITableViewController {
         switch indexPath.section {
         case 0:
             switch indexPath.row {
-            case 0: return 44
+            case 0: return 73
             case 1: return 393
             default: return 89}
         case 1:

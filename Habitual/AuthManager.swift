@@ -29,7 +29,9 @@ public class AuthManager : NSObject{
                 self.user = loadUser();
                 if socialEnabled {
                     loadHabitParseObjects()
-                    user?.getConnections(nil)
+                    user?.getConnections({ (success) -> () in
+                        if(success) {Utilities.postNotification(kNotificationIdentifierReloadConnections)}
+        })
                 }
             }
             return self.user
@@ -151,13 +153,7 @@ public class AuthManager : NSObject{
         
         let parseObjects = PFUser.currentUser()!["habits"] as! [PFObject]
         
-        for parseObject in parseObjects {
-            print("Cloud has habit with id: \(parseObject.objectId!)")
-        }
-        
         for habit in user!.habits {
-            
-            print("Coredata has habit with id: \(habit.coreDataObject!.objectId)")
             
             let filtered = parseObjects.filter({$0.objectId == habit.coreDataObject!.objectId})
             if filtered.count == 1 {

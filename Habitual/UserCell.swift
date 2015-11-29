@@ -51,11 +51,14 @@ class UserCell: UITableViewCell {
         
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
+            infoLabel.hidden = false
         }else{
-            acceptButton.backgroundColor = kColorGreen
+            acceptButton.backgroundColor = kColorGreen.colorWithAlphaComponent(0.7)
             acceptButton.titleLabel?.font = kFontSectionHeader
             acceptButton.tintColor = kColorTextMain
             acceptButton.addTarget(self, action: Selector("approve"), forControlEvents: .TouchUpInside)
+            acceptButton.layer.cornerRadius = 15.0
+            infoLabel.hidden = true
         }
         
         backgroundColor = kColorBackground

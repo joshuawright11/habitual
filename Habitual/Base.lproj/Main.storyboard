@@ -128,7 +128,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="42" id="YtZ-Hx-h1Y"/>
                                         </constraints>
-                                        <state key="normal" title="Login">
+                                        <state key="normal" title="Sign up">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="default">
@@ -142,17 +142,17 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="login" destination="83v-GV-iKW" eventType="touchUpInside" id="lJh-7U-3S4"/>
+                                            <action selector="complete" destination="83v-GV-iKW" eventType="touchUpInside" id="5e6-0k-6aM"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gS0-WU-BVu">
                                         <rect key="frame" x="277" y="305" width="49" height="30"/>
                                         <animations/>
-                                        <state key="normal" title="Sign up for Ignite">
+                                        <state key="normal" title="Toggle Sign up/Login">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="signup" destination="83v-GV-iKW" eventType="touchUpInside" id="S7p-lj-Riy"/>
+                                            <action selector="toggleSignup" destination="83v-GV-iKW" eventType="touchUpInside" id="3VC-u6-5lK"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZvK-xB-vfC">
@@ -224,7 +224,7 @@
                                             </mask>
                                         </variation>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to connect with others" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vsU-4D-drT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need an account to connect with others" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vsU-4D-drT">
                                         <rect key="frame" x="65" y="236" width="79" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -502,19 +502,19 @@
                                 <exclude reference="s0l-cp-ZLE"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="6gn-e5-HT2"/>
                                 <exclude reference="CFo-Ay-ASy"/>
                                 <exclude reference="hrA-sM-QHw"/>
                                 <exclude reference="qsa-0C-H2l"/>
-                                <exclude reference="69h-nB-GF9"/>
-                                <exclude reference="d6e-8S-I1z"/>
-                                <exclude reference="pk0-iH-AtR"/>
                                 <exclude reference="Ewn-Ng-Rih"/>
                                 <exclude reference="Mtz-9a-uUx"/>
                                 <exclude reference="OJi-5j-UWl"/>
                                 <exclude reference="4de-TY-6mh"/>
                                 <exclude reference="53O-xX-8X9"/>
                                 <exclude reference="IKV-lH-LIm"/>
-                                <exclude reference="6gn-e5-HT2"/>
+                                <exclude reference="69h-nB-GF9"/>
+                                <exclude reference="d6e-8S-I1z"/>
+                                <exclude reference="pk0-iH-AtR"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -525,19 +525,19 @@
                                 <include reference="s0l-cp-ZLE"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="6gn-e5-HT2"/>
                                 <include reference="CFo-Ay-ASy"/>
                                 <include reference="hrA-sM-QHw"/>
                                 <include reference="qsa-0C-H2l"/>
-                                <include reference="69h-nB-GF9"/>
-                                <include reference="d6e-8S-I1z"/>
-                                <include reference="pk0-iH-AtR"/>
                                 <include reference="Ewn-Ng-Rih"/>
                                 <include reference="Mtz-9a-uUx"/>
                                 <include reference="OJi-5j-UWl"/>
                                 <include reference="4de-TY-6mh"/>
                                 <include reference="53O-xX-8X9"/>
                                 <include reference="IKV-lH-LIm"/>
-                                <include reference="6gn-e5-HT2"/>
+                                <include reference="69h-nB-GF9"/>
+                                <include reference="d6e-8S-I1z"/>
+                                <include reference="pk0-iH-AtR"/>
                             </mask>
                         </variation>
                     </view>
@@ -571,14 +571,14 @@
                         <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="name" id="eGg-wC-JbM" customClass="NameCell" customModule="Ignite" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="name" rowHeight="73" id="eGg-wC-JbM" customClass="NameCell" customModule="Ignite" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGg-wC-JbM" id="cFh-68-zEj">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="The name of my habit is..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDE-5f-GXy">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="The name of my habit is..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDE-5f-GXy">
                                             <rect key="frame" x="190" y="7" width="202" height="30"/>
                                             <animations/>
                                             <constraints>
@@ -587,26 +587,48 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The name of my habit should be" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9D-vn-hib">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="wDE-5f-GXy" secondAttribute="centerY" constant="-0.5" id="LtH-Xj-Zve"/>
-                                        <constraint firstItem="wDE-5f-GXy" firstAttribute="leading" secondItem="cFh-68-zEj" secondAttribute="leading" constant="14" id="fUe-KW-R0O"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="wDE-5f-GXy" secondAttribute="bottom" id="9AL-IM-o39"/>
+                                        <constraint firstItem="wDE-5f-GXy" firstAttribute="centerX" secondItem="cFh-68-zEj" secondAttribute="centerX" id="Bwg-dn-ahN"/>
+                                        <constraint firstItem="M9D-vn-hib" firstAttribute="centerX" secondItem="cFh-68-zEj" secondAttribute="centerX" id="WJ6-eH-yvP"/>
+                                        <constraint firstAttribute="topMargin" secondItem="M9D-vn-hib" secondAttribute="top" id="nBw-R6-gkh"/>
                                     </constraints>
                                     <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="M9D-vn-hib"/>
+                                        </mask>
                                         <mask key="constraints">
-                                            <exclude reference="fUe-KW-R0O"/>
+                                            <exclude reference="WJ6-eH-yvP"/>
+                                            <exclude reference="nBw-R6-gkh"/>
+                                            <exclude reference="9AL-IM-o39"/>
+                                            <exclude reference="Bwg-dn-ahN"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="M9D-vn-hib"/>
+                                        </mask>
                                         <mask key="constraints">
-                                            <include reference="fUe-KW-R0O"/>
+                                            <include reference="WJ6-eH-yvP"/>
+                                            <include reference="nBw-R6-gkh"/>
+                                            <include reference="9AL-IM-o39"/>
+                                            <include reference="Bwg-dn-ahN"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
                                     <outlet property="textField" destination="wDE-5f-GXy" id="ZLa-Yj-iwG"/>
+                                    <outlet property="titleLabel" destination="M9D-vn-hib" id="J6r-5q-Xiv"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="icon" rowHeight="393" id="cvQ-Ai-Rdu" customClass="IconCell" customModule="Ignite" customModuleProvider="target">
@@ -2802,9 +2824,6 @@ I don't get this done on time</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="-26" y="11" width="172" height="21"/>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drink glass of water" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-wx-4QM">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -2812,9 +2831,6 @@ I don't get this done on time</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="150" y="11" width="152" height="21"/>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWr-xJ-KuD">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -2832,8 +2848,7 @@ I don't get this done on time</string>
                                                             <exclude reference="aSZ-k3-6Ka"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="146" y="21" width="4" height="1"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="PlW-i0-sf2"/>
                                                             <include reference="aSZ-k3-6Ka"/>

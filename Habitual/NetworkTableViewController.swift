@@ -141,7 +141,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
-        let image = UIImage(named: "ios-people-outline")?.imageWithRenderingMode(.AlwaysTemplate)
+        let image = UIImage(named: "connections_empty")?.imageWithRenderingMode(.AlwaysTemplate)
         return image
     }
     

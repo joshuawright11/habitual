@@ -189,7 +189,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
-        return UIImage(named: "checkmark_large")
+        return UIImage(named: "habits_empty")
+    }
+    
+    func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
+        return kColorAccent
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
@@ -264,6 +268,10 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return kFontSecondary
     }
     
+    func dayLabelWeekdayOutTextColor() -> UIColor {
+        return kColorTextSecondary
+    }
+    
     func dayLabelWeekdayFont() -> UIFont {
         return kFontCalendar
     }
@@ -281,7 +289,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func dayOfWeekTextColor() -> UIColor {
-        return kColorTextSecondary
+        return kColorTextMain
     }
     
     func dayOfWeekFont() -> UIFont {
