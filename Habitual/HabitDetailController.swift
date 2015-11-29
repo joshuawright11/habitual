@@ -108,9 +108,9 @@ class HabitDetailController: UITableViewController {
             if originalHabitState! && !habit!.notificationsEnabled {
                 habit?.deleteFromServer()
             }else if !originalHabitState! && habit!.notificationsEnabled {
-                habit?.uploadToServer()
+                habit?.uploadToServer(nil)
             }else if habit!.notificationsEnabled {
-                habit?.uploadToServer()
+                habit?.uploadToServer(nil)
             }
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)

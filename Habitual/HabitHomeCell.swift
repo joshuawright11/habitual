@@ -116,23 +116,17 @@ class HabitHomeCell: UITableViewCell {
                 animateReturn()
             }
         }else{
-            
             let translation = recognizer.translationInView(self)
             
             if percent > 0.3 && percent < 0.5 && translation.x > 0{
-                
             }else if percent < 0.7 && percent > 0.5 && translation.x < 0{
-                
             }else if percent < -0.3 && percent > -0.5{
-                
             }else if borderView.frame.origin.x > (UIScreen.mainScreen().bounds.width - 70) && translation.x > 0{
-                
             }else {
-                
                 borderView.frame.origin.x += translation.x
                 
                 let bgColor = percent > 0 ? color.hexString : "FFFFFF"
-                borderView.backgroundColor = UIColor(hexString: bgColor, withAlpha: abs(percent))
+                borderView.backgroundColor = UIColor(hexString: bgColor, withAlpha: Floats.colorAlpha + abs(percent*(1-Floats.colorAlpha)))
                 recognizer.setTranslation(CGPointZero, inView: self)
             }
         }
@@ -163,7 +157,7 @@ class HabitHomeCell: UITableViewCell {
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         if habit.notificationsEnabled && habit.dateInCurrentFrequency(date) {
-            habit.uploadToServer()
+            habit.uploadToServer(nil)
         }
     }
     
@@ -214,7 +208,7 @@ class HabitHomeCell: UITableViewCell {
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
         if habit.notificationsEnabled && habit.canDo() {
-            habit.uploadToServer()
+            habit.uploadToServer(nil)
         }
     }
     

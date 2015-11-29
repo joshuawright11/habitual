@@ -23,7 +23,7 @@ public class WebServices: NSObject {
                 installation["username"] = username
                 installation.saveInBackground()
                 
-                let user: User = User(parseUser: userLogged!)
+                let user: User = User(parseUser: userLogged!, withHabits: false)
                 user.habits = AuthManager.currentUser!.habits
                 
                 AuthManager.currentUser = user
@@ -53,7 +53,7 @@ public class WebServices: NSObject {
                 installation["username"] = username
                 installation.saveInBackground()
                 
-                let newUser: User = User(parseUser: user)
+                let newUser: User = User(parseUser: user, withHabits: false)
                 newUser.habits = AuthManager.currentUser!.habits
                 
                 AuthManager.currentUser = newUser
@@ -68,9 +68,25 @@ public class WebServices: NSObject {
     }
     
     static func syncDataForCurrentUser(callback: ((success: Bool) -> ())?) {
-        
+        var count = AuthManager.currentUser!.habits.count
         for habit:Habit in AuthManager.currentUser!.habits {
-            habit.uploadToServer()
+            habit.uploadToServer({ (success) -> () in
+                count--
+                if(count == 0) {
+                    syncUserHabits()
+                }
+            })
         }
+    }
+    
+    static func syncUserHabits() {
+        var objects:[PFObject] = []
+        
+        for habit in AuthManager.currentUser!.habits {
+            objects.append(habit.parseObject!)
+        }
+        
+        AuthManager.currentUser!.parseObject!["habits"] = objects
+        AuthManager.currentUser!.parseObject!.saveInBackground()
     }
 }

@@ -48,8 +48,8 @@ class Connection: ParseObject {
     }
     
     override init(parseObject: PFObject) {
-        sender = User(parseUser: parseObject["sender"] as! PFUser)
-        receiver = User(parseUser: parseObject["receiver"] as! PFUser)
+        sender = User(parseUser: parseObject["sender"] as! PFUser, withHabits: true)
+        receiver = User(parseUser: parseObject["receiver"] as! PFUser, withHabits: true)
         approved = parseObject["approved"] as! Bool
 
         super.init(parseObject: parseObject)

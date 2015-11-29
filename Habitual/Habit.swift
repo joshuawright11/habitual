@@ -14,7 +14,11 @@ public class Habit: ParseObject {
 
     var coreDataObject:HabitCoreData?
 
-    var objectId: String
+    var objectId: String {
+        get{
+            return coreDataObject!.objectId
+        }
+    }
     
     var datesCompleted: [NSDate]
     var frequency:Frequency
@@ -34,7 +38,6 @@ public class Habit: ParseObject {
     
     override init() {
         self.coreDataObject = nil
-        objectId = ""
         
         datesCompleted = []
         frequency = .Daily
@@ -57,13 +60,12 @@ public class Habit: ParseObject {
     
     override init(parseObject: PFObject) {
         coreDataObject = nil
-        objectId = parseObject.objectId!
         
         datesCompleted = parseObject["datesCompleted"] as! [NSDate]
-        frequency = Frequency(rawValue: parseObject["frequency"] as! Int16)!
+        frequency = Frequency.frequencyForName(parseObject["frequency"] as! String)
         name = parseObject["name"] as! String
         createdAt = parseObject["creationDate"] as! NSDate
-        privat = parseObject["private"] as! Bool
+        privat = false
         remindUserAt = ""
         notifyConnectionsAt = ""
         timeOfDay = .Morning
@@ -75,7 +77,7 @@ public class Habit: ParseObject {
         notificationSettings = [.None]
         usersToNotify = []
         for userPO in parseObject["usersToNotify"] as! [PFUser] {
-            usersToNotify.append(User(parseUser: userPO))
+            usersToNotify.append(User(parseUser: userPO, withHabits: false))
         }
         
         super.init(parseObject: parseObject)
@@ -83,7 +85,6 @@ public class Habit: ParseObject {
     
     init(coreDataObject: HabitCoreData) {
         self.coreDataObject = coreDataObject
-        objectId = coreDataObject.objectId
         
         datesCompleted = coreDataObject.datesCompleted
         frequency = coreDataObject.frequency

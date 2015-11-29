@@ -11,16 +11,21 @@ import Parse
 
 extension Habit {
     
-    public func uploadToServer() {
+    public func uploadToServer(callback: ((Bool) -> ())?) {
         if let _ = parseObject {
-            updateOnServer()
+            updateOnServer(callback)
         }else{
-            addToServer()
+            if(callback == nil){
+                addToServer({ (success) -> () in
+                    WebServices.syncUserHabits()
+                })
+            }else{
+                addToServer(callback)
+            }
         }
     }
     
-    private func addToServer() {
-        
+    private func addToServer(callback: ((Bool) -> ())?) {
         guard let user = AuthManager.currentUser else {
             print("ERROR! User is not loaded!")
             return
@@ -28,10 +33,10 @@ extension Habit {
         
         parseObject = PFObject(className: "Habit")
         parseObject!["owner"] = user.parseObject
-        updateOnServer()
+        updateOnServer(callback)
     }
     
-    private func updateOnServer() {
+    private func updateOnServer(callback: ((Bool) -> ())?) {
         
         parseObject!["creationDate"] = createdAt
         parseObject!["datesCompleted"] = datesCompleted
@@ -49,39 +54,20 @@ extension Habit {
         parseObject!["notificationsEnabled"] = notificationsEnabled
         parseObject!["notificationSettings"] = notificationSettings.map({$0.toString()})
         
-        var habits = AuthManager.currentUser?.parseObject!["habits"] as! [PFObject]
-        
         parseObject!.saveInBackgroundWithBlock({ (success, error) -> Void in
-            
             if success {
-                if self.coreDataObject!.objectId == "" {
-                    self.coreDataObject!.objectId = self.parseObject!.objectId!
-                    self.coreDataObject?.save()
-                    self.objectId = self.coreDataObject!.objectId
-                }
-                
-                let filtered = habits.filter({$0.objectId == self.parseObject!.objectId})
-                if(filtered.count == 0){
-                    habits.append(self.parseObject!)
-                    AuthManager.currentUser?.parseObject!["habits"] = habits
-                    AuthManager.currentUser?.parseObject?.saveInBackground()
-                }
-            }else{
+                self.coreDataObject!.objectId = self.parseObject!.objectId!
+                self.coreDataObject?.save()
+                if let callback = callback {callback(true)}
+            } else {
                 print("ERROR! \(error?.code)")
+                if let callback = callback {callback(false)}
             }
         })
     }
     
     public func deleteFromServer() {
-        
-        print("delete from server")
-        let habits = AuthManager.currentUser?.parseObject!["habits"] as! [PFObject]
-        
-        let filtered = habits.filter({$0.objectId != self.parseObject?.objectId})
-
-        AuthManager.currentUser?.parseObject!["habits"] = filtered
-        AuthManager.currentUser?.parseObject?.saveInBackground()
-        
         parseObject!.deleteInBackground()
+        WebServices.syncUserHabits()
     }
 }

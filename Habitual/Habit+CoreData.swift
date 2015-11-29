@@ -70,7 +70,7 @@ extension Habit {
     func saveToCoreData() {
         
         defer {
-            if(AuthManager.currentUser?.parseObject != nil){ uploadToServer() }
+            if(AuthManager.currentUser?.parseObject != nil){ uploadToServer(nil) }
         }
         
         if let _ = coreDataObject {

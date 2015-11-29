@@ -136,7 +136,7 @@ public class AuthManager : NSObject{
     private static func loadUser() -> User? {
         
         if socialEnabled {
-            let loadedUser = User(parseUser: PFUser.currentUser()!)
+            let loadedUser = User(parseUser: PFUser.currentUser()!, withHabits: false)
             loadedUser.habits = CoreDataManager.getHabitsOfCurrentUser()
             return loadedUser
         }else{
@@ -151,12 +151,19 @@ public class AuthManager : NSObject{
         
         let parseObjects = PFUser.currentUser()!["habits"] as! [PFObject]
         
+        for parseObject in parseObjects {
+            print("Cloud has habit with id: \(parseObject.objectId!)")
+        }
+        
         for habit in user!.habits {
-            let filtered = parseObjects.filter({$0.objectId == habit.coreDataObject?.objectId})
+            
+            print("Coredata has habit with id: \(habit.coreDataObject!.objectId)")
+            
+            let filtered = parseObjects.filter({$0.objectId == habit.coreDataObject!.objectId})
             if filtered.count == 1 {
                 habit.parseObject = filtered.first
             }else{
-                habit.uploadToServer()
+                habit.uploadToServer(nil)
             }
         }
     }

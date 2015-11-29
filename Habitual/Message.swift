@@ -21,7 +21,7 @@ class Message: ParseObject {
     
     override init(parseObject: PFObject) {
         text = parseObject["text"] as! String
-        sender = User(parseUser: parseObject["sender"] as! PFUser)
+        sender = User(parseUser: (parseObject["sender"] as! PFUser), withHabits: false)
         if let po = parseObject["habit"] {
             habit = po as? PFObject
         }else{

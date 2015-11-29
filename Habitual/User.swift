@@ -25,11 +25,11 @@ class User: ParseObject {
         super.init()
     }
     
-    init(parseUser: PFUser) {
+    init(parseUser: PFUser, withHabits: Bool) {
         username = parseUser.username!
         habits = []
         
-        if PFUser.currentUser()!.objectId != parseUser.objectId {
+        if PFUser.currentUser()!.objectId != parseUser.objectId && withHabits {
             for parseObject in parseUser["habits"] as! [PFObject] {
                 habits.append(Habit(parseObject: parseObject))
             }
