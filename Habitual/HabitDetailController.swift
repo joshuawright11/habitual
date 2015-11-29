@@ -105,13 +105,7 @@ class HabitDetailController: UITableViewController {
             
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
-            if originalHabitState! && !habit!.notificationsEnabled {
-                habit?.deleteFromServer()
-            }else if !originalHabitState! && habit!.notificationsEnabled {
-                habit?.uploadToServer(nil)
-            }else if habit!.notificationsEnabled {
-                habit?.uploadToServer(nil)
-            }
+            habit?.uploadToServer(nil)
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
             Utilities.postNotification(kNotificationIdentifierHabitDataChanged)

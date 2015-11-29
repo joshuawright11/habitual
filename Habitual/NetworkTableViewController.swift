@@ -39,8 +39,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             self.navigationItem.rightBarButtonItem = button
             
             loggedIn = true
-            self.connections = AuthManager.currentUser?.connections
+            self.connections = AuthManager.currentUser!.connections
             self.tableView.reloadData()
+        }else{
         }
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)

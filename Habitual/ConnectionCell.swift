@@ -56,7 +56,7 @@ class ConnectionCell: UITableViewCell {
         initialsLabel.layer.borderColor = connection.color!.CGColor
         
         checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        checkiv.tintColor = habit!.usersToNotify.contains(connection.user) ? connection.color! : kColorBackground
+        checkiv.tintColor = habit!.coreDataObject!.usernamesToNotify.contains(connection.user.name) ? connection.color! : kColorBackground
     }
     
     func configure(habit: Habit, index: Int) {

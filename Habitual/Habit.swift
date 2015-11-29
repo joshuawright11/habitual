@@ -77,7 +77,9 @@ public class Habit: ParseObject {
         notificationSettings = [.None]
         usersToNotify = []
         for userPO in parseObject["usersToNotify"] as! [PFUser] {
-            usersToNotify.append(User(parseUser: userPO, withHabits: false))
+            if(userPO.isDataAvailable()){
+                usersToNotify.append(User(parseUser: userPO, withHabits: false))
+            }
         }
         
         super.init(parseObject: parseObject)
