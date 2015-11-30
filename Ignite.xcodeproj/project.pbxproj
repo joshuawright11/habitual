@@ -282,7 +282,7 @@
 		031D28231B29D4C10060263A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				034ADC081BFAC6AD00593C4E /* StatCells */,
+				034ADC0B1BFAC6F700593C4E /* StatCell.swift */,
 				03ECDE361BF9695000B9F9E7 /* HabitDetailCells */,
 				03B488111B509C390077E601 /* HabitCell.swift */,
 				03B488121B509C390077E601 /* HabitCell.xib */,
@@ -321,14 +321,6 @@
 				034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */,
 			);
 			name = Stores;
-			sourceTree = "<group>";
-		};
-		034ADC081BFAC6AD00593C4E /* StatCells */ = {
-			isa = PBXGroup;
-			children = (
-				034ADC0B1BFAC6F700593C4E /* StatCell.swift */,
-			);
-			name = StatCells;
 			sourceTree = "<group>";
 		};
 		034E13271C07E66500EC3BCC /* Enums */ = {

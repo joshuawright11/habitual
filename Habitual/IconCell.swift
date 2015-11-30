@@ -48,7 +48,7 @@ class IconCell: UITableViewCell, HabitDetailCell {
             iv.addGestureRecognizer(tgr)
             dict[iv] = tgr
             
-            let path = iIconList[count%20]
+            let path = iIconList[count%iIconList.count]
             let image = UIImage(named: path)
             
             count++
@@ -64,13 +64,12 @@ class IconCell: UITableViewCell, HabitDetailCell {
     func tapped(tgr: UITapGestureRecognizer) {
         let iv = tgr.view as! UIImageView
         habit?.icon = iv.accessibilityIdentifier!
-
-        
-        iv.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
         
         if let selectediv = selectediv {
             selectediv.backgroundColor = kColorBackground
         }
+        
+        iv.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
         
         selectediv = iv
     }

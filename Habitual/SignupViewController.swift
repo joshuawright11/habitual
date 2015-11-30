@@ -120,13 +120,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     func inputIsValid() -> Bool {
         if(usernameTextField.text?.characters.count < 5){
-            Utilities.alertWarning("Username must be at least 5 characters")
+            Utilities.alertWarning("Username must be at least 5 characters", vc: self.navigationController!)
             return false
         }else if(passwordTextField.text?.characters.count < 5){
-            Utilities.alertWarning("Password must be at least 5 characters")
+            Utilities.alertWarning("Password must be at least 5 characters", vc: self.navigationController!)
             return false
         }else if(signupEnabled && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
-            Utilities.alertWarning("Please enter your first and last name")
+            Utilities.alertWarning("Please enter your first and last name", vc: self.navigationController!)
             return false
         }
         return true
@@ -165,7 +165,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     AuthManager.currentUser = user
                     Utilities.postNotification(kNotificationIdentifierReloadConnections)
                 }else{
-                    Utilities.alertError("An account with that username already exists")
+                    Utilities.alertError("An account with that username already exists", vc: self.navigationController!)
                 }
             }
         } else {
@@ -175,7 +175,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     Utilities.postNotification(kNotificationIdentifierReloadConnections)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }else{
-                    Utilities.alertError("Invalid username or password")
+                    Utilities.alertError("Invalid username or password", vc: self.navigationController!)
                 }
             }
         }

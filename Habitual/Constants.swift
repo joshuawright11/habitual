@@ -83,6 +83,7 @@ let kFontName = "SanFranciscoDisplay"
 let kFontMainTitle = UIFont.systemFontOfSize(32.0, weight: UIFontWeightUltraLight)
 let kFontBody = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
 let kFontSecondary = UIFont.systemFontOfSize(12.0, weight: UIFontWeightUltraLight)
+let kFontSecondaryBold = UIFont.systemFontOfSize(12.0, weight: UIFontWeightHeavy)
 let kFontSecondaryLight = UIFont.systemFontOfSize(12.0, weight: UIFontWeightRegular)
 let kFontCalendar = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
 let kFontInitials = UIFont.systemFontOfSize(24.0, weight: UIFontWeightLight)
@@ -111,27 +112,36 @@ struct Icons {
 }
 
 let iIconList = [
-    "flash",
-    "headphone",
-    "heart",
-    "ios-at-outline",
-    "ios-basketball-outline",
-    "ios-body-outline",
-    "ios-bookmarks-outline",
-    "ios-box-outline",
-    "ios-cloudy-night-outline",
-    "ios-flask-outline",
-    "ios-flower-outline",
-    "ios-lightbulb-outline",
-    "ios-list-outline",
-    "ios-location-outline",
-    "ios-paw-outline",
-    "ios-people-outline",
-    "ios-pulse",
-    "ios-stopwatch-outline",
-    "ios-sunny-outline",
-    "ios-telephone-outline",
-    "laptop"]
+    "aim_target",
+    "alarm_square",
+    "arrows_axis_angle",
+    "bullet_list",
+    "camera",
+    "cheeseburger",
+    "compass",
+    "email_open",
+    "heart_rate",
+    "iphone_delete",
+    "ledger",
+    "light_bulb_on",
+    "loop",
+    "male_female_symbol",
+    "map_route",
+    "moon",
+    "mortar_board",
+    "palette",
+    "paw_print",
+    "pencil",
+    "piggy_bank_coin",
+    "podium_mic",
+    "rocket",
+    "running",
+    "single_bed",
+    "sprint_cycling",
+    "ui_code",
+    "users_two",
+    "weight_lifting",
+    "yoga"]
 
 /// **********
 /// * FLOATS *

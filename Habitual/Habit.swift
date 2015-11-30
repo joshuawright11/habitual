@@ -49,7 +49,7 @@ public class Habit: ParseObject {
         timeOfDay = .Morning
         timesToComplete = 1
         daysToComplete = ["M","T","W","R","F","Sa","Su"]
-        icon = "flash"
+        icon = "compass"
         color = kColorPurple.hexString
         notificationsEnabled = false
         notificationSettings = [.None]

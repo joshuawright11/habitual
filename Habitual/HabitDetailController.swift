@@ -60,7 +60,7 @@ class HabitDetailController: UITableViewController {
     func done(sender: UIBarButtonItem) {
 
         if habit?.name == "" {
-            Utilities.alertWarning("Your habit needs a name")
+            Utilities.alertWarning("Your habit needs a name", vc: self.navigationController!)
             return
         }
         
@@ -104,8 +104,6 @@ class HabitDetailController: UITableViewController {
             for cell in tableView.visibleCells {cell.userInteractionEnabled = false}
             
             self.navigationItem.rightBarButtonItem?.title = "Edit"
-            
-            habit?.uploadToServer(nil)
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
             Utilities.postNotification(kNotificationIdentifierHabitDataChanged)

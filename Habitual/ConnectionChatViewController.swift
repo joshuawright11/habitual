@@ -140,24 +140,26 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     func attributedStringForHeaderWithMessage(message: Message) -> NSMutableAttributedString {
+        
+        var firstName = message.sender.name.componentsSeparatedByString(" ")[0]
+        if message.sender.username == AuthManager.currentUser?.username {firstName = "You"}
 
-        let firstName = message.sender.name.componentsSeparatedByString(" ")[0]
         let habitName = message.habit!["name"] as! String
         let due = Utilities.monthDayStringFromDate(message.timeStamp - 1.day)
         let goal = message.habit!["frequency"] as! String
-        let timesMissed = "123"
+//        let timesMissed = message.hab
+//, Times Missed: \(timesMissed)
         
-        
-        let string = NSMutableAttributedString(string: "\(firstName) missed \(habitName)\nDue: \(due), Goal: \(goal), Times Missed: \(timesMissed)", attributes: [NSFontAttributeName : kFontSecondaryLight])
+        let string = NSMutableAttributedString(string: "\(firstName) missed \(habitName)\nDue: \(due), Goal: \(goal)", attributes: [NSFontAttributeName : kFontSecondaryLight])
         
         var location = firstName.characters.count + 8
-        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,habitName.characters.count))
+        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,habitName.characters.count))
         location += (5 + habitName.characters.count)
-        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,due.characters.count+1))
+        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,due.characters.count+1))
         location += 8 + due.characters.count
-        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,goal.characters.count+1))
-        location += 16 + goal.characters.count
-        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,timesMissed.characters.count+1))
+        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,goal.characters.count+1))
+//        location += 16 + goal.characters.count
+//        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,timesMissed.characters.count+1))
         
         return string
     }

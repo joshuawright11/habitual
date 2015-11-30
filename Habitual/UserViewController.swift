@@ -36,7 +36,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             user = AuthManager.currentUser;
             self.navigationItem.title = "Me"
             
-            let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settings")
+            let button = UIBarButtonItem(image: UIImage(named: "settings")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "settings")
+            
             self.navigationItem.rightBarButtonItem = button
         }
         else {

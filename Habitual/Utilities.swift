@@ -12,16 +12,16 @@ import TSMessages
 
 public class Utilities {
     
-    public static func alertError(string:String){
-        TSMessage.showNotificationWithTitle("Uh oh", subtitle:string, type: .Error)
+    public static func alertError(string:String, vc: UIViewController){
+        TSMessage.showNotificationInViewController(vc, title: "Uh oh", subtitle: string, image: nil, type: .Error, duration: 2.0, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
     }
     
-    public static func alertWarning(string:String){
-        TSMessage.showNotificationWithTitle("Hey!", subtitle:string, type: .Warning)
+    public static func alertWarning(string:String, vc: UIViewController){
+        TSMessage.showNotificationInViewController(vc, title: "Hey!", subtitle: string, image: nil, type: .Warning, duration: 2.0, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
     }
     
-    public static func alertSuccess(string:String){
-        TSMessage.showNotificationWithTitle("Success!", subtitle:string, type: .Success)
+    public static func alertSuccess(string:String, vc: UIViewController){
+        TSMessage.showNotificationInViewController(vc, title: "Success!", subtitle: string, image: nil, type: .Success, duration: 2.0, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
     }
     
     public static func dateFromString(string: String) -> NSDate {

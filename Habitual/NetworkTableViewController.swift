@@ -85,9 +85,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
                 AuthManager.currentUser?.addConnection(txt.text!, callback: { (success) -> () in
                     if success {
                         self.connections = AuthManager.currentUser?.connections
-                        Utilities.alertSuccess("Connection request sent")
+                        Utilities.alertSuccess("Connection request sent", vc: self.navigationController!)
                     }else{
-                        Utilities.alertError("User not found")
+                        Utilities.alertError("User not found", vc: self.navigationController!)
                     }
                 })
             }
@@ -103,10 +103,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         let usernames = connections?.map({$0.user.username})
         
         if(usernames!.contains(string)) {
-            Utilities.alertError("You are already connected with that user!")
+            Utilities.alertError("You are already connected with that user!", vc: self.navigationController!)
             return true
         }else if(AuthManager.currentUser?.username == string){
-            Utilities.alertError("You can't connect with yourself!")
+            Utilities.alertError("You can't connect with yourself!", vc: self.navigationController!)
             return true
         }else{
             return false
