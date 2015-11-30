@@ -62,6 +62,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func doAppearance(){
         
+        tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
@@ -148,14 +150,14 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         header.textAlignment = .Center
         
         header.text = habitsOfDate.count > 0 ? "Habits for today" : ""
-        header.font = kFontSectionHeader
+        header.font = kFontSectionHeaderBold
         header.textColor = kColorTextSecondary
         
         return header
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50.0
+        return 40.0
     }
     
     // MARK: - View Controller methods

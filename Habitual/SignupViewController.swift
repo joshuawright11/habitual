@@ -120,13 +120,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     func inputIsValid() -> Bool {
         if(usernameTextField.text?.characters.count < 5){
-            Utilities.alert("Username must be at least 5 characters", vc: self)
+            Utilities.alertWarning("Username must be at least 5 characters")
             return false
         }else if(passwordTextField.text?.characters.count < 5){
-            Utilities.alert("Password must be at least 5 characters", vc: self)
+            Utilities.alertWarning("Password must be at least 5 characters")
             return false
         }else if(signupEnabled && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
-            Utilities.alert("Please enter your full name", vc: self)
+            Utilities.alertWarning("Please enter your first and last name")
             return false
         }
         return true
@@ -151,8 +151,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
     @IBAction func complete(){
         
         if !inputIsValid() {
@@ -167,7 +165,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     AuthManager.currentUser = user
                     Utilities.postNotification(kNotificationIdentifierReloadConnections)
                 }else{
-                    Utilities.alert("An account with that username already exists", vc: self)
+                    Utilities.alertError("An account with that username already exists")
                 }
             }
         } else {
@@ -177,7 +175,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     Utilities.postNotification(kNotificationIdentifierReloadConnections)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }else{
-                    Utilities.alert("Invalid username or password", vc: self)
+                    Utilities.alertError("Invalid username or password")
                 }
             }
         }

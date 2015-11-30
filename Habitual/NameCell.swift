@@ -26,14 +26,14 @@ class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
     
     func doAppearance() {
         selectionStyle = UITableViewCellSelectionStyle.None
-        let str = NSAttributedString(string: "Go for a run...", attributes: [NSForegroundColorAttributeName:kColorAccent, NSFontAttributeName:kFontSectionHeader])
+        let str = NSAttributedString(string: "Go for a run...", attributes: [NSForegroundColorAttributeName:kColorAccent, NSFontAttributeName:kFontSectionHeaderBold])
         textField.attributedPlaceholder = str
         
         titleLabel.font = kFontSectionHeader
         titleLabel.textColor = kColorTextMain
         
         textField.textColor = kColorAccentSecondary
-        textField.font = kFontSectionHeader
+        textField.font = kFontSectionHeaderBold
     }
     
     func configure(habit: Habit) {

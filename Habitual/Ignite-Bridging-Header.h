@@ -8,3 +8,4 @@
 
 #import "UIAppearance+Swift.h"
 #import <JSQMessagesViewController/JSQMessages.h>
+#import <TSMessages/TSMessageView.h>

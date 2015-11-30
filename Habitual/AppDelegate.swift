@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             forState: .Normal)
         
         UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
-        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeader
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeaderBold
         
     }
 
@@ -102,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        scheduleLocalNotifications()
         self.saveContext()
     }
     

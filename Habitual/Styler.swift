@@ -24,7 +24,7 @@ public class Styler: NSObject {
     
     public static func styleTitleLabel(label: UILabel) {
         label.textColor = kColorTextMain
-        label.font = kFontCellTitle
+        label.font = kFontMonthLabel
     }
     
     public static func navBarShader(vc: UIViewController) {
@@ -61,5 +61,14 @@ public class Styler: NSObject {
         view.layer.shadowOffset = CGSize(width: 2, height: 2)
         view.layer.shadowRadius = 2
         view.layer.shadowOpacity = 1
+    }
+    
+    public static func viewShaderSmall(view: UIView) {
+        view.layer.shouldRasterize = true;
+        view.layer.rasterizationScale = UIScreen.mainScreen().scale
+        view.layer.shadowColor = kColorShadow.CGColor
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.layer.shadowRadius = 2
+        view.layer.shadowOpacity = 0.3
     }
 }

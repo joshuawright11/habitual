@@ -20,7 +20,7 @@ let kKeychainUserAccount = "Habitual"
 /// *****************
 
 struct Notifications {
-    
+    static let localNotificationsDisabled = "LocalNotificationsEnabled"
 }
 
 let kNotificationIdentifierHabitAddedOrDeleted = "HabitAddedOrDeleted"
@@ -97,9 +97,10 @@ let iFontTabBarTitle = UIFont.systemFontOfSize(10.0, weight: UIFontWeightMedium)
 // Table Views
 let kFontCellTitle = UIFont.systemFontOfSize(20.0, weight: UIFontWeightRegular)
 let kFontCellSubtitle = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
-let kFontSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightRegular)
+let kFontSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
 let kFontSectionHeaderBold = UIFont.systemFontOfSize(18.0, weight: UIFontWeightMedium)
 let kFontMessage = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
+let kFontMonthLabel = UIFont.systemFontOfSize(20.0, weight: UIFontWeightLight)
 
 /// **********
 /// *  ICONS *

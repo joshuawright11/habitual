@@ -16,6 +16,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var chartView: BarChartView!
     
+    @IBOutlet weak var spacerView: UIView!
     @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
@@ -61,17 +62,12 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.rightAxis.enabled = false
         chartView.leftAxis.drawAxisLineEnabled = false
         chartView.leftAxis.enabled = false
-        
-        chartView.xAxis.labelFont = kFontSectionHeader
+        chartView.xAxis.labelFont = kFontSectionHeaderBold
         chartView.xAxis.labelTextColor = kColorTextMain
-        
         chartView.descriptionText = ""
         chartView.drawValueAboveBarEnabled = true
-        
         chartView.noDataText = "No habits created yet!"
-        
         chartView.notifyDataSetChanged()
-        
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
         
         tableView.reloadData()
@@ -90,10 +86,18 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func doAppearance() {
         self.tableView.backgroundColor = kColorBackground
-        self.chartView.backgroundColor = kColorBackground
+        self.chartView.backgroundColor = kColorBarBackground
         self.view.backgroundColor = kColorBackground
         
-        Styler.navBarShader(self)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        
+        spacerView.backgroundColor = kColorBarBackground
+        
+        spacerView.layer.shadowColor = kColorShadow.CGColor
+        spacerView.layer.shadowOffset = CGSize(width: 0, height: 2.75)
+        spacerView.layer.shadowRadius = 1.75
+        spacerView.layer.shadowOpacity = 0.4
     }
 
     func getChartData() -> BarChartData {

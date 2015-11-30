@@ -54,6 +54,7 @@ class ConnectionCell: UITableViewCell {
         initialsLabel.layer.cornerRadius = 22.0
         initialsLabel.layer.borderWidth = 2.0
         initialsLabel.layer.borderColor = connection.color!.CGColor
+        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
         
         checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
 
@@ -62,6 +63,8 @@ class ConnectionCell: UITableViewCell {
         }else{
             checkiv.tintColor = habit!.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : kColorBackground
         }
+        
+        Styler.viewShaderSmall(initialsLabel)
     }
     
     func configure(habit: Habit, index: Int) {

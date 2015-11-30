@@ -32,10 +32,14 @@ class HabitCell: UITableViewCell {
         countLabel.font = kFontSectionHeader
         countLabel.textColor = kColorTextMain
         
-        coloriv.backgroundColor = UIColor(hexString: habit.color)
+        coloriv.backgroundColor = UIColor(hexString: habit.color).colorWithAlphaComponent(0.8)
         self.checkiv.image = self.checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
                 self.checkiv.tintColor = UIColor(hexString: habit.color)
         coloriv.layer.cornerRadius = 10.0
+        
+        checkiv.layer.backgroundColor = kColorBackground.CGColor
+        
+        Styler.viewShaderSmall(self.coloriv)
     }
     
     func configureForHabit(habit: Habit) {

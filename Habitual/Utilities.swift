@@ -8,14 +8,20 @@
 
 import Foundation
 import UIKit
+import TSMessages
 
 public class Utilities {
     
-    public static func alert(string:String, vc:UIViewController){
-        
-        let alert = UIAlertController(title: "Alert", message: string, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Okie Dokie Artichokie", style: UIAlertActionStyle.Default, handler: nil))
-        vc.presentViewController(alert, animated: true, completion: nil)
+    public static func alertError(string:String){
+        TSMessage.showNotificationWithTitle("Uh oh", subtitle:string, type: .Error)
+    }
+    
+    public static func alertWarning(string:String){
+        TSMessage.showNotificationWithTitle("Hey!", subtitle:string, type: .Warning)
+    }
+    
+    public static func alertSuccess(string:String){
+        TSMessage.showNotificationWithTitle("Success!", subtitle:string, type: .Success)
     }
     
     public static func dateFromString(string: String) -> NSDate {
@@ -62,5 +68,20 @@ public class Utilities {
     public static func postNotification(name: String) {
         
         NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil)
+    }
+    
+    public static func writeUserDefaults(key: String, bool: Bool) {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(bool, forKey: key)
+    }
+    
+    public static func readUserDefaults(key: String) -> Bool {
+        let ud = NSUserDefaults.standardUserDefaults()
+        
+        if let bool = ud.objectForKey(key) {
+            return bool as! Bool
+        }else{
+            return false
+        }
     }
 }

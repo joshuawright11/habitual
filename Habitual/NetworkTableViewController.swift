@@ -8,6 +8,7 @@
 
 import UIKit
 import DZNEmptyDataSet
+import SCLAlertView
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
@@ -33,15 +34,16 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.navigationItem.title = "Connections"
         
+        let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addConnection")
+        self.navigationItem.rightBarButtonItem = button
+        
         if AuthManager.socialEnabled {
-            
-            let button = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action:"addConnection")
-            self.navigationItem.rightBarButtonItem = button
             
             loggedIn = true
             self.connections = AuthManager.currentUser!.connections
             self.tableView.reloadData()
         }else{
+            button.enabled = false
         }
         
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
@@ -55,7 +57,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func refreshData(){
         loggedIn = true
-        
+        self.navigationItem.rightBarButtonItem?.enabled = true
         AuthManager.currentUser?.getConnections() { (success) -> () in
             if success {
                 self.connections = AuthManager.currentUser?.connections
@@ -65,27 +67,50 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     @IBAction func addConnection() {
-        let alert = UIAlertController(title: "Follow a user", message: "enter their username", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let alert = SCLAlertView()
+        let txt = alert.addTextField("username")
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Follow", style: UIAlertActionStyle.Default) { (_) in
-            let usernameTextField = alert.textFields! [0] 
-                AuthManager.currentUser?.addConnection(usernameTextField.text!, callback: { (success) -> () in
+        txt.autocapitalizationType = .None
+        txt.autocorrectionType = .No
+        
+        alert.showCloseButton = false
+        alert.addButton("Request Connection") {
+            
+            let text = txt.text!
+            
+            if(self.alreadyConnected(text)){
+                return
+            }else{
+                AuthManager.currentUser?.addConnection(txt.text!, callback: { (success) -> () in
                     if success {
                         self.connections = AuthManager.currentUser?.connections
-                        Utilities.alert("User followed", vc: self)
+                        Utilities.alertSuccess("Connection request sent")
                     }else{
-                        Utilities.alert("User not found", vc: self)
+                        Utilities.alertError("User not found")
                     }
                 })
-            })
-        
-        alert.addTextFieldWithConfigurationHandler { (textField) in
-            textField.placeholder = "username"
+            }
         }
+        alert.addButton("Cancel") { () -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alert.showEdit("Add Connection", subTitle: "Request a connection with a username")
+    }
+    
+    func alreadyConnected(string: String) -> Bool {
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        let usernames = connections?.map({$0.user.username})
         
+        if(usernames!.contains(string)) {
+            Utilities.alertError("You are already connected with that user!")
+            return true
+        }else if(AuthManager.currentUser?.username == string){
+            Utilities.alertError("You can't connect with yourself!")
+            return true
+        }else{
+            return false
+        }
     }
     
     // MARK: - Empty data set delegate

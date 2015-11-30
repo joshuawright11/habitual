@@ -60,7 +60,7 @@ class HabitDetailController: UITableViewController {
     func done(sender: UIBarButtonItem) {
 
         if habit?.name == "" {
-            Utilities.alert("Your habit needs a name!", vc: self)
+            Utilities.alertWarning("Your habit needs a name")
             return
         }
         
@@ -265,7 +265,7 @@ class HabitDetailController: UITableViewController {
         case 0: return "Basic Info"
         case 1: return "Scheduling"
         case 2: return AuthManager.socialEnabled ? "Accountability" : ""
-        default: return "Accountability"
+        default: return ""
         }
     }
     

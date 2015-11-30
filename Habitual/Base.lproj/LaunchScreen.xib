@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9060"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,42 +11,84 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQ5-ZL-y9c">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26e-gu-33T">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <items/>
-                    <color key="barTintColor" red="0.14117647059999999" green="0.17254901959999999" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                </tabBar>
+                    <color key="backgroundColor" red="0.14117647058823529" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="198" id="5ar-Xc-GOw">
+                            <variation key="heightClass=regular-widthClass=compact" constant="174"/>
+                        </constraint>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="5ar-Xc-GOw"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="5ar-Xc-GOw"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vg0-DM-0lO">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.14117647058823529" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="0ay-gR-7uW"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="0ay-gR-7uW"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="0ay-gR-7uW"/>
+                        </mask>
+                    </variation>
+                </view>
             </subviews>
             <animations/>
-            <color key="backgroundColor" red="0.14117647058823529" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.16862745098039217" green="0.20784313725490194" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="cQ5-ZL-y9c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZlD-cK-8HZ"/>
-                <constraint firstAttribute="bottom" secondItem="cQ5-ZL-y9c" secondAttribute="bottom" id="hmH-1i-XcW"/>
-                <constraint firstAttribute="trailing" secondItem="cQ5-ZL-y9c" secondAttribute="trailing" id="oOR-8v-uFK"/>
+                <constraint firstAttribute="trailing" secondItem="26e-gu-33T" secondAttribute="trailing" id="8rO-R5-aDO"/>
+                <constraint firstItem="26e-gu-33T" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GiQ-H3-QiO"/>
+                <constraint firstItem="vg0-DM-0lO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lzi-Rn-iUi"/>
+                <constraint firstAttribute="trailing" secondItem="vg0-DM-0lO" secondAttribute="trailing" id="Pyc-rI-OWv"/>
+                <constraint firstItem="26e-gu-33T" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="t43-GU-OpB"/>
+                <constraint firstAttribute="bottom" secondItem="vg0-DM-0lO" secondAttribute="bottom" id="tFt-G5-vJ9"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="cQ5-ZL-y9c"/>
+                    <exclude reference="26e-gu-33T"/>
+                    <exclude reference="vg0-DM-0lO"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="ZlD-cK-8HZ"/>
-                    <exclude reference="hmH-1i-XcW"/>
-                    <exclude reference="oOR-8v-uFK"/>
+                    <exclude reference="8rO-R5-aDO"/>
+                    <exclude reference="GiQ-H3-QiO"/>
+                    <exclude reference="t43-GU-OpB"/>
+                    <exclude reference="Lzi-Rn-iUi"/>
+                    <exclude reference="Pyc-rI-OWv"/>
+                    <exclude reference="tFt-G5-vJ9"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="cQ5-ZL-y9c"/>
+                    <include reference="26e-gu-33T"/>
+                    <include reference="vg0-DM-0lO"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="ZlD-cK-8HZ"/>
-                    <include reference="hmH-1i-XcW"/>
-                    <include reference="oOR-8v-uFK"/>
+                    <include reference="8rO-R5-aDO"/>
+                    <include reference="GiQ-H3-QiO"/>
+                    <include reference="t43-GU-OpB"/>
+                    <include reference="Lzi-Rn-iUi"/>
+                    <include reference="Pyc-rI-OWv"/>
+                    <include reference="tFt-G5-vJ9"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="548" y="455"/>

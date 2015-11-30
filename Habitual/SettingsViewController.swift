@@ -11,8 +11,8 @@ import MessageUI
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
+    @IBOutlet weak var notificationSwitch: UISwitch!
     @IBOutlet weak var notificationsLabel: UILabel!
-    @IBOutlet weak var appBadgeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +21,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     func doAppearance() {
         self.tableView.backgroundColor = kColorBackground
-        notificationsLabel.font = kFontCellTitle
-        appBadgeLabel.font = kFontCellTitle
+        notificationsLabel.font = kFontSectionHeader
         notificationsLabel.textColor = kColorTextMain
-        appBadgeLabel.textColor = kColorTextMain
+        
+        notificationSwitch.on = !Utilities.readUserDefaults(Notifications.localNotificationsDisabled)
+        
+        Styler.navBarShader(self)
         
         let button = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: "pulse")
         self.navigationItem.rightBarButtonItem = button
@@ -36,21 +38,25 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:UITableViewCell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.textLabel!.font = kFontCellTitle
+        cell.textLabel!.font = kFontSectionHeader
         cell.textLabel!.textColor = kColorTextMain
         return cell
+    }
+    
+    @IBAction func notificationSwitchToggled(sender: UISwitch) {
+        Utilities.writeUserDefaults(Notifications.localNotificationsDisabled, bool: !sender.on)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.section {
-        case 1:
+        case 999:
             switch indexPath.row {
             case 0: shareTwitter()
             case 1: shareFacebook()
             default: shareText()
             }
-        case 2:
+        case 1:
             switch indexPath.row {
             case 0: submitFeedBack()
             default: rateOnAppStore()
