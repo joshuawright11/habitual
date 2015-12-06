@@ -66,6 +66,12 @@ extension Habit {
         })
     }
     
+    public func saveCompletionData() {
+        parseObject!["datesCompleted"] = datesCompleted
+        parseObject!["due"] = dueOn()
+        parseObject?.saveInBackground()
+    }
+    
     public func deleteFromServer() {
         parseObject!.deleteInBackground()
         WebServices.syncUserHabits()

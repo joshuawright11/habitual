@@ -11,6 +11,56 @@ import CoreData
 import Parse
 
 extension Habit {
+    
+    public func completeOn(date: NSDate) -> Bool {
+        
+        if countCompletedIn(date, freq: frequency) >= timesToComplete {
+            return false
+        }else{
+            datesCompleted.append(date)
+            coreDataObject?.save()
+            if AuthManager.socialEnabled {saveCompletionData()}
+            return true
+        }
+    }
+    
+    // uncomplete a habit on a certain date
+    public func uncompleteOn(date: NSDate) -> Bool {
+        
+        if !(countCompletedIn(date, freq: frequency) > 0) {
+            return false
+        }
+        
+        for completion: NSDate in datesCompleted {
+            
+            var beginning:NSDate
+            var end:NSDate
+            
+            switch frequency{
+            case .Daily:
+                beginning = completion.beginningOfDay
+                end = completion.endOfDay
+            case .Weekly:
+                beginning = completion.beginningOfWeek
+                end = completion.endOfWeek
+            case .Monthly:
+                beginning = completion.beginningOfMonth
+                end = completion.endOfMonth
+            }
+            
+            if(beginning...end).contains(date) {
+                if let index = datesCompleted.indexOf(completion) {
+                    datesCompleted.removeAtIndex(index)
+                    coreDataObject?.save()
+                    if AuthManager.socialEnabled {saveCompletionData()}
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     private func addToCoreData() {
         
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext

@@ -266,36 +266,6 @@ public class Habit: ParseObject {
         return count
     }
     
-    // uncomplete a habit on a certain date
-    public func uncompleteOn(date: NSDate) {
-        
-        for completion: NSDate in datesCompleted {
-            
-            var beginning:NSDate
-            var end:NSDate
-            
-            switch frequency{
-            case .Daily:
-                beginning = completion.beginningOfDay
-                end = completion.endOfDay
-            case .Weekly:
-                beginning = completion.beginningOfWeek
-                end = completion.endOfWeek
-            case .Monthly:
-                beginning = completion.beginningOfMonth
-                end = completion.endOfMonth
-            }
-            
-            if(beginning...end).contains(date) {
-                if let index = datesCompleted.indexOf(completion) {
-                    datesCompleted.removeAtIndex(index)
-                    saveToCoreData()
-                    return
-                }
-            }
-        }
-    }
-    
     // return true if completing a habit on this date would alter future push notifications
     // based on frequency
     public func dateInCurrentFrequency(date: NSDate) -> Bool {

@@ -143,10 +143,10 @@ class HabitHomeCell: UITableViewCell {
     
     func complete(){
         
-        if habit.countCompletedIn(date, freq: habit.frequency) >= habit.timesToComplete {return}
-
-        habit.datesCompleted.append(date)
-        habit.saveToCoreData()
+        if !habit.completeOn(date) {
+            return
+        }
+        
         detailTextLabel?.text = subtitleText()
 
         if habit.countCompletedIn(date, freq: habit.frequency) == habit.timesToComplete {
@@ -196,12 +196,10 @@ class HabitHomeCell: UITableViewCell {
     
     func uncomplete() {
         
-        if !(habit.countCompletedIn(date, freq: habit.frequency) > 0) {
+        if !habit.uncompleteOn(date) {
             animateReturn()
             return
         }
-        
-        habit.uncompleteOn(date)
         
         detailTextLabel?.text = subtitleText()
         animateUncomplete()

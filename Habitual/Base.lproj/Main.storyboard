@@ -2755,13 +2755,13 @@ I don't get this done on time</string>
                                                     <exclude reference="HWr-xJ-KuD"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="5Ga-1D-bkJ"/>
                                                     <exclude reference="Fz1-An-g6O"/>
                                                     <exclude reference="ksp-tn-b7f"/>
                                                     <exclude reference="tRR-oh-mNT"/>
                                                     <exclude reference="N12-R0-HVd"/>
                                                     <exclude reference="a5w-ZU-PWN"/>
                                                     <exclude reference="crO-is-Ynw"/>
+                                                    <exclude reference="5Ga-1D-bkJ"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -2771,13 +2771,13 @@ I don't get this done on time</string>
                                                     <include reference="HWr-xJ-KuD"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="5Ga-1D-bkJ"/>
                                                     <include reference="Fz1-An-g6O"/>
                                                     <include reference="ksp-tn-b7f"/>
                                                     <include reference="tRR-oh-mNT"/>
                                                     <include reference="N12-R0-HVd"/>
                                                     <include reference="a5w-ZU-PWN"/>
                                                     <include reference="crO-is-Ynw"/>
+                                                    <include reference="5Ga-1D-bkJ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
