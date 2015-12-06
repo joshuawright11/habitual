@@ -106,11 +106,16 @@ class HabitHomeCell: UITableViewCell {
         let percent = borderView.frame.origin.x/(distance*3)
         
         if(recognizer.state == .Ended) {
-            if(percent > 0.3 && percent < 0.5){
+            
+            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
+            
+            print("was complete \(wasComplete)")
+            
+            if(percent > 0.3 && !wasComplete){ //
                 complete()
-            }else if(percent < 0.7 && percent > 0.5){
+            }else if(percent < 0.7 && wasComplete){
                 uncomplete()
-            }else if(percent < -0.3 && percent > -0.5){
+            }else if(percent < -0.3){
                 uncomplete()
             }else{
                 animateReturn()
@@ -118,9 +123,11 @@ class HabitHomeCell: UITableViewCell {
         }else{
             let translation = recognizer.translationInView(self)
             
-            if percent > 0.3 && percent < 0.5 && translation.x > 0{
-            }else if percent < 0.7 && percent > 0.5 && translation.x < 0{
-            }else if percent < -0.3 && percent > -0.5{
+            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
+            
+            if  wasComplete && percent < 0.3 && translation.x < 0 {
+            }else if !wasComplete && percent > 0.7 && translation.x > 0 {
+            }else if percent < -0.3 && translation.x < 0 {
             }else if borderView.frame.origin.x > (UIScreen.mainScreen().bounds.width - 70) && translation.x > 0{
             }else {
                 borderView.frame.origin.x += translation.x

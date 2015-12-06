@@ -58,6 +58,8 @@ class ConnectionChatViewController: JSQMessagesViewController {
         
         self.collectionView?.collectionViewLayout.messageBubbleFont = kFontMessage
         
+        scrollToBottomAnimated(false)
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: Selector("pulse"))
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;

@@ -67,7 +67,7 @@ public class WebServices: NSObject {
         }
     }
     
-    static func syncDataForCurrentUser(callback: ((success: Bool) -> ())?) {
+    private static func syncDataForCurrentUser(callback: ((success: Bool) -> ())?) {
         var count = AuthManager.currentUser!.habits.count
         for habit:Habit in AuthManager.currentUser!.habits {
             habit.uploadToServer({ (success) -> () in
