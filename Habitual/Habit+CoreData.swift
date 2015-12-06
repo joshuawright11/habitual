@@ -18,8 +18,7 @@ extension Habit {
             return false
         }else{
             datesCompleted.append(date)
-            coreDataObject?.save()
-            if AuthManager.socialEnabled {saveCompletionData()}
+            saveToCoreData(true)
             return true
         }
     }
@@ -51,8 +50,7 @@ extension Habit {
             if(beginning...end).contains(date) {
                 if let index = datesCompleted.indexOf(completion) {
                     datesCompleted.removeAtIndex(index)
-                    coreDataObject?.save()
-                    if AuthManager.socialEnabled {saveCompletionData()}
+                    saveToCoreData(true)
                     return true
                 }
             }
@@ -117,10 +115,16 @@ extension Habit {
         coreDataObject!.save()
     }
     
-    func saveToCoreData() {
+    func saveToCoreData(completion: Bool) {
         
         defer {
-            if(AuthManager.currentUser?.parseObject != nil){ uploadToServer(nil) }
+            if(AuthManager.currentUser?.parseObject != nil){
+                if completion {
+                    saveCompletionData()
+                } else{
+                    uploadToServer(nil)
+                }
+            }
         }
         
         if let _ = coreDataObject {

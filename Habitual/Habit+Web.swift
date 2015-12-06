@@ -12,6 +12,7 @@ import Parse
 extension Habit {
     
     public func uploadToServer(callback: ((Bool) -> ())?) {
+
         if let _ = parseObject {
             updateOnServer(callback)
         }else{

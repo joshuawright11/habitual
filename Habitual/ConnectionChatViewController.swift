@@ -21,8 +21,14 @@ class ConnectionChatViewController: JSQMessagesViewController {
     var incomingAvatar:JSQMessagesAvatarImage!
     var outgoingAvatar:JSQMessagesAvatarImage!
     
+    var layout:ConnectionChatViewFlowLayout?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        layout = ConnectionChatViewFlowLayout(connection: self.connection)
+        
+        self.collectionView!.collectionViewLayout = layout
         
         Utilities.registerForNotification(self, selector: "chatReceived", name: kNotificationChatReceived)
         

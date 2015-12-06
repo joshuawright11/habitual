@@ -58,15 +58,15 @@ class User: ParseObject {
         return count
     }
     
-    func statLongestStreak() -> Int {
-        var longestStreak = 0
-        for habit:Habit in habits {
-            if habit.longestStreak() > longestStreak {
-                longestStreak = habit.longestStreak()
-            }
-        }
-        return longestStreak
-    }
+//    func statLongestStreak() -> Int {
+//        var longestStreak = 0
+//        for habit:Habit in habits {
+//            if habit.longestStreak() > longestStreak {
+//                longestStreak = habit.longestStreak()
+//            }
+//        }
+//        return longestStreak
+//    }
     
     func statMostCompletedHabit() -> String{
         if habits.count == 0 {

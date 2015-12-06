@@ -180,55 +180,58 @@ public class Habit: ParseObject {
         return count
     }
     
-    public func longestStreak() -> Int {
-        var longestStreak = 0
-        
-        var prevDate: NSDate?
-        for date:NSDate in datesCompleted.sort() {
-            if prevDate == nil {
-                prevDate = date
-                longestStreak = 1
-            }else{
-                if date.day - prevDate!.day == 1{
-                    longestStreak += 1
-                }else{
-                    longestStreak = 1
-                }
-                prevDate = date
-            }
-        }
-        
-        return longestStreak
-    }
-    
-    public func currentStreak() -> Int {
-        
-        if datesCompleted.count == 0 {
-            return 0
-        } else {
-            
-            let today: NSDate = (NSDate().beginningOfDay - 1.day)
-            var nextDate = datesCompleted.last!
-            
-            if nextDate < today {
-                return 0;
-            }else{
-                var streak = 1
-                for var i = datesCompleted.count - 2; i > 0; i-- {
-                    
-                    let dateToCheck = datesCompleted[i]
-                    
-                    if(dateToCheck < nextDate.beginningOfDay - 1.day) {
-                        return streak
-                    }else{
-                        streak++
-                        nextDate = dateToCheck
-                    }
-                }
-                return streak
-            }
-        }
-    }
+//    public func longestStreak() -> Int {
+//        var longestStreak = 0
+//        
+//        var currentStreak = 0
+//        
+//        var prevDate: NSDate?
+//        for date:NSDate in datesCompleted.sort() {
+//            if prevDate == nil {
+//                prevDate = date
+//                currentStreak = 1
+//            } else {
+//                if date.day - prevDate!.day == 1 {
+//                    currentStreak += 1
+//                } else {
+//                    longestStreak = currentStreak > longestStreak ? currentStreak : longestStreak
+//                    currentStreak = 1
+//                }
+//                prevDate = date
+//            }
+//        }
+//        
+//        return longestStreak
+//    }
+//    
+//    public func currentStreak() -> Int {
+//        
+//        if datesCompleted.count == 0 {
+//            return 0
+//        } else {
+//            
+//            let today: NSDate = (NSDate().beginningOfDay - 1.day)
+//            var nextDate = datesCompleted.last!
+//            
+//            if nextDate < today {
+//                return 0;
+//            }else{
+//                var streak = 1
+//                for var i = datesCompleted.count - 2; i > 0; i-- {
+//                    
+//                    let dateToCheck = datesCompleted[i]
+//                    
+//                    if(dateToCheck < nextDate.beginningOfDay - 1.day) {
+//                        return streak
+//                    }else{
+//                        streak++
+//                        nextDate = dateToCheck
+//                    }
+//                }
+//                return streak
+//            }
+//        }
+//    }
     
     public func countCompletedOn(date: NSDate) -> Int {
         
@@ -322,6 +325,13 @@ public class Habit: ParseObject {
     public func getCompletionPercentage() -> Double{
         // calculate number of units
         
+
+        
+        let perc = (Double(datesCompleted.count)/unitsSinceBegan())*100.0
+        return perc/Double(timesToComplete)
+    }
+    
+    private func unitsSinceBegan() -> Double {
         let today = NSDate()
         
         let startOfFirstInterval: NSDate
@@ -363,7 +373,6 @@ public class Habit: ParseObject {
             unitsSinceBegan = ceil(daysSinceBegan/30.417)
         }
         
-        let perc = (Double(datesCompleted.count)/unitsSinceBegan)*100.0
-        return perc/Double(timesToComplete)
+        return unitsSinceBegan
     }
 }

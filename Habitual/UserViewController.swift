@@ -144,11 +144,12 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     func statForIndex(index: Int) -> (String, String){
         if(index == 0){
             return ("Habits completed:","\(user!.statHabitsCompleted())")
-        }else if(index == 1){
-            return ("Longest streak:","\(user!.statLongestStreak())")
-        }else{
+        }else {
             return ("Most completed habit:",user!.statMostCompletedHabit())
         }
+//        else{
+//            return ("Longest streak:","\(user!.statLongestStreak())")
+//        }
     }
     
     // MARK: - Table view data source
@@ -165,7 +166,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return 0
             }
         }else{
-            return 3
+            return 2
         }
     }
 

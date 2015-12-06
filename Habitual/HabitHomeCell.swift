@@ -109,8 +109,6 @@ class HabitHomeCell: UITableViewCell {
             
             let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
             
-            print("was complete \(wasComplete)")
-            
             if(percent > 0.3 && !wasComplete){ //
                 complete()
             }else if(percent < 0.7 && wasComplete){
@@ -163,9 +161,6 @@ class HabitHomeCell: UITableViewCell {
         }
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-        if habit.notificationsEnabled && habit.dateInCurrentFrequency(date) {
-            habit.uploadToServer(nil)
-        }
     }
     
     func instantComplete() {
@@ -212,9 +207,6 @@ class HabitHomeCell: UITableViewCell {
         animateUncomplete()
         
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
-        if habit.notificationsEnabled && habit.canDo() {
-            habit.uploadToServer(nil)
-        }
     }
     
     func instantUncomplete() {

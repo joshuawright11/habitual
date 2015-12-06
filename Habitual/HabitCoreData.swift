@@ -54,7 +54,7 @@ public class HabitCoreData: NSManagedObject {
     
     func save() {
         do {
-            try managedObjectContext?.save()
+            try managedObjectContext!.save()
         } catch let error as NSError {
             print("awww error: " + error.description)
         }

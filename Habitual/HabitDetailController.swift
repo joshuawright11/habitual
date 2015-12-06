@@ -65,7 +65,7 @@ class HabitDetailController: UITableViewController {
         }
         
         habit?.createdAt = NSDate()
-        habit?.saveToCoreData()
+        habit?.saveToCoreData(false)
         
         Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
         Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
@@ -96,7 +96,7 @@ class HabitDetailController: UITableViewController {
                 AuthManager.currentUser?.habits.append(habit!)
             }
             
-            habit?.saveToCoreData()
+            habit?.saveToCoreData(false)
             
             self.tableView.deleteSections(NSIndexSet(index: AuthManager.socialEnabled ? 3 : 2), withRowAnimation: .Automatic)
             

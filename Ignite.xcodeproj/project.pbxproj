@@ -39,6 +39,7 @@
 		039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC071B2AD1F9006EAFD9 /* Constants.swift */; };
 		039BFC0A1B2AD234006EAFD9 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC091B2AD234006EAFD9 /* Utilities.swift */; };
 		039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039BFC0D1B2AE10B006EAFD9 /* User.swift */; };
+		039DBF471C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039DBF461C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift */; };
 		03B488131B509C390077E601 /* HabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488111B509C390077E601 /* HabitCell.swift */; };
 		03B488141B509C390077E601 /* HabitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03B488121B509C390077E601 /* HabitCell.xib */; };
 		03B488161B509CAA0077E601 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488151B509CAA0077E601 /* CalendarViewController.swift */; };
@@ -122,6 +123,7 @@
 		039BFC071B2AD1F9006EAFD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		039BFC091B2AD234006EAFD9 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		039BFC0D1B2AE10B006EAFD9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		039DBF461C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionChatViewFlowLayout.swift; sourceTree = "<group>"; };
 		03B488111B509C390077E601 /* HabitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCell.swift; sourceTree = "<group>"; };
 		03B488121B509C390077E601 /* HabitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitCell.xib; sourceTree = "<group>"; };
 		03B488151B509CAA0077E601 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				033DE6541BF1BA5900842C03 /* UserCell.xib */,
 				033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */,
 				033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */,
+				039DBF461C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
 				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupViewController.swift in Sources */,
+				039DBF471C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift in Sources */,
 				034ADC101BFD444D00593C4E /* ConnectionChatViewController.swift in Sources */,
 				034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */,
 				034ADC161BFD804300593C4E /* ParseObject.swift in Sources */,
