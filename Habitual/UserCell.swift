@@ -41,9 +41,9 @@ class UserCell: UITableViewCell {
         
         infoLabel.text = "\(connection.user.habits.count) habits"
         if connection.approved {
-            subtitleLabel.text = "\(connection.user.statHabitsCompleted()) habits completed"
+            subtitleLabel.text = connection.messages?.last?.text ?? "\(connection.user.statHabitsCompleted())"
         }else{
-            subtitleLabel.text = connection.sentByCurrentUser ? "Pending acception" : "Wants to connect"
+            subtitleLabel.text = connection.sentByCurrentUser ? "Pending acceptance" : "Wants to connect"
         }
         
         color = connection.approved ? connection.color : kColorTextSecondary
@@ -67,7 +67,7 @@ class UserCell: UITableViewCell {
         titleLabel.textColor = textColor
         titleLabel.font = kFontCellTitle
         
-        subtitleLabel.textColor = textColor
+        subtitleLabel.textColor = kColorTextSecondary
         subtitleLabel.font = kFontCellSubtitle
         
         infoLabel.textColor = kColorTextSecondary

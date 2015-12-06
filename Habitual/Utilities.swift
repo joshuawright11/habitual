@@ -84,4 +84,12 @@ public class Utilities {
             return false
         }
     }
+    
+    public static func incrementBadgeNumber() {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+    }
+    
+    public static func clearBadgeNumber() {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+    }
 }

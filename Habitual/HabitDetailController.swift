@@ -107,6 +107,8 @@ class HabitDetailController: UITableViewController {
             
             Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
             Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+            
+            navigationController?.popToRootViewControllerAnimated(true)
         }
         self.tableView.endUpdates()
     }

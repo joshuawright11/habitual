@@ -12,11 +12,14 @@ import Parse
 class NotificationHandler: NSObject {
 
     static func handPush(state: UIApplicationState, userInfo: [NSObject : AnyObject]) {
-        if state == UIApplicationState.Inactive {
+        if state == .Inactive || state == .Background{
             PFPush.handlePush(userInfo)
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+            Utilities.incrementBadgeNumber()
         }else{
-
+            
+            Utilities.incrementBadgeNumber()
+            
             let action = userInfo["action"] as! String
             
             switch action {

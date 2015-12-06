@@ -164,7 +164,7 @@
                                             <constraint firstAttribute="width" constant="330" id="SVb-I4-oS7"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="IKK-iA-h1r"/>
@@ -187,7 +187,7 @@
                                             <constraint firstAttribute="height" constant="42" id="iMs-c9-hOK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="015-Vg-nBq"/>
@@ -210,7 +210,7 @@
                                             <constraint firstAttribute="width" constant="330" id="l7p-Lf-n7v"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="JGZ-KO-3AD"/>
@@ -585,13 +585,13 @@
                                                 <constraint firstAttribute="width" constant="202" id="htN-5b-mlS"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The name of my habit should be" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9D-vn-hib">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -2451,7 +2451,7 @@ per day/week/month</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="71"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5t-O3-TDE">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="D5t-O3-TDE">
                                             <rect key="frame" x="15" y="11" width="303" height="21"/>
                                             <animations/>
                                             <string key="text">I want to notify specific people when 
@@ -2470,9 +2470,20 @@ I don't get this done on time</string>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="D5t-O3-TDE" secondAttribute="centerY" id="2hs-Br-FfJ"/>
                                         <constraint firstAttribute="centerY" secondItem="wcZ-nZ-XJq" secondAttribute="centerY" id="DLF-lE-4k1"/>
+                                        <constraint firstItem="wcZ-nZ-XJq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D5t-O3-TDE" secondAttribute="trailing" constant="8" id="KCS-xJ-G4K"/>
                                         <constraint firstItem="wcZ-nZ-XJq" firstAttribute="trailing" secondItem="eon-4m-66K" secondAttribute="trailingMargin" id="VLv-BL-KBr"/>
                                         <constraint firstItem="D5t-O3-TDE" firstAttribute="leading" secondItem="eon-4m-66K" secondAttribute="leadingMargin" constant="7" id="a7m-qr-x8F"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="KCS-xJ-G4K"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="KCS-xJ-G4K"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
@@ -2587,7 +2598,7 @@ I don't get this done on time</string>
                             <tableViewSection headerTitle="Feedback" id="rT8-B3-vrx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="HVL-5X-1UA" style="IBUITableViewCellStyleDefault" id="PNp-o0-1Ra">
-                                        <rect key="frame" x="0.0" y="356" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="137" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PNp-o0-1Ra" id="lmA-01-0hR">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -2696,7 +2707,7 @@ I don't get this done on time</string>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drink glass of water" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-wx-4QM">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drink glass of water" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-wx-4QM">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2731,6 +2742,7 @@ I don't get this done on time</string>
                                             <constraints>
                                                 <constraint firstItem="UaB-Xu-B9Z" firstAttribute="centerY" secondItem="az0-OU-3Rt" secondAttribute="centerY" id="5Ga-1D-bkJ"/>
                                                 <constraint firstItem="HWr-xJ-KuD" firstAttribute="centerY" secondItem="az0-OU-3Rt" secondAttribute="centerY" id="Fz1-An-g6O"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="KJ7-wx-4QM" secondAttribute="trailing" constant="7" id="N12-R0-HVd"/>
                                                 <constraint firstItem="KJ7-wx-4QM" firstAttribute="leading" secondItem="HWr-xJ-KuD" secondAttribute="trailing" id="a5w-ZU-PWN"/>
                                                 <constraint firstItem="KJ7-wx-4QM" firstAttribute="centerY" secondItem="az0-OU-3Rt" secondAttribute="centerY" id="crO-is-Ynw"/>
                                                 <constraint firstItem="HWr-xJ-KuD" firstAttribute="leading" secondItem="UaB-Xu-B9Z" secondAttribute="trailing" id="ksp-tn-b7f"/>
@@ -2743,12 +2755,13 @@ I don't get this done on time</string>
                                                     <exclude reference="HWr-xJ-KuD"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="5Ga-1D-bkJ"/>
                                                     <exclude reference="Fz1-An-g6O"/>
                                                     <exclude reference="ksp-tn-b7f"/>
                                                     <exclude reference="tRR-oh-mNT"/>
+                                                    <exclude reference="N12-R0-HVd"/>
                                                     <exclude reference="a5w-ZU-PWN"/>
                                                     <exclude reference="crO-is-Ynw"/>
-                                                    <exclude reference="5Ga-1D-bkJ"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -2758,12 +2771,13 @@ I don't get this done on time</string>
                                                     <include reference="HWr-xJ-KuD"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="5Ga-1D-bkJ"/>
                                                     <include reference="Fz1-An-g6O"/>
                                                     <include reference="ksp-tn-b7f"/>
                                                     <include reference="tRR-oh-mNT"/>
+                                                    <include reference="N12-R0-HVd"/>
                                                     <include reference="a5w-ZU-PWN"/>
                                                     <include reference="crO-is-Ynw"/>
-                                                    <include reference="5Ga-1D-bkJ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

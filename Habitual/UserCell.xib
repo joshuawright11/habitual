@@ -32,10 +32,10 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Habits Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph8-rL-AzW">
-                                <rect key="frame" x="67" y="43" width="170" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Habits Completed fdafdsafdsafdsaf" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph8-rL-AzW">
+                                <rect key="frame" x="67" y="43" width="125" height="35"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -69,10 +69,12 @@
                         <constraints>
                             <constraint firstItem="IEx-B5-Fpi" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="trailing" constant="-100" id="4cm-hg-9ee"/>
                             <constraint firstItem="QMX-5U-USJ" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="leading" constant="10" id="DJ7-EB-cl9"/>
+                            <constraint firstItem="IEx-B5-Fpi" firstAttribute="leading" secondItem="ph8-rL-AzW" secondAttribute="trailing" id="G7f-Dt-7em"/>
                             <constraint firstItem="QMX-5U-USJ" firstAttribute="centerY" secondItem="YhL-1W-Cxq" secondAttribute="centerY" id="GKd-kJ-Vbt"/>
                             <constraint firstAttribute="trailing" secondItem="IEx-B5-Fpi" secondAttribute="trailing" id="KBc-V3-LAZ"/>
                             <constraint firstAttribute="trailing" secondItem="lss-02-PBi" secondAttribute="trailing" constant="28" id="R92-Kh-CCh"/>
                             <constraint firstItem="g3n-d0-6eL" firstAttribute="leading" secondItem="QMX-5U-USJ" secondAttribute="trailing" constant="7" id="V3a-0l-Klb"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ph8-rL-AzW" secondAttribute="bottom" constant="7" id="c4N-ng-AhC"/>
                             <constraint firstItem="ph8-rL-AzW" firstAttribute="top" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cLY-fN-MVh"/>
                             <constraint firstItem="g3n-d0-6eL" firstAttribute="bottom" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="cfc-72-otd"/>
                             <constraint firstItem="ph8-rL-AzW" firstAttribute="leading" secondItem="g3n-d0-6eL" secondAttribute="leading" id="g84-Ki-42d"/>

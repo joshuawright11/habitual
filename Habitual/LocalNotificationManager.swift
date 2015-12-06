@@ -11,6 +11,8 @@ import Timepiece
 
 public func scheduleLocalNotifications() {
     
+    cancelAllLocalNotifications()
+    
     var count = 0
     
     for habit:Habit in AuthManager.currentUser!.habits {
@@ -21,9 +23,13 @@ public func scheduleLocalNotifications() {
     
     let localNotificationsDisabled = Utilities.readUserDefaults(Notifications.localNotificationsDisabled)
     
-    if !localNotificationsDisabled && count > 0 && NSDate() < (NSDate.today() + 18.hours){
+    if !localNotificationsDisabled && count > 0 {
         let notification = UILocalNotification()
-        notification.fireDate = NSDate.today() + 19.hours + 35.minutes
+        if NSDate().hour > 19 {
+            notification.fireDate = NSDate.tomorrow() + 19.hours
+        }else{
+            notification.fireDate = NSDate.today() + 19.hours
+        }
         notification.alertTitle = "Ignite"
 
         notification.alertBody = "Don't forget you have \(count) habits left to do today!"
