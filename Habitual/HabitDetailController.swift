@@ -59,10 +59,7 @@ class HabitDetailController: UITableViewController {
     
     func done(sender: UIBarButtonItem) {
 
-        if habit?.name == "" {
-            Utilities.alertWarning("Your habit needs a name", vc: self.navigationController!)
-            return
-        }
+        if !checkData() { return }
         
         habit?.createdAt = NSDate()
         habit?.saveToCoreData(false)
@@ -73,7 +70,20 @@ class HabitDetailController: UITableViewController {
         navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    func checkData() -> Bool {
+        if habit?.name == "" {
+            Utilities.alertWarning("Your habit needs a name", vc: self.navigationController!)
+            return false
+        } else if habit?.frequency == .Daily && habit!.daysToComplete.isEmpty {
+            Utilities.alertWarning("Your habit needs to be done on at least 1 weekday", vc: self.navigationController!)
+            return false
+        }
+        return true
+    }
+    
     func edit(sender: UIBarButtonItem){
+        
+        if !checkData() { return }
         
         editng = !editng
         

@@ -67,10 +67,10 @@ class UserCell: UITableViewCell {
         titleLabel.textColor = textColor
         titleLabel.font = kFontCellTitle
         
-        subtitleLabel.textColor = kColorTextSecondary
+        subtitleLabel.textColor = kColorTextSubtitle
         subtitleLabel.font = kFontCellSubtitle
         
-        infoLabel.textColor = kColorTextSecondary
+        infoLabel.textColor = kColorTextSubtitle
         infoLabel.font = kFontSectionHeader
         
         initialsLabel.font = kFontInitials

@@ -115,6 +115,11 @@ extension Habit {
         coreDataObject!.save()
     }
     
+    func saveCompletionCoreData() {
+        coreDataObject!.datesCompleted = datesCompleted
+        coreDataObject?.save()
+    }
+    
     func saveToCoreData(completion: Bool) {
         
         defer {
@@ -127,10 +132,14 @@ extension Habit {
             }
         }
         
-        if let _ = coreDataObject {
-            updateCoreData()
+        if completion {
+            saveCompletionCoreData()
         }else{
-            addToCoreData()
+            if let _ = coreDataObject {
+                updateCoreData()
+            }else{
+                addToCoreData()
+            }
         }
     }
     

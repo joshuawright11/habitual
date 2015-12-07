@@ -149,7 +149,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         let header = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
         header.textAlignment = .Center
         
-        header.text = habitsOfDate.count > 0 ? "Habits for today" : ""
+        header.text = habitsOfDate.count > 0 ? "Swipe to complete" : ""
         header.font = kFontSectionHeaderBold
         header.textColor = kColorTextSecondary
         

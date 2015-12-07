@@ -281,7 +281,5 @@ class HabitHomeCell: UITableViewCell {
         checkmark.alpha = 0.0
         
         borderView.layer.cornerRadius = 14.0
-//        borderView.layer.borderWidth = 0.5
-//        borderView.layer.borderColor = color.CGColor
     }
 }

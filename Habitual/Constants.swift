@@ -56,6 +56,7 @@ let kColorLogoRed = UIColor(hexString: "FF0000")
 // Text Colors
 let kColorTextMain = UIColor(hexString: "FFFFFF")
 let kColorTextSecondary = kColorBackground.lightenByPercentage(0.2)
+let kColorTextSubtitle = kColorBackground.lightenByPercentage(0.45)
 
 // Rainbow
 let kColorPurple = UIColor(hexString: "C644FC");

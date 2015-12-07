@@ -28,9 +28,9 @@ class HabitCell: UITableViewCell {
         titleLabel.font = kFontCellTitle
         titleLabel.textColor = kColorTextMain
         repeatLabel.font = kFontCellSubtitle
-        repeatLabel.textColor = kColorTextMain
+        repeatLabel.textColor = kColorTextSubtitle
         countLabel.font = kFontSectionHeader
-        countLabel.textColor = kColorTextMain
+        countLabel.textColor = kColorTextSubtitle
         
         coloriv.backgroundColor = UIColor(hexString: habit.color).colorWithAlphaComponent(0.8)
         self.checkiv.image = self.checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
