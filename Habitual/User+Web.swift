@@ -26,8 +26,13 @@ extension User
             if let objects = objects {
                 self.connections = []
                 var count = 0
+                var total = objects.count
                 for o in objects {
                     let connection = Connection(parseObject: o)
+                    connection.loadMessages({ (success) -> () in
+                        total -= 1
+                        if total == 0 {Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)}
+                    })
                     connection.color = kColorArray[count++ % 6]
                     self.connections.append(connection)
                 }

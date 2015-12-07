@@ -46,7 +46,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             button.enabled = false
         }
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
+        
         Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
+        
+        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: kNotificationIdentifierReloadConnectionsOffline)
     }
     
     func doAppearance() {
@@ -63,7 +68,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
                 self.connections = AuthManager.currentUser?.connections
                 self.tableView.reloadData()
             }
+            self.refreshControl?.endRefreshing()
         }
+    }
+    
+    func refreshDataOffline() {
+        self.tableView.reloadData()
     }
     
     @IBAction func addConnection() {

@@ -32,6 +32,8 @@ let kNotificationIdentifierToggleAccountability = "ToggleAccountability"
 let kNotificationIdentifierReloadConnections = "ReloadNetwork"
 let kNotificationChatReceived = "ReloadChat"
 
+let kNotificationIdentifierReloadConnectionsOffline = "ReloadNetworkOffline"
+
 /// **********
 /// * COLORS *
 /// **********

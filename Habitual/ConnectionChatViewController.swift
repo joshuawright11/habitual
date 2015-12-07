@@ -49,6 +49,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.connection.loadMessages { (success) -> () in
             if success {
                 self.collectionView?.reloadData()
+                Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)
                 JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                 self.scrollToBottomAnimated(true)
             }else{
@@ -128,7 +129,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        
+        Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         connection.sendMessage(text)
         finishSendingMessage()

@@ -41,13 +41,14 @@ class UserCell: UITableViewCell {
         
         infoLabel.text = "\(connection.user.habits.count) habits"
         if connection.approved {
-            subtitleLabel.text = connection.messages?.last?.text ?? "\(connection.user.statHabitsCompleted())"
+            subtitleLabel.text = connection.messages?.last?.text ?? "\(connection.user.statHabitsCompleted()) habits completed"
         }else{
             subtitleLabel.text = connection.sentByCurrentUser ? "Pending acceptance" : "Wants to connect"
         }
         
         color = connection.approved ? connection.color : kColorTextSecondary
         let textColor = connection.approved ? kColorTextMain : kColorTextSecondary
+        let subtitleTextColor = connection.approved ? kColorTextSubtitle : kColorTextSecondary
         
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
@@ -67,10 +68,10 @@ class UserCell: UITableViewCell {
         titleLabel.textColor = textColor
         titleLabel.font = kFontCellTitle
         
-        subtitleLabel.textColor = kColorTextSubtitle
+        subtitleLabel.textColor = subtitleTextColor
         subtitleLabel.font = kFontCellSubtitle
         
-        infoLabel.textColor = kColorTextSubtitle
+        infoLabel.textColor = subtitleTextColor
         infoLabel.font = kFontSectionHeader
         
         initialsLabel.font = kFontInitials

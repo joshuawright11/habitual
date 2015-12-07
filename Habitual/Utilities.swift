@@ -24,6 +24,10 @@ public class Utilities {
         TSMessage.showNotificationInViewController(vc, title: "Success!", subtitle: string, image: nil, type: .Success, duration: 2.0, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
     }
     
+    public static func globalAlert(title: String, text: String){
+        TSMessage.showNotificationWithTitle(title, subtitle: text, type: .Message)
+    }
+    
     public static func dateFromString(string: String) -> NSDate {
         
         let dateFormatter = NSDateFormatter()

@@ -34,14 +34,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupKeyboardNotifications() {
-        Utilities.registerForNotification(self, selector: "keyboardWasShown:", name: UIKeyboardDidShowNotification)
-        Utilities.registerForNotification(self, selector: "keyboardWillBeHidden:", name: UIKeyboardDidHideNotification)
+        Utilities.registerForNotification(self, selector: "keyboardWasShown:", name: UIKeyboardWillShowNotification)
+        Utilities.registerForNotification(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification)
     }
     
     func keyboardWasShown(notification: NSNotification) {
         let info = notification.userInfo!
         let kbSize = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
         let insets = UIEdgeInsetsMake(0, 0, kbSize!.height, 0)
+        
         scrollView.contentInset = insets
         scrollView.scrollIndicatorInsets = insets
         
@@ -133,6 +134,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func cancel() {
+        dismissKeyboard()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -183,7 +185,18 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK - UITextFieldDelegate methods
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        if textField.returnKeyType == .Next {
+            self.scrollView.scrollRectToVisible(passwordTextField.frame, animated: true)
+            if textField.isEqual(nameTextField) {
+                usernameTextField.becomeFirstResponder()
+            }else{
+                passwordTextField.becomeFirstResponder()
+            }
+            
+            return false
+        } else {
+            textField.resignFirstResponder()
+            return true
+        }
     }
 }
