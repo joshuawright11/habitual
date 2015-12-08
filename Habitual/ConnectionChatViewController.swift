@@ -114,7 +114,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
 
         let message = connection.messages![indexPath.row]
         if(message.habit == nil){
-            return message.sentByCurrentUser() ? outgoingBubbleImageData : incomingBubbleImageData
+            return message.sentByCurrentUser ? outgoingBubbleImageData : incomingBubbleImageData
         }else{
             return emptyBubbleImageData
         }

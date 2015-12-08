@@ -14,7 +14,7 @@ extension Habit {
     
     public func completeOn(date: NSDate) -> Bool {
         
-        if countCompletedIn(date, freq: frequency) >= timesToComplete {
+        if numCompletedIn(date) >= timesToComplete {
             return false
         }else{
             datesCompleted.append(date)
@@ -26,7 +26,7 @@ extension Habit {
     // uncomplete a habit on a certain date
     public func uncompleteOn(date: NSDate) -> Bool {
         
-        if !(countCompletedIn(date, freq: frequency) > 0) {
+        if !(numCompletedIn(date) > 0) {
             return false
         }
         
@@ -71,7 +71,7 @@ extension Habit {
             insertIntoManagedObjectContext: managedObjectContext)
         
         coreDataObject!.name = name
-        coreDataObject!.frequency = frequency
+        coreDataObject!.frequencyInt = frequency.rawValue
         coreDataObject!.color = color
         coreDataObject!.icon = icon
         coreDataObject!.privat = privat
@@ -79,12 +79,11 @@ extension Habit {
         coreDataObject!.timeOfDayInt = timeOfDay.rawValue
         coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
         coreDataObject!.remindUserAt = remindUserAt
-        coreDataObject!.notificationSettings = notificationSettings
-        coreDataObject!.timesToComplete = timesToComplete
+        coreDataObject!.notificationSettingsInts = []
+        coreDataObject!.timesToCompleteInt = Int64(timesToComplete)
         coreDataObject!.createdAt = createdAt
-        coreDataObject!.datesCompleted = datesCompleted
+        coreDataObject!.datesCompletedData = datesCompleted
         coreDataObject!.notificationsEnabled = notificationsEnabled
-        coreDataObject!.notificationSettings = notificationSettings
         coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
         
         do {
@@ -97,7 +96,7 @@ extension Habit {
     
     private func updateCoreData() {
         coreDataObject!.name = name
-        coreDataObject!.frequency = frequency
+        coreDataObject!.frequencyInt = frequency.rawValue
         coreDataObject!.color = color
         coreDataObject!.icon = icon
         coreDataObject!.privat = privat
@@ -105,18 +104,17 @@ extension Habit {
         coreDataObject!.timeOfDayInt = timeOfDay.rawValue
         coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
         coreDataObject!.remindUserAt = remindUserAt
-        coreDataObject!.notificationSettings = notificationSettings
-        coreDataObject!.timesToComplete = timesToComplete
+        coreDataObject!.notificationSettingsInts = []
+        coreDataObject!.timesToCompleteInt = Int64(timesToComplete)
         coreDataObject!.createdAt = createdAt
-        coreDataObject!.datesCompleted = datesCompleted
+        coreDataObject!.datesCompletedData = datesCompleted
         coreDataObject!.notificationsEnabled = notificationsEnabled
-        coreDataObject!.notificationSettings = notificationSettings
         coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
         coreDataObject!.save()
     }
     
     func saveCompletionCoreData() {
-        coreDataObject!.datesCompleted = datesCompleted
+        coreDataObject!.datesCompletedData = datesCompleted
         coreDataObject?.save()
     }
     

@@ -42,13 +42,13 @@ extension Habit {
         parseObject!["creationDate"] = createdAt
         parseObject!["datesCompleted"] = datesCompleted
         parseObject!["timesToComplete"] = timesToComplete
-        parseObject!["frequency"] = frequency.name()
+        parseObject!["frequency"] = frequency.toString()
         parseObject!["name"] = name
         parseObject!["due"] = dueOn()
         parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject!})
         parseObject!["daysToComplete"] = daysToComplete
         parseObject!["notifyConnectionsAt"] = notifyConnectionsAt
-        parseObject!["timeOfDay"] = timeOfDay.name()
+        parseObject!["timeOfDay"] = timeOfDay.toString()
         parseObject!["timesToComplete"] = timesToComplete
         parseObject!["icon"] = icon
         parseObject!["color"] = color

@@ -16,7 +16,7 @@ public func scheduleLocalNotifications() {
     var count = 0
     
     for habit:Habit in AuthManager.currentUser!.habits {
-        if habit.datesCompleted.count == 0 || habit.canDo(){
+        if habit.datesCompleted.count == 0 || habit.canDoOn(){
             count++
         }
     }

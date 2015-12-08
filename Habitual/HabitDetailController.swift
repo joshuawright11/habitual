@@ -158,7 +158,7 @@ class HabitDetailController: UITableViewController {
         case 0:
             return habit == nil ? "Enter name here" : habit!.name
         case 1:
-            return habit == nil ? "Daily" : habit!.frequency.name()
+            return habit == nil ? "Daily" : habit!.frequency.toString()
         default:
             return "\(habit!.datesCompleted.count)"
         }

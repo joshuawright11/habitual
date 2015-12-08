@@ -43,9 +43,7 @@ public class AuthManager : NSObject{
             - parameter newUser: The user to set as the currently logged in user.
         */
         set(newUser){
-            
             self.user = newUser;
-            storeUser(self.user)
         }
     }
     
@@ -160,22 +158,6 @@ public class AuthManager : NSObject{
                 habit.parseObject = filtered.first
             }else{
                 habit.uploadToServer(nil)
-            }
-        }
-    }
-    
-    /**
-        Private helper method to store the user in NSUserDefaults so that their information can be
-        loaded into memory again without the need to log back in.
-    */
-    private static func storeUser(user: User?){
-        if let user = user {
-            let ud = NSUserDefaults.standardUserDefaults()
-            
-            let string = user.toJSON().rawString()
-            
-            if let string = string {
-                ud.setObject(string, forKey: "currentUser")
             }
         }
     }

@@ -72,7 +72,7 @@ class HabitHomeCell: UITableViewCell {
         
         if(date.beginningOfDay < NSDate()) { setupHandlers() }
         
-        if habit.countDoneInDate(date) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             instantComplete()
         }else{
             instantUncomplete()
@@ -107,7 +107,7 @@ class HabitHomeCell: UITableViewCell {
         
         if(recognizer.state == .Ended) {
             
-            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
+            let wasComplete = habit.numCompletedIn(date) >= habit.timesToComplete
             
             if(percent > 0.3 && !wasComplete){ //
                 complete()
@@ -121,8 +121,8 @@ class HabitHomeCell: UITableViewCell {
         }else{
             let translation = recognizer.translationInView(self)
             
-            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
-            
+            let wasComplete = habit.numCompletedIn(date) >= habit.timesToComplete
+    
             if  wasComplete && percent < 0.3 && translation.x < 0 {
             }else if !wasComplete && percent > 0.7 && translation.x > 0 {
             }else if percent < -0.3 && translation.x < 0 {
@@ -139,7 +139,7 @@ class HabitHomeCell: UITableViewCell {
     
     func animateReturn() {
         
-        if habit.countDoneInDate(date) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
         }else{
             animateUncomplete()
@@ -154,7 +154,7 @@ class HabitHomeCell: UITableViewCell {
         
         detailTextLabel?.text = subtitleText()
 
-        if habit.countCompletedIn(date, freq: habit.frequency) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
         }else{
             animateReturn()
@@ -248,8 +248,8 @@ class HabitHomeCell: UITableViewCell {
             unit = "this month"
         }
         
-        var text = "\(habit.timesToComplete - habit.countDoneInDate(date)) more times \(unit)"
-        if((habit.timesToComplete - habit.countDoneInDate(date)) == 0) {text = "Complete!"}
+        var text = "\(habit.timesToComplete - habit.numCompletedIn(date)) more times \(unit)"
+        if((habit.timesToComplete - habit.numCompletedIn(date)) == 0) {text = "Complete!"}
         
         return text
     }

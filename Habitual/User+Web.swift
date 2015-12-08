@@ -55,7 +55,7 @@ extension User
             query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
                 
                 if let user = user{
-                    let connection = Connection(user: User(parseUser: user as! PFUser, withHabits: false))
+                    let connection = Connection(receiver: User(parseUser: user as! PFUser, withHabits: false))
                     connection.saveToServer()
                     
                     self.connections.append(connection)
