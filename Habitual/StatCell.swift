@@ -14,8 +14,8 @@ class StatCell: UITableViewCell {
     /// This should display the title of the statistic.
     @IBOutlet weak var titleLabel: UILabel! {
         didSet{
-            titleLabel.font = kFontSectionHeader
-            titleLabel.textColor = kColorTextMain
+            titleLabel.font = Fonts.sectionHeader
+            titleLabel.textColor = Colors.textMain
             selectionStyle = .None
         }
     }
@@ -23,8 +23,8 @@ class StatCell: UITableViewCell {
     /// This should display the data of the statistic.
     @IBOutlet weak var descriptionLabel: UILabel! {
         didSet{
-            descriptionLabel.font = kFontSectionHeader
-            descriptionLabel.textColor = kColorAccentSecondary
+            descriptionLabel.font = Fonts.sectionHeader
+            descriptionLabel.textColor = Colors.accentSecondary
         }
     }
     

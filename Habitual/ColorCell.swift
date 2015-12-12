@@ -17,7 +17,7 @@ class ColorCell: HabitDetailCell {
             var i = 0
             for bt in colorButtons {
                 bt.layer.cornerRadius = 8.0
-                bt.backgroundColor = kColorArray[i++]
+                bt.backgroundColor = Colors.rainbow[i++]
                 bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
             }
         }
@@ -34,7 +34,7 @@ class ColorCell: HabitDetailCell {
         didSet {
             if let selectedButton = selectedButton {
                 selectedButton.layer.borderWidth = 3.0
-                selectedButton.layer.borderColor = kColorAccentSecondary.CGColor
+                selectedButton.layer.borderColor = Colors.accentSecondary.CGColor
             }
         }
     }
@@ -48,7 +48,7 @@ class ColorCell: HabitDetailCell {
             if bt.backgroundColor!.hexString == habit.color {
                 selectedButton = bt
                 bt.layer.borderWidth = 3.0
-                bt.layer.borderColor = kColorAccentSecondary.CGColor
+                bt.layer.borderColor = Colors.accentSecondary.CGColor
             }
         }
     }

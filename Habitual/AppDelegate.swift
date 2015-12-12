@@ -76,37 +76,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func doDesign() {
         
         // Table View
-        UITableView.appearance().backgroundColor = kColorBackground
+        UITableView.appearance().backgroundColor = Colors.background
         UITableView.appearance().separatorColor = UIColor.clearColor()
         
         
         // Table View Cells
-        UITableViewCell.appearance().backgroundColor = kColorBackground
+        UITableViewCell.appearance().backgroundColor = Colors.background
         
         
         // Table View Header and Footer Label
-        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
-        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeaderBold
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = Colors.textSecondary
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = Fonts.sectionHeaderBold
         
         // Navigation Bars
-        UINavigationBar.appearance().barTintColor = kColorBarBackground
-        UINavigationBar.appearance().tintColor = kColorAccent
+        UINavigationBar.appearance().barTintColor = Colors.barBackground
+        UINavigationBar.appearance().tintColor = Colors.accent
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName: kColorTextMain, NSFontAttributeName: kFontNavTitle]
+            [NSForegroundColorAttributeName: Colors.textMain, NSFontAttributeName: Fonts.navTitle]
         
         // Navigation Bar Buttons
-        UIBarButtonItem.appearance().tintColor = kColorAccent
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontNavButtons], forState: UIControlState.Normal)
+        UIBarButtonItem.appearance().tintColor = Colors.accent
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: Fonts.navButtons], forState: UIControlState.Normal)
         
         // Tab Bar
-        UITabBar.appearance().barTintColor = kColorBarBackground
-        UITabBar.appearance().tintColor = kColorAccent
+        UITabBar.appearance().barTintColor = Colors.barBackground
+        UITabBar.appearance().tintColor = Colors.accent
         UITabBar.appearance().translucent = false
         
         // Tab Bar Buttons and Titles
         UITabBarItem.appearance().setTitleTextAttributes(
-            [NSFontAttributeName: iFontTabBarTitle],
+            [NSFontAttributeName: Fonts.tabBarTitle],
             forState: .Normal)
     }
     

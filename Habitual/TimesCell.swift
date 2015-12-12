@@ -14,14 +14,14 @@ class TimesCell: HabitDetailCell {
 
     @IBOutlet weak var timesLabel: UILabel! {
         didSet {
-            timesLabel.font = kFontSectionHeaderBold
-            timesLabel.textColor = kColorAccent
+            timesLabel.font = Fonts.sectionHeaderBold
+            timesLabel.textColor = Colors.accent
         }
     }
     
     @IBOutlet weak var stepper: UIStepper! {
         didSet {
-            stepper.tintColor = kColorAccent
+            stepper.tintColor = Colors.accent
             stepper.addTarget(self, action: Selector("stepperChanged:"), forControlEvents: .ValueChanged)
         }
     }

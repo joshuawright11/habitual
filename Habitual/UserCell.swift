@@ -48,38 +48,38 @@ class UserCell: UITableViewCell {
             subtitleLabel.text = connection.sentByCurrentUser ? "Pending acceptance" : "Wants to connect"
         }
         
-        color = connection.approved ? connection.color : kColorTextSecondary
-        let textColor = connection.approved ? kColorTextMain : kColorTextSecondary
-        let subtitleTextColor = connection.approved ? kColorTextSubtitle : kColorTextSecondary
+        color = connection.approved ? connection.color : Colors.textSecondary
+        let textColor = connection.approved ? Colors.textMain : Colors.textSecondary
+        let subtitleTextColor = connection.approved ? Colors.textSubtitle : Colors.textSecondary
         
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
             infoLabel.hidden = false
         }else{
-            acceptButton.backgroundColor = kColorGreen.colorWithAlphaComponent(0.7)
-            acceptButton.titleLabel?.font = kFontSectionHeader
-            acceptButton.tintColor = kColorTextMain
+            acceptButton.backgroundColor = Colors.green.colorWithAlphaComponent(0.7)
+            acceptButton.titleLabel?.font = Fonts.sectionHeader
+            acceptButton.tintColor = Colors.textMain
             acceptButton.addTarget(self, action: Selector("approve"), forControlEvents: .TouchUpInside)
             acceptButton.layer.cornerRadius = 15.0
             infoLabel.hidden = true
         }
         
-        backgroundColor = kColorBackground
+        backgroundColor = Colors.background
         selectionStyle = UITableViewCellSelectionStyle.None
         
         titleLabel.textColor = textColor
-        titleLabel.font = kFontCellTitle
+        titleLabel.font = Fonts.cellTitle
         
         subtitleLabel.textColor = subtitleTextColor
-        subtitleLabel.font = kFontCellSubtitle
+        subtitleLabel.font = Fonts.cellSubtitle
         
         infoLabel.textColor = subtitleTextColor
-        infoLabel.font = kFontSectionHeader
+        infoLabel.font = Fonts.sectionHeader
         
-        initialsLabel.font = kFontInitials
+        initialsLabel.font = Fonts.initials
         initialsLabel.textColor = color
         
-        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
+        initialsLabel.layer.backgroundColor = Colors.background.CGColor
         
         initialsLabel.layer.cornerRadius = 25.0
         initialsLabel.layer.borderWidth = 2.0

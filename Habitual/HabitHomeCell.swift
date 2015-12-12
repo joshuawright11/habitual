@@ -163,7 +163,7 @@ class HabitHomeCell: UITableViewCell {
             animateReturn()
         }
         
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.habitDataChanged)
     }
     
     func instantComplete() {
@@ -176,10 +176,10 @@ class HabitHomeCell: UITableViewCell {
         
         checkmark.alpha = 1.0
         
-        iv.tintColor = kColorTextSecondary
+        iv.tintColor = Colors.textSecondary
         
-        self.titleLabel.textColor = kColorTextSecondary
-        self.subtitleLabel.textColor = kColorTextSecondary
+        self.titleLabel.textColor = Colors.textSecondary
+        self.subtitleLabel.textColor = Colors.textSecondary
     }
     func animateComplete() {
         let moveTo = UIScreen.mainScreen().bounds.width - 70
@@ -192,10 +192,10 @@ class HabitHomeCell: UITableViewCell {
         
         checkmark.animation.makeAlpha(1.0).animate(kAnimationLength)
         
-        iv.tintColor = kColorTextSecondary
+        iv.tintColor = Colors.textSecondary
         
-        self.titleLabel.textColor = kColorTextSecondary
-        self.subtitleLabel.textColor = kColorTextSecondary
+        self.titleLabel.textColor = Colors.textSecondary
+        self.subtitleLabel.textColor = Colors.textSecondary
         
     }
     
@@ -209,7 +209,7 @@ class HabitHomeCell: UITableViewCell {
         detailTextLabel?.text = subtitleText()
         animateUncomplete()
         
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.habitDataChanged)
     }
     
     func instantUncomplete() {
@@ -222,8 +222,8 @@ class HabitHomeCell: UITableViewCell {
         
         iv.tintColor = color
         
-        self.titleLabel.textColor = kColorTextMain
-        self.subtitleLabel.textColor = kColorTextMain
+        self.titleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textMain
     }
     
     func animateUncomplete() {
@@ -236,8 +236,8 @@ class HabitHomeCell: UITableViewCell {
         
         iv.tintColor = color
         
-        self.titleLabel.textColor = kColorTextMain
-        self.subtitleLabel.textColor = kColorTextMain
+        self.titleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textMain
     }
     
     func subtitleText() -> String {
@@ -264,10 +264,10 @@ class HabitHomeCell: UITableViewCell {
     
     func doAppearance() {
         
-        titleLabel.textColor = kColorTextMain
-        titleLabel.font = kFontCellTitle
-        subtitleLabel.textColor = kColorTextMain
-        subtitleLabel.font = kFontCellSubtitle
+        titleLabel.textColor = Colors.textMain
+        titleLabel.font = Fonts.cellTitle
+        subtitleLabel.textColor = Colors.textMain
+        subtitleLabel.font = Fonts.cellSubtitle
         
         let image = UIImage(named: habit.icon)
         iv.backgroundColor = UIColor.clearColor()
@@ -275,12 +275,12 @@ class HabitHomeCell: UITableViewCell {
         iv.tintColor = color
         iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
-        backgroundColor = kColorBackground
+        backgroundColor = Colors.background
         
         self.borderView.backgroundColor = color
         
         checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
-        checkmark.tintColor = kColorBackground
+        checkmark.tintColor = Colors.background
         checkmark.alpha = 0.0
         
         borderView.layer.cornerRadius = 14.0

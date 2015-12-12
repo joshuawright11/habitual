@@ -14,7 +14,7 @@ class AccountabilityCell: HabitDetailCell {
     /// A `UISwitch` to toggle the 'notificationsEnabled' of the `Habit`
     @IBOutlet weak var swich: UISwitch! {
         didSet {
-            swich.tintColor = kColorAccent
+            swich.tintColor = Colors.accent
             swich.addTarget(self, action: Selector("swichChanged:"), forControlEvents: .ValueChanged)
         }
     }
@@ -35,6 +35,6 @@ class AccountabilityCell: HabitDetailCell {
     /// switch is toggled.
     func swichChanged(swich: UISwitch) {
         habit?.notificationsEnabled = !habit!.notificationsEnabled
-        Utilities.postNotification(kNotificationIdentifierToggleAccountability)
+        Utilities.postNotification(Notifications.accountabilityToggled)
     }
 }

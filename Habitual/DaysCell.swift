@@ -16,10 +16,10 @@ class DaysCell: HabitDetailCell {
     @IBOutlet var dayButtons: [UIButton]! {
         didSet {
             for bt in dayButtons {
-                bt.backgroundColor = kColorBackground
+                bt.backgroundColor = Colors.background
                 bt.layer.cornerRadius = 4.0
-                bt.setTitleColor(kColorAccent, forState: .Normal)
-                bt.titleLabel?.font = kFontSectionHeaderBold
+                bt.setTitleColor(Colors.accent, forState: .Normal)
+                bt.titleLabel?.font = Fonts.sectionHeaderBold
                 
                 bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
             }
@@ -33,7 +33,7 @@ class DaysCell: HabitDetailCell {
     override func configure() {
         for bt in dayButtons {
             if self.habit!.daysToComplete.contains((bt.titleLabel?.text)!) {
-                bt.setTitleColor(kColorAccentSecondary, forState: .Normal)
+                bt.setTitleColor(Colors.accentSecondary, forState: .Normal)
             }
         }
     }
@@ -48,10 +48,10 @@ class DaysCell: HabitDetailCell {
         let string: String = (button.titleLabel?.text)!
         if habit!.daysToComplete.contains(string) {
             habit!.daysToComplete.removeAtIndex((habit!.daysToComplete.indexOf(string))!)
-            button.setTitleColor(kColorAccent, forState: .Normal)
+            button.setTitleColor(Colors.accent, forState: .Normal)
         }else{
             habit?.daysToComplete.append(string)
-            button.setTitleColor(kColorAccentSecondary, forState: .Normal)
+            button.setTitleColor(Colors.accentSecondary, forState: .Normal)
         }
     }
 }

@@ -28,8 +28,8 @@ class HabitDetailController: UITableViewController {
         
         doAppearance()
         
-        Utilities.registerForNotification(self, selector: Selector("toggleDOTW"), name: kNotificationIdentifierToggleDOTW)
-        Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: kNotificationIdentifierToggleAccountability)
+        Utilities.registerForNotification(self, selector: Selector("toggleDOTW"), name: Notifications.dotwToggled)
+        Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: Notifications.accountabilityToggled)
         
         if let habit = habit {
             self.navigationItem.title = habit.name
@@ -54,7 +54,7 @@ class HabitDetailController: UITableViewController {
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
+        self.tableView.backgroundColor = Colors.background
         
         Styler.navBarShader(self)
     }
@@ -66,8 +66,7 @@ class HabitDetailController: UITableViewController {
         habit?.createdAt = NSDate()
         habit?.saveToCoreData(false)
         
-        Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.habitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -117,8 +116,7 @@ class HabitDetailController: UITableViewController {
             
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
-            Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-            Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+            Utilities.postNotification(Notifications.habitDataChanged)
             
             navigationController?.popToRootViewControllerAnimated(true)
         }

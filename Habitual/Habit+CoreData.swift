@@ -151,7 +151,7 @@ extension Habit {
             }else{
                 print("ERROR USER IS EMPTY")
             }
-            Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
+            Utilities.postNotification(Notifications.habitDataChanged)
         }else{
             fatalError("Not a core data object!")
         }

@@ -17,21 +17,21 @@ class ConnectionCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel! {
         didSet {
             selectionStyle = UITableViewCellSelectionStyle.None
-            nameLabel.font = kFontSectionHeader
-            nameLabel.textColor = kColorTextMain
+            nameLabel.font = Fonts.sectionHeader
+            nameLabel.textColor = Colors.textMain
         }
     }
 
     /// A `UILabel` representing the initials of the `Connection`.
     @IBOutlet weak var initialsLabel: UILabel! {
         didSet {
-            initialsLabel.font = kFontInitials
+            initialsLabel.font = Fonts.initials
             initialsLabel.textColor = connection.color
             
             initialsLabel.layer.cornerRadius = 22.0
             initialsLabel.layer.borderWidth = 2.0
             initialsLabel.layer.borderColor = connection.color!.CGColor
-            initialsLabel.layer.backgroundColor = kColorBackground.CGColor
+            initialsLabel.layer.backgroundColor = Colors.background.CGColor
             
             Styler.viewShaderSmall(initialsLabel)
         }
@@ -59,7 +59,7 @@ class ConnectionCell: UITableViewCell {
         if selected {
             if habit!.usersToNotify.contains(connection.user) {
                 habit!.usersToNotify.removeAtIndex(habit!.usersToNotify.indexOf(connection.user)!)
-                checkiv.tintColor = kColorBackground
+                checkiv.tintColor = Colors.background
             }else{
                 habit!.usersToNotify.append(connection.user)
                 checkiv.tintColor = connection.color!
@@ -82,13 +82,13 @@ class ConnectionCell: UITableViewCell {
         
         if let cdo = habit.coreDataObject {
             let contains:Bool = cdo.usernamesToNotify.contains(connection.user.name)
-            checkiv.tintColor = contains ? connection.color! : kColorBackground
+            checkiv.tintColor = contains ? connection.color! : Colors.background
             let habitContains:Bool = habit.usersToNotify.map({$0.name}).contains(connection.user.name)
             if(contains && !(habitContains)){
                 habit.usersToNotify.append(connection.user)
             }
         }else{
-            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : kColorBackground
+            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : Colors.background
         }
     }
 }

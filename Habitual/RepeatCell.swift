@@ -15,8 +15,8 @@ class RepeatCell: HabitDetailCell {
     /// A button representing the `Daily` `Frequency`.
     @IBOutlet weak var dayButton: UIButton! {
         didSet {
-            dayButton.titleLabel!.font = kFontSectionHeaderBold
-            dayButton.tintColor = kColorAccent
+            dayButton.titleLabel!.font = Fonts.sectionHeaderBold
+            dayButton.tintColor = Colors.accent
             dayButton.addTarget(self, action: Selector("buttonPressed:"),
                 forControlEvents: .TouchUpInside)
         }
@@ -25,8 +25,8 @@ class RepeatCell: HabitDetailCell {
     /// A button representing the `Weekly` `Frequency`.
     @IBOutlet weak var weekButton: UIButton! {
         didSet {
-            weekButton.titleLabel!.font = kFontSectionHeaderBold
-            weekButton.tintColor = kColorAccent
+            weekButton.titleLabel!.font = Fonts.sectionHeaderBold
+            weekButton.tintColor = Colors.accent
             weekButton.addTarget(self, action: Selector("buttonPressed:"),
                 forControlEvents: .TouchUpInside)
         }
@@ -35,8 +35,8 @@ class RepeatCell: HabitDetailCell {
     /// A button representing the `Monthly` `Frequency`.
     @IBOutlet weak var monthButton: UIButton! {
         didSet {
-            monthButton.titleLabel!.font = kFontSectionHeaderBold
-            monthButton.tintColor = kColorAccent
+            monthButton.titleLabel!.font = Fonts.sectionHeaderBold
+            monthButton.tintColor = Colors.accent
             monthButton.addTarget(self, action: Selector("buttonPressed:"),
                 forControlEvents: .TouchUpInside)
         }
@@ -48,9 +48,9 @@ class RepeatCell: HabitDetailCell {
     
     override func configure() {
         switch habit.frequency {
-        case .Daily: dayButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
-        case .Weekly: weekButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
-        case .Monthly: monthButton.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        case .Daily: dayButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
+        case .Weekly: weekButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
+        case .Monthly: monthButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
         }
     }
     
@@ -72,14 +72,14 @@ class RepeatCell: HabitDetailCell {
         default: habit?.frequency = .Daily
         }
         
-        dayButton.setTitleColor(kColorAccent, forState: .Normal)
-        weekButton.setTitleColor(kColorAccent, forState: .Normal)
-        monthButton.setTitleColor(kColorAccent, forState: .Normal)
+        dayButton.setTitleColor(Colors.accent, forState: .Normal)
+        weekButton.setTitleColor(Colors.accent, forState: .Normal)
+        monthButton.setTitleColor(Colors.accent, forState: .Normal)
         
-        button.setTitleColor(kColorAccentSecondary, forState: .Normal)
+        button.setTitleColor(Colors.accentSecondary, forState: .Normal)
         
         if(initialFreq == .Daily && habit?.frequency != .Daily)
             || (initialFreq != .Daily && habit?.frequency == .Daily)
-        {Utilities.postNotification(kNotificationIdentifierToggleDOTW)}
+        {Utilities.postNotification(Notifications.dotwToggled)}
     }
 }

@@ -24,10 +24,10 @@ class IconCell: HabitDetailCell {
                 iv.layer.cornerRadius = 5.0
                 iv.userInteractionEnabled = true
                 
-                let path = iIconList[count%iIconList.count]
+                let path = Icons.iconList[count%Icons.iconList.count]
                 let image = UIImage(named: path)
                 iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
-                iv.tintColor = kColorArray[count%6]
+                iv.tintColor = Colors.rainbow[count%6]
                 iv.accessibilityIdentifier = path
                 
                 if let gr = dict[iv] { iv.removeGestureRecognizer(gr) }
@@ -49,12 +49,12 @@ class IconCell: HabitDetailCell {
     var selectediv: UIImageView? {
         willSet {
             if let selectediv = selectediv {
-                selectediv.backgroundColor = kColorBackground
+                selectediv.backgroundColor = Colors.background
             }
         }
         
         didSet {
-            selectediv?.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
+            selectediv?.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
         }
     }
     
@@ -66,7 +66,7 @@ class IconCell: HabitDetailCell {
         for iv in iconivs {
             if iv.accessibilityIdentifier == habit.icon {
                 selectediv = iv
-                iv.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
+                iv.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
             }
         }
     }

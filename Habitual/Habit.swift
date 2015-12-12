@@ -110,7 +110,7 @@ public class Habit: ParseObject {
         timesToComplete = 1
         daysToComplete = ["M","T","W","R","F","Sa","Su"]
         icon = "compass"
-        color = kColorPurple.hexString
+        color = Colors.purple.hexString
         notificationsEnabled = false
         notificationSettings = [.None]
         usersToNotify = []

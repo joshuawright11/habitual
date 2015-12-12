@@ -65,57 +65,57 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func doAppearance() {
-        titleLabel.font = kFontMainTitle
-        titleLabel.textColor = kColorTextMain
+        titleLabel.font = Fonts.mainTitle
+        titleLabel.textColor = Colors.textMain
         
-        infoLabel.font = kFontCellSubtitle
-        infoLabel.textColor = kColorTextMain
+        infoLabel.font = Fonts.cellSubtitle
+        infoLabel.textColor = Colors.textMain
         
         usernameTextField.delegate = self
         usernameTextField.layer.cornerRadius = 15
-        usernameTextField.backgroundColor = kColorTextViewBackground
+        usernameTextField.backgroundColor = Colors.textViewBackground
         let spacer1 = UIView(frame: CGRectMake(0, 0, 21, 21))
         usernameTextField.leftViewMode = .Always
         usernameTextField.leftView = spacer1
         
-        let str1 = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName:kColorTextSecondary, NSFontAttributeName:kFontSectionHeader])
+        let str1 = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
         usernameTextField.attributedPlaceholder = str1
         
-        usernameTextField.textColor = kColorBackground
-        usernameTextField.font = kFontSectionHeader
+        usernameTextField.textColor = Colors.background
+        usernameTextField.font = Fonts.sectionHeader
         
         passwordTextField.delegate = self
         passwordTextField.layer.cornerRadius = 15
-        passwordTextField.backgroundColor = kColorTextViewBackground
+        passwordTextField.backgroundColor = Colors.textViewBackground
         let spacer2 = UIView(frame: CGRectMake(0, 0, 21, 21))
         passwordTextField.leftViewMode = .Always
         passwordTextField.leftView = spacer2
         
-        let str2 = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:kColorTextSecondary, NSFontAttributeName:kFontSectionHeader])
+        let str2 = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
         passwordTextField.attributedPlaceholder = str2
         
-        passwordTextField.textColor = kColorBackground
-        passwordTextField.font = kFontSectionHeader
+        passwordTextField.textColor = Colors.background
+        passwordTextField.font = Fonts.sectionHeader
         
         nameTextField.delegate = self
         nameTextField.layer.cornerRadius = 15
-        nameTextField.backgroundColor = kColorTextViewBackground
+        nameTextField.backgroundColor = Colors.textViewBackground
         let spacer3 = UIView(frame: CGRectMake(0, 0, 21, 21))
         nameTextField.leftViewMode = .Always
         nameTextField.leftView = spacer3
         
-        let str3 = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName:kColorTextSecondary, NSFontAttributeName:kFontSectionHeader])
+        let str3 = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
         nameTextField.attributedPlaceholder = str3
         
-        nameTextField.textColor = kColorBackground
-        nameTextField.font = kFontSectionHeader
+        nameTextField.textColor = Colors.background
+        nameTextField.font = Fonts.sectionHeader
         
         loginButton.layer.cornerRadius = 15
-        loginButton.setTitleColor(kColorTextMain, forState: .Normal)
-        loginButton.titleLabel?.font = kFontCellTitle
+        loginButton.setTitleColor(Colors.textMain, forState: .Normal)
+        loginButton.titleLabel?.font = Fonts.cellTitle
         
-        signupButton.setTitleColor(kColorAccent, forState: .Normal)
-        signupButton.titleLabel?.font = kFontSectionHeader
+        signupButton.setTitleColor(Colors.accent, forState: .Normal)
+        signupButton.titleLabel?.font = Fonts.sectionHeader
         
         self.loginButton.setTitle("Sign up", forState: .Normal)
         self.signupButton.setTitle("Already have an account?", forState: .Normal)
@@ -167,7 +167,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 if success {
                     self.dismissViewControllerAnimated(true, completion: nil)
                     AuthManager.currentUser = user
-                    Utilities.postNotification(kNotificationIdentifierReloadConnections)
+                    Utilities.postNotification(Notifications.reloadNetworkOnline)
                 }else{
                     Utilities.alertError("An account with that username already exists", vc: self.navigationController!)
                 }
@@ -176,7 +176,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
                 if success {
                     AuthManager.currentUser = user
-                    Utilities.postNotification(kNotificationIdentifierReloadConnections)
+                    Utilities.postNotification(Notifications.reloadNetworkOnline)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }else{
                     Utilities.alertError("Invalid username or password", vc: self.navigationController!)

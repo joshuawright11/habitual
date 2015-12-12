@@ -26,8 +26,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         doAppearance()
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
-        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         
@@ -56,13 +54,13 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
+        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadNetworkOnline)
         
-        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: kNotificationIdentifierReloadConnectionsOffline)
+        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: Notifications.reloadNetworkOffline)
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
+        self.tableView.backgroundColor = Colors.background
         
         Styler.navBarShader(self)
     }
@@ -188,7 +186,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorBackground
+        return Colors.background
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
@@ -197,7 +195,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorAccent
+        return Colors.accent
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
@@ -207,7 +205,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             text = "Your subscription is out, please renew at www.ignitehabits.io"
         }
         
-        let font = kFontNavTitle
+        let font = Fonts.navTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -220,7 +218,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
         let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Free 2 month trial!"
         
-        let font = kFontCellTitle
+        let font = Fonts.cellTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(

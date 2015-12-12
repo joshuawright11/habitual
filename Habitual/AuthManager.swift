@@ -32,7 +32,7 @@ public class AuthManager : NSObject{
                 if socialEnabled {
                     loadHabitParseObjects()
                     user?.getConnections({ (success) -> () in
-                        if(success) {Utilities.postNotification(kNotificationIdentifierReloadConnections)}
+                        if(success) {Utilities.postNotification(Notifications.reloadNetworkOnline)}
         })
                 }
             }
@@ -72,7 +72,7 @@ public class AuthManager : NSObject{
                 let dict:Dictionary = ["username":username,"password":password]
                 
                 do{
-                    try Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
+                    try Locksmith.saveData(dict, forUserAccount: "Habitual")
                 }catch{
                     
                 }
@@ -92,7 +92,7 @@ public class AuthManager : NSObject{
     public static func logout() {
         user = nil;
         do{
-            try Locksmith.deleteDataForUserAccount(kKeychainUserAccount)
+            try Locksmith.deleteDataForUserAccount("Habitual")
         }catch {
             
         }

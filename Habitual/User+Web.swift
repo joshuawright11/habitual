@@ -33,9 +33,9 @@ extension User
                     let connection = Connection(parseObject: o)
                     connection.loadMessages({ (success) -> () in
                         total -= 1
-                        if total == 0 {Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)}
+                        if total == 0 {Utilities.postNotification(Notifications.reloadNetworkOffline)}
                     })
-                    connection.color = kColorArray[count++ % 6]
+                    connection.color = Colors.rainbow[count++ % 6]
                     self.connections.append(connection)
                 }
                 if let callback = callback {

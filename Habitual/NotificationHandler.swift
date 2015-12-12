@@ -23,11 +23,11 @@ class NotificationHandler: NSObject {
         let action = userInfo["action"] as! String
         
         switch action {
-        case kNotificationChatReceived:
-            Utilities.postNotification(kNotificationChatReceived)
+        case Notifications.reloadChat:
+            Utilities.postNotification(Notifications.reloadChat)
             Utilities.globalAlert("Message", text: userInfo["aps"]!["alert"] as! String)
-        case kNotificationIdentifierReloadConnections:
-            Utilities.postNotification(kNotificationIdentifierReloadConnections)
+        case Notifications.reloadNetworkOnline:
+            Utilities.postNotification(Notifications.reloadNetworkOnline)
             Utilities.globalAlert("Connections", text: userInfo["aps"]!["alert"] as! String)
         default:
             return

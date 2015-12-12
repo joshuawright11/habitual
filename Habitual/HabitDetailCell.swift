@@ -18,8 +18,8 @@ class HabitDetailCell:UITableViewCell {
     /// The `UILabel` describing what properties the cell will modify.
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            titleLabel.font = kFontSectionHeader
-            titleLabel.textColor = kColorTextMain
+            titleLabel.font = Fonts.sectionHeader
+            titleLabel.textColor = Colors.textMain
             selectionStyle = .None
         }
     }
