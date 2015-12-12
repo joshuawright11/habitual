@@ -8,36 +8,31 @@
 
 import UIKit
 
-class AccountabilityCell: UITableViewCell, HabitDetailCell {
+/// A cell representing the `notificationsEnabled` of the `Habit`.
+class AccountabilityCell: HabitDetailCell {
 
-    @IBOutlet weak var swich: UISwitch!
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    var habit:Habit?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    /// A `UISwitch` to toggle the 'notificationsEnabled' of the `Habit`
+    @IBOutlet weak var swich: UISwitch! {
+        didSet {
+            swich.tintColor = kColorAccent
+            swich.addTarget(self, action: Selector("swichChanged:"), forControlEvents: .ValueChanged)
+        }
     }
+
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-        
-        swich.tintColor = kColorAccent
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        swich.addTarget(self, action: Selector("swichChanged:"), forControlEvents: .ValueChanged)
+    override func configure() {
         swich.setOn(habit.notificationsEnabled, animated: false)
-        doAppearance()
     }
     
+    // ***************
+    // MARK: - Targets
+    // ***************
+    
+    /// Change the notifications enabled property of the `Habit` whenever the
+    /// switch is toggled.
     func swichChanged(swich: UISwitch) {
         habit?.notificationsEnabled = !habit!.notificationsEnabled
         Utilities.postNotification(kNotificationIdentifierToggleAccountability)

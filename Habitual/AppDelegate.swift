@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PFInstallation.currentInstallation().saveEventually() // update the Parse Installation data
         
+        PFUser.currentUser()?.fetchInBackground()
+        
         doDesign()
         
         return true

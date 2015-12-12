@@ -8,23 +8,52 @@
 
 import UIKit
 
+/// A cell representing a connection that a `Habit` could be accountable to.
+///
+/// - note: This class is NOT a subclass of `HabitDetailCell`.
 class ConnectionCell: UITableViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    /// A `UILabel` representing the name of the `Connection`.
+    @IBOutlet weak var nameLabel: UILabel! {
+        didSet {
+            selectionStyle = UITableViewCellSelectionStyle.None
+            nameLabel.font = kFontSectionHeader
+            nameLabel.textColor = kColorTextMain
+        }
+    }
 
-    @IBOutlet weak var initialsLabel: UILabel!
-    @IBOutlet weak var checkiv: UIImageView!
-
-    var habit:Habit?
+    /// A `UILabel` representing the initials of the `Connection`.
+    @IBOutlet weak var initialsLabel: UILabel! {
+        didSet {
+            initialsLabel.font = kFontInitials
+            initialsLabel.textColor = connection.color
+            
+            initialsLabel.layer.cornerRadius = 22.0
+            initialsLabel.layer.borderWidth = 2.0
+            initialsLabel.layer.borderColor = connection.color!.CGColor
+            initialsLabel.layer.backgroundColor = kColorBackground.CGColor
+            
+            Styler.viewShaderSmall(initialsLabel)
+        }
+    }
+    
+    /// A `UIImageView` representing whether the habit is accountable to this 
+    /// connection.
+    @IBOutlet weak var checkiv: UIImageView! {
+        didSet {
+            checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
+        }
+    }
+    
+    /// The `Habit` to which this cell is associated.
+    var habit:Habit!
+    
+    /// The `Connection` this cell represents.
     var connection:Connection!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    // *********************************
+    // MARK: - UITableViewCell Overrides
+    // *********************************
     
     override func setSelected(selected: Bool, animated: Bool) {
         if selected {
@@ -37,48 +66,29 @@ class ConnectionCell: UITableViewCell {
             }
         }
     }
+
+    // ***************
+    // MARK: - Methods
+    // ***************
     
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        nameLabel.font = kFontSectionHeader
-        nameLabel.textColor = kColorTextMain
+    /// Configure the cell with a `Habit` and a `Connection`.
+    func configure(habit: Habit, connection: Connection) {
+        self.habit = habit
+        self.connection = connection
+
         nameLabel.text = connection.user.name
-        
         let names:[String] = connection.user.name.componentsSeparatedByString(" ")
-        
         initialsLabel.text = String(names[0].characters.first!) + String(names[1].characters.first!)
         
-        initialsLabel.font = kFontInitials
-        initialsLabel.textColor = connection.color
-        
-        initialsLabel.layer.cornerRadius = 22.0
-        initialsLabel.layer.borderWidth = 2.0
-        initialsLabel.layer.borderColor = connection.color!.CGColor
-        initialsLabel.layer.backgroundColor = kColorBackground.CGColor
-        
-        checkiv.image = checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-
-        if let cdo = habit?.coreDataObject {
-            
+        if let cdo = habit.coreDataObject {
             let contains:Bool = cdo.usernamesToNotify.contains(connection.user.name)
             checkiv.tintColor = contains ? connection.color! : kColorBackground
-            
-            let habitContains:Bool = (habit?.usersToNotify.map({$0.name}).contains(connection.user.name))!
-            
+            let habitContains:Bool = habit.usersToNotify.map({$0.name}).contains(connection.user.name)
             if(contains && !(habitContains)){
-                habit?.usersToNotify.append(connection.user)
+                habit.usersToNotify.append(connection.user)
             }
-            
         }else{
-            checkiv.tintColor = habit!.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : kColorBackground
+            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : kColorBackground
         }
-        
-        Styler.viewShaderSmall(initialsLabel)
-    }
-    
-    func configure(habit: Habit, index: Int) {
-        self.habit = habit
-        self.connection = AuthManager.currentUser?.connections[index]
-        doAppearance()
     }
 }

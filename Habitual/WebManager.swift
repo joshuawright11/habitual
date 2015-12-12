@@ -10,6 +10,7 @@ import Foundation
 import SwiftyJSON
 import Locksmith
 import Parse
+import Timepiece
 
 /*
     TODO: - Rather confusing, should only work through the AuthManager class
@@ -46,6 +47,7 @@ public class WebServices: NSObject {
         user["name"] = name
         user["following"] = []
         user["habits"] = []
+        user["paymentDue"] = NSDate().endOfDay + 2.months
         
         user.signUpInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
             if error == nil {

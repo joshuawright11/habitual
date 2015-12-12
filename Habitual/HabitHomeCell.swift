@@ -11,6 +11,7 @@ import DKChainableAnimationKit
 
 class HabitHomeCell: UITableViewCell {
 
+    /// The length in seconds that the animation should run
     let kAnimationLength = 0.3
     
     @IBOutlet weak var iv: UIImageView!

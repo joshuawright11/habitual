@@ -209,7 +209,7 @@ class HabitDetailController: UITableViewController {
             return tableView.dequeueReusableCellWithIdentifier(id)!
         }else if indexPath.section == 2 && indexPath.row > 1 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
-            cell.configure(habit!, index: indexPath.row - 2)
+            cell.configure(habit!, connection: AuthManager.currentUser!.connections[indexPath.row - 2])
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -217,14 +217,12 @@ class HabitDetailController: UITableViewController {
             return cell
         }else{    
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
-            cell.configure(habit!)
+            cell.habit = habit!
             
-            let toReturn: UITableViewCell = cell as! UITableViewCell
+            if !canInteract {cell.userInteractionEnabled = false}
+            else {cell.userInteractionEnabled = true}
             
-            if !canInteract {toReturn.userInteractionEnabled = false}
-            else {toReturn.userInteractionEnabled = true}
-            
-            return cell as! UITableViewCell
+            return cell
         }
     }
     

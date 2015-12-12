@@ -9,6 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 import SCLAlertView
+import Parse
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
@@ -43,6 +44,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             self.connections = AuthManager.currentUser!.connections
             self.tableView.reloadData()
         }else{
+            button.enabled = false
+        }
+        
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
             button.enabled = false
         }
         
@@ -127,6 +132,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            return
+        }
+        
         if loggedIn {
             addConnection()
         }else{
@@ -140,9 +149,14 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         if let connections = connections {
-            return connections.count
+            
+            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+                return 0
+            }else{
+                return connections.count
+            }
         }else{
             return 0
         }
@@ -185,7 +199,11 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "You aren't connected yet!" : "Press to sign up or log in"
+        var text = loggedIn ? "You aren't connected yet!" : "Press to log in or start free 60 day trial!"
+        
+        if((PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
+            text = "Your subscription is out, please renew at www.ignitehabits.io"
+        }
         
         let font = kFontNavTitle
         let attrString = NSAttributedString(
@@ -198,7 +216,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
+        let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Free 2 month trial!"
         
         let font = kFontCellTitle
         let attrString = NSAttributedString(

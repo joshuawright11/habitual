@@ -9,18 +9,6 @@
 import Foundation
 
 public class Styler: NSObject {
-
-    public static func styleNavBarTitle(title: UILabel) {
-        
-    }
-    
-    public static func styleNavBarItem(item: UIBarButtonItem) {
-        
-    }
-    
-    public static func styleCalendarDate(label: UILabel) {
-        
-    }
     
     public static func styleTitleLabel(label: UILabel) {
         label.textColor = kColorTextMain
