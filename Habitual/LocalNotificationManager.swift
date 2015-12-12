@@ -9,6 +9,8 @@
 import Foundation
 import Timepiece
 
+// -TODO: Needs refactoring/documentation
+
 public func scheduleLocalNotifications() {
     
     cancelAllLocalNotifications()

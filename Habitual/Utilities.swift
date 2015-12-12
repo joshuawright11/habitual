@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import TSMessages
 
+// -TODO: Needs refactoring/documentation
+
 public class Utilities {
     
     public static func alertError(string:String, vc: UIViewController){

@@ -9,6 +9,8 @@
 import Foundation
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 class NotificationHandler: NSObject {
 
     static func handPush(state: UIApplicationState, userInfo: [NSObject : AnyObject]) {

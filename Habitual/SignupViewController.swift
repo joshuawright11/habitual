@@ -8,6 +8,8 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!

@@ -11,6 +11,8 @@ import Timepiece
 import DZNEmptyDataSet
 import CVCalendar
 
+// -TODO: Needs refactoring/documentation
+
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!

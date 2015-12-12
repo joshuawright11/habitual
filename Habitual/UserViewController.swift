@@ -10,6 +10,8 @@ import UIKit
 import Charts
 import ChameleonFramework
 
+// -TODO: Needs refactoring/documentation
+
 class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var user:User?

@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+// -TODO: Needs refactoring/documentation
+
 public class CoreDataManager: NSObject {
 
     static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext

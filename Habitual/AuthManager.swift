@@ -11,6 +11,8 @@ import SwiftyJSON
 import Locksmith
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 /// A Singleton class to manage the current user. All accesses of the current user should be made through 
 /// this class. Allows for logging in and logging out over the web, as well as storing the currently logged 
 /// in user's data locally to prevent the need for logging in every time a user is cleared from memory.

@@ -9,6 +9,8 @@
 import Foundation
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 extension Habit {
     
     public func uploadToServer(callback: ((Bool) -> ())?) {

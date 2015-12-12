@@ -14,6 +14,7 @@ import Timepiece
 
 /*
     TODO: - Rather confusing, should only work through the AuthManager class
+// -TODO: Needs refactoring/documentation
 */
 public class WebServices: NSObject {
     

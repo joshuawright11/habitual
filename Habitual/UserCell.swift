@@ -8,6 +8,8 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class UserCell: UITableViewCell {
 
     

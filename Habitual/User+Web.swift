@@ -8,6 +8,8 @@
 
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 extension User
 {
     func getConnections(callback:((success: Bool) -> ())?){

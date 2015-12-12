@@ -9,6 +9,8 @@
 import UIKit
 import MessageUI
 
+// -TODO: Needs refactoring/documentation
+
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var notificationSwitch: UISwitch!

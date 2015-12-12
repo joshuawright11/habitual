@@ -9,6 +9,8 @@
 import UIKit
 import DKChainableAnimationKit
 
+// -TODO: Needs refactoring/documentation
+
 class HabitHomeCell: UITableViewCell {
 
     /// The length in seconds that the animation should run

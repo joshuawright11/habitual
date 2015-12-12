@@ -8,7 +8,10 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class HabitCell: UITableViewCell {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!

@@ -10,6 +10,8 @@ import Foundation
 import CoreData
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 extension Habit {
     
     public func completeOn(date: NSDate) -> Bool {

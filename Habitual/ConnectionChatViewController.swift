@@ -10,6 +10,8 @@ import UIKit
 import JSQMessagesViewController
 import Timepiece
 
+// -TODO: Needs refactoring/documentation
+
 class ConnectionChatViewController: JSQMessagesViewController {
     
     var connection:Connection!

@@ -9,6 +9,8 @@
 import Foundation
 import JSQMessagesViewController
 
+// -TODO: Needs refactoring/documentation
+
 class ConnectionChatViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
    
     let connection: Connection?

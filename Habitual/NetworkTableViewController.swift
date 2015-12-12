@@ -11,6 +11,8 @@ import DZNEmptyDataSet
 import SCLAlertView
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
     var connections:[Connection]?{
