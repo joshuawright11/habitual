@@ -26,14 +26,19 @@ public class AuthManager : NSObject{
             returning.
         */
         get{
-        
             if (self.user == nil){
                 self.user = loadUser();
                 if socialEnabled {
                     loadHabitParseObjects()
                     user?.getConnections({ (success) -> () in
-                        if(success) {Utilities.postNotification(Notifications.reloadNetworkOnline)}
-        })
+                        if(success) {
+                            Utilities.postNotification(Notifications.reloadNetworkOnline)
+                            for habit in self.currentUser!.habits {
+                                habit.loadUsersToNotify()
+                            }
+                            WebServices.updateAllData()
+                        }
+                    })
                 }
             }
             return self.user

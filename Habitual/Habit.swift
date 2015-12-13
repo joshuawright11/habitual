@@ -369,4 +369,14 @@ public class Habit: ParseObject {
         
         return unitsSinceBegan
     }
+    
+    /// Loads connections from the AuthManager to the `usersToNotify` property.
+    /// This property is currently initialized as an empty array, since Parse
+    /// objects are not saved offline, hence the need for this method.
+    public func loadUsersToNotify() {
+        let connections = AuthManager.currentUser?.connections
+        for name in coreDataObject!.usernamesToNotify {
+            usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+        }
+    }
 }

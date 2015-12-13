@@ -32,6 +32,14 @@ class HabitDetailController: UITableViewController {
         Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: Notifications.accountabilityToggled)
         
         if let habit = habit {
+            
+            if habit.usersToNotify.count != habit.coreDataObject?.usernamesToNotify.count {
+                let connections = AuthManager.currentUser?.connections
+                for name in habit.coreDataObject!.usernamesToNotify {
+                    habit.usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+                }
+            }
+            
             self.navigationItem.title = habit.name
 
             canInteract = false

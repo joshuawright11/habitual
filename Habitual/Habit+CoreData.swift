@@ -111,7 +111,9 @@ extension Habit {
         coreDataObject!.createdAt = createdAt
         coreDataObject!.datesCompletedData = datesCompleted
         coreDataObject!.notificationsEnabled = notificationsEnabled
-        coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
+        if(AuthManager.currentUser?.connections.count != 0) {
+            coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
+        }
         coreDataObject!.save()
     }
     

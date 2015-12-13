@@ -199,7 +199,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        var text = loggedIn ? "You aren't connected yet!" : "Press to log in or start free 60 day trial!"
+        var text = loggedIn ? "You aren't connected yet!" : "Press to log in or sign up!"
         
         if((PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
             text = "Your subscription is out, please renew at www.ignitehabits.io"
@@ -216,7 +216,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Free 2 month trial!"
+        let text = loggedIn ? "Press to add a connection" : "You need an account to connect with other users. It takes 11-43 seconds to sign up depending on how fast you type. Free 1 year trial, normally $0.99 per year. Offline usage is always free."
         
         let font = Fonts.cellTitle
         let attrString = NSAttributedString(

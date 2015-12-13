@@ -47,7 +47,9 @@ extension Habit {
         parseObject!["frequency"] = frequency.toString()
         parseObject!["name"] = name
         parseObject!["due"] = dueOn()
-        parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject!})
+        if coreDataObject?.usernamesToNotify.count == usersToNotify.count {
+            parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject!})
+        }
         parseObject!["daysToComplete"] = daysToComplete
         parseObject!["notifyConnectionsAt"] = notifyConnectionsAt
         parseObject!["timeOfDay"] = timeOfDay.toString()

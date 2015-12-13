@@ -26,11 +26,10 @@ class ConnectionCell: UITableViewCell {
     @IBOutlet weak var initialsLabel: UILabel! {
         didSet {
             initialsLabel.font = Fonts.initials
-            initialsLabel.textColor = connection.color
+
             
             initialsLabel.layer.cornerRadius = 22.0
             initialsLabel.layer.borderWidth = 2.0
-            initialsLabel.layer.borderColor = connection.color!.CGColor
             initialsLabel.layer.backgroundColor = Colors.background.CGColor
             
             Styler.viewShaderSmall(initialsLabel)
@@ -76,6 +75,9 @@ class ConnectionCell: UITableViewCell {
         self.habit = habit
         self.connection = connection
 
+        initialsLabel.textColor = connection.color
+        initialsLabel.layer.borderColor = connection.color!.CGColor
+        
         nameLabel.text = connection.user.name
         let names:[String] = connection.user.name.componentsSeparatedByString(" ")
         initialsLabel.text = String(names[0].characters.first!) + String(names[1].characters.first!)
