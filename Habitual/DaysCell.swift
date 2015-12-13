@@ -8,56 +8,50 @@
 
 import UIKit
 
-class DaysCell: UITableViewCell, HabitDetailCell {
-
-
-    @IBOutlet var dayButtons: [UIButton]!
-    @IBOutlet weak var titleLabel: UILabel!
-
-    var habit:Habit?
+/// A cell representing the days of the week on which the `Habit` should be 
+/// completed.
+class DaysCell: HabitDetailCell {
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-        
-        for bt in dayButtons {
-            bt.backgroundColor = kColorBackground
-            bt.layer.cornerRadius = 4.0
-            bt.setTitleColor(kColorAccent, forState: .Normal)
-            bt.titleLabel?.font = kFontSectionHeaderBold
-            
-            bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+    /// 7 Buttons representing the days of the week.
+    @IBOutlet var dayButtons: [UIButton]! {
+        didSet {
+            for bt in dayButtons {
+                bt.backgroundColor = Colors.background
+                bt.layer.cornerRadius = 4.0
+                bt.setTitleColor(Colors.accent, forState: .Normal)
+                bt.titleLabel?.font = Fonts.sectionHeaderBold
+                
+                bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+            }
         }
     }
+
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
     
-    func buttonPressed(button: UIButton) {
-        let string: String = (button.titleLabel?.text)!
-        if habit!.daysToComplete.contains(string) {
-            habit!.daysToComplete.removeAtIndex((habit!.daysToComplete.indexOf(string))!)
-            button.setTitleColor(kColorAccent, forState: .Normal)
-        }else{
-            habit?.daysToComplete.append(string)
-            button.setTitleColor(kColorAccentSecondary, forState: .Normal)
-        }
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        doAppearance()
+    override func configure() {
         for bt in dayButtons {
             if self.habit!.daysToComplete.contains((bt.titleLabel?.text)!) {
-                bt.setTitleColor(kColorAccentSecondary, forState: .Normal)
+                bt.setTitleColor(Colors.accentSecondary, forState: .Normal)
             }
         }
     }
     
+    // ***************
+    // MARK: - Targets
+    // ***************
+    
+    /// When a button is pressed toggle its color and update the 
+    /// `daysToComplete` of the `Habit`.
+    func buttonPressed(button: UIButton) {
+        let string: String = (button.titleLabel?.text)!
+        if habit!.daysToComplete.contains(string) {
+            habit!.daysToComplete.removeAtIndex((habit!.daysToComplete.indexOf(string))!)
+            button.setTitleColor(Colors.accent, forState: .Normal)
+        }else{
+            habit?.daysToComplete.append(string)
+            button.setTitleColor(Colors.accentSecondary, forState: .Normal)
+        }
+    }
 }

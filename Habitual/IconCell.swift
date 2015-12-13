@@ -8,81 +8,76 @@
 
 import UIKit
 
-class IconCell: UITableViewCell, HabitDetailCell {
-
-    @IBOutlet weak var titleLabel: UILabel!
+/// A cell representing the icon of the `Habit`.
+class IconCell: HabitDetailCell {
     
-    @IBOutlet var iconivs: [UIImageView]!
-    var habit:Habit?
+    /// The `UIImageViews` representing the possible icons a `Habit` could have.
+    ///
+    /// - Note: Each `UIImageView` has their image path in their 
+    ///         `accessibilityIdentifier` property.
+    @IBOutlet var iconivs: [UIImageView]! {
+        didSet {
+            var count = 0
+            for iv in iconivs {
+                iv.backgroundColor = UIColor.clearColor()
+                iv.contentMode = .ScaleAspectFit
+                iv.layer.cornerRadius = 5.0
+                iv.userInteractionEnabled = true
+                
+                let path = Icons.iconList[count%Icons.iconList.count]
+                let image = UIImage(named: path)
+                iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
+                iv.tintColor = Colors.rainbow[count%6]
+                iv.accessibilityIdentifier = path
+                
+                if let gr = dict[iv] { iv.removeGestureRecognizer(gr) }
+                let tgr = UITapGestureRecognizer(target: self, action: Selector("tapped:"))
+                iv.addGestureRecognizer(tgr)
+                dict[iv] = tgr
+                
+                count += 1
+            }
+        }
+    }
     
+    /// A dictionary linking each of the `UIImageView`s with their corresponding
+    /// `UITapGestureRecognizer`. Used for making sure that multiple gesture 
+    /// recognizers aren't added to the same image view.
     var dict: [UIImageView: UITapGestureRecognizer] = [UIImageView: UITapGestureRecognizer]()
     
-    var selectediv: UIImageView?
+    /// The `UIImageView` representing the current icon of the `Habit`.
+    var selectediv: UIImageView? {
+        willSet {
+            if let selectediv = selectediv {
+                selectediv.backgroundColor = Colors.background
+            }
+        }
+        
+        didSet {
+            selectediv?.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
+        }
+    }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
+    
+    override func configure() {
+        for iv in iconivs {
+            if iv.accessibilityIdentifier == habit.icon {
+                selectediv = iv
+                iv.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
+            }
+        }
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    // ***************
+    // MARK: - Targets
+    // ***************
     
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-        
-        var count = 0
-        for iv in iconivs {
-            iv.backgroundColor = UIColor.clearColor()
-            iv.contentMode = .ScaleAspectFit
-            iv.layer.cornerRadius = 5.0
-            
-            
-            if let gr = dict[iv] {
-                iv.removeGestureRecognizer(gr)
-            }
-            
-            let tgr = UITapGestureRecognizer(target: self, action: Selector("tapped:"))
-            iv.userInteractionEnabled = true
-            iv.addGestureRecognizer(tgr)
-            dict[iv] = tgr
-            
-            let path = iIconList[count%iIconList.count]
-            let image = UIImage(named: path)
-            
-            count++
-            
-            iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
-            iv.tintColor = kColorArray[count%6]
-            
-            iv.accessibilityIdentifier = path
-        }
-        
-    }
-    
+    /// When a `UIImageView` is tapped, set the icon of the `Habit`.
     func tapped(tgr: UITapGestureRecognizer) {
-        let iv = tgr.view as! UIImageView
-        habit?.icon = iv.accessibilityIdentifier!
-        
-        if let selectediv = selectediv {
-            selectediv.backgroundColor = kColorBackground
-        }
-        
-        iv.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
-        
-        selectediv = iv
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        doAppearance()
-        
-        for iv in iconivs {
-            if iv.accessibilityIdentifier == habit.icon{
-                selectediv = iv
-                iv.backgroundColor = UIColor(hexString: kColorAccentSecondary.hexString, withAlpha: 0.4)
-            }
-        }
+        selectediv = tgr.view as? UIImageView
+        habit?.icon = selectediv!.accessibilityIdentifier!
     }
 }

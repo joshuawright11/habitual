@@ -9,6 +9,8 @@
 import UIKit
 import MessageUI
 
+// -TODO: Needs refactoring/documentation
+
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var notificationSwitch: UISwitch!
@@ -20,9 +22,9 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
-        notificationsLabel.font = kFontSectionHeader
-        notificationsLabel.textColor = kColorTextMain
+        self.tableView.backgroundColor = Colors.background
+        notificationsLabel.font = Fonts.sectionHeader
+        notificationsLabel.textColor = Colors.textMain
         
         notificationSwitch.on = !Utilities.readUserDefaults(Notifications.localNotificationsDisabled)
         
@@ -38,8 +40,8 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:UITableViewCell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.textLabel!.font = kFontSectionHeader
-        cell.textLabel!.textColor = kColorTextMain
+        cell.textLabel!.font = Fonts.sectionHeader
+        cell.textLabel!.textColor = Colors.textMain
         return cell
     }
     

@@ -10,6 +10,8 @@ import UIKit
 import Charts
 import ChameleonFramework
 
+// -TODO: Needs refactoring/documentation
+
 class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var user:User?
@@ -28,8 +30,9 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.contentInset = UIEdgeInsets(top: -15, left: 0, bottom: 0, right: 0)
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitDataChanged)
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
+        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
+        Utilities.registerForNotification(self, selector: "refreshData", name:
+            Notifications.reloadPulse)
         
         // this is gross because you can follow yourself when I wrote this
         if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
@@ -63,8 +66,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.rightAxis.enabled = false
         chartView.leftAxis.drawAxisLineEnabled = false
         chartView.leftAxis.enabled = false
-        chartView.xAxis.labelFont = kFontSectionHeaderBold
-        chartView.xAxis.labelTextColor = kColorTextMain
+        chartView.xAxis.labelFont = Fonts.sectionHeaderBold
+        chartView.xAxis.labelTextColor = Colors.textMain
         chartView.descriptionText = ""
         chartView.drawValueAboveBarEnabled = true
         chartView.noDataText = "No habits created yet!"
@@ -86,16 +89,16 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
-        self.chartView.backgroundColor = kColorBarBackground
-        self.view.backgroundColor = kColorBackground
+        self.tableView.backgroundColor = Colors.background
+        self.chartView.backgroundColor = Colors.barBackground
+        self.view.backgroundColor = Colors.background
         
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
-        spacerView.backgroundColor = kColorBarBackground
+        spacerView.backgroundColor = Colors.barBackground
         
-        spacerView.layer.shadowColor = kColorShadow.CGColor
+        spacerView.layer.shadowColor = Colors.shadow.CGColor
         spacerView.layer.shadowOffset = CGSize(width: 0, height: 2.75)
         spacerView.layer.shadowRadius = 1.75
         spacerView.layer.shadowOpacity = 0.4
@@ -122,8 +125,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let data = BarChartData(xVals: xvals, dataSets: dataSets)
-        data.setValueFont(kFontBody)
-        data.setValueTextColor(kColorTextMain)
+        data.setValueFont(Fonts.body)
+        data.setValueTextColor(Colors.textMain)
         
         let nf = NSNumberFormatter()
         nf.numberStyle = .PercentStyle

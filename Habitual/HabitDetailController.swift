@@ -8,6 +8,8 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class HabitDetailController: UITableViewController {
     
     var habit:Habit?
@@ -26,10 +28,18 @@ class HabitDetailController: UITableViewController {
         
         doAppearance()
         
-        Utilities.registerForNotification(self, selector: Selector("toggleDOTW"), name: kNotificationIdentifierToggleDOTW)
-        Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: kNotificationIdentifierToggleAccountability)
+        Utilities.registerForNotification(self, selector: Selector("toggleDOTW"), name: Notifications.dotwToggled)
+        Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: Notifications.accountabilityToggled)
         
         if let habit = habit {
+            
+            if habit.usersToNotify.count != habit.coreDataObject?.usernamesToNotify.count {
+                let connections = AuthManager.currentUser?.connections
+                for name in habit.coreDataObject!.usernamesToNotify {
+                    habit.usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+                }
+            }
+            
             self.navigationItem.title = habit.name
 
             canInteract = false
@@ -52,7 +62,7 @@ class HabitDetailController: UITableViewController {
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
+        self.tableView.backgroundColor = Colors.background
         
         Styler.navBarShader(self)
     }
@@ -64,8 +74,7 @@ class HabitDetailController: UITableViewController {
         habit?.createdAt = NSDate()
         habit?.saveToCoreData(false)
         
-        Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.habitDataChanged)
         
         navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -115,8 +124,7 @@ class HabitDetailController: UITableViewController {
             
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             
-            Utilities.postNotification(kNotificationIdentifierHabitAddedOrDeleted)
-            Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+            Utilities.postNotification(Notifications.habitDataChanged)
             
             navigationController?.popToRootViewControllerAnimated(true)
         }
@@ -158,7 +166,7 @@ class HabitDetailController: UITableViewController {
         case 0:
             return habit == nil ? "Enter name here" : habit!.name
         case 1:
-            return habit == nil ? "Daily" : habit!.frequency.name()
+            return habit == nil ? "Daily" : habit!.frequency.toString()
         default:
             return "\(habit!.datesCompleted.count)"
         }
@@ -209,7 +217,7 @@ class HabitDetailController: UITableViewController {
             return tableView.dequeueReusableCellWithIdentifier(id)!
         }else if indexPath.section == 2 && indexPath.row > 1 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
-            cell.configure(habit!, index: indexPath.row - 2)
+            cell.configure(habit!, connection: AuthManager.currentUser!.connections[indexPath.row - 2])
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -217,14 +225,12 @@ class HabitDetailController: UITableViewController {
             return cell
         }else{    
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
-            cell.configure(habit!)
+            cell.habit = habit!
             
-            let toReturn: UITableViewCell = cell as! UITableViewCell
+            if !canInteract {cell.userInteractionEnabled = false}
+            else {cell.userInteractionEnabled = true}
             
-            if !canInteract {toReturn.userInteractionEnabled = false}
-            else {toReturn.userInteractionEnabled = true}
-            
-            return cell as! UITableViewCell
+            return cell
         }
     }
     

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class SelectConnectionsTableViewController: UITableViewController {
 
     static let reuseIdentifier = "ContactCell"

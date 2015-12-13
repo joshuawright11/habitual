@@ -9,6 +9,9 @@
 import UIKit
 import DZNEmptyDataSet
 import SCLAlertView
+import Parse
+
+// -TODO: Needs refactoring/documentation
 
 class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
@@ -22,8 +25,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         super.viewDidLoad()
         
         doAppearance()
-        
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
         
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
@@ -46,16 +47,20 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             button.enabled = false
         }
         
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            button.enabled = false
+        }
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierReloadConnections)
+        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadNetworkOnline)
         
-        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: kNotificationIdentifierReloadConnectionsOffline)
+        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: Notifications.reloadNetworkOffline)
     }
     
     func doAppearance() {
-        self.tableView.backgroundColor = kColorBackground
+        self.tableView.backgroundColor = Colors.background
         
         Styler.navBarShader(self)
     }
@@ -127,6 +132,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            return
+        }
+        
         if loggedIn {
             addConnection()
         }else{
@@ -140,9 +149,14 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         if let connections = connections {
-            return connections.count
+            
+            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+                return 0
+            }else{
+                return connections.count
+            }
         }else{
             return 0
         }
@@ -172,7 +186,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorBackground
+        return Colors.background
     }
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
@@ -181,13 +195,17 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorAccent
+        return Colors.accent
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "You aren't connected yet!" : "Press to sign up or log in"
+        var text = loggedIn ? "You aren't connected yet!" : "Press to log in or sign up!"
         
-        let font = kFontNavTitle
+        if((PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
+            text = "Your subscription is out, please renew at www.ignitehabits.io"
+        }
+        
+        let font = Fonts.navTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -198,9 +216,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection" : "It takes 10-30 seconds depending on how fast you type. Josh can do it in 7."
+        let text = loggedIn ? "Press to add a connection" : "You need an account to connect with other users. It takes 11-43 seconds to sign up depending on how fast you type. Free 1 year trial, normally $0.99 per year. Offline usage is always free."
         
-        let font = kFontCellTitle
+        let font = Fonts.cellTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(

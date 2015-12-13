@@ -11,47 +11,76 @@ import CoreData
 import Timepiece
 import SwiftyJSON
 
+/// The `NSManagedObject` for representing a `Habit` in Core Data. This class
+/// should only be accessible by the `Habit` class.
 @objc(Habit)
 public class HabitCoreData: NSManagedObject {
     
+    /// The dates on which the habit was completed
     @NSManaged var datesCompletedData: AnyObject
-    var datesCompleted: [NSDate] {
-        get{return datesCompletedData as? [NSDate] ?? []}
-        set{datesCompletedData = newValue}
-    }
     
+    /// The raw value of the `Frequency` at which the habit should be completed.
     @NSManaged var frequencyInt: Int16
-    var frequency:Frequency { // Wrapper because enums can't be saved in Core Data
-        get{return Frequency(rawValue: frequencyInt) ?? .Daily}
-        set{frequencyInt = newValue.rawValue}
-    }
     
+    /// The habit's server identifier.
     @NSManaged var objectId: String
+    
+    /// Managed variable for he name of the habit.
     @NSManaged var name: String
+    
+    /// The time at which the habit was created.
     @NSManaged var createdAt: NSDate
+    
+    /// Whether the habit is publicly unavailable to all connections except
+    /// those that it is accountable to.
     @NSManaged var privat: Bool
+    
+    /// The `String` value of the time to remind the user to complete the habit.
+    /// Empty string (`""`) if the user should never be reminded.
     @NSManaged var remindUserAt: String
+    
+    /// The `String` value of the time to remind the users to which the habit is
+    /// accountable, if the habit has not been completed by that time.
     @NSManaged var notifyConnectionsAt: String
+    
+    /// The raw value of the `TimeOfDay` at which the habit is aimed to be 
+    /// completed.
     @NSManaged var timeOfDayInt: Int16
     
-    var timesToComplete: Int {
-        get{ return Int(timesToCompleteInt)}
-        set(newVal){timesToCompleteInt = Int64(newVal)}
-    }
-    
+    /// The `Int64` value of the amount of times a habit should be completed per
+    /// `Frequency`. This is Int64 to avoid type errors on the pre-64-bit 
+    /// devices.
     @NSManaged var timesToCompleteInt: Int64
+    
+    /// The `String` values of the days on which the habit should be completed.
+    /// The format of the days are:
+    ///
+    ///     Sunday    : "Su"
+    ///     Monday    : "M"
+    ///     Tuesday   : "T"
+    ///     Wednesday : "W"
+    ///     Thursday  : "R"
+    ///     Friday    : "F"
+    ///     Saturday  : "Sa"
     @NSManaged var daysToComplete: [String]
+    
+    /// The filename of the habit's icon.
     @NSManaged var icon: String
+    
+    /// The hex value of the habit's color in the form "#RRGGBB".
     @NSManaged var color: String
-    // Mark: - Notification data
+    
+    /// Whether the habit is accountable to any connections.
     @NSManaged var notificationsEnabled: Bool
+    
+    /// The raw values of the `NotificationSetting`s describing when users to
+    /// to which the habit is accountable should be notified.
     @NSManaged var notificationSettingsInts: AnyObject
-    var notificationSettings:[NotificationSetting] { // Wrapper because enums can't be saved in Core Data
-        get{return [.None]}
-        set{notificationSettingsInts = []}
-    }
+    
+    /// The names of the users to which the habit is accountable.
     @NSManaged var usernamesToNotify: [String]
     
+    /// Saves the object to Core Data
     func save() {
         do {
             try managedObjectContext!.save()
@@ -60,6 +89,7 @@ public class HabitCoreData: NSManagedObject {
         }
     }
     
+    /// Completely erases the object from Core Data
     func delete() {
         managedObjectContext?.deleteObject(self)
         save()

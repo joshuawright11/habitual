@@ -8,6 +8,8 @@
 
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 extension User
 {
     func getConnections(callback:((success: Bool) -> ())?){
@@ -31,9 +33,9 @@ extension User
                     let connection = Connection(parseObject: o)
                     connection.loadMessages({ (success) -> () in
                         total -= 1
-                        if total == 0 {Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)}
+                        if total == 0 {Utilities.postNotification(Notifications.reloadNetworkOffline)}
                     })
-                    connection.color = kColorArray[count++ % 6]
+                    connection.color = Colors.rainbow[count++ % 6]
                     self.connections.append(connection)
                 }
                 if let callback = callback {
@@ -55,7 +57,7 @@ extension User
             query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
                 
                 if let user = user{
-                    let connection = Connection(user: User(parseUser: user as! PFUser, withHabits: false))
+                    let connection = Connection(receiver: User(parseUser: user as! PFUser, withHabits: false))
                     connection.saveToServer()
                     
                     self.connections.append(connection)

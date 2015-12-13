@@ -9,6 +9,8 @@
 import Foundation
 import Timepiece
 
+// -TODO: Needs refactoring/documentation
+
 public func scheduleLocalNotifications() {
     
     cancelAllLocalNotifications()
@@ -16,7 +18,7 @@ public func scheduleLocalNotifications() {
     var count = 0
     
     for habit:Habit in AuthManager.currentUser!.habits {
-        if habit.datesCompleted.count == 0 || habit.canDo(){
+        if habit.datesCompleted.count == 0 || habit.canDoOn(){
             count++
         }
     }

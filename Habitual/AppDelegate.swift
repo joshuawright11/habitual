@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    // MARK: - App Lifecycle methods
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         // Crashlytics setup
@@ -47,65 +48,69 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Parse setup
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         
+        PFInstallation.currentInstallation().saveEventually() // update the Parse Installation data
+        
+        PFUser.currentUser()?.fetchInBackground()
+        
         doDesign()
         
         return true
     }
+
+    func applicationWillResignActive(application: UIApplication) {}
+
+    /// Reschedule local notifications every time the app is closed
+    func applicationDidEnterBackground(application: UIApplication) {scheduleLocalNotifications()}
+
+    func applicationWillEnterForeground(application: UIApplication) {}
+
+    /// Clear the badge number of the app every time the app is opened
+    func applicationDidBecomeActive(application: UIApplication) {Utilities.clearBadgeNumber()}
+
+    /// Save the Core Data stack every time the app is closed
+    func applicationWillTerminate(application: UIApplication) {self.saveContext()}
     
+    // MARK: - Design methods
+    
+    /// Sets the global fonts and colors
     func doDesign() {
         
-        UITableView.appearance().backgroundColor = kColorBackground
+        // Table View
+        UITableView.appearance().backgroundColor = Colors.background
         UITableView.appearance().separatorColor = UIColor.clearColor()
         
-        UINavigationBar.appearance().barTintColor = kColorBarBackground
-        UINavigationBar.appearance().tintColor = kColorAccent
+        
+        // Table View Cells
+        UITableViewCell.appearance().backgroundColor = Colors.background
+        
+        
+        // Table View Header and Footer Label
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = Colors.textSecondary
+        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = Fonts.sectionHeaderBold
+        
+        // Navigation Bars
+        UINavigationBar.appearance().barTintColor = Colors.barBackground
+        UINavigationBar.appearance().tintColor = Colors.accent
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName: kColorTextMain, NSFontAttributeName: kFontNavTitle]
+            [NSForegroundColorAttributeName: Colors.textMain, NSFontAttributeName: Fonts.navTitle]
         
-        UITableViewCell.appearance().backgroundColor = kColorBackground
+        // Navigation Bar Buttons
+        UIBarButtonItem.appearance().tintColor = Colors.accent
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: Fonts.navButtons], forState: UIControlState.Normal)
         
-        UITabBar.appearance().barTintColor = kColorBarBackground
-        UITabBar.appearance().tintColor = kColorAccent
+        // Tab Bar
+        UITabBar.appearance().barTintColor = Colors.barBackground
+        UITabBar.appearance().tintColor = Colors.accent
         UITabBar.appearance().translucent = false
         
-        UIBarButtonItem.appearance().tintColor = kColorAccent
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: kFontNavButtons], forState: UIControlState.Normal)
-        
+        // Tab Bar Buttons and Titles
         UITabBarItem.appearance().setTitleTextAttributes(
-            [NSFontAttributeName: iFontTabBarTitle],
+            [NSFontAttributeName: Fonts.tabBarTitle],
             forState: .Normal)
-        
-        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).textColor = kColorTextSecondary
-        UILabel.my_appearanceWhenContainedIn(UITableViewHeaderFooterView.self).font = kFontSectionHeaderBold
-        
-    }
-
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        scheduleLocalNotifications()
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        Utilities.clearBadgeNumber()
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        self.saveContext()
     }
     
-    // MARK: - Push stuff
+    // MARK: - Push methods
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let installation = PFInstallation.currentInstallation()
@@ -125,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationHandler.handPush(application.applicationState, userInfo: userInfo)
     }
     
-    // MARK: - Core Data stack
+    // MARK: - Core Data methods
     
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.xxxx.ProjectName" in the application's documents Application Support directory.

@@ -8,60 +8,58 @@
 
 import UIKit
 
-class ColorCell: UITableViewCell, HabitDetailCell {
+/// A cell representing the color of the `Habit`.
+class ColorCell: HabitDetailCell {
 
-    @IBOutlet var colorButtons: [UIButton]!
-    @IBOutlet weak var titleLabel: UILabel!
-
-    var selectedButton: UIButton?
-    
-    var habit:Habit?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-        
-        var i = 0
-        for bt in colorButtons {
-            bt.layer.cornerRadius = 8.0
-            bt.backgroundColor = kColorArray[i++]
-            bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+    /// Buttons representing the possible colors a `Habit` could be.
+    @IBOutlet var colorButtons: [UIButton]! {
+        didSet {
+            var i = 0
+            for bt in colorButtons {
+                bt.layer.cornerRadius = 8.0
+                bt.backgroundColor = Colors.rainbow[i++]
+                bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+            }
         }
     }
-    
-    func buttonPressed(button: UIButton) {
-        if let selectedButton = selectedButton {
-            selectedButton.layer.borderWidth = 0
+
+    /// The button reflecting the currently selected color.
+    var selectedButton: UIButton? {
+        willSet {
+            if let selectedButton = selectedButton {
+                selectedButton.layer.borderWidth = 0
+            }
         }
         
-        button.layer.borderWidth = 3.0
-        button.layer.borderColor = kColorAccentSecondary.CGColor
-        selectedButton = button
-        
-        habit?.color = (selectedButton?.backgroundColor!.hexString)!
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        
-        doAppearance()
-        
-        for bt in colorButtons {
-            if bt.backgroundColor!.hexString == habit.color {
-                selectedButton = bt
-                bt.layer.borderWidth = 3.0
-                bt.layer.borderColor = kColorAccentSecondary.CGColor
+        didSet {
+            if let selectedButton = selectedButton {
+                selectedButton.layer.borderWidth = 3.0
+                selectedButton.layer.borderColor = Colors.accentSecondary.CGColor
             }
         }
     }
     
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
+    
+    override func configure() {
+        for bt in colorButtons {
+            if bt.backgroundColor!.hexString == habit.color {
+                selectedButton = bt
+                bt.layer.borderWidth = 3.0
+                bt.layer.borderColor = Colors.accentSecondary.CGColor
+            }
+        }
+    }
+    
+    // ***************
+    // MARK: - Targets
+    // ***************
+    
+    /// Changes the color of a habit when a button is pressed.
+    func buttonPressed(button: UIButton) {
+        selectedButton = button
+        habit?.color = (selectedButton?.backgroundColor!.hexString)!
+    }
 }

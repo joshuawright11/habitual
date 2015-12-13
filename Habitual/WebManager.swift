@@ -10,9 +10,11 @@ import Foundation
 import SwiftyJSON
 import Locksmith
 import Parse
+import Timepiece
 
 /*
     TODO: - Rather confusing, should only work through the AuthManager class
+// -TODO: Needs refactoring/documentation
 */
 public class WebServices: NSObject {
     
@@ -46,6 +48,7 @@ public class WebServices: NSObject {
         user["name"] = name
         user["following"] = []
         user["habits"] = []
+        user["paymentDue"] = NSDate().endOfDay + 2.months
         
         user.signUpInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
             if error == nil {
@@ -88,5 +91,24 @@ public class WebServices: NSObject {
         
         AuthManager.currentUser!.parseObject!["habits"] = objects
         AuthManager.currentUser!.parseObject!.saveInBackground()
+    }
+    
+    /// Overwrite whatever is on the server with whatever is in Core Data
+    static func updateAllData() {
+        PFUser.currentUser()?.saveInBackground()
+        let query = PFQuery(className: "Habit")
+        query.whereKey("owner", equalTo: PFUser.currentUser()!)
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            let cdObjects = AuthManager.currentUser!.habits
+            for object in objects! {
+                let objectId = object.objectId
+                let array = cdObjects.filter({$0.objectId == objectId})
+                if array.count == 0 { // object on server but not CoreData
+                    object.deleteInBackground()
+                }else{
+                    array.first!.uploadToServer(nil)
+                }
+            }
+        }
     }
 }

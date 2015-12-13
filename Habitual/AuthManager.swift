@@ -11,6 +11,8 @@ import SwiftyJSON
 import Locksmith
 import Parse
 
+// -TODO: Needs refactoring/documentation
+
 /// A Singleton class to manage the current user. All accesses of the current user should be made through 
 /// this class. Allows for logging in and logging out over the web, as well as storing the currently logged 
 /// in user's data locally to prevent the need for logging in every time a user is cleared from memory.
@@ -24,14 +26,19 @@ public class AuthManager : NSObject{
             returning.
         */
         get{
-        
             if (self.user == nil){
                 self.user = loadUser();
                 if socialEnabled {
                     loadHabitParseObjects()
                     user?.getConnections({ (success) -> () in
-                        if(success) {Utilities.postNotification(kNotificationIdentifierReloadConnections)}
-        })
+                        if(success) {
+                            Utilities.postNotification(Notifications.reloadNetworkOnline)
+                            for habit in self.currentUser!.habits {
+                                habit.loadUsersToNotify()
+                            }
+                            WebServices.updateAllData()
+                        }
+                    })
                 }
             }
             return self.user
@@ -43,9 +50,7 @@ public class AuthManager : NSObject{
             - parameter newUser: The user to set as the currently logged in user.
         */
         set(newUser){
-            
             self.user = newUser;
-            storeUser(self.user)
         }
     }
     
@@ -72,7 +77,7 @@ public class AuthManager : NSObject{
                 let dict:Dictionary = ["username":username,"password":password]
                 
                 do{
-                    try Locksmith.saveData(dict, forUserAccount: kKeychainUserAccount)
+                    try Locksmith.saveData(dict, forUserAccount: "Habitual")
                 }catch{
                     
                 }
@@ -92,7 +97,7 @@ public class AuthManager : NSObject{
     public static func logout() {
         user = nil;
         do{
-            try Locksmith.deleteDataForUserAccount(kKeychainUserAccount)
+            try Locksmith.deleteDataForUserAccount("Habitual")
         }catch {
             
         }
@@ -160,22 +165,6 @@ public class AuthManager : NSObject{
                 habit.parseObject = filtered.first
             }else{
                 habit.uploadToServer(nil)
-            }
-        }
-    }
-    
-    /**
-        Private helper method to store the user in NSUserDefaults so that their information can be
-        loaded into memory again without the need to log back in.
-    */
-    private static func storeUser(user: User?){
-        if let user = user {
-            let ud = NSUserDefaults.standardUserDefaults()
-            
-            let string = user.toJSON().rawString()
-            
-            if let string = string {
-                ud.setObject(string, forKey: "currentUser")
             }
         }
     }

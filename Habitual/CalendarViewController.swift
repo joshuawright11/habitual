@@ -11,6 +11,8 @@ import Timepiece
 import DZNEmptyDataSet
 import CVCalendar
 
+// -TODO: Needs refactoring/documentation
+
 class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!
@@ -42,7 +44,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         habits = AuthManager.currentUser!.habits
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: kNotificationIdentifierHabitAddedOrDeleted)
+        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
         
         self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.calendarView.changeDaysOutShowingState(false)
@@ -69,13 +71,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         Styler.viewBottomShader(calendarView)
         
-        self.calendarView.backgroundColor = kColorBarBackground
-        self.monthLabel.backgroundColor = kColorBarBackground
-        self.menuView.backgroundColor = kColorBarBackground
-        self.view.backgroundColor = kColorBackground
-        self.tableView.backgroundColor = kColorBackground
-        Styler.styleTitleLabel(self.monthLabel)
-        monthLabel.textColor = kColorTextMain
+        self.calendarView.backgroundColor = Colors.barBackground
+        self.monthLabel.backgroundColor = Colors.barBackground
+        self.menuView.backgroundColor = Colors.barBackground
+        self.view.backgroundColor = Colors.background
+        self.tableView.backgroundColor = Colors.background
+        monthLabel.font = Fonts.monthLabel
+        monthLabel.textColor = Colors.textMain
     }
     
     override func viewDidLayoutSubviews() {
@@ -93,7 +95,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func clearData(){
         CoreDataManager.clearHabitsOfCurrentUser()
         self.refreshData()
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.habitDataChanged)
     }
 
     // MARK: - Table view data source
@@ -157,8 +159,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         let text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
         
         header.text = habitsOfDate.count > 0 ? text : ""
-        header.font = kFontSectionHeaderBold
-        header.textColor = kColorTextSecondary
+        header.font = Fonts.sectionHeaderBold
+        header.textColor = Colors.textSecondary
         
         return header
     }
@@ -181,13 +183,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - Empty data set data source
     
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorBackground
+        return Colors.background
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "No Habits today!"
         
-        let font = kFontNavTitle
+        let font = Fonts.navTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -202,7 +204,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
-        return kColorAccent
+        return Colors.accent
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
@@ -213,7 +215,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let text = dateFormatter.stringFromDate(selectedDate)
         
-        let font = kFontCellTitle
+        let font = Fonts.cellTitle
         let attrString = NSAttributedString(
             string: text,
             attributes: NSDictionary(
@@ -262,31 +264,31 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - CVCalendarAppearanceDelegate methods
     func dayLabelWeekdayInTextColor() -> UIColor {
-        return kColorAccent
+        return Colors.accent
     }
     
     func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
-        return kColorAccentSecondary
+        return Colors.accentSecondary
     }
     
     func dayLabelWeekdayHighlightedTextColor() -> UIColor {
-        return kColorAccent
+        return Colors.accent
     }
     
     func dayLabelPresentWeekdayFont() -> UIFont {
-        return kFontSecondary
+        return Fonts.secondary
     }
     
     func dayLabelWeekdayOutTextColor() -> UIColor {
-        return kColorTextSecondary
+        return Colors.textSecondary
     }
     
     func dayLabelWeekdayFont() -> UIFont {
-        return kFontCalendar
+        return Fonts.calendar
     }
     
     func dayLabelPresentWeekdayTextColor() -> UIColor {
-        return kColorAccentSecondary
+        return Colors.accentSecondary
     }
     
     func dayLabelPresentWeekdayInitallyBold() -> Bool {
@@ -294,15 +296,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {
-        return kColorAccentSecondary
+        return Colors.accentSecondary
     }
     
     func dayOfWeekTextColor() -> UIColor {
-        return kColorTextMain
+        return Colors.textMain
     }
     
     func dayOfWeekFont() -> UIFont {
-        return kFontSecondary
+        return Fonts.secondary
     }
     
 }

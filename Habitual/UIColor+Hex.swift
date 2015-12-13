@@ -6,6 +6,8 @@
 //  Copyright © 2015 Josh Wright. All rights reserved.
 //
 
+// -TODO: Needs refactoring/documentation
+
 public extension UIColor
 {
     var hexString:String {

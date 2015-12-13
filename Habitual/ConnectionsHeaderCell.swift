@@ -8,28 +8,12 @@
 
 import UIKit
 
-class ConnectionsHeaderCell: UITableViewCell, HabitDetailCell {
+/// A cell representing any header in the HabitDetailController.
+class ConnectionsHeaderCell: HabitDetailCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
     
-    var habit:Habit?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        doAppearance()
-    }
+    override func configure() {}
 }

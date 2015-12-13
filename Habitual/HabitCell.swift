@@ -8,7 +8,10 @@
 
 import UIKit
 
+// -TODO: Needs refactoring/documentation
+
 class HabitCell: UITableViewCell {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
@@ -25,19 +28,19 @@ class HabitCell: UITableViewCell {
     }
     
     func doAppearance() {
-        titleLabel.font = kFontCellTitle
-        titleLabel.textColor = kColorTextMain
-        repeatLabel.font = kFontCellSubtitle
-        repeatLabel.textColor = kColorTextSubtitle
-        countLabel.font = kFontSectionHeader
-        countLabel.textColor = kColorTextMain
+        titleLabel.font = Fonts.cellTitle
+        titleLabel.textColor = Colors.textMain
+        repeatLabel.font = Fonts.cellSubtitle
+        repeatLabel.textColor = Colors.textSubtitle
+        countLabel.font = Fonts.sectionHeader
+        countLabel.textColor = Colors.textMain
         
         coloriv.backgroundColor = UIColor(hexString: habit.color).colorWithAlphaComponent(0.8)
         self.checkiv.image = self.checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
                 self.checkiv.tintColor = UIColor(hexString: habit.color)
         coloriv.layer.cornerRadius = 10.0
         
-        checkiv.layer.backgroundColor = kColorBackground.CGColor
+        checkiv.layer.backgroundColor = Colors.background.CGColor
         
         Styler.viewShaderSmall(self.coloriv)
     }

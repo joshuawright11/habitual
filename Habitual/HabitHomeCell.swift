@@ -9,9 +9,12 @@
 import UIKit
 import DKChainableAnimationKit
 
+// -TODO: Needs refactoring/documentation
+
 class HabitHomeCell: UITableViewCell {
 
-    let kAnimationLength = 0.3
+    /// The length in seconds that the animation should run
+    let kAnimationLength = 0.4
     
     @IBOutlet weak var iv: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -72,7 +75,7 @@ class HabitHomeCell: UITableViewCell {
         
         if(date.beginningOfDay < NSDate()) { setupHandlers() }
         
-        if habit.countDoneInDate(date) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             instantComplete()
         }else{
             instantUncomplete()
@@ -107,7 +110,7 @@ class HabitHomeCell: UITableViewCell {
         
         if(recognizer.state == .Ended) {
             
-            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
+            let wasComplete = habit.numCompletedIn(date) >= habit.timesToComplete
             
             if(percent > 0.3 && !wasComplete){ //
                 complete()
@@ -121,8 +124,8 @@ class HabitHomeCell: UITableViewCell {
         }else{
             let translation = recognizer.translationInView(self)
             
-            let wasComplete = habit.countCompletedOn(date) >= habit.timesToComplete
-            
+            let wasComplete = habit.numCompletedIn(date) >= habit.timesToComplete
+    
             if  wasComplete && percent < 0.3 && translation.x < 0 {
             }else if !wasComplete && percent > 0.7 && translation.x > 0 {
             }else if percent < -0.3 && translation.x < 0 {
@@ -139,7 +142,7 @@ class HabitHomeCell: UITableViewCell {
     
     func animateReturn() {
         
-        if habit.countDoneInDate(date) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
         }else{
             animateUncomplete()
@@ -154,13 +157,13 @@ class HabitHomeCell: UITableViewCell {
         
         detailTextLabel?.text = subtitleText()
 
-        if habit.countCompletedIn(date, freq: habit.frequency) == habit.timesToComplete {
+        if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
         }else{
             animateReturn()
         }
         
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.reloadPulse)
     }
     
     func instantComplete() {
@@ -173,10 +176,10 @@ class HabitHomeCell: UITableViewCell {
         
         checkmark.alpha = 1.0
         
-        iv.tintColor = kColorTextSecondary
+        iv.tintColor = Colors.textSecondary
         
-        self.titleLabel.textColor = kColorTextSecondary
-        self.subtitleLabel.textColor = kColorTextSecondary
+        self.titleLabel.textColor = Colors.textSecondary
+        self.subtitleLabel.textColor = Colors.textSecondary
     }
     func animateComplete() {
         let moveTo = UIScreen.mainScreen().bounds.width - 70
@@ -189,10 +192,10 @@ class HabitHomeCell: UITableViewCell {
         
         checkmark.animation.makeAlpha(1.0).animate(kAnimationLength)
         
-        iv.tintColor = kColorTextSecondary
+        iv.tintColor = Colors.textSecondary
         
-        self.titleLabel.textColor = kColorTextSecondary
-        self.subtitleLabel.textColor = kColorTextSecondary
+        self.titleLabel.textColor = Colors.textSecondary
+        self.subtitleLabel.textColor = Colors.textSecondary
         
     }
     
@@ -206,7 +209,7 @@ class HabitHomeCell: UITableViewCell {
         detailTextLabel?.text = subtitleText()
         animateUncomplete()
         
-        Utilities.postNotification(kNotificationIdentifierHabitDataChanged)
+        Utilities.postNotification(Notifications.reloadPulse)
     }
     
     func instantUncomplete() {
@@ -219,8 +222,8 @@ class HabitHomeCell: UITableViewCell {
         
         iv.tintColor = color
         
-        self.titleLabel.textColor = kColorTextMain
-        self.subtitleLabel.textColor = kColorTextMain
+        self.titleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textMain
     }
     
     func animateUncomplete() {
@@ -233,8 +236,8 @@ class HabitHomeCell: UITableViewCell {
         
         iv.tintColor = color
         
-        self.titleLabel.textColor = kColorTextMain
-        self.subtitleLabel.textColor = kColorTextMain
+        self.titleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textMain
     }
     
     func subtitleText() -> String {
@@ -248,8 +251,8 @@ class HabitHomeCell: UITableViewCell {
             unit = "this month"
         }
         
-        var text = "\(habit.timesToComplete - habit.countDoneInDate(date)) more times \(unit)"
-        if((habit.timesToComplete - habit.countDoneInDate(date)) == 0) {text = "Complete!"}
+        var text = "\(habit.timesToComplete - habit.numCompletedIn(date)) more times \(unit)"
+        if((habit.timesToComplete - habit.numCompletedIn(date)) == 0) {text = "Complete!"}
         
         return text
     }
@@ -261,10 +264,10 @@ class HabitHomeCell: UITableViewCell {
     
     func doAppearance() {
         
-        titleLabel.textColor = kColorTextMain
-        titleLabel.font = kFontCellTitle
-        subtitleLabel.textColor = kColorTextMain
-        subtitleLabel.font = kFontCellSubtitle
+        titleLabel.textColor = Colors.textMain
+        titleLabel.font = Fonts.cellTitle
+        subtitleLabel.textColor = Colors.textMain
+        subtitleLabel.font = Fonts.cellSubtitle
         
         let image = UIImage(named: habit.icon)
         iv.backgroundColor = UIColor.clearColor()
@@ -272,12 +275,12 @@ class HabitHomeCell: UITableViewCell {
         iv.tintColor = color
         iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
-        backgroundColor = kColorBackground
+        backgroundColor = Colors.background
         
         self.borderView.backgroundColor = color
         
         checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
-        checkmark.tintColor = kColorBackground
+        checkmark.tintColor = Colors.background
         checkmark.alpha = 0.0
         
         borderView.layer.cornerRadius = 14.0

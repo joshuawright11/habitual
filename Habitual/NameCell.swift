@@ -9,53 +9,46 @@
 import UIKit
 import TextFieldEffects
 
-class NameCell: UITableViewCell, HabitDetailCell, UITextFieldDelegate {
+/// A cell representing the name of the `Habit`.
+class NameCell: HabitDetailCell, UITextFieldDelegate {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
-    
-    var habit:Habit?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    /// A `UITextField` in which the user will enter the name of their habit.
+    @IBOutlet weak var textField: UITextField! {
+        didSet {
+            let str = NSAttributedString(string: "Habit name here...", attributes: [NSForegroundColorAttributeName:Colors.accent, NSFontAttributeName:Fonts.sectionHeaderBold])
+            textField.attributedPlaceholder = str
+            textField.textColor = Colors.accentSecondary
+            textField.font = Fonts.sectionHeaderBold
+            textField.delegate = self
+            textField.addTarget(self, action: "textFieldChanged:", forControlEvents: .EditingChanged)
+        }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    // ********************************
+    // MARK: - HabitDetailCell Override
+    // ********************************
     
-    func doAppearance() {
-        selectionStyle = UITableViewCellSelectionStyle.None
-        let str = NSAttributedString(string: "Go for a run...", attributes: [NSForegroundColorAttributeName:kColorAccent, NSFontAttributeName:kFontSectionHeaderBold])
-        textField.attributedPlaceholder = str
-        
-        titleLabel.font = kFontSectionHeader
-        titleLabel.textColor = kColorTextMain
-        
-        textField.textColor = kColorAccentSecondary
-        textField.font = kFontSectionHeaderBold
-    }
-    
-    func configure(habit: Habit) {
-        self.habit = habit
-        textField.delegate = self
-        
+    override func configure() {
         textField.text = habit.name
-        
-        textField.addTarget(self, action: "textFieldChanged:", forControlEvents: .EditingChanged)
-        
-        doAppearance()
     }
     
+    // ***************
+    // MARK: - Targets
+    // ***************
+    
+    /// Called whenever the `UITextField` changes, so that the `habit` name can
+    /// be updated.
     func textFieldChanged(textField: UITextField) {
-        habit?.name = textField.text!
+        habit.name = textField.text!
     }
     
-    // MARK - UITextFieldDelegate methods
+    // ***********************************
+    // MARK: - UITextFieldDelegate Methods
+    // ***********************************
     
+    /// Dismiss the keyboard when `return` is pressed.
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        habit?.name = textField.text!
         return true
     }
 }

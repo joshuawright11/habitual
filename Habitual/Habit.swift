@@ -10,32 +10,92 @@ import Timepiece
 import SwiftyJSON
 import Parse
 
+
+/// A model for the habits that a user can create in the app. Each `Habit` has
+/// specific data about when it should be completed, to whom and how it should
+/// be accountable, and various display settings.
 public class Habit: ParseObject {
 
+    // ******************
+    // MARK: - Properties
+    // ******************
+    
+    /// The underlying Core Data object for the `Habit`, if it is indeed saved
+    /// in Core Data.
     var coreDataObject:HabitCoreData?
 
+    /// The unique identifier of the `Habit` for identifying it on the server.
     var objectId: String {
         get{
             return coreDataObject!.objectId
         }
     }
     
+    /// The dates on which the `Habit` was completed.
     var datesCompleted: [NSDate]
+    
+    /// The frequency at which the habit should be repeated.
     var frequency:Frequency
+    
+    /// The name of the `Habit`
     var name: String
+    
+    /// The time and date the `Habit` was created at.
     var createdAt: NSDate
+    
+    /// Whether the `Habit` should be kept private and not shown to connections,
+    /// except those to which the `Habit` is accountable.
     var privat: Bool
+    
+    /// The `String` value of the time to remind the user to complete the habit.
+    /// Empty string (`""`) if the user should never be reminded.
     var remindUserAt: String
+    
+    /// The `String` value of the time to remind the users to which the habit is
+    /// accountable, if the habit has not been completed by that time.
     var notifyConnectionsAt: String
+    
+    /// The time of day that a user aims to complete this `Habit`.
     var timeOfDay: TimeOfDay
+    
+    /// The amount of times a habit should be completed per `Frequency`.
     var timesToComplete: Int
+    
+    /// The `String` values of the days on which the habit should be completed.
+    /// The format of the days are:
+    ///
+    ///     Sunday    : "Su"
+    ///     Monday    : "M"
+    ///     Tuesday   : "T"
+    ///     Wednesday : "W"
+    ///     Thursday  : "R"
+    ///     Friday    : "F"
+    ///     Saturday  : "Sa"
     var daysToComplete: [String]
+    
+    /// The filename of the habit's icon.
     var icon: String
+    
+    /// The hex value of the habit's color in the form "#RRGGBB".
     var color: String
+    
+    /// Whether the habit is accountable to any connections.
     var notificationsEnabled: Bool
+    
+    /// The `NotificationSetting`s describing when users to which the habit is 
+    /// accountable should be notified.
     var notificationSettings:[NotificationSetting]
+    
+    /// The `User` objects of the users to which the habit is accountable.
     var usersToNotify: [User]
     
+    // ********************
+    // MARK: - Initializers
+    // ********************
+    
+    /// Basic initializer. This is used for when a habit is created in the app
+    /// but has not yet been saved to Core Data or the server. This should never
+    /// otherwise be called.
     override init() {
         self.coreDataObject = nil
         
@@ -50,7 +110,7 @@ public class Habit: ParseObject {
         timesToComplete = 1
         daysToComplete = ["M","T","W","R","F","Sa","Su"]
         icon = "compass"
-        color = kColorPurple.hexString
+        color = Colors.purple.hexString
         notificationsEnabled = false
         notificationSettings = [.None]
         usersToNotify = []
@@ -58,6 +118,9 @@ public class Habit: ParseObject {
         super.init()
     }
     
+    /// Initialize with a Parse `PFObject` object.
+    ///
+    /// - parameter parseObject: The `PFObject` object with which to initialize.
     override init(parseObject: PFObject) {
         coreDataObject = nil
         
@@ -85,40 +148,44 @@ public class Habit: ParseObject {
         super.init(parseObject: parseObject)
     }
     
+    /// Initialize with a Core Data `HabitCoreData` object.
+    ///
+    /// - parameter coreDataObject: The `HabitCoreData` object with which to 
+    ///                             initialize.
     init(coreDataObject: HabitCoreData) {
         self.coreDataObject = coreDataObject
         
-        datesCompleted = coreDataObject.datesCompleted
-        frequency = coreDataObject.frequency
+        datesCompleted = coreDataObject.datesCompletedData as! [NSDate]
+        frequency = Frequency(rawValue: coreDataObject.frequencyInt)!
         name = coreDataObject.name
         createdAt = coreDataObject.createdAt
         privat = coreDataObject.privat
         remindUserAt = coreDataObject.remindUserAt
         notifyConnectionsAt = coreDataObject.notifyConnectionsAt
         timeOfDay = TimeOfDay(rawValue: coreDataObject.timeOfDayInt)!
-        timesToComplete = coreDataObject.timesToComplete
+        timesToComplete = Int(coreDataObject.timesToCompleteInt)
         daysToComplete = coreDataObject.daysToComplete
         icon = coreDataObject.icon
         color = coreDataObject.color
         notificationsEnabled = coreDataObject.notificationsEnabled
-        notificationSettings = coreDataObject.notificationSettings
+        notificationSettings = []
         usersToNotify = []
         
         super.init()
     }
     
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩 CLEAN ME    💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    // 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    
+    // ***************
+    // MARK: - Methods
+    // ***************
+
+    /// Whether the habit should be completed on a certain day. Factors in this
+    /// are the creation date of the `Habit` and the days of the week on which
+    /// the `Habit` is available, if the `Habit` has a `Frequency` of `Daily`.
+    /// 
+    /// - parameter date: A date on which to see if the habit should be
+    ///                   completed.
+    ///
+    /// - returns: Whether the `Habit` should be completed on `date`.
     public func availableOn(date: NSDate) -> Bool {
         
         if createdAt.beginningOfDay > date {return false}
@@ -134,28 +201,33 @@ public class Habit: ParseObject {
         return true
     }
     
-    public func canDo() -> Bool { return canDoOn(NSDate()) }
-    
-    public func canDoOn(date: NSDate) -> Bool {
-        
-        if createdAt.endOfDay < date.beginningOfDay {return false}
-        
-        if datesCompleted.count == 0 {return true}
-        
-        if(frequency == .Daily) {
-            let dsotw = ["Su","M","T","W","R","F","Sa"]
-            
-            let dayOfWeek = dsotw[date.weekday-1]
-            
-            if !daysToComplete.contains(dayOfWeek) {return false}
-        }
-        
-        let timesLeft = countDoneInDate(date) < timesToComplete
-        
-        return timesLeft
+    /// Whether the habit is able to be completed on a certain date. This
+    /// differs from `availableOn(date:NSDate)` in that it reuturns true only if
+    /// the `Habit` has not already been completed the maximum amount of times
+    /// on the date.
+    ///
+    /// - parameter date: A date on which to see if the habit can be completed.
+    ///
+    /// - returns: Whether the `Habit` can be completed on `date`.
+    public func canDoOn(date: NSDate = NSDate()) -> Bool {
+        let timesDone = numCompletedIn(date)
+        return availableOn(date) && timesDone < timesToComplete
     }
     
-    public func countDoneInDate(date: NSDate) -> Int {
+    /// Count and return the number of times the `Habit` has been completed in 
+    /// the `Frequency` unit containing a date. An example would be (assuming 
+    /// the `Habit` has a `frequency` of `Weekly`) the amount of times the habit
+    /// has been done in the full week containing the date.
+    ///
+    /// - Note: Days begin at 12AM, Weeks begin on Sunday and Months begin on 
+    ///         the 1st.
+    ///
+    /// - parameter date: The date that's `Frequency` unit should have the
+    ///                   number of times a habit was completed in it counted.
+    ///
+    /// - returns: The number of times the `Habit` was completed in the 
+    ///            `Frequency` unit of `date`.
+    public func numCompletedIn(date: NSDate) -> Int {
         
         var count = 0
         
@@ -180,97 +252,14 @@ public class Habit: ParseObject {
         return count
     }
     
-//    public func longestStreak() -> Int {
-//        var longestStreak = 0
-//        
-//        var currentStreak = 0
-//        
-//        var prevDate: NSDate?
-//        for date:NSDate in datesCompleted.sort() {
-//            if prevDate == nil {
-//                prevDate = date
-//                currentStreak = 1
-//            } else {
-//                if date.day - prevDate!.day == 1 {
-//                    currentStreak += 1
-//                } else {
-//                    longestStreak = currentStreak > longestStreak ? currentStreak : longestStreak
-//                    currentStreak = 1
-//                }
-//                prevDate = date
-//            }
-//        }
-//        
-//        return longestStreak
-//    }
-//    
-//    public func currentStreak() -> Int {
-//        
-//        if datesCompleted.count == 0 {
-//            return 0
-//        } else {
-//            
-//            let today: NSDate = (NSDate().beginningOfDay - 1.day)
-//            var nextDate = datesCompleted.last!
-//            
-//            if nextDate < today {
-//                return 0;
-//            }else{
-//                var streak = 1
-//                for var i = datesCompleted.count - 2; i > 0; i-- {
-//                    
-//                    let dateToCheck = datesCompleted[i]
-//                    
-//                    if(dateToCheck < nextDate.beginningOfDay - 1.day) {
-//                        return streak
-//                    }else{
-//                        streak++
-//                        nextDate = dateToCheck
-//                    }
-//                }
-//                return streak
-//            }
-//        }
-//    }
-    
-    public func countCompletedOn(date: NSDate) -> Int {
-        
-        var count = 0
-        
-        for completion: NSDate in datesCompleted {
-            if(completion.beginningOfDay...completion.endOfDay).contains(date) {count++}
-        }
-        
-        return count
-    }
-    
-    public func countCompletedIn(date: NSDate, freq: Frequency) -> Int {
-        
-        var count = 0
-        
-        for completion: NSDate in datesCompleted {
-            
-            let first: NSDate, last: NSDate
-            switch frequency {
-            case .Daily:
-                first = completion.beginningOfDay
-                last = completion.endOfDay
-            case .Weekly:
-                first = completion.beginningOfWeek
-                last = completion.endOfWeek
-            case .Monthly:
-                first = completion.beginningOfMonth
-                last = completion.endOfMonth
-            }
-            
-            if(first...last).contains(date) {count++}
-        }
-        
-        return count
-    }
-    
-    // return true if completing a habit on this date would alter future push notifications
-    // based on frequency
+    /// Simple method for determining whether a date is in the current
+    /// `Frequency` unit. Primarily used to see if completing a habit might
+    /// warrent a server call to notify users to which the habit is accountable.
+    ///
+    /// - parameter date: The date that should be checked to see if it is in the
+    ///                   current `Frequency` unit.
+    ///
+    /// - returns: Whether `date` is in the current `Frequency` unit.
     public func dateInCurrentFrequency(date: NSDate) -> Bool {
         
         let now = NSDate()
@@ -285,9 +274,12 @@ public class Habit: ParseObject {
         }
     }
     
+    /// When the habit must next be completed by.
+    ///
+    /// - returns: The date and time at which the habit must be completed by.
     public func dueOn() -> NSDate {
-        if datesCompleted.count < 1 {
-            switch frequency {
+        if datesCompleted.count < 1 { // If the habit has just been created base
+            switch frequency {        // the due date off of the creation date.
             case .Daily:
                 return createdAt.endOfDay
             case .Weekly:
@@ -298,12 +290,10 @@ public class Habit: ParseObject {
         }
         
         let lastCompletedOn = datesCompleted.sort().last!
-        
-        let countDone = countCompletedIn(lastCompletedOn, freq: frequency)
-        
-        if countDone < timesToComplete {
-            switch frequency {
-            case .Daily:
+        let countDone = numCompletedIn(lastCompletedOn)
+        if countDone < timesToComplete { // If the habit has not been fully
+            switch frequency {           // completed this `Frequency` unit
+            case .Daily:                 // return the end of this unit.
                 return lastCompletedOn.endOfDay
             case .Weekly:
                 return lastCompletedOn.endOfWeek
@@ -312,9 +302,9 @@ public class Habit: ParseObject {
             }
         }
         
-        switch frequency {
-        case .Daily:
-            return lastCompletedOn.endOfDay + 1.day
+        switch frequency { // If the habit has been fully completed this
+        case .Daily:       // `Frequency` unit, return the end of this unit plus
+            return lastCompletedOn.endOfDay + 1.day // one unit.
         case .Weekly:
             return lastCompletedOn.endOfWeek + 1.week
         case .Monthly:
@@ -322,15 +312,19 @@ public class Habit: ParseObject {
         }
     }
     
+    /// Calculate the overall completion percentage for the `Habit`.
+    ///
+    /// - returns: The completion percentage, 0.0 - 100.0, of the `Habit` since
+    ///            it was created.
     public func getCompletionPercentage() -> Double{
-        // calculate number of units
-        
-
-        
         let perc = (Double(datesCompleted.count)/unitsSinceBegan())*100.0
         return perc/Double(timesToComplete)
     }
     
+    /// The number of `Frequency` units since the habit was created. Rounded up.
+    ///
+    /// - returns: The number of `Frequency` units, currently either Days,
+    ///            Weeks or Months.
     private func unitsSinceBegan() -> Double {
         let today = NSDate()
         
@@ -374,5 +368,15 @@ public class Habit: ParseObject {
         }
         
         return unitsSinceBegan
+    }
+    
+    /// Loads connections from the AuthManager to the `usersToNotify` property.
+    /// This property is currently initialized as an empty array, since Parse
+    /// objects are not saved offline, hence the need for this method.
+    public func loadUsersToNotify() {
+        let connections = AuthManager.currentUser?.connections
+        for name in coreDataObject!.usernamesToNotify {
+            usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+        }
     }
 }

@@ -10,6 +10,8 @@ import UIKit
 import JSQMessagesViewController
 import Timepiece
 
+// -TODO: Needs refactoring/documentation
+
 class ConnectionChatViewController: JSQMessagesViewController {
     
     var connection:Connection!
@@ -30,7 +32,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         
         self.collectionView!.collectionViewLayout = layout
         
-        Utilities.registerForNotification(self, selector: "chatReceived", name: kNotificationChatReceived)
+        Utilities.registerForNotification(self, selector: "chatReceived", name: Notifications.reloadChat)
         
         senderId = AuthManager.currentUser?.username
         senderDisplayName = AuthManager.currentUser?.username
@@ -38,8 +40,8 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.navigationItem.title = connection.user.name.componentsSeparatedByString(" ")[0]
         
         let bif = JSQMessagesBubbleImageFactory()
-        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(kColorBlue.colorWithAlphaComponent(0.7))
-        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(kColorPurple.colorWithAlphaComponent(0.7))
+        outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(Colors.blue.colorWithAlphaComponent(0.7))
+        incomingBubbleImageData = bif.incomingMessagesBubbleImageWithColor(Colors.purple.colorWithAlphaComponent(0.7))
         emptyBubbleImageData = JSQMessagesBubbleImage(messageBubbleImage: UIImage(), highlightedImage: UIImage())
         
         doAppearance()
@@ -49,7 +51,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         self.connection.loadMessages { (success) -> () in
             if success {
                 self.collectionView?.reloadData()
-                Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)
+                Utilities.postNotification(Notifications.reloadNetworkOffline)
                 JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                 self.scrollToBottomAnimated(true)
             }else{
@@ -59,31 +61,31 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     func doAppearance() {
-        self.collectionView!.backgroundColor = kColorBackground.lightenByPercentage(0.02)
+        self.collectionView!.backgroundColor = Colors.background.lightenByPercentage(0.02)
         self.collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
         self.collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
         
-        self.collectionView?.collectionViewLayout.messageBubbleFont = kFontMessage
+        self.collectionView?.collectionViewLayout.messageBubbleFont = Fonts.message
         
         scrollToBottomAnimated(false)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: Selector("pulse"))
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;
-        self.inputToolbar?.tintColor = kColorBackground
-        self.inputToolbar?.contentView!.backgroundColor = kColorBackground
-        self.inputToolbar?.contentView?.textView?.backgroundColor = kColorBackground.lightenByPercentage(0.03)
+        self.inputToolbar?.tintColor = Colors.background
+        self.inputToolbar?.contentView!.backgroundColor = Colors.background
+        self.inputToolbar?.contentView?.textView?.backgroundColor = Colors.background.lightenByPercentage(0.03)
         
         let bt = self.inputToolbar?.contentView?.rightBarButtonItem!
-        bt?.setTitleColor(kColorAccent, forState: .Normal)
-        bt?.titleLabel?.font = kFontMessage
+        bt?.setTitleColor(Colors.accent, forState: .Normal)
+        bt?.titleLabel?.font = Fonts.message
         
         self.inputToolbar?.contentView?.leftBarButtonItem = nil
         
         let tf = self.inputToolbar!.contentView!.textView!
-        tf.textColor = kColorTextMain
-        tf.tintColor = kColorTextMain
-        tf.font = kFontMessage
+        tf.textColor = Colors.textMain
+        tf.tintColor = Colors.textMain
+        tf.font = Fonts.message
     }
     
     func pulse() {
@@ -114,7 +116,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
 
         let message = connection.messages![indexPath.row]
         if(message.habit == nil){
-            return message.sentByCurrentUser() ? outgoingBubbleImageData : incomingBubbleImageData
+            return message.sentByCurrentUser ? outgoingBubbleImageData : incomingBubbleImageData
         }else{
             return emptyBubbleImageData
         }
@@ -129,7 +131,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        Utilities.postNotification(kNotificationIdentifierReloadConnectionsOffline)
+        Utilities.postNotification(Notifications.reloadNetworkOffline)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         connection.sendMessage(text)
         finishSendingMessage()
@@ -159,16 +161,16 @@ class ConnectionChatViewController: JSQMessagesViewController {
 //        let timesMissed = message.hab
 //, Times Missed: \(timesMissed)
         
-        let string = NSMutableAttributedString(string: "\(firstName) missed \(habitName)\nDue: \(due), Goal: \(goal)", attributes: [NSFontAttributeName : kFontSecondaryLight])
+        let string = NSMutableAttributedString(string: "\(firstName) missed \(habitName)\nDue: \(due), Goal: \(goal)", attributes: [NSFontAttributeName : Fonts.secondaryLight])
         
         var location = firstName.characters.count + 8
-        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,habitName.characters.count))
+        string.addAttribute(NSFontAttributeName, value: Fonts.secondaryBold, range: NSMakeRange(location,habitName.characters.count))
         location += (5 + habitName.characters.count)
-        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,due.characters.count+1))
+        string.addAttribute(NSFontAttributeName, value: Fonts.secondaryBold, range: NSMakeRange(location,due.characters.count+1))
         location += 8 + due.characters.count
-        string.addAttribute(NSFontAttributeName, value: kFontSecondaryBold, range: NSMakeRange(location,goal.characters.count+1))
+        string.addAttribute(NSFontAttributeName, value: Fonts.secondaryBold, range: NSMakeRange(location,goal.characters.count+1))
 //        location += 16 + goal.characters.count
-//        string.addAttribute(NSFontAttributeName, value: kFontSecondary, range: NSMakeRange(location,timesMissed.characters.count+1))
+//        string.addAttribute(NSFontAttributeName, value: Fonts.Secondary, range: NSMakeRange(location,timesMissed.characters.count+1))
         
         return string
     }
