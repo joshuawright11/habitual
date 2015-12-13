@@ -35,8 +35,11 @@ class HabitDetailController: UITableViewController {
             
             if habit.usersToNotify.count != habit.coreDataObject?.usernamesToNotify.count {
                 let connections = AuthManager.currentUser?.connections
-                for name in habit.coreDataObject!.usernamesToNotify {
-                    habit.usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+                if let connections = connections {
+                    if(connections.count == 0) { return }
+                    for name in habit.coreDataObject!.usernamesToNotify {
+                        habit.usersToNotify.append(connections.filter({$0.user.name == name}).first!.user)
+                    }
                 }
             }
             

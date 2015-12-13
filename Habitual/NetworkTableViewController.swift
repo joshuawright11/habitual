@@ -47,8 +47,10 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             button.enabled = false
         }
         
-        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
-            button.enabled = false
+        if AuthManager.socialEnabled {
+            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+                button.enabled = false
+            }
         }
         
         self.refreshControl = UIRefreshControl()
@@ -57,6 +59,8 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadNetworkOnline)
         
         Utilities.registerForNotification(self, selector: "refreshDataOffline", name: Notifications.reloadNetworkOffline)
+        
+        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadChat)
     }
     
     func doAppearance() {
@@ -110,7 +114,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         alert.addButton("Cancel") { () -> Void in
             alert.dismissViewControllerAnimated(true, completion: nil)
         }
-        alert.showEdit("Add Connection", subTitle: "Request a connection with a username")
+        alert.showEdit("Add Connection", subTitle: "Request a connection with a username. Yours is '\(PFUser.currentUser()!.username!)'.")
     }
     
     func alreadyConnected(string: String) -> Bool {
@@ -132,7 +136,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         
-        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+        if AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
             return
         }
         
@@ -152,7 +156,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         if let connections = connections {
             
-            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            if AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
                 return 0
             }else{
                 return connections.count
@@ -201,7 +205,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
         var text = loggedIn ? "You aren't connected yet!" : "Press to log in or sign up!"
         
-        if((PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
+        if(AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
             text = "Your subscription is out, please renew at www.ignitehabits.io"
         }
         
@@ -216,7 +220,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection" : "You need an account to connect with other users. It takes 11-43 seconds to sign up depending on how fast you type. Free 1 year trial, normally $0.99 per year. Offline usage is always free."
+        let text = loggedIn ? "Press to add a connection" : "You need an account to connect with other users. Free 1 year trial, normally $0.99 per year. Offline features are still 100% free."
         
         let font = Fonts.cellTitle
         let attrString = NSAttributedString(

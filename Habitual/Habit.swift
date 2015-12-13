@@ -108,7 +108,7 @@ public class Habit: ParseObject {
         notifyConnectionsAt = ""
         timeOfDay = .Morning
         timesToComplete = 1
-        daysToComplete = ["M","T","W","R","F","Sa","Su"]
+        daysToComplete = []
         icon = "compass"
         color = Colors.purple.hexString
         notificationsEnabled = false

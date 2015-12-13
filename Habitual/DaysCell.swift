@@ -19,7 +19,7 @@ class DaysCell: HabitDetailCell {
                 bt.backgroundColor = Colors.background
                 bt.layer.cornerRadius = 4.0
                 bt.setTitleColor(Colors.accent, forState: .Normal)
-                bt.titleLabel?.font = Fonts.sectionHeaderBold
+                bt.titleLabel?.font = Fonts.sectionHeader
                 
                 bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
             }
@@ -34,6 +34,7 @@ class DaysCell: HabitDetailCell {
         for bt in dayButtons {
             if self.habit!.daysToComplete.contains((bt.titleLabel?.text)!) {
                 bt.setTitleColor(Colors.accentSecondary, forState: .Normal)
+                bt.titleLabel?.font = Fonts.sectionHeaderBold
             }
         }
     }
@@ -49,9 +50,11 @@ class DaysCell: HabitDetailCell {
         if habit!.daysToComplete.contains(string) {
             habit!.daysToComplete.removeAtIndex((habit!.daysToComplete.indexOf(string))!)
             button.setTitleColor(Colors.accent, forState: .Normal)
+            button.titleLabel?.font = Fonts.sectionHeader
         }else{
             habit?.daysToComplete.append(string)
             button.setTitleColor(Colors.accentSecondary, forState: .Normal)
+            button.titleLabel?.font = Fonts.sectionHeaderBold
         }
     }
 }

@@ -35,7 +35,9 @@ class UserCell: UITableViewCell {
         let names = user.name.componentsSeparatedByString(" ")
         
         initialsLabel.text = (String(names[0].characters.first!) + String(names[1].characters.first!)).uppercaseString
+        
         titleLabel.text = user.name
+        
         doAppearance()
     }
     
@@ -55,7 +57,8 @@ class UserCell: UITableViewCell {
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
             infoLabel.hidden = false
-        }else{
+        } else {
+            acceptButton.hidden = false
             acceptButton.backgroundColor = Colors.green.colorWithAlphaComponent(0.7)
             acceptButton.titleLabel?.font = Fonts.sectionHeader
             acceptButton.tintColor = Colors.textMain
