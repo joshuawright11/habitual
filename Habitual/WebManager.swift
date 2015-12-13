@@ -48,7 +48,7 @@ public class WebServices: NSObject {
         user["name"] = name
         user["following"] = []
         user["habits"] = []
-        user["paymentDue"] = NSDate().endOfDay + 2.months
+        user["paymentDue"] = NSDate().endOfDay + 1.year
         
         user.signUpInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
             if error == nil {
