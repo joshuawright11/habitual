@@ -14,7 +14,7 @@ import DKChainableAnimationKit
 class HabitHomeCell: UITableViewCell {
 
     /// The length in seconds that the animation should run
-    let kAnimationLength = 1.0
+    let kAnimationLength = 0.4
     
     @IBOutlet weak var iv: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -163,7 +163,7 @@ class HabitHomeCell: UITableViewCell {
             animateReturn()
         }
         
-        Utilities.postNotification(Notifications.habitDataChanged)
+        Utilities.postNotification(Notifications.reloadPulse)
     }
     
     func instantComplete() {
@@ -209,7 +209,7 @@ class HabitHomeCell: UITableViewCell {
         detailTextLabel?.text = subtitleText()
         animateUncomplete()
         
-        Utilities.postNotification(Notifications.habitDataChanged)
+        Utilities.postNotification(Notifications.reloadPulse)
     }
     
     func instantUncomplete() {

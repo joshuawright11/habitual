@@ -31,6 +31,8 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.contentInset = UIEdgeInsets(top: -15, left: 0, bottom: 0, right: 0)
         
         Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
+        Utilities.registerForNotification(self, selector: "refreshData", name:
+            Notifications.reloadPulse)
         
         // this is gross because you can follow yourself when I wrote this
         if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {

@@ -17,6 +17,7 @@ import Foundation
 struct Notifications {
     static let localNotificationsDisabled = "LocalNotificationsEnabled"
     static let habitDataChanged = "HabitDataChanged"
+    static let reloadPulse = "ReloadPulse"
     static let dotwToggled = "DOTWToggled"
     static let accountabilityToggled = "AccountabilityToggled"
     static let reloadNetworkOnline = "ReloadNetworkOnline"
