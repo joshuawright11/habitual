@@ -15,7 +15,7 @@ Like Snapchat, just trophies that a user can gain. Any reason to get the user to
 
 The user needs to be able to easily invite their friends to the app and connect their habits with others.
 
-* **Share via ... **: Sharing via text/social networks on settings page.
+* **Share via ...**: Sharing via text/social networks on settings page.
 * **Notify New User**: Invite a new user when creating a new habit. This would be an "invite new" user cell at the end of the connections list on the creation page.
 * **Finding Users**: The user should be able to find people they know who already have an account. This would occur through Facebook and the Contacts list. This would require accounts being linked to a Facebook, email, or phone number.
 
