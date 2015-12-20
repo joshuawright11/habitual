@@ -17,18 +17,47 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!
     
-    var habits: [Habit] = []
-    
-    var habitsOfDate: [Habit] {
-        get{
-            return habits.filter({$0.availableOn(selectedDate)})
-        }
-        set{
-            self.habitsOfDate = newValue
+    var habits: [Habit] = [] {
+        didSet {
+            habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort(
+                { (firstHabit, secondHabit) -> Bool in
+                    let first = firstHabit.canDoOn(selectedDate)
+                    let second = secondHabit.canDoOn(selectedDate)
+                    
+                    if first && second {
+                        return firstHabit.name < secondHabit.name
+                    } else if first {
+                        return true
+                    } else if second {
+                        return false
+                    } else {
+                        return firstHabit.name < secondHabit.name
+                    }
+            })
         }
     }
     
-    var selectedDate: NSDate = NSDate()
+    var habitsOfDate: [Habit] = []
+    
+    var selectedDate: NSDate = NSDate() {
+        didSet {
+            habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort(
+                { (firstHabit, secondHabit) -> Bool in
+                let first = firstHabit.canDoOn(selectedDate)
+                let second = secondHabit.canDoOn(selectedDate)
+                
+                if first && second {
+                    return firstHabit.name < secondHabit.name
+                } else if first {
+                    return true
+                } else if second {
+                    return false
+                } else {
+                    return firstHabit.name < secondHabit.name
+                }
+            })
+        }
+    }
     
     @IBOutlet var tableView: UITableView!
     
@@ -42,16 +71,18 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.navigationItem.title = "Habits"
         
-        habits = AuthManager.currentUser!.habits
-        
         Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
+        
+        Utilities.registerForNotification(self, selector: "moveCell:", name:
+            Notifications.reloadPulse)
         
         self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.calendarView.changeDaysOutShowingState(false)
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         self.tableView.tableFooterView = UIView()
-        self.tableView.reloadData()
+        
+        refreshData()
         
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
         
@@ -85,6 +116,38 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         calendarView.commitCalendarViewUpdate()
         menuView.commitMenuViewUpdate()
+    }
+    
+    func moveCell(notification: NSNotification) {
+        
+        if let userInfo = notification.userInfo {
+            let data = userInfo["data"] as! String
+            let completed = userInfo["secondaryData"] as! Bool
+            if data == "" {
+                print("No changes")
+            }else{
+                let oldIndex = habitsOfDate.indexOf({$0.name == data})
+                
+                habitsOfDate.sortInPlace({ (firstHabit, secondHabit) -> Bool in
+                    let first = firstHabit.canDoOn(selectedDate)
+                    let second = secondHabit.canDoOn(selectedDate)
+                    
+                    if first && second {
+                        return firstHabit.name < secondHabit.name
+                    } else if first {
+                        return true
+                    } else if second {
+                        return false
+                    } else {
+                        return firstHabit.name < secondHabit.name
+                    }
+                })
+                
+                let newIndex = habitsOfDate.indexOf({$0.name == data})
+                
+                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: oldIndex!, inSection: 0), toIndexPath: NSIndexPath(forRow: newIndex!, inSection: 0))
+            }
+        }
     }
     
     func refreshData(){

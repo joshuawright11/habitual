@@ -71,9 +71,11 @@ public class Utilities {
         NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: name, object: nil)
     }
     
-    public static func postNotification(name: String) {
+    public static func postNotification(name: String, data: String = "", secondaryData: Bool = false) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil)
+        let info:[NSObject:AnyObject] = ["data":data,"secondaryData":secondaryData]
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil, userInfo: info)
     }
     
     public static func writeUserDefaults(key: String, bool: Bool) {
@@ -98,4 +100,14 @@ public class Utilities {
     public static func clearBadgeNumber() {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
+    
+    public static func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+
 }

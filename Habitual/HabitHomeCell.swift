@@ -195,11 +195,14 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
 
         if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
+            Utilities.delay(0.7) {
+                Utilities.postNotification(Notifications.reloadPulse,
+                    data: self.habit.name, secondaryData: true)
+            }
         }else{
             animateReturn()
+            Utilities.postNotification(Notifications.reloadPulse)
         }
-        
-        Utilities.postNotification(Notifications.reloadPulse)
     }
     
     func instantComplete() {
@@ -224,7 +227,6 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
         borderView.animation.makeX(moveTo).easeOut.makeBackground(color).animateWithCompletion(kAnimationLength) {
             self.borderConstraint.constant = moveTo
             self.refreshLabels()
-            
         }
         
         checkmark.animation.makeAlpha(1.0).animate(kAnimationLength)
@@ -243,9 +245,16 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             return
         }
         
-        animateUncomplete()
+        if habit.numCompletedIn(date) + 1 == habit.timesToComplete {
+            Utilities.delay(0.7) {
+                Utilities.postNotification(Notifications.reloadPulse,
+                    data: self.habit.name, secondaryData: false)
+            }
+        } else {
+            Utilities.postNotification(Notifications.reloadPulse)
+        }
         
-        Utilities.postNotification(Notifications.reloadPulse)
+        animateUncomplete()
     }
     
     func instantUncomplete() {
