@@ -86,7 +86,7 @@ struct Fonts {
     static let cellSubtitle = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
     static let cellSubtitleBold = UIFont.systemFontOfSize(14.0, weight: UIFontWeightSemibold)
     static let sectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
-    static let sectionHeaderBold = UIFont.systemFontOfSize(18.0, weight: UIFontWeightMedium)
+    static let sectionHeaderBold = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
     static let message = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
     static let monthLabel = UIFont.systemFontOfSize(20.0, weight: UIFontWeightLight)
 

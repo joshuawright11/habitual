@@ -122,9 +122,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if let userInfo = notification.userInfo {
             let data = userInfo["data"] as! String
-            let completed = userInfo["secondaryData"] as! Bool
             if data == "" {
-                print("No changes")
             }else{
                 let oldIndex = habitsOfDate.indexOf({$0.name == data})
                 
