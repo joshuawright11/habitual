@@ -8,17 +8,20 @@
 
 import UIKit
 import DKChainableAnimationKit
+import LTMorphingLabel
 
 // -TODO: Needs refactoring/documentation
 
-class HabitHomeCell: UITableViewCell {
+class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
 
     /// The length in seconds that the animation should run
     let kAnimationLength = 0.3
     
     @IBOutlet weak var iv: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: LTMorphingLabel!
+    @IBOutlet weak var bottomLabel: LTMorphingLabel!
+    @IBOutlet weak var emojiLabel: UILabel!
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var checkmark: UIImageView!
     @IBOutlet weak var borderConstraint: NSLayoutConstraint!
@@ -73,6 +76,8 @@ class HabitHomeCell: UITableViewCell {
         self.titleLabel.text = habit.name
         refreshLabels()
         
+        self.subtitleLabel.delegate = self
+        
         if(date.beginningOfDay < NSDate()) { setupHandlers() }
         
         if habit.numCompletedIn(date) == habit.timesToComplete {
@@ -83,7 +88,40 @@ class HabitHomeCell: UITableViewCell {
     }
     
     func refreshLabels() {
-        self.subtitleLabel.text = subtitleText()
+        self.bottomLabel.text = frequencyText()
+
+        let unit:String
+        switch habit.frequency {
+        case .Daily:
+            unit = "days"
+        case .Weekly:
+            unit = "weeks"
+        case .Monthly:
+            unit = "months"
+        }
+        
+        let count = habit.currentStreak()
+        var string = "\(count == 0 ? "No streak... yet!" : "\(count) \(unit) in a row!")"
+        
+        if count == 1 {string = "Solid start."}
+        subtitleLabel.text = string
+        
+        let emoji:String
+        switch(count) {
+        case 0...1:
+            emoji = ""
+        case 2...5:
+            emoji = "🔥"
+        case 6...9:
+            emoji = "⚡️"
+        case 10...19:
+            emoji = "✨"
+        case 20...99:
+            emoji = "🌟"
+        default:
+            emoji = "💯"
+        }
+        emojiLabel.text = emoji
     }
     
     func setupHandlers() {
@@ -154,8 +192,6 @@ class HabitHomeCell: UITableViewCell {
         if !habit.completeOn(date) {
             return
         }
-        
-        detailTextLabel?.text = subtitleText()
 
         if habit.numCompletedIn(date) == habit.timesToComplete {
             animateComplete()
@@ -180,6 +216,7 @@ class HabitHomeCell: UITableViewCell {
         
         self.titleLabel.textColor = Colors.textSecondary
         self.subtitleLabel.textColor = Colors.textSecondary
+        self.bottomLabel.textColor = Colors.textSecondary
     }
     func animateComplete() {
         let moveTo = UIScreen.mainScreen().bounds.width - 70
@@ -196,7 +233,7 @@ class HabitHomeCell: UITableViewCell {
         
         self.titleLabel.textColor = Colors.textSecondary
         self.subtitleLabel.textColor = Colors.textSecondary
-        
+        self.bottomLabel.textColor = Colors.textSecondary
     }
     
     func uncomplete() {
@@ -206,7 +243,6 @@ class HabitHomeCell: UITableViewCell {
             return
         }
         
-        detailTextLabel?.text = subtitleText()
         animateUncomplete()
         
         Utilities.postNotification(Notifications.reloadPulse)
@@ -223,7 +259,8 @@ class HabitHomeCell: UITableViewCell {
         iv.tintColor = color
         
         self.titleLabel.textColor = Colors.textMain
-        self.subtitleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textSubtitle
+        self.bottomLabel.textColor = Colors.textSubtitle
     }
     
     func animateUncomplete() {
@@ -237,10 +274,11 @@ class HabitHomeCell: UITableViewCell {
         iv.tintColor = color
         
         self.titleLabel.textColor = Colors.textMain
-        self.subtitleLabel.textColor = Colors.textMain
+        self.subtitleLabel.textColor = Colors.textSubtitle
+        self.bottomLabel.textColor = Colors.textSubtitle
     }
     
-    func subtitleText() -> String {
+    func frequencyText() -> String {
         let unit:String
         switch habit.frequency {
         case .Daily:
@@ -251,8 +289,9 @@ class HabitHomeCell: UITableViewCell {
             unit = "this month"
         }
         
-        var text = "\(habit.timesToComplete - habit.numCompletedIn(date)) more times \(unit)"
-        if((habit.timesToComplete - habit.numCompletedIn(date)) == 0) {text = "Complete!"}
+        let number = habit.timesToComplete - habit.numCompletedIn(date)
+        var text = "\(number > 1 ? "\(number) more times " : "Once more ")\(unit)"
+        if(number == 0) {text = "Complete!"}
         
         return text
     }
@@ -266,8 +305,11 @@ class HabitHomeCell: UITableViewCell {
         
         titleLabel.textColor = Colors.textMain
         titleLabel.font = Fonts.cellTitle
-        subtitleLabel.textColor = Colors.textMain
+        subtitleLabel.textColor = Colors.textSubtitle
         subtitleLabel.font = Fonts.cellSubtitle
+        
+        bottomLabel.font = Fonts.cellSubtitle
+        bottomLabel.textColor = Colors.textSubtitle
         
         let image = UIImage(named: habit.icon)
         iv.backgroundColor = UIColor.clearColor()

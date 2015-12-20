@@ -370,6 +370,56 @@ public class Habit: ParseObject {
         return unitsSinceBegan
     }
     
+    public func currentStreak(onDate: NSDate = NSDate()) -> Int {
+
+        var yesterunit:NSDate
+        let beginning: (NSDate) -> (NSDate)
+        let unit:Duration
+        
+        switch frequency {
+        case .Daily:
+            yesterunit = NSDate().beginningOfDay - 1.day
+            beginning = {(date) in return date.beginningOfDay}
+            unit = 1.day
+        case .Weekly:
+            yesterunit = NSDate().beginningOfWeek - 1.week
+            beginning = {(date) in return date.beginningOfWeek}
+            unit = 1.week
+        case .Monthly:
+            yesterunit = NSDate().beginningOfMonth - 1.month
+            beginning = {(date) in return date.beginningOfMonth}
+            unit = 1.month
+        }
+        
+        // ignore everything in the current unit
+        let sortedCompletions = datesCompleted.filter({$0 < (beginning(onDate))}).sort().reverse()
+        let overflow = datesCompleted.filter({$0 >= (beginning(onDate))})
+        
+        if sortedCompletions.first == nil || sortedCompletions.first < yesterunit {
+            return overflow.count >= timesToComplete ?  1 : 0;
+        }
+        
+        var count = overflow.count >= timesToComplete ? 1 : 0
+        
+        var after: NSDate = beginning(yesterunit)
+        var leftToComplete = timesToComplete
+        
+        for date in sortedCompletions {
+                if(date > after + unit) {continue}
+                else if date >= after {
+                    leftToComplete -= 1
+                    if leftToComplete == 0 {
+                        count += 1
+                        leftToComplete = timesToComplete
+                        after = after - unit
+                    }
+                } else {
+                    return count
+                }
+        }
+        return count
+    }
+    
     /// Loads connections from the AuthManager to the `usersToNotify` property.
     /// This property is currently initialized as an empty array, since Parse
     /// objects are not saved offline, hence the need for this method.
