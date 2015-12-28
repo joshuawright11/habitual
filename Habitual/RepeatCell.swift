@@ -50,13 +50,13 @@ class RepeatCell: HabitDetailCell {
         switch habit.frequency {
         case .Daily:
             dayButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
-            dayButton.titleLabel?.font = Fonts.sectionHeaderBold
+            dayButton.titleLabel?.font = Fonts.buttonSelected
         case .Weekly:
             weekButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
-            weekButton.titleLabel?.font = Fonts.sectionHeaderBold
+            weekButton.titleLabel?.font = Fonts.buttonSelected
         case .Monthly:
             monthButton.setTitleColor(Colors.accentSecondary, forState: .Normal)
-            monthButton.titleLabel?.font = Fonts.sectionHeaderBold
+            monthButton.titleLabel?.font = Fonts.buttonSelected
         }
     }
     
@@ -86,7 +86,7 @@ class RepeatCell: HabitDetailCell {
         monthButton.titleLabel?.font = Fonts.sectionHeader
         
         button.setTitleColor(Colors.accentSecondary, forState: .Normal)
-        button.titleLabel?.font = Fonts.sectionHeaderBold
+        button.titleLabel?.font = Fonts.buttonSelected
         
         if(initialFreq == .Daily && habit?.frequency != .Daily)
             || (initialFreq != .Daily && habit?.frequency == .Daily)

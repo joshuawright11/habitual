@@ -35,7 +35,7 @@ class HabitCell: UITableViewCell {
         countLabel.font = Fonts.sectionHeader
         countLabel.textColor = Colors.textMain
         
-        coloriv.backgroundColor = UIColor(hexString: habit.color).colorWithAlphaComponent(0.8)
+        coloriv.backgroundColor = UIColor(hexString: habit.color)
         self.checkiv.image = self.checkiv.image?.imageWithRenderingMode(.AlwaysTemplate)
                 self.checkiv.tintColor = UIColor(hexString: habit.color)
         coloriv.layer.cornerRadius = 10.0

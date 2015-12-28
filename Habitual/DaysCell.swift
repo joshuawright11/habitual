@@ -34,7 +34,7 @@ class DaysCell: HabitDetailCell {
         for bt in dayButtons {
             if self.habit!.daysToComplete.contains((bt.titleLabel?.text)!) {
                 bt.setTitleColor(Colors.accentSecondary, forState: .Normal)
-                bt.titleLabel?.font = Fonts.sectionHeaderBold
+                bt.titleLabel?.font = Fonts.buttonSelected
             }
         }
     }
@@ -54,7 +54,7 @@ class DaysCell: HabitDetailCell {
         }else{
             habit?.daysToComplete.append(string)
             button.setTitleColor(Colors.accentSecondary, forState: .Normal)
-            button.titleLabel?.font = Fonts.sectionHeaderBold
+            button.titleLabel?.font = Fonts.buttonSelected
         }
     }
 }

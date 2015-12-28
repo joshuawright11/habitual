@@ -8,7 +8,7 @@
 
 import UIKit
 import Charts
-import ChameleonFramework
+import DynamicColor
 
 // -TODO: Needs refactoring/documentation
 

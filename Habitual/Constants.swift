@@ -9,6 +9,7 @@
 // -TODO: Needs refactoring/documentation
 
 import Foundation
+import DynamicColor
 
 /// *****************
 /// * Notifications *
@@ -32,7 +33,7 @@ struct Notifications {
 struct Colors {
     // Main Colors
     static let barBackground = UIColor(hexString: "242C33")
-    static let background = barBackground.lightenByPercentage(0.04)
+    static let background = barBackground.lightenColor(0.04)
     static let shadow = UIColor.blackColor()
     
     static let accent = UIColor(hexString: "F09819").colorWithAlphaComponent(0.7)
@@ -45,16 +46,17 @@ struct Colors {
     
     // Text Colors
     static let textMain = UIColor(hexString: "FFFFFF")
-    static let textSecondary = background.lightenByPercentage(0.2)
-    static let textSubtitle = background.lightenByPercentage(0.45)
+    static let textSecondary = background.lightenColor(0.2)
+    static let textSubtitle = UIColor(hexString: "A3B0B7")
     
     // Rainbow
-    static let purple = UIColor(hexString: "C644FC");
-    static let blue = UIColor(hexString: "007AFF");
-    static let green = UIColor(hexString: "17EB00");
-    static let yellow = UIColor(hexString: "E5FF00");
-    static let orange = UIColor(hexString: "FF8300");
-    static let red = UIColor(hexString: "FF2D55");
+    static let purple = UIColor(hexString: "C644FC").darkenColor(0.1)
+    static let blue = UIColor(hexString: "007AFF")
+    static let green = UIColor(hexString: "17EB00")
+    static let yellow = UIColor(hexString: "E5FF00")
+    static let orange = UIColor(hexString: "FF8300")
+    static let red = UIColor(hexString: "FF2D55")
+    static let gray = UIColor(hexString: "BDC3C7")
     
     static let rainbow = [purple, blue, green, yellow, orange, red]
 }
@@ -86,7 +88,11 @@ struct Fonts {
     static let cellSubtitle = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
     static let cellSubtitleBold = UIFont.systemFontOfSize(14.0, weight: UIFontWeightSemibold)
     static let sectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
-    static let sectionHeaderBold = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
+    static let sectionHeaderBold = UIFont.systemFontOfSize(15.0, weight: UIFontWeightRegular)
+    
+    static let calendarSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
+    static let buttonSelected = UIFont.systemFontOfSize(18.0, weight: UIFontWeightMedium)
+    
     static let message = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
     static let monthLabel = UIFont.systemFontOfSize(20.0, weight: UIFontWeightLight)
 
@@ -136,5 +142,7 @@ struct Icons {
 
 struct Floats {
     static let colorAlpha: CGFloat = 0.3
+    static let darkenPercentage = 0.24
+    static let cardCornerRadius: CGFloat = 15
 }
 

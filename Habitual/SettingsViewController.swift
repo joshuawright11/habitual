@@ -48,7 +48,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         twitteriv.image = twitteriv.image?.imageWithRenderingMode(.AlwaysTemplate)
         mailiv.image = mailiv.image?.imageWithRenderingMode(.AlwaysTemplate)
         
-        appleiv.tintColor = Colors.barBackground.darkenByPercentage(0.1)
+        appleiv.tintColor = Colors.gray
         textiv.tintColor = Colors.green
         fbiv.tintColor = Colors.blue
         twitteriv.tintColor = Colors.accentSecondary
@@ -88,7 +88,6 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     func rateOnAppStore() {
         UIApplication.sharedApplication().openURL(NSURL(string: "\(url)")!)
-
     }
     
     func shareText() {

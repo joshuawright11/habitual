@@ -43,7 +43,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             date = new.1
             
             color = UIColor(hexString: habit.color)
-            bgColor = color.colorWithAlphaComponent(Floats.colorAlpha)
+            bgColor = color.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
             
             doAppearance()
         }
@@ -64,7 +64,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        Styler.viewShader(borderView)
+        Styler.viewShaderSmall(borderView)
     }
     
     func configure() {
@@ -172,7 +172,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
                 borderView.frame.origin.x += translation.x
                 
                 let bgColor = percent > 0 ? color.hexString : "FFFFFF"
-                borderView.backgroundColor = UIColor(hexString: bgColor, withAlpha: Floats.colorAlpha + abs(percent*(1-Floats.colorAlpha)))
+                borderView.backgroundColor = UIColor(hexString: bgColor).darkenColor(Floats.darkenPercentage - Floats.darkenPercentage * Double(percent)).saturateColor(0.4 - 0.4 * Double(percent))
                 recognizer.setTranslation(CGPointZero, inView: self)
             }
         }
@@ -315,7 +315,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
         titleLabel.textColor = Colors.textMain
         titleLabel.font = Fonts.cellTitle
         subtitleLabel.textColor = Colors.textSubtitle
-        subtitleLabel.font = Fonts.cellSubtitle
+        subtitleLabel.font = Fonts.cellSubtitleBold
         
         bottomLabel.font = Fonts.cellSubtitle
         bottomLabel.textColor = Colors.textSubtitle
@@ -334,6 +334,6 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
         checkmark.tintColor = Colors.background
         checkmark.alpha = 0.0
         
-        borderView.layer.cornerRadius = 14.0
+        borderView.layer.cornerRadius = Floats.cardCornerRadius
     }
 }

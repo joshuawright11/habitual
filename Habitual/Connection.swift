@@ -48,6 +48,14 @@ class Connection: ParseObject {
         }
     }
     
+    /// Computed property to return the number of habits of the other user that 
+    /// are accountable to the current user.
+    var numAccountable: Int {
+        get {
+            return user.habits.filter({$0.usersToNotify.contains({$0.username == AuthManager.currentUser?.username})}).count
+        }
+    }
+    
     /// Basic initializer to create a new `Connection` with a `User` to connect
     /// to. Creates a connection with the currently logged in `User` as the
     /// sender, and the parameter as the receiver.

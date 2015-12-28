@@ -48,17 +48,17 @@ public class Styler: NSObject {
         view.layer.shouldRasterize = true;
         view.layer.rasterizationScale = UIScreen.mainScreen().scale
         view.layer.shadowColor = Colors.shadow.CGColor
-        view.layer.shadowOffset = CGSize(width: 2, height: 2)
-        view.layer.shadowRadius = 2
-        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 3)
+        view.layer.shadowRadius = 3
+        view.layer.shadowOpacity = 0.6
     }
     
     public static func viewShaderSmall(view: UIView) {
         view.layer.shouldRasterize = true;
         view.layer.rasterizationScale = UIScreen.mainScreen().scale
         view.layer.shadowColor = Colors.shadow.CGColor
-        view.layer.shadowOffset = CGSize(width: 2, height: 2)
-        view.layer.shadowRadius = 2
-        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowRadius = 1
+        view.layer.shadowOpacity = 0.6
     }
 }

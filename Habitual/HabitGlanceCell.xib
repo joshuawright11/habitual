@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HabitGlance" rowHeight="22" id="KGk-i7-Jjw" customClass="HabitGlanceCell" customModule="Ignite" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASn-HX-ceb">
+                        <rect key="frame" x="14" y="5" width="11" height="11"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="EBL-wr-unT"/>
+                            <constraint firstAttribute="width" constant="11" id="fOP-JN-h4Q"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for others" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdZ-Iz-j2c">
+                        <rect key="frame" x="32" y="0.0" width="113" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NgL-zn-9eN">
+                        <rect key="frame" x="145" y="0.0" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="b9a-uJ-ugU"/>
+                            <constraint firstAttribute="height" constant="22" id="yvs-1O-oLI"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ASn-HX-ceb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2t3-S2-b2V"/>
+                    <constraint firstItem="NgL-zn-9eN" firstAttribute="leading" secondItem="IdZ-Iz-j2c" secondAttribute="trailing" id="Jdz-Zr-0a7"/>
+                    <constraint firstItem="NgL-zn-9eN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PD9-07-Cye"/>
+                    <constraint firstItem="IdZ-Iz-j2c" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eIL-KR-vjA"/>
+                    <constraint firstItem="ASn-HX-ceb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="pQq-1z-G7F"/>
+                    <constraint firstItem="IdZ-Iz-j2c" firstAttribute="leading" secondItem="ASn-HX-ceb" secondAttribute="trailing" constant="7" id="x8s-4i-CJz"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="NgL-zn-9eN" secondAttribute="trailing" constant="4" id="zta-ry-Coj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="circleView" destination="ASn-HX-ceb" id="jw0-dT-wVk"/>
+                <outlet property="iv" destination="NgL-zn-9eN" id="Kzh-92-u5C"/>
+                <outlet property="titleLabel" destination="IdZ-Iz-j2c" id="sMx-cj-Dm1"/>
+            </connections>
+            <point key="canvasLocation" x="251" y="272"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -54,7 +54,7 @@ class IconCell: HabitDetailCell {
         }
         
         didSet {
-            selectediv?.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
+            selectediv?.backgroundColor = Colors.accentSecondary.colorWithAlphaComponent(0.5)
         }
     }
     
@@ -66,7 +66,7 @@ class IconCell: HabitDetailCell {
         for iv in iconivs {
             if iv.accessibilityIdentifier == habit.icon {
                 selectediv = iv
-                iv.backgroundColor = UIColor(hexString: Colors.accentSecondary.hexString, withAlpha: 0.4)
+                iv.backgroundColor = Colors.accentSecondary.colorWithAlphaComponent(0.5)
             }
         }
     }

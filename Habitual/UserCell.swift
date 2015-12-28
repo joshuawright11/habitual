@@ -10,22 +10,122 @@ import UIKit
 
 // -TODO: Needs refactoring/documentation
 
-class UserCell: UITableViewCell {
+class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
 
+    static let height = CGFloat(156)
     
-    @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var initialsLabel: UILabel!
+    @IBOutlet weak var borderView: UIView! {
+        didSet {
+            Styler.viewShader(borderView)
+        }
+    }
+    @IBOutlet weak var initialsLabel: UILabel! {
+        didSet {
+            Styler.viewShaderSmall(initialsLabel)
+        }
+    }
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var borderViewHeight: NSLayoutConstraint!
+  
+    @IBOutlet weak var timesLabel: UILabel! {
+        didSet {
+            timesLabel.font = Fonts.buttonSelected
+            timesLabel.textColor = Colors.textSubtitle
+        }
+    }
+    @IBOutlet weak var timesiv: UIImageView! {
+        didSet {
+            timesiv.image = UIImage(named: "checkmark_small")?.imageWithRenderingMode(.AlwaysTemplate)
+            Styler.viewShaderSmall(timesiv)
+        }
+    }
     
-    var connection:Connection!
-    var color: UIColor!
+    @IBOutlet weak var linksLabel: UILabel! {
+        didSet {
+            linksLabel.font = Fonts.buttonSelected
+            linksLabel.textColor = Colors.textSubtitle
+        }
+    }
+    @IBOutlet weak var linksiv: UIImageView! {
+        didSet {
+            linksiv.image = UIImage(named: "chain")?.imageWithRenderingMode(.AlwaysTemplate)
+            Styler.viewShaderSmall(linksiv)
+        }
+    }
+    
+    @IBOutlet weak var finishedLabel: UILabel! {
+        didSet {
+            finishedLabel.font = Fonts.buttonSelected
+            finishedLabel.textColor = Colors.textMain
+        }
+    }
+    @IBOutlet weak var unfinishedLabel: UILabel! {
+        didSet {
+            unfinishedLabel.font = Fonts.buttonSelected
+            unfinishedLabel.textColor = Colors.textMain
+        }
+    }
+
+    @IBOutlet weak var habitsContainer: UIView! {
+        didSet {
+            habitsContainer.backgroundColor = Colors.background
+            habitsContainer.layer.cornerRadius = Floats.cardCornerRadius
+            Styler.viewShaderSmall(habitsContainer)
+        }
+    }
+    
+    @IBOutlet weak var finishedTableView: UITableView! {
+        didSet {
+            finishedTableView.layer.cornerRadius = Floats.cardCornerRadius
+        }
+    }
+    
+    @IBOutlet weak var unfinishedTableView: UITableView! {
+        didSet {
+            unfinishedTableView.layer.cornerRadius = Floats.cardCornerRadius
+        }
+    }
+    
+    private var finishedHabits: [Habit]!
+    private var unfinishedHabits: [Habit]!
+    
+    var connection:Connection! {
+        didSet {
+            finishedHabits = connection.user.habits.filter({$0.completed()})
+            unfinishedHabits = connection.user.habits.filter({!$0.completed()})
+            linksLabel.text = "x\(connection.numAccountable)"
+            timesLabel.text = "x\(connection.user.statHabitsCompleted())"
+            
+            finishedTableView.reloadData()
+            unfinishedTableView.reloadData()
+            
+            let numFinished = connection.user.habits.filter({$0.completed()}).count
+            let numUnfinished = connection.user.habits.count - numFinished
+            
+            let height = UserCell.height + (CGFloat(max(numFinished, numUnfinished)) * HabitGlanceCell.height)
+            
+            borderViewHeight.constant = height-16
+            
+            borderView.setNeedsLayout()
+            initialsLabel.setNeedsLayout()
+            titleLabel.setNeedsLayout()
+            habitsContainer.setNeedsLayout()
+            
+        }
+    }
+    var color: UIColor! {
+        didSet {
+            linksiv.tintColor = color
+            timesiv.tintColor = color
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        Styler.viewShader(borderView)
+        
+        setupTableViews()
     }
     
     func configure(connection: Connection) {
@@ -41,9 +141,40 @@ class UserCell: UITableViewCell {
         doAppearance()
     }
     
+    func setupTableViews() {
+        
+        finishedTableView.registerNib(UINib(nibName: "HabitGlanceCell", bundle: nil), forCellReuseIdentifier: HabitGlanceCell.reuseIdentifier)
+        unfinishedTableView.registerNib(UINib(nibName: "HabitGlanceCell", bundle: nil), forCellReuseIdentifier: HabitGlanceCell.reuseIdentifier)
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == finishedTableView {
+            return finishedHabits.count
+        } else {
+            return unfinishedHabits.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(HabitGlanceCell.reuseIdentifier, forIndexPath: indexPath) as! HabitGlanceCell
+        
+        if tableView == finishedTableView {
+            cell.habit = finishedHabits[indexPath.row]
+            cell.connectionColor = self.color
+        } else {
+            cell.habit = unfinishedHabits[indexPath.row]
+            cell.connectionColor = self.color
+        }
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return HabitGlanceCell.height
+    }
+    
     func doAppearance() {
         
-        infoLabel.text = "\(connection.user.habits.count) habits"
         if connection.approved {
             subtitleLabel.text = connection.messages?.last?.text ?? "\(connection.user.statHabitsCompleted()) habits completed"
         }else{
@@ -56,15 +187,13 @@ class UserCell: UITableViewCell {
         
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
-            infoLabel.hidden = false
         } else {
             acceptButton.hidden = false
             acceptButton.backgroundColor = Colors.green.colorWithAlphaComponent(0.7)
             acceptButton.titleLabel?.font = Fonts.sectionHeader
             acceptButton.tintColor = Colors.textMain
             acceptButton.addTarget(self, action: Selector("approve"), forControlEvents: .TouchUpInside)
-            acceptButton.layer.cornerRadius = 15.0
-            infoLabel.hidden = true
+            acceptButton.layer.cornerRadius = Floats.cardCornerRadius
         }
         
         backgroundColor = Colors.background
@@ -76,9 +205,6 @@ class UserCell: UITableViewCell {
         subtitleLabel.textColor = subtitleTextColor
         subtitleLabel.font = Fonts.cellSubtitle
         
-        infoLabel.textColor = subtitleTextColor
-        infoLabel.font = Fonts.sectionHeader
-        
         initialsLabel.font = Fonts.initials
         initialsLabel.textColor = color
         
@@ -88,10 +214,8 @@ class UserCell: UITableViewCell {
         initialsLabel.layer.borderWidth = 2.0
         initialsLabel.layer.borderColor = color.CGColor
         
-        borderView.backgroundColor = color.colorWithAlphaComponent(0.3)
-        borderView.layer.cornerRadius = 15.0
-//        borderView.layer.borderWidth = 2.0
-//        borderView.layer.borderColor = color.CGColor
+        borderView.backgroundColor = color.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
+        borderView.layer.cornerRadius = Floats.cardCornerRadius
     }
     
     func approve() {

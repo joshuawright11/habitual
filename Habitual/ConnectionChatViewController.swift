@@ -61,7 +61,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     func doAppearance() {
-        self.collectionView!.backgroundColor = Colors.background.lightenByPercentage(0.02)
+        self.collectionView!.backgroundColor = Colors.background.lightenColor(0.02)
         self.collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
         self.collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
         
@@ -73,8 +73,8 @@ class ConnectionChatViewController: JSQMessagesViewController {
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;
         self.inputToolbar?.tintColor = Colors.background
-        self.inputToolbar?.contentView!.backgroundColor = Colors.background
-        self.inputToolbar?.contentView?.textView?.backgroundColor = Colors.background.lightenByPercentage(0.03)
+        self.inputToolbar?.contentView!.backgroundColor = Colors.barBackground
+        self.inputToolbar?.contentView?.textView?.backgroundColor = Colors.background
         
         let bt = self.inputToolbar?.contentView?.rightBarButtonItem!
         bt?.setTitleColor(Colors.accent, forState: .Normal)

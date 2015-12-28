@@ -89,6 +89,28 @@ public class Habit: ParseObject {
     /// The `User` objects of the users to which the habit is accountable.
     var usersToNotify: [User]
     
+    var streakBadge: String {
+        get {
+            let emoji:String
+            switch(currentStreak()) {
+            case 0...1:
+                emoji = ""
+            case 2...5:
+                emoji = "🔥"
+            case 6...9:
+                emoji = "⚡️"
+            case 10...19:
+                emoji = "✨"
+            case 20...99:
+                emoji = "🌟"
+            default:
+                emoji = "💯"
+            }
+            return emoji
+        }
+    }
+    
+    
     // ********************
     // MARK: - Initializers
     // ********************
@@ -309,6 +331,21 @@ public class Habit: ParseObject {
             return lastCompletedOn.endOfWeek + 1.week
         case .Monthly:
             return lastCompletedOn.endOfMonth + 1.month
+        }
+    }
+    
+    
+    /// Whether the habit was completed during the current frequency.
+    ///
+    /// - returns: Whether the habit was completed during the current frequency.
+    public func completed() -> Bool {
+        switch frequency {
+        case .Daily:
+            return datesCompleted.sort().last > NSDate().beginningOfDay
+        case .Weekly:
+            return datesCompleted.sort().last > NSDate().beginningOfWeek
+        case .Monthly:
+            return datesCompleted.sort().last > NSDate().beginningOfMonth
         }
     }
     

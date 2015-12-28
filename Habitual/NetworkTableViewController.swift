@@ -33,6 +33,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 160.0
+        
         self.navigationItem.title = "Connections"
         
         let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addConnection")
@@ -168,12 +171,21 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
-        cell.configure(connections![indexPath.row])
+
+        let connection = connections![indexPath.row]
+        cell.configure(connection)
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 99
+        let user = connections![indexPath.row].user
+        let numFinished = user.habits.filter({$0.completed()}).count
+        let numUnfinished = user.habits.count - numFinished
+        
+        let height = UserCell.height + (CGFloat(max(numFinished, numUnfinished)) * HabitGlanceCell.height)
+        
+        return height
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

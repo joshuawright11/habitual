@@ -216,11 +216,10 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
             
         }
         
-        
         let text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
         
         header.text = habitsOfDate.count > 0 ? text : ""
-        header.font = Fonts.sectionHeaderBold
+        header.font = Fonts.calendarSectionHeader
         header.textColor = Colors.textSecondary
         
         return header
@@ -368,4 +367,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return Fonts.secondary
     }
     
+    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
+        return [Colors.accentSecondary]
+    }
+    
+    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
+        return true
+    }
+    
+    func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
+        return false
+    }
 }

@@ -15,10 +15,10 @@ class NameCell: HabitDetailCell, UITextFieldDelegate {
     /// A `UITextField` in which the user will enter the name of their habit.
     @IBOutlet weak var textField: UITextField! {
         didSet {
-            let str = NSAttributedString(string: "Habit name here...", attributes: [NSForegroundColorAttributeName:Colors.accent, NSFontAttributeName:Fonts.sectionHeaderBold])
+            let str = NSAttributedString(string: "Habit name here...", attributes: [NSForegroundColorAttributeName:Colors.accent, NSFontAttributeName:Fonts.buttonSelected])
             textField.attributedPlaceholder = str
             textField.textColor = Colors.accentSecondary
-            textField.font = Fonts.sectionHeaderBold
+            textField.font = Fonts.buttonSelected
             textField.delegate = self
             textField.addTarget(self, action: "textFieldChanged:", forControlEvents: .EditingChanged)
         }

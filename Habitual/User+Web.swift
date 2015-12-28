@@ -23,7 +23,9 @@ extension User
         or.includeKey("sender")
         or.includeKey("receiver")
         or.includeKey("sender.habits")
+        or.includeKey("sender.habits.usersToNotify")
         or.includeKey("receiver.habits")
+        or.includeKey("receiver.habits.usersToNotify")
         or.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let objects = objects {
                 self.connections = []
