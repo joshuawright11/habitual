@@ -8,6 +8,8 @@
 
 // -TODO: Needs refactoring/documentation
 
+import DynamicColor
+
 public extension UIColor
 {
     var hexString:String {
@@ -18,5 +20,9 @@ public extension UIColor
         let b:CGFloat = colorRef[2]
         
         return String(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
+    }
+    
+    public func igniteDarken() -> UIColor {
+        return self.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
     }
 }

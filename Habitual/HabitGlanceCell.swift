@@ -39,7 +39,15 @@ class HabitGlanceCell: UITableViewCell {
     var habit: Habit! {
         didSet {
             titleLabel.text = habit.name + " " + habit.streakBadge
-            circleView.backgroundColor = UIColor(hexString: habit.color)
+            
+            if finished! {
+                circleView.backgroundColor = UIColor(hexString: habit.color)
+                circleView.layer.borderWidth = 0
+            } else {
+                circleView.backgroundColor = Colors.barBackground
+                circleView.layer.borderColor = UIColor(hexString: habit.color).CGColor
+                circleView.layer.borderWidth = 2
+            }
             
             if habit.usersToNotify.filter({$0.username == AuthManager.currentUser?.username}).count > 0 {
                 iv.hidden = false
@@ -49,4 +57,6 @@ class HabitGlanceCell: UITableViewCell {
             }
         }
     }
+    
+    var finished: Bool!
 }

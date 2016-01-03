@@ -11,3 +11,6 @@
 #import "UIAppearance+Swift.h"
 #import <JSQMessagesViewController/JSQMessages.h>
 #import <TSMessages/TSMessageView.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>

@@ -148,11 +148,7 @@ extension Habit {
     func deleteFromCoreData() {
         if let coreDataObject = coreDataObject {
             coreDataObject.delete()
-            if AuthManager.socialEnabled {
-                deleteFromServer()
-            }else{
-                print("ERROR USER IS EMPTY")
-            }
+            deleteFromServer()
             Utilities.postNotification(Notifications.habitDataChanged)
         }else{
             fatalError("Not a core data object!")

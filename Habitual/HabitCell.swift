@@ -41,8 +41,6 @@ class HabitCell: UITableViewCell {
         coloriv.layer.cornerRadius = 10.0
         
         checkiv.layer.backgroundColor = Colors.background.CGColor
-        
-        Styler.viewShaderSmall(self.coloriv)
     }
     
     func configureForHabit(habit: Habit) {

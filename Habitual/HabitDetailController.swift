@@ -102,7 +102,7 @@ class HabitDetailController: UITableViewController {
         self.tableView.beginUpdates()
         if editng {
             
-            self.tableView.insertSections(NSIndexSet(index: AuthManager.socialEnabled ? 3 : 2), withRowAnimation: .Automatic)
+            self.tableView.insertSections(NSIndexSet(index: 3), withRowAnimation: .Automatic)
             
             self.navigationItem.rightBarButtonItem?.title = "Save"
             canInteract = true
@@ -120,7 +120,7 @@ class HabitDetailController: UITableViewController {
             
             habit?.saveToCoreData(false)
             
-            self.tableView.deleteSections(NSIndexSet(index: AuthManager.socialEnabled ? 3 : 2), withRowAnimation: .Automatic)
+            self.tableView.deleteSections(NSIndexSet(index: 3), withRowAnimation: .Automatic)
             
             canInteract = false
             for cell in tableView.visibleCells {cell.userInteractionEnabled = false}
@@ -193,8 +193,8 @@ class HabitDetailController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if editng {return AuthManager.socialEnabled ? 4 : 3}
-        else {return AuthManager.socialEnabled ? 3 : 2}
+        if editng {return 4}
+        else {return 3}
         
     }
     
@@ -216,7 +216,7 @@ class HabitDetailController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let id = cellIdentifierForIndexPath(indexPath)
         
-        if(indexPath.section == (AuthManager.socialEnabled ? 3 : 2)) {
+        if(indexPath.section == 3) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
         }else if indexPath.section == 2 && indexPath.row > 1 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
@@ -251,7 +251,6 @@ class HabitDetailController: UITableViewController {
             default: return "times"}
         case 3: return "delete"
         default:
-            if(!AuthManager.socialEnabled) {return "delete"}
             switch ip.row {
             case 0: return "accountability"
             case 1: return "connections_header"
@@ -283,7 +282,7 @@ class HabitDetailController: UITableViewController {
         switch section {
         case 0: return "Basic Info"
         case 1: return "Scheduling"
-        case 2: return AuthManager.socialEnabled ? "Accountability" : ""
+        case 2: return "Accountability"
         default: return ""
         }
     }
@@ -296,7 +295,7 @@ class HabitDetailController: UITableViewController {
         switch indexPath.section {
         case 0: return
         case 1: return
-        case 2: if !AuthManager.socialEnabled {deletePressed()}
+        case 2: return
         case 3: deletePressed()
         default: return
         }

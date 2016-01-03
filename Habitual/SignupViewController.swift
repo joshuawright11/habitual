@@ -11,28 +11,53 @@ import UIKit
 // -TODO: Needs refactoring/documentation
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField! {
+        didSet {
+            usernameTextField.layer.cornerRadius = 7
+            Styler.viewShaderSmall(usernameTextField)
+        }
+    }
+    
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet {
+            passwordTextField.layer.cornerRadius = 7
+            Styler.viewShaderSmall(passwordTextField)
+        }
+    }
+    
+    @IBOutlet weak var nameTextField: UITextField! {
+        didSet {
+            nameTextField.layer.cornerRadius = 7
+            Styler.viewShaderSmall(nameTextField)
+        }
+    }
+    
+    @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var signupButton: UIButton!
+
+    @IBOutlet weak var loginButton: UIButton! {
+        didSet {
+            loginButton.layer.cornerRadius = 7
+            Styler.viewShaderSmall(loginButton)
+        }
+    }
+
     
-    var signupEnabled = true
+    var newAccount = true
     
     override func viewDidLoad() {
         doAppearance()
+        
+        if(!newAccount) {
+            nameTextFieldHeight.constant = 0
+        }
         
         setupKeyboardNotifications()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
-        
-        let button = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
-        self.navigationItem.leftBarButtonItem = button
     }
     
     func setupKeyboardNotifications() {
@@ -65,71 +90,71 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func doAppearance() {
+        
         titleLabel.font = Fonts.mainTitle
         titleLabel.textColor = Colors.textMain
         
-        infoLabel.font = Fonts.cellSubtitle
-        infoLabel.textColor = Colors.textMain
-        
         usernameTextField.delegate = self
-        usernameTextField.layer.cornerRadius = 15
-        usernameTextField.backgroundColor = Colors.textViewBackground
+        usernameTextField.backgroundColor = Colors.textMain.colorWithAlphaComponent(0.03)
         let spacer1 = UIView(frame: CGRectMake(0, 0, 21, 21))
         usernameTextField.leftViewMode = .Always
         usernameTextField.leftView = spacer1
         
-        let str1 = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
+        let str1 = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName:Colors.textSubtitle, NSFontAttributeName:Fonts.message])
         usernameTextField.attributedPlaceholder = str1
         
-        usernameTextField.textColor = Colors.background
-        usernameTextField.font = Fonts.sectionHeader
+        usernameTextField.textColor = Colors.textMain
+        usernameTextField.font = Fonts.message
         
         passwordTextField.delegate = self
-        passwordTextField.layer.cornerRadius = 15
-        passwordTextField.backgroundColor = Colors.textViewBackground
+        passwordTextField.backgroundColor = Colors.textMain.colorWithAlphaComponent(0.03)
         let spacer2 = UIView(frame: CGRectMake(0, 0, 21, 21))
         passwordTextField.leftViewMode = .Always
         passwordTextField.leftView = spacer2
         
-        let str2 = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
+        let str2 = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:Colors.textSubtitle, NSFontAttributeName:Fonts.message])
         passwordTextField.attributedPlaceholder = str2
         
-        passwordTextField.textColor = Colors.background
-        passwordTextField.font = Fonts.sectionHeader
+        passwordTextField.textColor = Colors.textMain
+        passwordTextField.font = Fonts.message
         
         nameTextField.delegate = self
-        nameTextField.layer.cornerRadius = 15
-        nameTextField.backgroundColor = Colors.textViewBackground
+        nameTextField.backgroundColor = Colors.textMain.colorWithAlphaComponent(0.03)
         let spacer3 = UIView(frame: CGRectMake(0, 0, 21, 21))
         nameTextField.leftViewMode = .Always
         nameTextField.leftView = spacer3
         
-        let str3 = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName:Colors.textSecondary, NSFontAttributeName:Fonts.sectionHeader])
+        let str3 = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName:Colors.textSubtitle, NSFontAttributeName:Fonts.message])
         nameTextField.attributedPlaceholder = str3
         
-        nameTextField.textColor = Colors.background
-        nameTextField.font = Fonts.sectionHeader
+        nameTextField.textColor = Colors.textMain
+        nameTextField.font = Fonts.message
         
-        loginButton.layer.cornerRadius = 15
         loginButton.setTitleColor(Colors.textMain, forState: .Normal)
-        loginButton.titleLabel?.font = Fonts.cellTitle
-        
-        signupButton.setTitleColor(Colors.accent, forState: .Normal)
-        signupButton.titleLabel?.font = Fonts.sectionHeader
+        loginButton.titleLabel?.font = Fonts.message
         
         self.loginButton.setTitle("Sign up", forState: .Normal)
-        self.signupButton.setTitle("Already have an account?", forState: .Normal)
+        
+        if (!newAccount) {
+            loginButton.setTitle("Log in", forState: .Normal)
+            nameTextField.hidden = true
+        }
     }
     
     func inputIsValid() -> Bool {
-        if(usernameTextField.text?.characters.count < 5){
-            Utilities.alertWarning("Username must be at least 5 characters", vc: self.navigationController!)
+        
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        if(!emailTest.evaluateWithObject(usernameTextField.text)){
+            Utilities.alertWarning("Invalid email.", vc: self)
             return false
         }else if(passwordTextField.text?.characters.count < 5){
-            Utilities.alertWarning("Password must be at least 5 characters", vc: self.navigationController!)
+            Utilities.alertWarning("Password must be at least 5 characters.", vc: self)
             return false
-        }else if(signupEnabled && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
-            Utilities.alertWarning("Please enter your first and last name", vc: self.navigationController!)
+        }else if(newAccount && nameTextField.text?.componentsSeparatedByString(" ").count < 2){
+            Utilities.alertWarning("Please enter your first and last name.", vc: self)
             return false
         }
         return true
@@ -140,28 +165,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func toggleSignup(){
-        
-        signupEnabled = !signupEnabled
-        
-        if signupEnabled {
-            self.nameTextField.hidden = false
-            self.loginButton.setTitle("Sign up", forState: .Normal)
-            self.signupButton.setTitle("Already have an account?", forState: .Normal)
-        } else {
-            self.nameTextField.hidden = true
-            self.loginButton.setTitle("Login", forState: .Normal)
-            self.signupButton.setTitle("Don't have an account?", forState: .Normal)
-        }
-    }
-    
     @IBAction func complete(){
         
         if !inputIsValid() {
             return
         }
         
-        if signupEnabled {
+        if newAccount {
             WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
                 
                 if success {
@@ -169,7 +179,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     AuthManager.currentUser = user
                     Utilities.postNotification(Notifications.reloadNetworkOnline)
                 }else{
-                    Utilities.alertError("An account with that username already exists", vc: self.navigationController!)
+                    Utilities.alertError("An account with that email already exists", vc: self)
                 }
             }
         } else {
@@ -179,7 +189,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     Utilities.postNotification(Notifications.reloadNetworkOnline)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }else{
-                    Utilities.alertError("Invalid username or password", vc: self.navigationController!)
+                    Utilities.alertError("Invalid email or password", vc: self)
                 }
             }
         }

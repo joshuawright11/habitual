@@ -12,12 +12,15 @@ import Locksmith
 import Parse
 
 // -TODO: Needs refactoring/documentation
+// remember to refarcor knowing that all users need to log in to use the app
 
 /// A Singleton class to manage the current user. All accesses of the current user should be made through 
 /// this class. Allows for logging in and logging out over the web, as well as storing the currently logged 
 /// in user's data locally to prevent the need for logging in every time a user is cleared from memory.
 public class AuthManager : NSObject{
     
+    
+    /// TODO: Make this a lazy wrapper for PFUser.currentUser() so that it doesn't need to be set
     /// Wrapper for the currently logged in user. This is so that the user variable can be private.
     static var currentUser:User? {
         
@@ -28,7 +31,7 @@ public class AuthManager : NSObject{
         get{
             if (self.user == nil){
                 self.user = loadUser();
-                if socialEnabled {
+                if self.user != nil {
                     loadHabitParseObjects()
                     user?.getConnections({ (success) -> () in
                         if(success) {
@@ -55,7 +58,7 @@ public class AuthManager : NSObject{
     }
     
     /// Whether the social features are enabled (currently if the user is logged into an account).
-    static var socialEnabled:Bool {get{return PFUser.currentUser() != nil ? true : false}}
+    static var loggedIn:Bool {get{return PFUser.currentUser() != nil ? true : false}}
     
     /// The currently logged in user. Wrapped by currentUser for getting and setting.
     private static var user:User?
@@ -130,9 +133,7 @@ public class AuthManager : NSObject{
     
     public static func reloadHabits() -> [Habit]?{
         user?.habits = CoreDataManager.getHabitsOfCurrentUser()
-        if socialEnabled {
-            loadHabitParseObjects()
-        }
+        loadHabitParseObjects()
         return user?.habits
     }
     
@@ -141,16 +142,12 @@ public class AuthManager : NSObject{
         To prevent the need to log in again after closing the application.
     */
     private static func loadUser() -> User? {
-        
-        if socialEnabled {
-            let loadedUser = User(parseUser: PFUser.currentUser()!, withHabits: false)
+        if let parseUser = PFUser.currentUser() {
+            let loadedUser = User(parseUser: parseUser, withHabits: false)
             loadedUser.habits = CoreDataManager.getHabitsOfCurrentUser()
             return loadedUser
-        }else{
-            let newUser = User()
-            newUser.habits = CoreDataManager.getHabitsOfCurrentUser()
-            
-            return newUser
+        } else {
+            return nil
         }
     }
     

@@ -49,4 +49,12 @@ class MainTabBarController: UITabBarController {
 //        self.tabBar.insertSubview(frost, atIndex: 0)
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if !AuthManager.loggedIn {
+            let vc = storyboard?.instantiateViewControllerWithIdentifier("account")
+            presentViewController(vc!, animated: false, completion: nil)
+        }
+    }
 }

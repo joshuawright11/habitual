@@ -11,6 +11,7 @@ import CoreData
 import Parse
 import Fabric
 import Crashlytics
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Crashlytics setup
         Fabric.with([Crashlytics.self])
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // Register for Push Notitications
         if application.applicationState != UIApplicationState.Background {
@@ -47,8 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Parse setup
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-        PFInstallation.currentInstallation().saveEventually() // update the Parse Installation data
+//        PFInstallation.currentInstallation().saveEventually() // update the Parse Installation data
         
         PFUser.currentUser()?.fetchInBackground()
         
@@ -65,7 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(application: UIApplication) {}
 
     /// Clear the badge number of the app every time the app is opened
-    func applicationDidBecomeActive(application: UIApplication) {Utilities.clearBadgeNumber()}
+    func applicationDidBecomeActive(application: UIApplication) {
+        Utilities.clearBadgeNumber()
+        FBSDKAppEvents.activateApp()
+    }
 
     /// Save the Core Data stack every time the app is closed
     func applicationWillTerminate(application: UIApplication) {self.saveContext()}
@@ -202,7 +209,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
-
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
 }
 

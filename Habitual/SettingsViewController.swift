@@ -13,15 +13,6 @@ import Social
 // -TODO: Needs refactoring/documentation
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
-
-    @IBOutlet weak var notificationSwitch: UISwitch!
-    @IBOutlet weak var notificationsLabel: UILabel!
-    
-    @IBOutlet weak var appleiv: UIImageView!
-    @IBOutlet weak var textiv: UIImageView!
-    @IBOutlet weak var fbiv: UIImageView!
-    @IBOutlet weak var twitteriv: UIImageView!
-    @IBOutlet weak var mailiv: UIImageView!
     
     let url = "https://itunes.apple.com/us/app/ignite-habit-tracker-accountability/id1049840265?ls=1&mt=8"
     
@@ -32,42 +23,102 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     func doAppearance() {
         self.tableView.backgroundColor = Colors.background
-        notificationsLabel.font = Fonts.sectionHeader
-        notificationsLabel.textColor = Colors.textMain
-        
-        notificationSwitch.on = !Utilities.readUserDefaults(Notifications.localNotificationsDisabled)
         
         Styler.navBarShader(self)
         
         let button = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: "pulse")
         self.navigationItem.rightBarButtonItem = button
         
-        appleiv.image = appleiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        textiv.image = textiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        fbiv.image = fbiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        twitteriv.image = twitteriv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        mailiv.image = mailiv.image?.imageWithRenderingMode(.AlwaysTemplate)
-        
-        appleiv.tintColor = Colors.gray
-        textiv.tintColor = Colors.green
-        fbiv.tintColor = Colors.blue
-        twitteriv.tintColor = Colors.accentSecondary
-        mailiv.tintColor = Colors.orange
+        tableView.registerNib(UINib(nibName: "SettingsCell", bundle: nil), forCellReuseIdentifier: SettingsCell.reuseIdentifier)
     }
     
     func pulse() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func notificationSwitchToggled(sender: UISwitch) {
+        Utilities.writeUserDefaults(Notifications.localNotificationsDisabled, bool: !sender.on)
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 1
+        case 1: return 1
+        default: return 6
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.textLabel!.font = Fonts.cellTitle
-        cell.textLabel!.textColor = Colors.textMain
+        let cell:SettingsCell = tableView.dequeueReusableCellWithIdentifier("settings") as! SettingsCell
+        cell.titleLabel.text = "Share on Facebook"
+        doCell(cell, indexPath: indexPath)
         return cell
     }
     
-    @IBAction func notificationSwitchToggled(sender: UISwitch) {
-        Utilities.writeUserDefaults(Notifications.localNotificationsDisabled, bool: !sender.on)
+    func doCell(cell: SettingsCell, indexPath: NSIndexPath) {
+        switch indexPath.section {
+        case 0:
+            switch(indexPath.row) {
+            case 0:
+                cell.iv?.image = UIImage(named: "alarm")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.yellow
+                cell.borderView.backgroundColor = Colors.yellow.igniteDarken()
+                cell.titleLabel.text = "Daily Reminders @ 7pm"
+            default: break
+            }
+        case 1:
+            switch(indexPath.row) {
+            case 0:
+                cell.iv?.image = UIImage(named: "question_mark")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.red
+                cell.borderView.backgroundColor = Colors.red.igniteDarken()
+                cell.titleLabel.text = "Get Support"
+            default: break
+            }
+        case 2:
+            switch(indexPath.row) {
+            case 0:
+                cell.iv?.image = UIImage(named: "email_plane")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.green
+                cell.borderView.backgroundColor = Colors.green.igniteDarken()
+                cell.titleLabel.text = "Send Feedback or Ideas"
+            case 1:
+                cell.iv?.image = UIImage(named: "apple")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.yellow
+                cell.borderView.backgroundColor = Colors.yellow.igniteDarken()
+                cell.titleLabel.text = "Rate on App Store"
+            case 2:
+                cell.iv?.image = UIImage(named: "facebook")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.blue
+                cell.borderView.backgroundColor = Colors.blue.igniteDarken()
+                cell.titleLabel.text = "Share on Facebook"
+            case 3:
+                cell.iv?.image = UIImage(named: "twitter")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.accentSecondary
+                cell.borderView.backgroundColor = Colors.accentSecondary.igniteDarken()
+                cell.titleLabel.text = "Share on Twitter"
+            case 4:
+                cell.iv?.image = UIImage(named: "email_contacts")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.orange
+                cell.borderView.backgroundColor = Colors.orange.igniteDarken()
+                cell.titleLabel.text = "Invite a Friend via Email"
+            case 5:
+                cell.iv?.image = UIImage(named: "chats")?.imageWithRenderingMode(.AlwaysTemplate)
+                cell.iv?.tintColor = Colors.purple
+                cell.borderView.backgroundColor = Colors.purple.igniteDarken()
+                cell.titleLabel.text = "Invite a Friend via Text"
+            default: break
+            }
+        default: break
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 52
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -80,9 +131,18 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             case 2: shareTwitter()
             case 3: shareEmail()
             case 4: shareText()
-            default: shareText()
+            default: submitFeedBack()
             }
         default: break
+        }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0: return "Options"
+        case 1: return "Support"
+        case 2: return "Help Ignite Grow :)"
+        default: return ""
         }
     }
     

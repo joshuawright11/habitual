@@ -19,8 +19,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         didSet{tableView.reloadData()}
     }
     
-    var loggedIn:Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,19 +39,11 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addConnection")
         self.navigationItem.rightBarButtonItem = button
         
-        if AuthManager.socialEnabled {
-            
-            loggedIn = true
-            self.connections = AuthManager.currentUser!.connections
-            self.tableView.reloadData()
-        }else{
-            button.enabled = false
-        }
+        self.connections = AuthManager.currentUser!.connections
+        self.tableView.reloadData()
         
-        if AuthManager.socialEnabled {
-            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
-                button.enabled = false
-            }
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            button.enabled = false
         }
         
         self.refreshControl = UIRefreshControl()
@@ -73,7 +63,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func refreshData(){
-        loggedIn = true
         self.navigationItem.rightBarButtonItem?.enabled = true
         AuthManager.currentUser?.getConnections() { (success) -> () in
             if success {
@@ -89,6 +78,11 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     @IBAction func addConnection() {
+        
+        let sc = ShareController(nibName: "ShareController", bundle: nil)
+        let nav = UINavigationController(rootViewController: sc)
+        presentViewController(nav, animated: true, completion: nil)
+        return
         
         let alert = SCLAlertView()
         let txt = alert.addTextField("username")
@@ -139,17 +133,11 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         
-        if AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
             return
         }
         
-        if loggedIn {
-            addConnection()
-        }else{
-            let svc:UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("signup") as! UINavigationController
-            
-            presentViewController(svc, animated: true, completion: nil)
-        }
+        addConnection()
     }
     
     
@@ -159,7 +147,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         if let connections = connections {
             
-            if AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
+            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
                 return 0
             }else{
                 return connections.count
@@ -215,9 +203,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        var text = loggedIn ? "You aren't connected yet!" : "Press to log in or sign up!"
+        var text = "You aren't connected yet!"
         
-        if(AuthManager.socialEnabled && (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate()){
+        if(PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate(){
             text = "Your subscription is out, please renew at www.ignitehabits.io"
         }
         
@@ -232,7 +220,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = loggedIn ? "Press to add a connection" : "You need an account to connect with other users. Free 1 year trial, normally $0.99 per year. Offline features are still 100% free."
+        let text = "Press to add a connection"
         
         let font = Fonts.cellTitle
         let attrString = NSAttributedString(

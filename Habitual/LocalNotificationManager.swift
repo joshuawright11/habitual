@@ -17,9 +17,11 @@ public func scheduleLocalNotifications() {
     
     var count = 0
     
-    for habit:Habit in AuthManager.currentUser!.habits {
-        if habit.datesCompleted.count == 0 || habit.canDoOn(){
-            count++
+    if let user = AuthManager.currentUser {
+        for habit:Habit in user.habits {
+            if habit.datesCompleted.count == 0 || habit.canDoOn(){
+                count++
+            }
         }
     }
     

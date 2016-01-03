@@ -90,6 +90,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBar.layer.shadowColor = UIColor.clearColor().CGColor
     }
     
@@ -149,8 +150,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func refreshData(){
-        habits = AuthManager.currentUser!.habits
-        self.tableView.reloadData()
+        
+        if let currentUser = AuthManager.currentUser {
+            habits = currentUser.habits
+            self.tableView.reloadData()
+        }
     }
     
     @IBAction func clearData(){
@@ -312,12 +316,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func didSelectDayView(dayView: DayView) {
+    func didSelectDayView(dayView: DayView, animationDidFinish: Bool) {
         self.selectedDate = dayView.date.convertedDate()!
         self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.tableView.reloadData()
     }
-    
+
     func shouldAutoSelectDayOnMonthChange() -> Bool {
         return false
     }
@@ -336,7 +340,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func dayLabelPresentWeekdayFont() -> UIFont {
-        return Fonts.secondary
+        return Fonts.calendar
     }
     
     func dayLabelWeekdayOutTextColor() -> UIColor {
@@ -367,15 +371,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return Fonts.secondary
     }
     
-    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
-        return [Colors.accentSecondary]
-    }
-    
-    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        return true
-    }
-    
-    func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
+    func shouldAutoSelectDayOnWeekChange() -> Bool {
         return false
     }
 }

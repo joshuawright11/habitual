@@ -68,7 +68,7 @@ struct Colors {
 struct Fonts {
 
     // Main Fonts
-    static let mainTitle = UIFont.systemFontOfSize(32.0, weight: UIFontWeightUltraLight)
+    static let mainTitle = UIFont.systemFontOfSize(26.0, weight: UIFontWeightRegular)
     static let body = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
     static let secondary = UIFont.systemFontOfSize(12.0, weight: UIFontWeightUltraLight)
     static let secondaryBold = UIFont.systemFontOfSize(12.0, weight: UIFontWeightHeavy)
@@ -93,7 +93,7 @@ struct Fonts {
     static let calendarSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
     static let buttonSelected = UIFont.systemFontOfSize(18.0, weight: UIFontWeightMedium)
     
-    static let message = UIFont.systemFontOfSize(16.0, weight: UIFontWeightRegular)
+    static let message = UIFont.systemFontOfSize(15.0, weight: UIFontWeightRegular)
     static let monthLabel = UIFont.systemFontOfSize(20.0, weight: UIFontWeightLight)
 
 }

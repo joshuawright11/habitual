@@ -161,9 +161,11 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         if tableView == finishedTableView {
             cell.habit = finishedHabits[indexPath.row]
             cell.connectionColor = self.color
+            cell.finished = true
         } else {
             cell.habit = unfinishedHabits[indexPath.row]
             cell.connectionColor = self.color
+            cell.finished = false
         }
         
         return cell

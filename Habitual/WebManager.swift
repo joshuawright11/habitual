@@ -18,11 +18,11 @@ import Timepiece
 */
 public class WebServices: NSObject {
     
-    static func login(username: String, password:String, callback: ((success: Bool, user: User?) -> ())?) {
-        PFUser.logInWithUsernameInBackground(username, password: password) { (userLogged: PFUser?, error: NSError?) -> Void in
+    static func login(email: String, password:String, callback: ((success: Bool, user: User?) -> ())?) {
+        PFUser.logInWithUsernameInBackground(email, password: password) { (userLogged: PFUser?, error: NSError?) -> Void in
             if error == nil {
                 let installation = PFInstallation.currentInstallation()
-                installation["username"] = username
+                installation["username"] = email
                 installation.saveInBackground()
                 
                 let user: User = User(parseUser: userLogged!, withHabits: false)
@@ -39,11 +39,11 @@ public class WebServices: NSObject {
         }
     }
     
-    static func signup(username: String, password: String, name: String, callback:((success: Bool, user: User?) -> ())?) {
+    static func signup(email: String, password: String, name: String, callback:((success: Bool, user: User?) -> ())?) {
         let user = PFUser()
-        user.username = username
+        user.username = email
         user.password = password
-        user.email = "\(username)@false.com"
+        user.email = email
         
         user["name"] = name
         user["following"] = []
@@ -53,7 +53,7 @@ public class WebServices: NSObject {
         user.signUpInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
             if error == nil {
                 let installation = PFInstallation.currentInstallation()
-                installation["username"] = username
+                installation["username"] = email
                 installation.saveInBackground()
                 
                 let newUser: User = User(parseUser: user, withHabits: false)
