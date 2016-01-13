@@ -45,7 +45,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             date = new.1
             
             color = UIColor(hexString: habit.color)
-            bgColor = color.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
+            bgColor = color.igniteDarken()
             
             doAppearance()
         }

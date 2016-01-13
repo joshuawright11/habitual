@@ -47,13 +47,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 let second = secondHabit.canDoOn(selectedDate)
                 
                 if first && second {
-                    return firstHabit.name < secondHabit.name
+                    return firstHabit.timeOfDay < secondHabit.timeOfDay
                 } else if first {
                     return true
                 } else if second {
                     return false
                 } else {
-                    return firstHabit.name < secondHabit.name
+                    return firstHabit.timeOfDay < secondHabit.timeOfDay
                 }
             })
         }

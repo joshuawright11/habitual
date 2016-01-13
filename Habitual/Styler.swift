@@ -61,4 +61,13 @@ public class Styler: NSObject {
         view.layer.shadowRadius = 1
         view.layer.shadowOpacity = 0.4
     }
+    
+    public static func viewShaderSmall(view: UIView, color: UIColor) {
+        view.layer.shouldRasterize = true;
+        view.layer.rasterizationScale = UIScreen.mainScreen().scale
+        view.layer.shadowColor = color.darkenColor(0.04).CGColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 0
+        view.layer.shadowOpacity = 1.0
+    }
 }
