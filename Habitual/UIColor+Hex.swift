@@ -25,4 +25,8 @@ public extension UIColor
     public func igniteDarken() -> UIColor {
         return self.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
     }
+    
+    public func calendarLighten() -> UIColor {
+        return self.desaturateColor(0.25).lightenColor(0.25)
+    }
 }

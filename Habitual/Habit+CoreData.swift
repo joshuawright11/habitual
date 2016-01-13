@@ -78,7 +78,7 @@ extension Habit {
         coreDataObject!.icon = icon
         coreDataObject!.privat = privat
         coreDataObject!.daysToComplete = daysToComplete
-        coreDataObject!.timeOfDayInt = timeOfDay.rawValue
+        coreDataObject!.timeOfDayInt = Int16(timeOfDay)
         coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
         coreDataObject!.remindUserAt = remindUserAt
         coreDataObject!.notificationSettingsInts = []
@@ -103,7 +103,7 @@ extension Habit {
         coreDataObject!.icon = icon
         coreDataObject!.privat = privat
         coreDataObject!.daysToComplete = daysToComplete
-        coreDataObject!.timeOfDayInt = timeOfDay.rawValue
+        coreDataObject!.timeOfDayInt = Int16(timeOfDay)
         coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
         coreDataObject!.remindUserAt = remindUserAt
         coreDataObject!.notificationSettingsInts = []
@@ -142,6 +142,14 @@ extension Habit {
             }else{
                 addToCoreData()
             }
+        }
+    }
+    
+    func saveOrder() {
+        if let coreDataObject = coreDataObject {
+            coreDataObject.save()
+        } else {
+            print("Error! No core data object")
         }
     }
     

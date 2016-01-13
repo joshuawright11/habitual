@@ -91,6 +91,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
     func pulse() {
         let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
         uvc.user = connection.user
+        uvc.color = connection.color!
         
         let nav = UINavigationController(rootViewController: uvc)
         nav.modalTransitionStyle = .FlipHorizontal

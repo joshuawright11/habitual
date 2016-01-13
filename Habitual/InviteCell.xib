@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Shu-q6-wqt">
-                        <rect key="frame" x="112" y="25" width="44" height="44"/>
+                        <rect key="frame" x="101" y="25" width="44" height="44"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="01i-VD-Gev">
                                 <rect key="frame" x="4" y="4" width="36" height="36"/>
@@ -36,7 +36,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4I-eE-ZjY">
-                        <rect key="frame" x="34" y="25" width="44" height="44"/>
+                        <rect key="frame" x="29" y="25" width="44" height="44"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="li3-3Z-mrq">
                                 <rect key="frame" x="4" y="4" width="36" height="36"/>
@@ -55,7 +55,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ams-Th-J5g">
-                        <rect key="frame" x="190" y="25" width="44" height="44"/>
+                        <rect key="frame" x="174" y="25" width="44" height="44"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PtC-te-5MO">
                                 <rect key="frame" x="4" y="4" width="36" height="36"/>
@@ -74,7 +74,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fz5-Zd-QrJ">
-                        <rect key="frame" x="268" y="25" width="44" height="44"/>
+                        <rect key="frame" x="246" y="25" width="44" height="44"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tS4-zg-8Rx">
                                 <rect key="frame" x="4" y="4" width="36" height="36"/>
@@ -92,18 +92,36 @@
                             <constraint firstAttribute="width" constant="44" id="xDD-dv-VJB"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwK-T7-xno">
+                        <rect key="frame" x="139" y="0.0" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="fz5-Zd-QrJ" secondAttribute="trailing" multiplier="4:4" id="0Vz-Zl-M6o"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Shu-q6-wqt" secondAttribute="trailing" multiplier="4:2" id="9dl-50-X0C"/>
+                    <constraint firstAttribute="trailing" secondItem="fz5-Zd-QrJ" secondAttribute="trailing" multiplier="4:4" constant="30" id="0Vz-Zl-M6o"/>
+                    <constraint firstItem="KwK-T7-xno" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="1A5-qj-u4I"/>
+                    <constraint firstAttribute="trailing" secondItem="Shu-q6-wqt" secondAttribute="trailing" multiplier="4:2" constant="30" id="9dl-50-X0C"/>
                     <constraint firstItem="fz5-Zd-QrJ" firstAttribute="top" secondItem="ams-Th-J5g" secondAttribute="top" id="Eo6-7a-AOQ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="S4I-eE-ZjY" secondAttribute="trailing" multiplier="4:1" id="NQr-Wz-ERN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="ams-Th-J5g" secondAttribute="trailing" multiplier="4:3" id="Ryu-yO-hHR"/>
+                    <constraint firstItem="KwK-T7-xno" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="HMm-PB-JDX"/>
+                    <constraint firstAttribute="trailing" secondItem="S4I-eE-ZjY" secondAttribute="trailing" multiplier="4:1" constant="30" id="NQr-Wz-ERN"/>
+                    <constraint firstAttribute="trailing" secondItem="ams-Th-J5g" secondAttribute="trailing" multiplier="4:3" constant="30" id="Ryu-yO-hHR"/>
                     <constraint firstItem="S4I-eE-ZjY" firstAttribute="top" secondItem="Shu-q6-wqt" secondAttribute="top" id="hRd-Za-IaA"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Shu-q6-wqt" secondAttribute="bottom" id="uvv-nV-yhj"/>
                     <constraint firstItem="ams-Th-J5g" firstAttribute="top" secondItem="S4I-eE-ZjY" secondAttribute="top" id="vLL-1N-caZ"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="emailView" destination="ams-Th-J5g" id="uSL-kS-9as"/>
+                <outlet property="emailiv" destination="PtC-te-5MO" id="yAT-u1-WKZ"/>
+                <outlet property="fbiv" destination="li3-3Z-mrq" id="8Ou-74-THY"/>
+                <outlet property="textView" destination="fz5-Zd-QrJ" id="UCB-Gx-2ug"/>
+                <outlet property="textiv" destination="tS4-zg-8Rx" id="iYN-Yc-fMv"/>
+                <outlet property="titleLabel" destination="KwK-T7-xno" id="aO9-FO-5gh"/>
+                <outlet property="twitterView" destination="Shu-q6-wqt" id="HsV-TF-Pum"/>
+                <outlet property="twitteriv" destination="01i-VD-Gev" id="ouY-G1-UBd"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

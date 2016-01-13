@@ -28,6 +28,8 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     var pgr:UIPanGestureRecognizer? = nil
     
+    var canSwipe = true
+    
     private var date: NSDate!
     private var habit: Habit!
     
@@ -142,6 +144,8 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     }
     
     func handlePan(recognizer: UIPanGestureRecognizer) {
+        
+        if !canSwipe {return}
         
         let distance = (UIScreen.mainScreen().bounds.width-70)/3
         let percent = borderView.frame.origin.x/(distance*3)
@@ -326,7 +330,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
         iv.tintColor = color
         iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
-        backgroundColor = Colors.background
+        backgroundColor = UIColor.clearColor()
         
         self.borderView.backgroundColor = color
         

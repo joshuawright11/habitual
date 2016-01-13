@@ -52,7 +52,7 @@ extension Habit {
         }
         parseObject!["daysToComplete"] = daysToComplete
         parseObject!["notifyConnectionsAt"] = notifyConnectionsAt
-        parseObject!["timeOfDay"] = timeOfDay.toString()
+        parseObject!["timeOfDay"] = String(timeOfDay)
         parseObject!["timesToComplete"] = timesToComplete
         parseObject!["icon"] = icon
         parseObject!["color"] = color

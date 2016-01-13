@@ -25,13 +25,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                     let second = secondHabit.canDoOn(selectedDate)
                     
                     if first && second {
-                        return firstHabit.name < secondHabit.name
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
                     } else if first {
                         return true
                     } else if second {
                         return false
                     } else {
-                        return firstHabit.name < secondHabit.name
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
                     }
             })
         }
@@ -60,11 +60,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var spacerView: UIView! {
+        didSet {
+            spacerView.backgroundColor = Colors.barBackground
+            Styler.viewBottomShader(spacerView)
+        }
+    }
     
     @IBOutlet weak var calendarView: CVCalendarView!
     @IBOutlet weak var menuView: CVCalendarMenuView!
-    
-    @IBOutlet weak var monthLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +80,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         Utilities.registerForNotification(self, selector: "moveCell:", name:
             Notifications.reloadPulse)
         
-        self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
         self.calendarView.changeDaysOutShowingState(false)
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
@@ -86,7 +89,68 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
         
+        let dataButton = UIBarButtonItem(image: UIImage(named: "order")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "order")
+        navigationItem.leftBarButtonItem = dataButton
+        
+        let addButton = UIBarButtonItem(image: UIImage(named: "plus")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "add")
+        navigationItem.rightBarButtonItem = addButton
+        
         doAppearance()
+    }
+    
+    func order() {
+        if self.tableView.editing {
+            let temp = habits
+            habits = temp
+            self.calendarView.userInteractionEnabled = true
+        } else {
+            self.calendarView.userInteractionEnabled = false
+            habitsOfDate = habits.sort({ (one, two) -> Bool in
+                return one.timeOfDay < two.timeOfDay
+            })
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.setEditing(!self.tableView.editing, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .None
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+        let removed = habitsOfDate.removeAtIndex(sourceIndexPath.row)
+        habitsOfDate.insert(removed, atIndex: destinationIndexPath.row)
+        
+        var count = 0
+        for habit in habitsOfDate {
+            habit.timeOfDay = count
+            habit.coreDataObject?.timeOfDayInt = Int16(count)
+            count += 1
+            habit.saveOrder()
+        }
+        
+        habitsOfDate = habits.sort({ (one, two) -> Bool in
+            return one.timeOfDay < two.timeOfDay
+        })
+    }
+    
+    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+        return proposedDestinationIndexPath
+    }
+    
+    func add() {
+        let hdc = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail")
+        self.navigationController?.pushViewController(hdc!, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -101,15 +165,10 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
-        Styler.viewBottomShader(calendarView)
-        
         self.calendarView.backgroundColor = Colors.barBackground
-        self.monthLabel.backgroundColor = Colors.barBackground
         self.menuView.backgroundColor = Colors.barBackground
         self.view.backgroundColor = Colors.background
         self.tableView.backgroundColor = Colors.background
-        monthLabel.font = Fonts.monthLabel
-        monthLabel.textColor = Colors.textMain
     }
     
     override func viewDidLayoutSubviews() {
@@ -132,13 +191,13 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                     let second = secondHabit.canDoOn(selectedDate)
                     
                     if first && second {
-                        return firstHabit.name < secondHabit.name
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
                     } else if first {
                         return true
                     } else if second {
                         return false
                     } else {
-                        return firstHabit.name < secondHabit.name
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
                     }
                 })
                 
@@ -188,6 +247,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell?.configure()
         
+        if tableView.editing {cell?.canSwipe = false}
+        
         return cell!
     }
     
@@ -220,7 +281,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
             
         }
         
-        let text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
+        var text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
+        
+        if tableView.editing {
+            text = "Drag to rearrange order"
+        }
         
         header.text = habitsOfDate.count > 0 ? text : ""
         header.font = Fonts.calendarSectionHeader
@@ -318,8 +383,9 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func didSelectDayView(dayView: DayView, animationDidFinish: Bool) {
         self.selectedDate = dayView.date.convertedDate()!
-        self.monthLabel.text = Utilities.monthDayStringFromDate(selectedDate)
+        self.navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
         self.tableView.reloadData()
+        self.calendarView.commitCalendarViewUpdate()
     }
 
     func shouldAutoSelectDayOnMonthChange() -> Bool {
@@ -328,7 +394,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - CVCalendarAppearanceDelegate methods
     func dayLabelWeekdayInTextColor() -> UIColor {
-        return Colors.accent
+        return Colors.textMain
     }
     
     func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
@@ -352,7 +418,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func dayLabelPresentWeekdayTextColor() -> UIColor {
-        return Colors.accentSecondary
+        return Colors.textMain
     }
     
     func dayLabelPresentWeekdayInitallyBold() -> Bool {
@@ -367,11 +433,53 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return Colors.textMain
     }
     
+    func dayLabelPresentWeekdaySelectedFont() -> UIFont {
+        return Fonts.calendar
+    }
+    
+    func dayLabelWeekdaySelectedFont() -> UIFont {
+        return Fonts.calendar
+    }
+    
     func dayOfWeekFont() -> UIFont {
         return Fonts.secondary
     }
     
     func shouldAutoSelectDayOnWeekChange() -> Bool {
-        return false
+        return true
+    }
+    
+    func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
+        if let date = dayView.date {
+            
+            if date.convertedDate() > NSDate() || AuthManager.currentUser?.habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
+
+        var lightColor: UIColor, darkColor:UIColor
+        
+        lightColor = Colors.accent.calendarLighten()
+        darkColor = Colors.accent
+        
+        let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
+        let percent = AuthManager.currentUser?.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
+        if percent < 50.0 {
+            view.fillColor = UIColor.clearColor()
+            view.strokeColor = lightColor
+        } else if percent < 100.0 {
+            view.fillColor = lightColor
+        } else {
+            view.fillColor = darkColor
+        }
+        
+        return view
     }
 }

@@ -56,7 +56,7 @@ public class Habit: ParseObject {
     var notifyConnectionsAt: String
     
     /// The time of day that a user aims to complete this `Habit`.
-    var timeOfDay: TimeOfDay
+    var timeOfDay: Int
     
     /// The amount of times a habit should be completed per `Frequency`.
     var timesToComplete: Int
@@ -128,7 +128,7 @@ public class Habit: ParseObject {
         privat = false
         remindUserAt = ""
         notifyConnectionsAt = ""
-        timeOfDay = .Morning
+        timeOfDay = AuthManager.currentUser!.habits.count
         timesToComplete = 1
         daysToComplete = []
         icon = "compass"
@@ -153,7 +153,7 @@ public class Habit: ParseObject {
         privat = false
         remindUserAt = ""
         notifyConnectionsAt = ""
-        timeOfDay = .Morning
+        timeOfDay = 1
         timesToComplete = parseObject["timesToComplete"] as! Int
         daysToComplete = parseObject["daysToComplete"] as! [String]
         icon = parseObject["icon"] as! String
@@ -184,7 +184,7 @@ public class Habit: ParseObject {
         privat = coreDataObject.privat
         remindUserAt = coreDataObject.remindUserAt
         notifyConnectionsAt = coreDataObject.notifyConnectionsAt
-        timeOfDay = TimeOfDay(rawValue: coreDataObject.timeOfDayInt)!
+        timeOfDay = Int(coreDataObject.timeOfDayInt)
         timesToComplete = Int(coreDataObject.timesToCompleteInt)
         daysToComplete = coreDataObject.daysToComplete
         icon = coreDataObject.icon
@@ -408,7 +408,7 @@ public class Habit: ParseObject {
     }
     
     public func currentStreak(onDate: NSDate = NSDate()) -> Int {
-
+        
         var yesterunit:NSDate
         let beginning: (NSDate) -> (NSDate)
         let unit:Duration

@@ -44,7 +44,7 @@ class HabitGlanceCell: UITableViewCell {
                 circleView.backgroundColor = UIColor(hexString: habit.color)
                 circleView.layer.borderWidth = 0
             } else {
-                circleView.backgroundColor = Colors.barBackground
+                circleView.backgroundColor = Colors.background
                 circleView.layer.borderColor = UIColor(hexString: habit.color).CGColor
                 circleView.layer.borderWidth = 2
             }

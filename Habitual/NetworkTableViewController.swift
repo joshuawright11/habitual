@@ -36,7 +36,9 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.navigationItem.title = "Connections"
         
-        let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addConnection")
+        
+        let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: "addConnection")
+        
         self.navigationItem.rightBarButtonItem = button
         
         self.connections = AuthManager.currentUser!.connections

@@ -159,13 +159,13 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier(HabitGlanceCell.reuseIdentifier, forIndexPath: indexPath) as! HabitGlanceCell
         
         if tableView == finishedTableView {
+            cell.finished = true
             cell.habit = finishedHabits[indexPath.row]
             cell.connectionColor = self.color
-            cell.finished = true
         } else {
+            cell.finished = false
             cell.habit = unfinishedHabits[indexPath.row]
             cell.connectionColor = self.color
-            cell.finished = false
         }
         
         return cell

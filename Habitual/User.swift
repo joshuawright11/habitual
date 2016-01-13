@@ -93,4 +93,21 @@ class User: ParseObject {
             return mostCompletedHabit.name
         }
     }
+    
+    func statHabitCompletionPercentageForDate(date: NSDate) -> Double {
+        
+        var available = 0.0, completed = 0.0
+        for habit in habits {
+            if habit.availableOn(date) {
+                available += 1
+                if !habit.canDoOn(date) {
+                    completed += 1
+                } else {
+                    print("")
+                }
+            }
+        }
+        
+        return completed/available * 100.0
+    }
 }
