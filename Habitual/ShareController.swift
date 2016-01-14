@@ -35,7 +35,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var fbView: UIView! {
         didSet {
             fbView.layer.cornerRadius = 7
-            fbView.backgroundColor = UIColor(hexString: "3B5998")
+            fbView.backgroundColor = Colors.blue
             Styler.viewShader(fbView)
             setupListener(fbView)
             selectedView = fbView
@@ -94,7 +94,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
             clearSelectedView()
             fbView.layer.shadowOpacity = 0.4
             fbiv.tintColor = Colors.barBackground
-            fbView.backgroundColor = UIColor(hexString: "3B5998")
+            fbView.backgroundColor = Colors.blue
             selectedView = fbView
             tableView.reloadData()
         } else if sender.view == contactsView && selectedView != contactsView {
@@ -118,7 +118,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
         selectedView.layer.shadowOpacity = 0
         selectedView.backgroundColor = Colors.barBackground
         if selectedView == fbView {
-            fbiv.tintColor = UIColor(hexString: "3B5998")
+            fbiv.tintColor = Colors.blue
         } else if selectedView == contactsView {
             contactsiv.tintColor = Colors.orange
         } else if selectedView == inviteView {

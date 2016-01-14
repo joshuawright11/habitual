@@ -17,6 +17,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var user:User?
     var color:UIColor = Colors.accent
+    var connection: Connection?
     
     @IBOutlet weak var chartView: BarChartView! {
         didSet {
@@ -69,6 +70,29 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var selectedDate = NSDate() {
         didSet {
             navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
+            habitsOfDate = user!.habits.filter({$0.availableOn(selectedDate)}).sort(
+                { (firstHabit, secondHabit) -> Bool in
+                    let first = firstHabit.canDoOn(selectedDate)
+                    let second = secondHabit.canDoOn(selectedDate)
+                    
+                    if first && second {
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
+                    } else if first {
+                        return true
+                    } else if second {
+                        return false
+                    } else {
+                        return firstHabit.timeOfDay < secondHabit.timeOfDay
+                    }
+            })
+        }
+    }
+    
+    var habitsOfDate: [Habit] = [] {
+        didSet {
+            if calendar {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -87,7 +111,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let dataButton = UIBarButtonItem(image: UIImage(named: "line_graph")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "data")
         
-        navigationItem.leftBarButtonItem = dataButton
+
         
         // this is gross because you can follow yourself when I wrote this
         if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
@@ -96,19 +120,21 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let settingsButton = UIBarButtonItem(image: UIImage(named: "cog")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "settings")
             
-            self.navigationItem.rightBarButtonItem = settingsButton
+            self.navigationItem.leftBarButtonItem = settingsButton
+            navigationItem.rightBarButtonItem = dataButton
         }
         else {
             self.navigationItem.title = user?.name.componentsSeparatedByString(" ")[0]
             
-            let button = UIBarButtonItem(title: "Chat", style: .Plain, target: self, action: "chat")
-            self.navigationItem.rightBarButtonItem = button
+            
+            let button = UIBarButtonItem(image: UIImage(named: "chats")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "chat")
+            self.navigationItem.rightBarButtonItems = [dataButton, button]
         }
         
         chartView.data = getChartData()
         chartView.notifyDataSetChanged()
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
-        
+        selectedDate = NSDate()
         tableView.reloadData()
     }
     
@@ -130,10 +156,26 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.hidden = !chartView.hidden
         chartView.notifyDataSetChanged()
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
+        tableView.reloadData()
+        if chartView.hidden {
+            self.navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
+        } else {
+            if user?.username == AuthManager.currentUser?.username {
+                navigationItem.title = "Me"
+            } else {
+                navigationItem.title = user!.name
+            }
+        }
     }
     
     func chat() {
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
+        ccvc.connection = self.connection
+        
+        let nav = UINavigationController(rootViewController: ccvc)
+        nav.modalTransitionStyle = .FlipHorizontal
+        
+        presentViewController(nav, animated: true, completion: nil)
     }
     
     func doAppearance() {
@@ -201,13 +243,13 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Table view data source
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return user!.habits.count > 0 ? 2 : 1
+        return calendar ? 1 : 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if let user = user {
-                return user.habits.count
+                return calendar ?  habitsOfDate.count : user.habits.count
             }else{
                 return 0
             }
@@ -220,7 +262,11 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
-            cell.configureForHabit(user!.habits[indexPath.row])
+            if calendar {
+                cell.configureForHabit(user!.habits[indexPath.row], date: selectedDate)
+            } else {
+                cell.configureForHabit(user!.habits[indexPath.row])
+            }
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("stat") as! StatCell
@@ -240,7 +286,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         if(section == 0){
-            return "Habits"
+            return calendar ? "Habits of \(Utilities.monthDayStringFromDate(selectedDate))" : "All Habits"
         }else{
             return "Stats"
         }
@@ -277,7 +323,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func shouldAutoSelectDayOnMonthChange() -> Bool {
-        return false
+        return true
     }
     
     // MARK: - CVCalendarAppearanceDelegate methods

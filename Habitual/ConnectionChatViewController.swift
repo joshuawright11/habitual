@@ -69,7 +69,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
         
         scrollToBottomAnimated(false)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pulse", style: .Plain, target: self, action: Selector("pulse"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "tab_pulse")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: Selector("pulse"))
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;
         self.inputToolbar?.tintColor = Colors.background
@@ -89,14 +89,7 @@ class ConnectionChatViewController: JSQMessagesViewController {
     }
     
     func pulse() {
-        let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
-        uvc.user = connection.user
-        uvc.color = connection.color!
-        
-        let nav = UINavigationController(rootViewController: uvc)
-        nav.modalTransitionStyle = .FlipHorizontal
-        
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {

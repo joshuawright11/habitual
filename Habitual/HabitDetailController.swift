@@ -62,6 +62,8 @@ class HabitDetailController: UITableViewController {
             
             habit = Habit()
         }
+        
+        tableView.registerNib(UINib(nibName: "InviteCell", bundle: nil), forCellReuseIdentifier: InviteCell.reuseID)
     }
     
     func doAppearance() {
@@ -151,6 +153,8 @@ class HabitDetailController: UITableViewController {
         if(!accountabilityOn){
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
             
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 2)], withRowAnimation: .Automatic)
+            
             for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
@@ -160,6 +164,8 @@ class HabitDetailController: UITableViewController {
             for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
             }
+            
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 2)], withRowAnimation: .Automatic)
         }
         self.tableView.endUpdates()
     }
@@ -205,7 +211,7 @@ class HabitDetailController: UITableViewController {
         case 1:
             return dotwOn ? 3 : 2
         case 2:
-            return accountabilityOn ? 2+(AuthManager.currentUser?.connections.count)! : 1
+            return accountabilityOn ? 3+(AuthManager.currentUser?.connections.count)! : 1
         case 3:
             return 1
         default:
@@ -218,7 +224,10 @@ class HabitDetailController: UITableViewController {
         
         if(indexPath.section == 3) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
-        }else if indexPath.section == 2 && indexPath.row > 1 {
+        }else if indexPath.section == 2 && indexPath.row == AuthManager.currentUser!.connections.count + 2{
+            let cell: InviteCell = tableView.dequeueReusableCellWithIdentifier(InviteCell.reuseID) as! InviteCell
+            return cell
+        }else if indexPath.section == 2 && indexPath.row > 1 && indexPath.row != AuthManager.currentUser!.connections.count + 2 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
             cell.configure(habit!, connection: AuthManager.currentUser!.connections[indexPath.row - 2])
             
@@ -226,7 +235,7 @@ class HabitDetailController: UITableViewController {
             else {cell.userInteractionEnabled = true}
             
             return cell
-        }else{    
+        }else{
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
             cell.habit = habit!
             
@@ -274,6 +283,7 @@ class HabitDetailController: UITableViewController {
             switch indexPath.row {
             case 0: return 72
             case 1: return 44
+            case AuthManager.currentUser!.connections.count + 2: return InviteCell.height
             default: return 58}
         }
     }
@@ -295,7 +305,14 @@ class HabitDetailController: UITableViewController {
         switch indexPath.section {
         case 0: return
         case 1: return
-        case 2: return
+        case 2:
+            if indexPath.row == AuthManager.currentUser!.connections.count + 2 {
+                let sc = ShareController(nibName: "ShareController", bundle: nil)
+                let nav = UINavigationController(rootViewController: sc)
+                self.presentViewController(nav, animated: true, completion: nil)
+            } else {
+                return
+            }
         case 3: deletePressed()
         default: return
         }

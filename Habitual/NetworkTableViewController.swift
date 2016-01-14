@@ -81,18 +81,18 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     @IBAction func addConnection() {
         
-        let sc = ShareController(nibName: "ShareController", bundle: nil)
-        let nav = UINavigationController(rootViewController: sc)
-        presentViewController(nav, animated: true, completion: nil)
-        return
+        let alert = AddUserView()
         
-        let alert = SCLAlertView()
-        let txt = alert.addTextField("username")
+        alert.buttonCornerRadius = 5
+        alert.contentViewCornerRadius = 10
+        alert.fieldCornerRadius = 5
+        
+        let txt = alert.addTextField("Email")
 
         txt.autocapitalizationType = .None
         txt.autocorrectionType = .No
         
-        alert.showCloseButton = false
+        alert.showCloseButton = true
         alert.addButton("Request Connection") {
             
             let text = txt.text!
@@ -110,10 +110,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
                 })
             }
         }
-        alert.addButton("Cancel") { () -> Void in
-            alert.dismissViewControllerAnimated(true, completion: nil)
+        alert.addButton("Find Friends") { () -> Void in
+            let sc = ShareController(nibName: "ShareController", bundle: nil)
+            let nav = UINavigationController(rootViewController: sc)
+            self.presentViewController(nav, animated: true, completion: nil)
         }
-        alert.showEdit("Add Connection", subTitle: "Request a connection with a username. Yours is '\(PFUser.currentUser()!.username!)'.")
+        alert.showEdit("Add Connection", subTitle: "Request a connection with an email.", closeButtonTitle: "Close", colorStyle: 0xC644FC)
     }
     
     func alreadyConnected(string: String) -> Bool {
@@ -180,13 +182,12 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let connection = connections![indexPath.row]
+        let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
+        uvc.user = connections![indexPath.row].user
+        uvc.color = connections![indexPath.row].color!
+        uvc.connection = connections![indexPath.row]
         
-        if(!connection.approved) {return}
-        
-        let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
-        ccvc.connection = connections![indexPath.row]
-        navigationController?.pushViewController(ccvc, animated: true)
+        self.navigationController?.pushViewController(uvc, animated: true)
     }
 
     // MARK: - Empty data set data source

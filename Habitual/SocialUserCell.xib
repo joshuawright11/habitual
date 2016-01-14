@@ -33,11 +33,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ifr-Gp-kE1">
-                                <rect key="frame" x="217" y="15" width="60" height="37"/>
+                                <rect key="frame" x="207" y="15" width="70" height="37"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="PXP-Qi-w0e"/>
+                                    <constraint firstAttribute="width" constant="70" id="PXP-Qi-w0e"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Connect"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXT-5e-3A3">
                                 <rect key="frame" x="66" y="33" width="42" height="21"/>

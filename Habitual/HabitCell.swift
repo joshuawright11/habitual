@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Timepiece
 
 // -TODO: Needs refactoring/documentation
 
@@ -20,6 +21,7 @@ class HabitCell: UITableViewCell {
     @IBOutlet weak var checkiv: UIImageView!
     
     var habit:Habit!
+    var date:NSDate?
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -49,9 +51,40 @@ class HabitCell: UITableViewCell {
         selectionStyle = .None
         doAppearance()
         
+        coloriv.layer.borderWidth = 0
+        
         self.titleLabel.text = habit.name
         self.countLabel.text = "\(habit.datesCompleted.count) "
         self.repeatLabel.text = repeatTextForHabit(habit)
+    }
+    
+    func configureForHabit(habit: Habit, date: NSDate) {
+        self.habit = habit
+        self.date = date
+        selectionStyle = .None
+        doAppearance()
+        
+        coloriv.layer.borderWidth = 0
+        
+        self.titleLabel.text = habit.name
+        self.countLabel.text = "\(habit.currentStreak()) \(Habit.emoji(habit.currentStreak()))"
+        var text = ""
+        if habit.canDoOn(date) {
+            text = date < NSDate().beginningOfDay ? "Missed" : "Not yet!"
+            coloriv.backgroundColor = Colors.background
+            coloriv.layer.borderWidth = 2
+            coloriv.layer.borderColor = UIColor(hexString: habit.color).CGColor
+        } else {
+            switch habit.frequency {
+            case .Daily:
+                text = "Completed today"
+            case .Weekly:
+                text = "Completed this week"
+            case .Monthly:
+                text = "Completed this month"
+            }
+        }
+        self.repeatLabel.text = text
     }
     
     func repeatTextForHabit(habit: Habit) -> String{

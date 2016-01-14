@@ -407,6 +407,8 @@ public class Habit: ParseObject {
         return unitsSinceBegan
     }
     
+    /// DOESNT WORK
+    
     public func currentStreak(onDate: NSDate = NSDate()) -> Int {
         
         var yesterunit:NSDate
@@ -455,6 +457,26 @@ public class Habit: ParseObject {
                 }
         }
         return count
+    }
+    
+    public static func emoji(streak: Int) -> String {
+        let emoji:String
+        switch(streak) {
+        case 0...1:
+            emoji = ""
+        case 2...5:
+            emoji = "🔥"
+        case 6...9:
+            emoji = "⚡️"
+        case 10...19:
+            emoji = "✨"
+        case 20...99:
+            emoji = "🌟"
+        default:
+            emoji = "💯"
+        }
+        
+        return emoji
     }
     
     /// Loads connections from the AuthManager to the `usersToNotify` property.

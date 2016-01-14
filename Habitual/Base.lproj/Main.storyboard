@@ -737,7 +737,7 @@
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="name" rowHeight="73" id="eGg-wC-JbM" customClass="NameCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="114" width="600" height="73"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="73"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGg-wC-JbM" id="cFh-68-zEj">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
@@ -793,7 +793,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="accountability" rowHeight="72" id="eUF-ci-byK" customClass="AccountabilityCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="187" width="600" height="72"/>
+                                <rect key="frame" x="0.0" y="123" width="600" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUF-ci-byK" id="eon-4m-66K">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="71"/>
@@ -839,7 +839,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="icon" rowHeight="393" id="cvQ-Ai-Rdu" customClass="IconCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="259" width="600" height="393"/>
+                                <rect key="frame" x="0.0" y="195" width="600" height="393"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cvQ-Ai-Rdu" id="AbG-dj-Iph">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
@@ -1798,7 +1798,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connection" rowHeight="58" id="3kV-Ra-5mU" customClass="ConnectionCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="652" width="600" height="58"/>
+                                <rect key="frame" x="0.0" y="588" width="600" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3kV-Ra-5mU" id="dii-vh-Zj7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
@@ -1898,7 +1898,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="color" rowHeight="89" id="dBb-cz-iKP" customClass="ColorCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="710" width="600" height="89"/>
+                                <rect key="frame" x="0.0" y="646" width="600" height="89"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dBb-cz-iKP" id="ecz-GS-hLB">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
@@ -2137,7 +2137,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="repeat" rowHeight="80" id="c1T-CM-X2d" customClass="RepeatCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="799" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="735" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c1T-CM-X2d" id="Bic-Sr-vgN">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
@@ -2219,7 +2219,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="delete" id="7he-x5-X3P">
-                                <rect key="frame" x="0.0" y="879" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="815" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7he-x5-X3P" id="tKA-xl-0fJ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -2258,7 +2258,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="days" rowHeight="83" id="jn8-c1-CA2" customClass="DaysCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="923" width="600" height="83"/>
+                                <rect key="frame" x="0.0" y="859" width="600" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jn8-c1-CA2" id="Wvh-hf-Ik3">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
@@ -2509,7 +2509,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="times" rowHeight="102" id="ZA3-fJ-fbC" customClass="TimesCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1006" width="600" height="102"/>
+                                <rect key="frame" x="0.0" y="942" width="600" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZA3-fJ-fbC" id="XMr-tb-0cm">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
@@ -2581,7 +2581,7 @@ per day/week/month</string>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connections_header" rowHeight="44" id="ndi-bR-iJ0" customClass="ConnectionsHeaderCell" customModule="Ignite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1108" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="1044" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ndi-bR-iJ0" id="oXe-mv-Bav">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>

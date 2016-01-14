@@ -57,6 +57,7 @@ struct Colors {
     static let orange = UIColor(hexString: "FF8300")
     static let red = UIColor(hexString: "FF2D55")
     static let gray = UIColor(hexString: "BDC3C7")
+    static let silver = UIColor(hexString: "7F919B")
     
     static let rainbow = [purple, blue, green, yellow, orange, red]
 }
@@ -88,6 +89,7 @@ struct Fonts {
     static let cellSubtitle = UIFont.systemFontOfSize(14.0, weight: UIFontWeightLight)
     static let cellSubtitleBold = UIFont.systemFontOfSize(14.0, weight: UIFontWeightSemibold)
     static let sectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)
+    
     static let sectionHeaderBold = UIFont.systemFontOfSize(15.0, weight: UIFontWeightRegular)
     
     static let calendarSectionHeader = UIFont.systemFontOfSize(18.0, weight: UIFontWeightLight)

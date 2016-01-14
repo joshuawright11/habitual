@@ -30,7 +30,7 @@ class SettingsCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
             titleLabel.textColor = Colors.textMain
-            titleLabel.font = Fonts.sectionHeader
+            titleLabel.font = Fonts.cellTitle
         }
     }
 }

@@ -248,6 +248,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         cell?.configure()
         
         if tableView.editing {cell?.canSwipe = false}
+        else {cell?.canSwipe = true}
         
         return cell!
     }
