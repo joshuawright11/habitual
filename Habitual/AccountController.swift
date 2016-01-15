@@ -194,11 +194,11 @@ class AccountController: UIViewController {
                     Utilities.alertWarning("Invalid email.", vc: self)
                 }
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.navigationController!.pushViewController(alert, animated: true)
         } else {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupViewController
             vc.newAccount = sender == signUpButton
-            presentViewController(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

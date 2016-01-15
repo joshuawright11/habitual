@@ -55,11 +55,13 @@ class MainTabBarController: UITabBarController {
         super.viewDidAppear(animated)
         if !AuthManager.loggedIn {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("account")
-            presentViewController(vc!, animated: false, completion: nil)
+            let nav = UINavigationController(rootViewController: vc!)
+            presentViewController(nav, animated: false, completion: nil)
         } else if PFUser.currentUser()!.email!.containsString("@false.com") {
             let ac = storyboard?.instantiateViewControllerWithIdentifier("account") as! AccountController
             ac.upgrade = true
-            presentViewController(ac, animated: false, completion: nil)
+            let nav = UINavigationController(rootViewController: ac)
+            presentViewController(nav, animated: false, completion: nil)
         }
     }
 }
