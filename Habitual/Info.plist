@@ -49,6 +49,8 @@
     <string>Ignite</string>
     <key>NSAppTransportSecurity</key>
     <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <false/>
         <key>NSExceptionDomains</key>
         <dict>
             <key>facebook.com</key>

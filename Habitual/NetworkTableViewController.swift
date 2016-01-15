@@ -115,7 +115,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
             let nav = UINavigationController(rootViewController: sc)
             self.presentViewController(nav, animated: true, completion: nil)
         }
-        alert.showEdit("Add Connection", subTitle: "Request a connection with an email.", closeButtonTitle: "Close", colorStyle: 0xC644FC)
+        alert.showEdit("Add Connection", subTitle: "Request a connection with someone with their email.", closeButtonTitle: "Close", colorStyle: 0xC644FC)
     }
     
     func alreadyConnected(string: String) -> Bool {

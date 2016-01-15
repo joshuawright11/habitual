@@ -13,6 +13,7 @@
 		031D280D1B29D1300060263A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031D280B1B29D1300060263A /* LaunchScreen.xib */; };
 		031D28191B29D1300060263A /* HabitualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28181B29D1300060263A /* HabitualTests.swift */; };
 		0322F18C1C46F409005A5B16 /* AddUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322F18B1C46F409005A5B16 /* AddUserView.swift */; };
+		0322F18E1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */; };
 		032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */; };
 		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; };
 		033DE64E1BF1A94C00842C03 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE64D1BF1A94C00842C03 /* Styler.swift */; };
@@ -109,6 +110,7 @@
 		031D28171B29D1300060263A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031D28181B29D1300060263A /* HabitualTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitualTests.swift; sourceTree = "<group>"; };
 		0322F18B1C46F409005A5B16 /* AddUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserView.swift; sourceTree = "<group>"; };
+		0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+AsyncDownload.swift"; sourceTree = "<group>"; };
 		032EEBE71BF81C3C0094F179 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; };
 		032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		0336741D1BCF477500AA87C2 /* SecretConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretConstants.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 				032EEBE71BF81C3C0094F179 /* UIAppearance+Swift.h */,
 				032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */,
 				03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */,
+				0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */,
 			);
 			name = "Helper Extensions";
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 				034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */,
 				03ECDE4A1BF96A5800B9F9E7 /* NameCell.swift in Sources */,
 				03CC14E91C32FF1F00831F1A /* AccountController.swift in Sources */,
+				0322F18E1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift in Sources */,
 				03ECDE481BF96A3400B9F9E7 /* ConnectionsHeaderCell.swift in Sources */,
 				039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */,
 				032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */,

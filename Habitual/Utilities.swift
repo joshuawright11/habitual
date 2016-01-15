@@ -109,5 +109,15 @@ public class Utilities {
             ),
             dispatch_get_main_queue(), closure)
     }
-
+    
+    public static func validEmail(email: String) -> Bool {
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        if(!emailTest.evaluateWithObject(email)){
+            return false
+        }
+        return true
+    }
 }

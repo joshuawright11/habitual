@@ -81,8 +81,8 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     private var selectedView: UIView!
     
-    private var fbFriends: [SocialMediaUser]?
-    private var contacts: [SocialMediaUser]?
+    private var fbFriends: [SocialMediaUser] = []
+    private var contacts: [SocialMediaUser] = []
     
     func setupListener(view: UIView) {
         let gr = UITapGestureRecognizer(target: self, action: "tapped:")
@@ -129,7 +129,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "Share"
+        self.navigationItem.title = "Find Friends"
         let button = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
         self.navigationItem.leftBarButtonItem = button
         
@@ -150,8 +150,9 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.fbFriends = []
                 for friend in friends {
                     let su = SocialMediaUser(fbjson: friend as! NSDictionary)
-                    self.fbFriends?.append(su)
+                    self.fbFriends.append(su)
                 }
+                self.tableView.reloadData()
             }
         }
     }
@@ -187,11 +188,24 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if selectedView === fbView {
+            return fbFriends.count
+        } else if selectedView === contactsView {
+            return contacts.count
+        } else if selectedView === inviteView {
+            return 3
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("social", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("social", forIndexPath: indexPath) as! SocialUserCell
+        if selectedView == fbView {
+            cell.user = fbFriends[indexPath.row]
+        } else if selectedView == contactsView {
+            cell.user = contacts[indexPath.row]
+        } else {}
         return cell
     }
     

@@ -12,13 +12,13 @@ class SocialMediaUser: NSObject {
     
     let name: String
     let imageURL: String
-    let email: String
+    let id: String
     
     init(fbjson: NSDictionary) {
         let firstName = fbjson["first_name"] as! String
         let lastName = fbjson["last_name"] as! String
         name = firstName + " " + lastName
-        email = "SADFACE"
-        imageURL = fbjson["picture"]!["data"]!["url"] as! String
+        id = fbjson["id"] as! String
+        imageURL = "https://graph.facebook.com/\(id)/picture?type=large"
     }
 }

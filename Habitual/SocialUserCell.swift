@@ -14,6 +14,7 @@ class SocialUserCell: UITableViewCell {
         didSet {
             iv.layer.cornerRadius = 25
             iv.backgroundColor = Colors.gray
+            iv.clipsToBounds = true
             Styler.viewShaderSmall(iv)
         }
     }
@@ -47,6 +48,14 @@ class SocialUserCell: UITableViewCell {
             borderView.layer.cornerRadius = 7
             borderView.backgroundColor = Colors.purple.igniteDarken()
             Styler.viewShaderSmall(borderView)
+        }
+    }
+    
+    var user: SocialMediaUser! {
+        didSet {
+            titleLabel.text = user.name
+            subtitleLabel.text = user.id
+            iv.imageFromURL(user.imageURL)
         }
     }
 }
