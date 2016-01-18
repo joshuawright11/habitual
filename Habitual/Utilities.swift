@@ -66,6 +66,14 @@ public class Utilities {
         return dateFormatter.stringFromDate(date).componentsSeparatedByString(",")[0]
     }
     
+    public static func monthYearStringFromDate(date: NSDate) -> String {
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM yyyy"
+        
+        return dateFormatter.stringFromDate(date)
+    }
+    
     public static func registerForNotification(object: AnyObject, selector:Selector, name:String){
         
         NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: name, object: nil)

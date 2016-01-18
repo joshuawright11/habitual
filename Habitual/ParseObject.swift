@@ -15,7 +15,7 @@ public class ParseObject: NSObject {
 
     /// The `PFObject` parse object that this object is a representation of.
     var parseObject: PFObject?
-    
+
     /// Basic initializer that sets the parseObject to nil. Used when creating
     /// objects in the app that will be saved to the server, but not yet.
     override init() {

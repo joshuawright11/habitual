@@ -38,6 +38,9 @@
                                     <constraint firstAttribute="width" constant="70" id="PXP-Qi-w0e"/>
                                 </constraints>
                                 <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="connectPressed" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J7Q-vg-VAx"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXT-5e-3A3">
                                 <rect key="frame" x="66" y="33" width="42" height="21"/>

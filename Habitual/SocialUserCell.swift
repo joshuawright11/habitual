@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SocialUserCell: UITableViewCell {
 
@@ -15,6 +16,7 @@ class SocialUserCell: UITableViewCell {
             iv.layer.cornerRadius = 25
             iv.backgroundColor = Colors.gray
             iv.clipsToBounds = true
+            iv.contentMode = .ScaleAspectFill
             Styler.viewShaderSmall(iv)
         }
     }
@@ -36,7 +38,7 @@ class SocialUserCell: UITableViewCell {
     @IBOutlet weak var button: UIButton! {
         didSet {
             button.backgroundColor = Colors.accentSecondary
-            button.titleLabel?.font = Fonts.cellSubtitle
+            button.titleLabel?.font = Fonts.cellSubtitleBold
             button.tintColor = Colors.textMain
             button.layer.cornerRadius = 7
             Styler.viewShaderSmall(button)
@@ -51,11 +53,40 @@ class SocialUserCell: UITableViewCell {
         }
     }
     
-    var user: SocialMediaUser! {
+    var user: User! {
         didSet {
             titleLabel.text = user.name
-            subtitleLabel.text = user.id
-            iv.imageFromURL(user.imageURL)
+            subtitleLabel.text = "Member since \(Utilities.monthYearStringFromDate(user.parseObject!.createdAt!))"
+            let id = user.parseObject!["fbId"]
+            if oldValue == nil || oldValue.username != user.username {
+                iv.image = UIImage()
+                if let id = id as? String {
+                    iv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
+                }
+                if AuthManager.currentUser!.connections.map({$0.user.username})
+                    .contains(user.username) {
+                    button.setTitle("Sent", forState: .Normal)
+                    button.enabled = false
+                } else {
+                    button.setTitle("Connect", forState: .Normal)
+                    button.enabled = true
+                }
+            }
         }
+    }
+    
+    var color: UIColor! {
+        didSet {
+            borderView.backgroundColor = color.igniteDarken().lightenColor(0.07)
+        }
+    }
+    
+    @IBAction func connectPressed() {
+        AuthManager.currentUser?.addConnection(self.user.username, callback: { (success) -> () in
+            if success {
+                self.button.setTitle("Sent", forState: .Normal)
+                self.button.enabled = false
+            }
+        })
     }
 }

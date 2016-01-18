@@ -142,10 +142,11 @@ class AccountController: UIViewController {
                     myUser.setObject(file!, forKey: "profilePicture")
                 }
                 
-                myUser["name"] = "\(userFirstName) \(userLastName)"
                 myUser.email = userEmail
-
+                myUser["fbId"] = userId
+                
                 if !self.upgrade {
+                    myUser["name"] = "\(userFirstName) \(userLastName)"
                     myUser["habits"] = []
                     myUser["paymentDue"] = NSDate() + 1.year
                     myUser["following"] = []

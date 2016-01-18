@@ -484,8 +484,13 @@ public class Habit: ParseObject {
     /// objects are not saved offline, hence the need for this method.
     public func loadUsersToNotify() {
         let connections = AuthManager.currentUser?.connections
-        for name in coreDataObject!.usernamesToNotify {
-            usersToNotify.append(connections!.filter({$0.user.name == name}).first!.user)
+        if let coreDataObject = coreDataObject {
+            for name in coreDataObject.usernamesToNotify {
+                let first = connections?.filter({$0.user.name == name}).first
+                if let first = first {
+                    usersToNotify.append(first.user)
+                }
+            }
         }
     }
 }
