@@ -10,6 +10,7 @@ import UIKit
 import Charts
 import DynamicColor
 import CVCalendar
+import DKChainableAnimationKit
 
 // -TODO: Needs refactoring/documentation
 
@@ -17,7 +18,39 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var user:User?
     var color:UIColor = Colors.accent
+    
     var connection: Connection?
+    
+    @IBOutlet weak var keyView: UIView! {
+        didSet {
+            keyView.backgroundColor = Colors.barBackground
+        }
+    }
+    
+    @IBOutlet weak var key1: UIView! {
+        didSet {
+            key1.layer.cornerRadius = 16
+            key1.backgroundColor = Colors.barBackground
+            key1.layer.borderWidth = 1
+            key1.layer.borderColor = color.calendarLighten().CGColor
+        }
+    }
+    
+    @IBOutlet weak var key2: UIView! {
+        didSet {
+            key2.layer.cornerRadius = 16
+            key2.backgroundColor = color.calendarLighten()
+        }
+    }
+    
+    @IBOutlet weak var key3: UIView! {
+        didSet {
+            key3.layer.cornerRadius = 16
+            key3.backgroundColor = color
+        }
+    }
+    
+    @IBOutlet weak var keyHeight: NSLayoutConstraint!
     
     @IBOutlet weak var chartView: BarChartView! {
         didSet {
@@ -157,6 +190,17 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
         chartView.notifyDataSetChanged()
         chartView.animate(yAxisDuration: 0.8, easingOption: .EaseOutSine)
         tableView.reloadData()
+        
+        if !chartView.hidden {
+            keyHeight.constant = 0
+        } else {
+            keyHeight.constant = 32
+        }
+        
+        UIView.animateWithDuration(0.3) {
+            self.keyView.layoutIfNeeded()
+        }
+        
         if chartView.hidden {
             self.navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
         } else {
