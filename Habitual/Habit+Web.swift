@@ -58,6 +58,7 @@ extension Habit {
         parseObject!["color"] = color
         parseObject!["notificationsEnabled"] = notificationsEnabled
         parseObject!["notificationSettings"] = notificationSettings.map({$0.toString()})
+        parseObject!["private"] = privat
         
         parseObject!.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {

@@ -150,7 +150,16 @@ public class Habit: ParseObject {
         frequency = Frequency.frequencyForName(parseObject["frequency"] as! String)
         name = parseObject["name"] as! String
         createdAt = parseObject["creationDate"] as! NSDate
-        privat = false
+
+        if let priv = parseObject["private"] {
+            privat = priv as! Bool
+        } else {
+            if name == "Call home" {
+                print("here")
+            }
+            privat = false
+        }
+        
         remindUserAt = ""
         notifyConnectionsAt = ""
         timeOfDay = 1

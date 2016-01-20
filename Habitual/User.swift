@@ -46,7 +46,12 @@ class User: ParseObject {
         
         if PFUser.currentUser()!.objectId != parseUser.objectId && withHabits {
             for parseObject in parseUser["habits"] as! [PFObject] {
-                habits.append(Habit(parseObject: parseObject))
+                let habit = Habit(parseObject: parseObject)
+                if !habit.privat {
+                    habits.append(habit)
+                } else if !(habit.usersToNotify.filter({$0.username == AuthManager.currentUser?.username}).isEmpty) {
+                    habits.append(habit)
+                }
             }
         }
         connections = []

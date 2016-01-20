@@ -104,7 +104,7 @@ class HabitDetailController: UITableViewController {
         self.tableView.beginUpdates()
         if editng {
             
-            self.tableView.insertSections(NSIndexSet(index: 3), withRowAnimation: .Automatic)
+            self.tableView.insertSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             
             self.navigationItem.rightBarButtonItem?.title = "Save"
             canInteract = true
@@ -122,7 +122,7 @@ class HabitDetailController: UITableViewController {
             
             habit?.saveToCoreData(false)
             
-            self.tableView.deleteSections(NSIndexSet(index: 3), withRowAnimation: .Automatic)
+            self.tableView.deleteSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             
             canInteract = false
             for cell in tableView.visibleCells {cell.userInteractionEnabled = false}
@@ -151,21 +151,21 @@ class HabitDetailController: UITableViewController {
         accountabilityOn = !accountabilityOn
         self.tableView.beginUpdates()
         if(!accountabilityOn){
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 3)], withRowAnimation: .Automatic)
             
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 2)], withRowAnimation: .Automatic)
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
             
             for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
+                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 3)], withRowAnimation: .Automatic)
             }
         }else{
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 3)], withRowAnimation: .Automatic)
             
             for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 2)], withRowAnimation: .Automatic)
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 3)], withRowAnimation: .Automatic)
             }
             
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 2)], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
         }
         self.tableView.endUpdates()
     }
@@ -199,37 +199,42 @@ class HabitDetailController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if editng {return 4}
-        else {return 3}
+        if editng {return 5}
+        else {return 4}
         
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 3
-        case 1:
-            return dotwOn ? 3 : 2
-        case 2:
-            return accountabilityOn ? 3+(AuthManager.currentUser?.connections.count)! : 1
-        case 3:
-            return 1
-        default:
-            return 3
+        case 0: return 3
+        case 1: return dotwOn ? 3 : 2
+        case 2: return 1
+        case 3: return accountabilityOn ? 3+(AuthManager.currentUser?.connections.count)! : 1
+        case 4: return 1
+        default: return 3
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let id = cellIdentifierForIndexPath(indexPath)
         
-        if(indexPath.section == 3) {
+        if(indexPath.section == 4) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
-        }else if indexPath.section == 2 && indexPath.row == AuthManager.currentUser!.connections.count + 2{
+        }else if indexPath.section == 3 && indexPath.row == AuthManager.currentUser!.connections.count + 2{
             let cell: InviteCell = tableView.dequeueReusableCellWithIdentifier(InviteCell.reuseID) as! InviteCell
             return cell
-        }else if indexPath.section == 2 && indexPath.row > 1 && indexPath.row != AuthManager.currentUser!.connections.count + 2 {
+        }else if indexPath.section == 3 && indexPath.row > 1 && indexPath.row != AuthManager.currentUser!.connections.count + 2 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
             cell.configure(habit!, connection: AuthManager.currentUser!.connections[indexPath.row - 2])
+            
+            if !canInteract {cell.userInteractionEnabled = false}
+            else {cell.userInteractionEnabled = true}
+            
+            return cell
+        }else if indexPath.section == 2 {
+            let cell: AccountabilityCell = tableView.dequeueReusableCellWithIdentifier(id) as! AccountabilityCell
+            cell.privat = true
+            cell.habit = habit!
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -238,6 +243,11 @@ class HabitDetailController: UITableViewController {
         }else{
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
             cell.habit = habit!
+
+            if indexPath.section == 3 && indexPath.row == 0 {
+                let cell = cell as! AccountabilityCell
+                cell.privat = false
+            }
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -258,7 +268,8 @@ class HabitDetailController: UITableViewController {
             case 0: return "repeat"
             case 1: return dotwOn ? "days" : "times"
             default: return "times"}
-        case 3: return "delete"
+        case 2: return "accountability"
+        case 4: return "delete"
         default:
             switch ip.row {
             case 0: return "accountability"
@@ -279,6 +290,7 @@ class HabitDetailController: UITableViewController {
             case 0: return 80
             case 1: return dotwOn ? 83 : 102
             default: return 102}
+        case 2: return 72
         default:
             switch indexPath.row {
             case 0: return 72
@@ -292,7 +304,8 @@ class HabitDetailController: UITableViewController {
         switch section {
         case 0: return "Basic Info"
         case 1: return "Scheduling"
-        case 2: return "Accountability"
+        case 2: return "Privacy"
+        case 3: return "Accountability"
         default: return ""
         }
     }
@@ -305,7 +318,8 @@ class HabitDetailController: UITableViewController {
         switch indexPath.section {
         case 0: return
         case 1: return
-        case 2:
+        case 2: return
+        case 3:
             if indexPath.row == AuthManager.currentUser!.connections.count + 2 {
                 let sc = ShareController(nibName: "ShareController", bundle: nil)
                 let nav = UINavigationController(rootViewController: sc)
@@ -313,7 +327,7 @@ class HabitDetailController: UITableViewController {
             } else {
                 return
             }
-        case 3: deletePressed()
+        case 4: deletePressed()
         default: return
         }
     
