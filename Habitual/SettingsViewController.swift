@@ -16,8 +16,11 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     let url = "https://itunes.apple.com/us/app/ignite-habit-tracker-accountability/id1049840265?ls=1&mt=8"
     
+    var notificationTime: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: DatePickerCell.reuseID)
         doAppearance()
     }
     
@@ -36,27 +39,35 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func notificationSwitchToggled(sender: UISwitch) {
-        Utilities.writeUserDefaults(Notifications.localNotificationsDisabled, bool: !sender.on)
-    }
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 1
+        case 0: return notificationTime ? 2 : 1
         case 1: return 1
         default: return 6
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:SettingsCell = tableView.dequeueReusableCellWithIdentifier("settings") as! SettingsCell
-        cell.titleLabel.text = "Share on Facebook"
-        doCell(cell, indexPath: indexPath)
-        return cell
+        if indexPath.section == 0 && indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(DatePickerCell.reuseID) as! DatePickerCell
+            cell.datePicker.addTarget(self, action: "notificationTimeSet:", forControlEvents: .ValueChanged)
+            var time = Utilities.readString(Notifications.reminderTime)
+            if time == "" {
+                time = "7:00 PM"
+            }
+            cell.datePicker.date = Utilities.dateFromHourMinuteString(time)
+            return cell
+        } else {
+            let cell:SettingsCell = tableView.dequeueReusableCellWithIdentifier("settings") as! SettingsCell
+            cell.swtch.hidden = true
+            cell.titleLabel.text = "Share on Facebook"
+            doCell(cell, indexPath: indexPath)
+            return cell
+        }
     }
     
     func doCell(cell: SettingsCell, indexPath: NSIndexPath) {
@@ -67,7 +78,16 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
                 cell.iv?.image = UIImage(named: "alarm")?.imageWithRenderingMode(.AlwaysTemplate)
                 cell.iv?.tintColor = Colors.yellow
                 cell.borderView.backgroundColor = Colors.yellow.igniteDarken()
-                cell.titleLabel.text = "Daily Reminders @ 7pm"
+                cell.swtch.hidden = false
+                cell.swtch.onTintColor = Colors.accent
+                let bool = Utilities.readUserDefaults(Notifications.localNotificationsDisabled)
+                var time = Utilities.readString(Notifications.reminderTime)
+                if time == "" {
+                    time = "7:00 PM"
+                }
+                cell.titleLabel.text = "Daily Reminders @ \(time)"
+                cell.swtch.setOn(!bool, animated: false)
+                cell.swtch.addTarget(self, action: "toggleReminders:", forControlEvents: .ValueChanged)
             default: break
             }
         case 1:
@@ -118,12 +138,18 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 52
+        if notificationTime && indexPath.section == 0 && indexPath.row == 1 {
+            return 100
+        } else {
+            return 52
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.section {
+        case 0:
+            if indexPath.row == 0{setTiming()}
         case 1: submitFeedBack()
         case 2: switch indexPath.row {
             case 0: submitFeedBack()
@@ -145,6 +171,21 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         case 2: return "Help Ignite Grow :)"
         default: return ""
         }
+    }
+    
+    func setTiming() {
+        notificationTime = !notificationTime
+        self.tableView.reloadData()
+    }
+    
+    func notificationTimeSet(sender: UIDatePicker) {
+        let timeString = Utilities.hourMinuteStringFromDate(sender.date)
+        Utilities.writeString(Notifications.reminderTime, string: timeString)
+        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
+    }
+    
+    func toggleReminders(sender: UISwitch) {
+        Utilities.writeUserDefaults(Notifications.localNotificationsDisabled, bool: !sender.on)
     }
     
     func rateOnAppStore() {

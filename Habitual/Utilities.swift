@@ -74,6 +74,24 @@ public class Utilities {
         return dateFormatter.stringFromDate(date)
     }
     
+    public static func hourMinuteStringFromDate(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    public static func dateFromHourMinuteString(string: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        
+        if let date = dateFormatter.dateFromString(string) {
+            return date
+        } else {
+            return NSDate()
+        }
+    }
+    
     public static func registerForNotification(object: AnyObject, selector:Selector, name:String){
         
         NSNotificationCenter.defaultCenter().addObserver(object, selector: selector, name: name, object: nil)
@@ -99,6 +117,22 @@ public class Utilities {
         }else{
             return false
         }
+    }
+    
+    public static func writeString(key: String, string: String) {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setValue(string, forKey: key)
+    }
+    
+    public static func readString(key: String) -> String {
+        let ud = NSUserDefaults.standardUserDefaults()
+        
+        if let string = ud.objectForKey(key) {
+            return string as! String
+        } else {
+            return ""
+        }
+
     }
     
     public static func incrementBadgeNumber() {

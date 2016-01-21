@@ -33,6 +33,8 @@
 		034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */; };
 		034E13311C07F1E100EC3BCC /* Habit+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */; };
 		0350ED981C5041F800CECE5A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350ED971C5041F800CECE5A /* UserCell.swift */; };
+		0350ED9F1C506AFF00CECE5A /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350ED9D1C506AFF00CECE5A /* DatePickerCell.swift */; };
+		0350EDA01C506AFF00CECE5A /* DatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0350ED9E1C506AFF00CECE5A /* DatePickerCell.xib */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		037610951C2F61C100B3E9F2 /* HabitGlanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037610931C2F61C100B3E9F2 /* HabitGlanceCell.swift */; };
@@ -130,6 +132,8 @@
 		034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Habit+CoreData.swift"; sourceTree = "<group>"; };
 		0350ED971C5041F800CECE5A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		0350ED9D1C506AFF00CECE5A /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		0350ED9E1C506AFF00CECE5A /* DatePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerCell.xib; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		037610931C2F61C100B3E9F2 /* HabitGlanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitGlanceCell.swift; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 				03CC14F41C36CF3200831F1A /* SettingsCell.swift */,
 				03CC14F51C36CF3200831F1A /* SettingsCell.xib */,
 				0322F18B1C46F409005A5B16 /* AddUserView.swift */,
+				0350ED9D1C506AFF00CECE5A /* DatePickerCell.swift */,
+				0350ED9E1C506AFF00CECE5A /* DatePickerCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -547,6 +553,7 @@
 				031D28081B29D1300060263A /* Main.storyboard in Resources */,
 				033DE6561BF1BA5900842C03 /* UserCell.xib in Resources */,
 				031D280D1B29D1300060263A /* LaunchScreen.xib in Resources */,
+				0350EDA01C506AFF00CECE5A /* DatePickerCell.xib in Resources */,
 				03CC14F11C34459500831F1A /* SocialUserCell.xib in Resources */,
 				03CC14F71C36CF3200831F1A /* SettingsCell.xib in Resources */,
 				03E9F81B1C37384C008EC91A /* InviteCell.xib in Resources */,
@@ -625,6 +632,7 @@
 				03E6F2E31B51A23400484DB6 /* HabitCoreData.swift in Sources */,
 				033DE64E1BF1A94C00842C03 /* Styler.swift in Sources */,
 				034E13311C07F1E100EC3BCC /* Habit+CoreData.swift in Sources */,
+				0350ED9F1C506AFF00CECE5A /* DatePickerCell.swift in Sources */,
 				03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */,
 				03B488161B509CAA0077E601 /* CalendarViewController.swift in Sources */,
 				03ECDE401BF969D700B9F9E7 /* DaysCell.swift in Sources */,

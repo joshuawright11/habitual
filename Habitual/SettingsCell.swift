@@ -20,6 +20,8 @@ class SettingsCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var swtch: UISwitch!
+    
     @IBOutlet weak var iv: UIImageView! {
         didSet {
             iv.image = UIImage(named: "facebook")?.imageWithRenderingMode(.AlwaysTemplate)

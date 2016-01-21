@@ -17,6 +17,7 @@ import DynamicColor
 
 struct Notifications {
     static let localNotificationsDisabled = "LocalNotificationsEnabled"
+    static let reminderTime = "ReminderTime"
     static let habitDataChanged = "HabitDataChanged"
     static let reloadPulse = "ReloadPulse"
     static let dotwToggled = "DOTWToggled"
