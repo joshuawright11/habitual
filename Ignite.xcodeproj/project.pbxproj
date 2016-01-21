@@ -17,7 +17,6 @@
 		032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */; };
 		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; };
 		033DE64E1BF1A94C00842C03 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE64D1BF1A94C00842C03 /* Styler.swift */; };
-		033DE6551BF1BA5900842C03 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE6531BF1BA5900842C03 /* UserCell.swift */; };
 		033DE6561BF1BA5900842C03 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE6541BF1BA5900842C03 /* UserCell.xib */; };
 		033DE65F1BF1BEB800842C03 /* HabitHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */; };
 		033DE6601BF1BEB800842C03 /* HabitHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */; };
@@ -33,6 +32,7 @@
 		034E132D1C07E6F400EC3BCC /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132C1C07E6F400EC3BCC /* Frequency.swift */; };
 		034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */; };
 		034E13311C07F1E100EC3BCC /* Habit+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */; };
+		0350ED981C5041F800CECE5A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350ED971C5041F800CECE5A /* UserCell.swift */; };
 		0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */; };
 		0355D1101B5D786D00EA8185 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355D10F1B5D786D00EA8185 /* UserViewController.swift */; };
 		037610951C2F61C100B3E9F2 /* HabitGlanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037610931C2F61C100B3E9F2 /* HabitGlanceCell.swift */; };
@@ -55,7 +55,6 @@
 		03CC14ED1C335D4E00831F1A /* ShareController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC14EB1C335D4E00831F1A /* ShareController.xib */; };
 		03CC14F01C34459500831F1A /* SocialUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC14EE1C34459500831F1A /* SocialUserCell.swift */; };
 		03CC14F11C34459500831F1A /* SocialUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC14EF1C34459500831F1A /* SocialUserCell.xib */; };
-		03CC14F31C35897500831F1A /* SocialMediaUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC14F21C35897500831F1A /* SocialMediaUser.swift */; };
 		03CC14F61C36CF3200831F1A /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC14F41C36CF3200831F1A /* SettingsCell.swift */; };
 		03CC14F71C36CF3200831F1A /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC14F51C36CF3200831F1A /* SettingsCell.xib */; };
 		03DD15DD1C059BBF0099C497 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD15DC1C059BBF0099C497 /* CoreDataManager.swift */; };
@@ -115,7 +114,6 @@
 		032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		0336741D1BCF477500AA87C2 /* SecretConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretConstants.swift; sourceTree = "<group>"; };
 		033DE64D1BF1A94C00842C03 /* Styler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
-		033DE6531BF1BA5900842C03 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		033DE6541BF1BA5900842C03 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitHomeCell.swift; sourceTree = "<group>"; };
 		033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitHomeCell.xib; sourceTree = "<group>"; };
@@ -131,6 +129,7 @@
 		034E132C1C07E6F400EC3BCC /* Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
 		034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		034E13301C07F1E100EC3BCC /* Habit+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Habit+CoreData.swift"; sourceTree = "<group>"; };
+		0350ED971C5041F800CECE5A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0355D10D1B5D786200EA8185 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
 		0355D10F1B5D786D00EA8185 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		037610931C2F61C100B3E9F2 /* HabitGlanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitGlanceCell.swift; sourceTree = "<group>"; };
@@ -154,7 +153,6 @@
 		03CC14EB1C335D4E00831F1A /* ShareController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareController.xib; sourceTree = "<group>"; };
 		03CC14EE1C34459500831F1A /* SocialUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialUserCell.swift; sourceTree = "<group>"; };
 		03CC14EF1C34459500831F1A /* SocialUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SocialUserCell.xib; sourceTree = "<group>"; };
-		03CC14F21C35897500831F1A /* SocialMediaUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaUser.swift; sourceTree = "<group>"; };
 		03CC14F41C36CF3200831F1A /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		03CC14F51C36CF3200831F1A /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
 		03DD15DC1C059BBF0099C497 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -305,7 +303,6 @@
 				034ADC131BFD77F100593C4E /* Message.swift */,
 				034ADC151BFD804300593C4E /* ParseObject.swift */,
 				03DD15DE1C05A1780099C497 /* Habit.swift */,
-				03CC14F21C35897500831F1A /* SocialMediaUser.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -317,7 +314,7 @@
 				034ADC0B1BFAC6F700593C4E /* StatCell.swift */,
 				03B488111B509C390077E601 /* HabitCell.swift */,
 				03B488121B509C390077E601 /* HabitCell.xib */,
-				033DE6531BF1BA5900842C03 /* UserCell.swift */,
+				0350ED971C5041F800CECE5A /* UserCell.swift */,
 				033DE6541BF1BA5900842C03 /* UserCell.xib */,
 				033DE65D1BF1BEB800842C03 /* HabitHomeCell.swift */,
 				033DE65E1BF1BEB800842C03 /* HabitHomeCell.xib */,
@@ -634,16 +631,15 @@
 				039BFC081B2AD1F9006EAFD9 /* Constants.swift in Sources */,
 				03CC14F01C34459500831F1A /* SocialUserCell.swift in Sources */,
 				037610951C2F61C100B3E9F2 /* HabitGlanceCell.swift in Sources */,
-				03CC14F31C35897500831F1A /* SocialMediaUser.swift in Sources */,
 				03CC14EC1C335D4E00831F1A /* ShareController.swift in Sources */,
 				0355D10E1B5D786200EA8185 /* NetworkTableViewController.swift in Sources */,
+				0350ED981C5041F800CECE5A /* UserCell.swift in Sources */,
 				03ECDE3C1BF969C200B9F9E7 /* ColorCell.swift in Sources */,
 				034E132D1C07E6F400EC3BCC /* Frequency.swift in Sources */,
 				034ADC181BFD828700593C4E /* User+Web.swift in Sources */,
 				034ADC121BFD77E600593C4E /* Connection.swift in Sources */,
 				03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */,
 				03ECDE551BF99BDA00B9F9E7 /* UIColor+Hex.swift in Sources */,
-				033DE6551BF1BA5900842C03 /* UserCell.swift in Sources */,
 				034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */,
 				03ECDE4A1BF96A5800B9F9E7 /* NameCell.swift in Sources */,
 				03CC14E91C32FF1F00831F1A /* AccountController.swift in Sources */,

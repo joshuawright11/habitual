@@ -197,7 +197,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
             keyHeight.constant = 32
         }
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animateWithDuration(0.2) {
             self.keyView.layoutIfNeeded()
         }
         

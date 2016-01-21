@@ -172,8 +172,13 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let user = connections![indexPath.row].user
-        let numFinished = user.habits.filter({$0.completed()}).count
-        let numUnfinished = user.habits.count - numFinished
+        var numFinished = user.habits.filter({$0.completed()}).count
+        var numUnfinished = user.habits.count - numFinished
+        
+        if !connections![indexPath.row].approved {
+            numFinished = 0
+            numUnfinished = 0
+        }
         
         let height = UserCell.height + (CGFloat(max(numFinished, numUnfinished)) * HabitGlanceCell.height)
         

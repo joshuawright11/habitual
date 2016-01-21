@@ -109,17 +109,17 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="50M-Lp-D9T">
+                        <rect key="frame" x="21" y="14" width="50" height="50"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Josh Wright" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-d0-6eL">
                         <rect key="frame" x="79" y="18" width="93" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Habits Completed fdafdsafdsafdsaf" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph8-rL-AzW">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123 Habits Completed fdafdsafdsafdsaf" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph8-rL-AzW">
                         <rect key="frame" x="79" y="39" width="130" height="34"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="34" id="fWW-w8-COX"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -136,12 +136,14 @@
                     <constraint firstAttribute="trailing" secondItem="YhL-1W-Cxq" secondAttribute="trailing" constant="10" id="0Rv-jG-0Zj"/>
                     <constraint firstItem="IEx-B5-Fpi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="2mC-Gj-E9r"/>
                     <constraint firstItem="bsE-th-0N6" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="leading" constant="14" id="66n-Bt-Qoa"/>
+                    <constraint firstItem="50M-Lp-D9T" firstAttribute="height" secondItem="QMX-5U-USJ" secondAttribute="height" id="A8a-C6-gH1"/>
                     <constraint firstItem="IEx-B5-Fpi" firstAttribute="trailing" secondItem="YhL-1W-Cxq" secondAttribute="trailing" id="C2S-NO-AX7"/>
                     <constraint firstItem="ph8-rL-AzW" firstAttribute="top" secondItem="g3n-d0-6eL" secondAttribute="bottom" id="KjR-k9-8Nr"/>
                     <constraint firstItem="l3u-A0-YRg" firstAttribute="leading" secondItem="nOi-ob-esr" secondAttribute="trailing" constant="4" id="Lq1-uu-qaO"/>
                     <constraint firstItem="IEx-B5-Fpi" firstAttribute="bottom" secondItem="YhL-1W-Cxq" secondAttribute="bottom" id="QSr-Px-VaM"/>
                     <constraint firstItem="Q0Q-BQ-1qq" firstAttribute="leading" secondItem="YhL-1W-Cxq" secondAttribute="trailing" constant="-78" id="RUg-FN-Th2"/>
                     <constraint firstItem="g3n-d0-6eL" firstAttribute="leading" secondItem="QMX-5U-USJ" secondAttribute="trailing" constant="8" id="RhX-a0-4EZ"/>
+                    <constraint firstItem="50M-Lp-D9T" firstAttribute="width" secondItem="QMX-5U-USJ" secondAttribute="width" id="V8x-Kc-wFC"/>
                     <constraint firstItem="YhL-1W-Cxq" firstAttribute="top" secondItem="Q0Q-BQ-1qq" secondAttribute="bottom" constant="-42" id="WBd-SE-sjS"/>
                     <constraint firstItem="bsE-th-0N6" firstAttribute="top" secondItem="nOi-ob-esr" secondAttribute="bottom" constant="12" id="WYo-na-CwT"/>
                     <constraint firstItem="XNI-hz-mr8" firstAttribute="leading" secondItem="Q0Q-BQ-1qq" secondAttribute="trailing" constant="4" id="Wgh-qH-Da5"/>
@@ -153,6 +155,8 @@
                     <constraint firstItem="Q0Q-BQ-1qq" firstAttribute="leading" secondItem="ph8-rL-AzW" secondAttribute="trailing" constant="23" id="kmI-2T-p9h"/>
                     <constraint firstItem="bsE-th-0N6" firstAttribute="top" secondItem="YhL-1W-Cxq" secondAttribute="bottom" constant="-189" id="l14-Ks-v6p"/>
                     <constraint firstItem="g3n-d0-6eL" firstAttribute="bottom" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="mn5-3V-uyW"/>
+                    <constraint firstItem="50M-Lp-D9T" firstAttribute="centerX" secondItem="QMX-5U-USJ" secondAttribute="centerX" id="poH-v6-biI"/>
+                    <constraint firstItem="50M-Lp-D9T" firstAttribute="centerY" secondItem="QMX-5U-USJ" secondAttribute="centerY" id="tY2-JO-oRB"/>
                     <constraint firstItem="YhL-1W-Cxq" firstAttribute="leading" secondItem="QMX-5U-USJ" secondAttribute="trailing" constant="-61" id="u11-Yt-3Vw"/>
                     <constraint firstItem="l3u-A0-YRg" firstAttribute="top" secondItem="nOi-ob-esr" secondAttribute="top" id="wNZ-x0-Ubh"/>
                     <constraint firstItem="nOi-ob-esr" firstAttribute="top" secondItem="Q0Q-BQ-1qq" secondAttribute="bottom" constant="7" id="wOn-j6-WFs"/>
@@ -176,6 +180,7 @@
                 <outlet property="initialsLabel" destination="QMX-5U-USJ" id="Ldf-rW-kJS"/>
                 <outlet property="linksLabel" destination="l3u-A0-YRg" id="ktI-X7-Php"/>
                 <outlet property="linksiv" destination="nOi-ob-esr" id="0Ks-6E-e0b"/>
+                <outlet property="profileiv" destination="50M-Lp-D9T" id="bsZ-Tw-v8k"/>
                 <outlet property="subtitleLabel" destination="ph8-rL-AzW" id="hf3-bg-dxe"/>
                 <outlet property="timesLabel" destination="XNI-hz-mr8" id="mC0-j9-ee5"/>
                 <outlet property="timesiv" destination="Q0Q-BQ-1qq" id="xZA-sh-zgQ"/>
