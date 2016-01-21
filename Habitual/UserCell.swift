@@ -19,6 +19,13 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             Styler.viewShader(borderView)
         }
     }
+    @IBOutlet weak var profileiv: UIImageView! {
+        didSet {
+            profileiv.layer.cornerRadius = 25
+            profileiv.clipsToBounds = true
+            profileiv.contentMode = .ScaleAspectFill
+        }
+    }
     @IBOutlet weak var initialsLabel: UILabel! {
         didSet {
             Styler.viewShaderSmall(initialsLabel)
@@ -98,11 +105,28 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             linksLabel.text = "x\(connection.numAccountable)"
             timesLabel.text = "x\(connection.user.statHabitsCompleted())"
             
+            let id = connection.user.parseObject!["fbId"]
+            
+            if let id = id as? String {
+                profileiv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
+                profileiv.hidden = false
+            } else {
+                profileiv.hidden = true
+            }
+            
             finishedTableView.reloadData()
             unfinishedTableView.reloadData()
             
-            let numFinished = connection.user.habits.filter({$0.completed()}).count
-            let numUnfinished = connection.user.habits.count - numFinished
+            var numFinished = connection.user.habits.filter({$0.completed()}).count
+            var numUnfinished = connection.user.habits.count - numFinished
+            
+            if !connection.approved {
+                numFinished = 0
+                numUnfinished = 0
+                habitsContainer.hidden = true
+            } else {
+                habitsContainer.hidden = false
+            }
             
             let height = UserCell.height + (CGFloat(max(numFinished, numUnfinished)) * HabitGlanceCell.height)
             
@@ -183,9 +207,9 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             subtitleLabel.text = connection.sentByCurrentUser ? "Pending acceptance" : "Wants to connect"
         }
         
-        color = connection.approved ? connection.color : Colors.textSecondary
-        let textColor = connection.approved ? Colors.textMain : Colors.textSecondary
-        let subtitleTextColor = connection.approved ? Colors.textSubtitle : Colors.textSecondary
+        color = connection.approved ? connection.color : UIColor(hexString: "999999")
+        let textColor = connection.approved ? Colors.textMain : UIColor(hexString: "999999")
+        let subtitleTextColor = connection.approved ? Colors.textSubtitle : UIColor(hexString: "999999")
         
         if connection.approved || connection.sentByCurrentUser {
             acceptButton.hidden = true
@@ -216,7 +240,7 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         initialsLabel.layer.borderWidth = 2.0
         initialsLabel.layer.borderColor = color.CGColor
         
-        borderView.backgroundColor = color.darkenColor(Floats.darkenPercentage).desaturateColor(0.4)
+        borderView.backgroundColor = connection.approved ? color.darkenColor(Floats.darkenPercentage).desaturateColor(0.4) : UIColor.whiteColor().colorWithAlphaComponent(0.05)
         borderView.layer.cornerRadius = Floats.cardCornerRadius
     }
     
