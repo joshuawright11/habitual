@@ -30,6 +30,7 @@ public class AuthManager : NSObject{
         */
         get{
             if (self.user == nil){
+                print("AuthManager user was nil so creating a new one.")
                 self.user = loadUser();
                 if self.user != nil {
                     loadHabitParseObjects()
@@ -39,7 +40,10 @@ public class AuthManager : NSObject{
                             for habit in self.currentUser!.habits {
                                 habit.loadUsersToNotify()
                             }
+                            print("AuthManager get user sees a user with \(AuthManager.currentUser?.connections.count) connections")
                             WebServices.updateAllData()
+                        } else {
+                            print("Error loading connections in AuthManager")
                         }
                     })
                 }
@@ -54,6 +58,9 @@ public class AuthManager : NSObject{
         */
         set(newUser){
             self.user = newUser;
+            newUser?.getConnections({ (success) -> () in
+                print("AuthManager got \(AuthManager.currentUser!.connections.count) connections")
+            })
         }
     }
     
@@ -135,6 +142,10 @@ public class AuthManager : NSObject{
         user?.habits = CoreDataManager.getHabitsOfCurrentUser()
         loadHabitParseObjects()
         return user?.habits
+    }
+    
+    public static func hasHabits() -> Bool {
+        return CoreDataManager.getHabitsOfCurrentUser().count > 0
     }
     
     /**

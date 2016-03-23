@@ -175,7 +175,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             }else {
                 borderView.frame.origin.x += translation.x
                 
-                let bgColor = percent > 0 ? color.hexString : "FFFFFF"
+                let bgColor = color.hexString
                 borderView.backgroundColor = UIColor(hexString: bgColor).darkenColor(Floats.darkenPercentage - Floats.darkenPercentage * Double(percent)).saturateColor(0.4 - 0.4 * Double(percent))
                 recognizer.setTranslation(CGPointZero, inView: self)
             }

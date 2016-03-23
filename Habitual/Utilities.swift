@@ -162,4 +162,8 @@ public class Utilities {
         }
         return true
     }
+    
+    public static func log(text: String) {
+        print("---> \(text). Line: \(#line) File: \(#file) Column:\(#column) Function:\(#function)")
+    }
 }

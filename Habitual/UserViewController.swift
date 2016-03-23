@@ -270,6 +270,7 @@ class UserViewController: UIViewController, UITableViewDelegate, UITableViewData
     func refreshData(){
         chartView.data = getChartData()
         chartView.notifyDataSetChanged()
+        calendarView.refresh()
         tableView.reloadData()
     }
     

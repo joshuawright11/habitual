@@ -72,6 +72,7 @@ class Connection: ParseObject {
         parseObject["sender"] = AuthManager.currentUser?.parseObject
         parseObject["receiver"] = receiver.parseObject
         parseObject["approved"] = false
+        parseObject["privateApproved"] = false
 
         super.init(parseObject: parseObject)
     }
@@ -82,7 +83,8 @@ class Connection: ParseObject {
     override init(parseObject: PFObject) {
         sender = User(parseUser: parseObject["sender"] as! PFUser, withHabits: true)
         receiver = User(parseUser: parseObject["receiver"] as! PFUser, withHabits: true)
-        approved = parseObject["approved"] as! Bool
+
+        approved = parseObject["privateApproved"] as! Bool
 
         super.init(parseObject: parseObject)
         
@@ -141,7 +143,7 @@ class Connection: ParseObject {
     /// Approve the `Connection`. The approved `Connection` is then saved to the
     /// server.
     func approve() {
-        parseObject!["approved"] = true
+        parseObject!["privateApproved"] = true
         approved = true
         parseObject!.saveInBackground()
     }

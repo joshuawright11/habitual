@@ -28,6 +28,7 @@ extension User
         or.includeKey("receiver.habits.usersToNotify")
         or.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let objects = objects {
+                print("connections loaded \(objects.count)")
                 self.connections = []
                 var count = 0
                 var total = objects.count
@@ -40,9 +41,13 @@ extension User
                     connection.color = Colors.rainbow[count++ % 6]
                     self.connections.append(connection)
                 }
+                Utilities.postNotification(Notifications.reloadNetworkOffline)
                 if let callback = callback {
+                    print("User+Web sees a currentUser with \(AuthManager.currentUser!.connections.count) connections")
                     callback(success: true)
                 }
+            } else {
+                print("error loading connections")
             }
         }
     }

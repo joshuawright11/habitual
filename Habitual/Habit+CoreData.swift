@@ -88,6 +88,10 @@ extension Habit {
         coreDataObject!.notificationsEnabled = notificationsEnabled
         coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
         
+        if let po = parseObject {
+            coreDataObject!.objectId = po.objectId!
+        }
+        
         do {
             try managedObjectContext?.save()
             AuthManager.currentUser?.habits.append(self)
@@ -136,10 +140,10 @@ extension Habit {
         
         if completion {
             saveCompletionCoreData()
-        }else{
+        } else {
             if let _ = coreDataObject {
                 updateCoreData()
-            }else{
+            } else {
                 addToCoreData()
             }
         }

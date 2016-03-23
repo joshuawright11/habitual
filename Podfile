@@ -1,4 +1,4 @@
-link_with 'Ignite', 'IgniteTests'
+link_with 'Ignite'
 use_frameworks!
 
 pod 'SwiftyJSON'
@@ -22,5 +22,11 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
 pod 'ParseFacebookUtilsV4'
+
+post_install do |installer|
+  installer.pods_project.build_configuration_list.build_configurations.each do |configuration|
+    configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+  end
+end
 pod 'SwiftAddressBook'
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0kD-fU-pCp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0kD-fU-pCp">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -233,7 +233,7 @@
                             <constraint firstItem="2Ab-Jx-g07" firstAttribute="top" secondItem="Lpg-el-0Of" secondAttribute="bottom" id="WX1-Od-TOn"/>
                             <constraint firstItem="40u-vE-ryc" firstAttribute="top" secondItem="2Ab-Jx-g07" secondAttribute="bottom" constant="17" id="Z8q-pr-VpP"/>
                             <constraint firstItem="vOF-0t-Ozi" firstAttribute="centerX" secondItem="18Z-l1-XGy" secondAttribute="centerX" id="dED-YD-P01"/>
-                            <constraint firstItem="Lpg-el-0Of" firstAttribute="top" secondItem="sVB-5e-JEU" secondAttribute="bottom" constant="53" id="fQ6-G4-Oda"/>
+                            <constraint firstItem="Lpg-el-0Of" firstAttribute="top" secondItem="sVB-5e-JEU" secondAttribute="bottom" id="fQ6-G4-Oda"/>
                             <constraint firstItem="40u-vE-ryc" firstAttribute="centerX" secondItem="18Z-l1-XGy" secondAttribute="centerX" id="g2e-fl-M5c"/>
                             <constraint firstItem="HrG-ky-Gwf" firstAttribute="leading" secondItem="dgg-yO-5TL" secondAttribute="trailing" constant="8" id="gHP-eF-Mt5"/>
                             <constraint firstItem="vOF-0t-Ozi" firstAttribute="top" secondItem="dgg-yO-5TL" secondAttribute="bottom" constant="8" id="iSA-FT-AAl"/>
@@ -259,31 +259,31 @@
                                 <exclude reference="OOi-s8-U6x"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Uyi-en-iXk"/>
-                                <exclude reference="fQ6-G4-Oda"/>
+                                <exclude reference="nSE-b6-92I"/>
+                                <exclude reference="0xz-ie-urE"/>
+                                <exclude reference="NYu-fG-mMP"/>
+                                <exclude reference="lmc-Hp-4ih"/>
+                                <exclude reference="OYD-6L-Co7"/>
+                                <exclude reference="TS4-Po-7KG"/>
+                                <exclude reference="dED-YD-P01"/>
+                                <exclude reference="iSA-FT-AAl"/>
                                 <exclude reference="OXy-a1-BNG"/>
                                 <exclude reference="Z8q-pr-VpP"/>
                                 <exclude reference="g2e-fl-M5c"/>
                                 <exclude reference="k1m-tr-wAf"/>
-                                <exclude reference="JQV-PP-Tee"/>
-                                <exclude reference="WX1-Od-TOn"/>
                                 <exclude reference="QQB-lv-QOR"/>
-                                <exclude reference="0xz-ie-urE"/>
-                                <exclude reference="NYu-fG-mMP"/>
-                                <exclude reference="lmc-Hp-4ih"/>
-                                <exclude reference="5k3-8f-hQG"/>
-                                <exclude reference="KMe-sD-09m"/>
                                 <exclude reference="iod-mc-0bq"/>
                                 <exclude reference="puV-xi-lVA"/>
                                 <exclude reference="xrE-9e-UNW"/>
-                                <exclude reference="dED-YD-P01"/>
-                                <exclude reference="iSA-FT-AAl"/>
+                                <exclude reference="5k3-8f-hQG"/>
+                                <exclude reference="KMe-sD-09m"/>
                                 <exclude reference="ILp-NL-TQO"/>
                                 <exclude reference="gHP-eF-Mt5"/>
                                 <exclude reference="oNN-IB-5hp"/>
-                                <exclude reference="OYD-6L-Co7"/>
-                                <exclude reference="TS4-Po-7KG"/>
-                                <exclude reference="nSE-b6-92I"/>
+                                <exclude reference="Uyi-en-iXk"/>
+                                <exclude reference="fQ6-G4-Oda"/>
+                                <exclude reference="JQV-PP-Tee"/>
+                                <exclude reference="WX1-Od-TOn"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -300,31 +300,31 @@
                                 <include reference="OOi-s8-U6x"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Uyi-en-iXk"/>
-                                <include reference="fQ6-G4-Oda"/>
+                                <include reference="nSE-b6-92I"/>
+                                <include reference="0xz-ie-urE"/>
+                                <include reference="NYu-fG-mMP"/>
+                                <include reference="lmc-Hp-4ih"/>
+                                <include reference="OYD-6L-Co7"/>
+                                <include reference="TS4-Po-7KG"/>
+                                <include reference="dED-YD-P01"/>
+                                <include reference="iSA-FT-AAl"/>
                                 <include reference="OXy-a1-BNG"/>
                                 <include reference="Z8q-pr-VpP"/>
                                 <include reference="g2e-fl-M5c"/>
                                 <include reference="k1m-tr-wAf"/>
-                                <include reference="JQV-PP-Tee"/>
-                                <include reference="WX1-Od-TOn"/>
                                 <include reference="QQB-lv-QOR"/>
-                                <include reference="0xz-ie-urE"/>
-                                <include reference="NYu-fG-mMP"/>
-                                <include reference="lmc-Hp-4ih"/>
-                                <include reference="5k3-8f-hQG"/>
-                                <include reference="KMe-sD-09m"/>
                                 <include reference="iod-mc-0bq"/>
                                 <include reference="puV-xi-lVA"/>
                                 <include reference="xrE-9e-UNW"/>
-                                <include reference="dED-YD-P01"/>
-                                <include reference="iSA-FT-AAl"/>
+                                <include reference="5k3-8f-hQG"/>
+                                <include reference="KMe-sD-09m"/>
                                 <include reference="ILp-NL-TQO"/>
                                 <include reference="gHP-eF-Mt5"/>
                                 <include reference="oNN-IB-5hp"/>
-                                <include reference="OYD-6L-Co7"/>
-                                <include reference="TS4-Po-7KG"/>
-                                <include reference="nSE-b6-92I"/>
+                                <include reference="Uyi-en-iXk"/>
+                                <include reference="fQ6-G4-Oda"/>
+                                <include reference="JQV-PP-Tee"/>
+                                <include reference="WX1-Od-TOn"/>
                             </mask>
                         </variation>
                     </view>
@@ -3099,24 +3099,24 @@ per day/week/month</string>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="dti-cN-pCA"/>
-                                        <exclude reference="1QG-Oy-vaF"/>
-                                        <exclude reference="WD1-W4-3zt"/>
-                                        <exclude reference="bzR-cn-9z5"/>
                                         <exclude reference="471-PH-zFa"/>
                                         <exclude reference="eAE-v1-oNn"/>
                                         <exclude reference="nUX-4Q-0Yq"/>
-                                        <exclude reference="Bd0-7N-fBH"/>
-                                        <exclude reference="Ffa-7k-tQJ"/>
-                                        <exclude reference="bvC-85-5gc"/>
+                                        <exclude reference="1Ga-30-dwD"/>
+                                        <exclude reference="LZg-X4-KXM"/>
+                                        <exclude reference="uGE-ZS-CUV"/>
                                         <exclude reference="4f5-bS-7xb"/>
                                         <exclude reference="qPX-MT-70Y"/>
                                         <exclude reference="t5A-PO-97g"/>
                                         <exclude reference="92a-Tj-p0R"/>
                                         <exclude reference="FWr-54-zk1"/>
                                         <exclude reference="isQ-oi-wbU"/>
-                                        <exclude reference="1Ga-30-dwD"/>
-                                        <exclude reference="LZg-X4-KXM"/>
-                                        <exclude reference="uGE-ZS-CUV"/>
+                                        <exclude reference="Bd0-7N-fBH"/>
+                                        <exclude reference="Ffa-7k-tQJ"/>
+                                        <exclude reference="bvC-85-5gc"/>
+                                        <exclude reference="1QG-Oy-vaF"/>
+                                        <exclude reference="WD1-W4-3zt"/>
+                                        <exclude reference="bzR-cn-9z5"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -3130,24 +3130,24 @@ per day/week/month</string>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="dti-cN-pCA"/>
-                                        <exclude reference="1QG-Oy-vaF"/>
-                                        <include reference="WD1-W4-3zt"/>
-                                        <include reference="bzR-cn-9z5"/>
                                         <include reference="471-PH-zFa"/>
                                         <exclude reference="eAE-v1-oNn"/>
                                         <include reference="nUX-4Q-0Yq"/>
-                                        <include reference="Bd0-7N-fBH"/>
-                                        <exclude reference="Ffa-7k-tQJ"/>
-                                        <include reference="bvC-85-5gc"/>
+                                        <include reference="1Ga-30-dwD"/>
+                                        <exclude reference="LZg-X4-KXM"/>
+                                        <include reference="uGE-ZS-CUV"/>
                                         <include reference="4f5-bS-7xb"/>
                                         <exclude reference="qPX-MT-70Y"/>
                                         <include reference="t5A-PO-97g"/>
                                         <include reference="92a-Tj-p0R"/>
                                         <exclude reference="FWr-54-zk1"/>
                                         <include reference="isQ-oi-wbU"/>
-                                        <include reference="1Ga-30-dwD"/>
-                                        <exclude reference="LZg-X4-KXM"/>
-                                        <include reference="uGE-ZS-CUV"/>
+                                        <include reference="Bd0-7N-fBH"/>
+                                        <exclude reference="Ffa-7k-tQJ"/>
+                                        <include reference="bvC-85-5gc"/>
+                                        <exclude reference="1QG-Oy-vaF"/>
+                                        <include reference="WD1-W4-3zt"/>
+                                        <include reference="bzR-cn-9z5"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -3189,6 +3189,13 @@ per day/week/month</string>
                                 <exclude reference="HvH-et-6h6"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="vrj-0X-5iW"/>
+                                <exclude reference="84R-6Q-rkp"/>
+                                <exclude reference="Ukl-Mc-vgw"/>
+                                <exclude reference="XGx-Ir-m1x"/>
+                                <exclude reference="KA8-Gk-Elh"/>
+                                <exclude reference="Xcv-Dt-GqM"/>
+                                <exclude reference="cub-76-tdn"/>
                                 <exclude reference="7mU-Cz-MH8"/>
                                 <exclude reference="MjB-38-N7y"/>
                                 <exclude reference="eoo-0T-p5I"/>
@@ -3198,12 +3205,6 @@ per day/week/month</string>
                                 <exclude reference="cjr-NG-d4P"/>
                                 <exclude reference="pEC-7K-y2o"/>
                                 <exclude reference="wZO-XP-uLB"/>
-                                <exclude reference="KA8-Gk-Elh"/>
-                                <exclude reference="Xcv-Dt-GqM"/>
-                                <exclude reference="cub-76-tdn"/>
-                                <exclude reference="84R-6Q-rkp"/>
-                                <exclude reference="Ukl-Mc-vgw"/>
-                                <exclude reference="XGx-Ir-m1x"/>
                                 <exclude reference="2jI-j7-2bC"/>
                                 <exclude reference="5im-qI-zK7"/>
                                 <exclude reference="CWC-bm-fU4"/>
@@ -3212,7 +3213,6 @@ per day/week/month</string>
                                 <exclude reference="QDo-cE-Ngk"/>
                                 <exclude reference="SEv-Eu-yTr"/>
                                 <exclude reference="Vyh-8u-tvG"/>
-                                <exclude reference="vrj-0X-5iW"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3225,6 +3225,13 @@ per day/week/month</string>
                                 <include reference="HvH-et-6h6"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="vrj-0X-5iW"/>
+                                <include reference="84R-6Q-rkp"/>
+                                <include reference="Ukl-Mc-vgw"/>
+                                <include reference="XGx-Ir-m1x"/>
+                                <include reference="KA8-Gk-Elh"/>
+                                <include reference="Xcv-Dt-GqM"/>
+                                <include reference="cub-76-tdn"/>
                                 <include reference="7mU-Cz-MH8"/>
                                 <include reference="MjB-38-N7y"/>
                                 <include reference="eoo-0T-p5I"/>
@@ -3234,12 +3241,6 @@ per day/week/month</string>
                                 <include reference="cjr-NG-d4P"/>
                                 <include reference="pEC-7K-y2o"/>
                                 <include reference="wZO-XP-uLB"/>
-                                <include reference="KA8-Gk-Elh"/>
-                                <include reference="Xcv-Dt-GqM"/>
-                                <include reference="cub-76-tdn"/>
-                                <include reference="84R-6Q-rkp"/>
-                                <include reference="Ukl-Mc-vgw"/>
-                                <include reference="XGx-Ir-m1x"/>
                                 <include reference="2jI-j7-2bC"/>
                                 <include reference="5im-qI-zK7"/>
                                 <exclude reference="CWC-bm-fU4"/>
@@ -3248,7 +3249,6 @@ per day/week/month</string>
                                 <include reference="QDo-cE-Ngk"/>
                                 <include reference="SEv-Eu-yTr"/>
                                 <include reference="Vyh-8u-tvG"/>
-                                <include reference="vrj-0X-5iW"/>
                             </mask>
                         </variation>
                     </view>

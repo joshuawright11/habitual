@@ -28,9 +28,11 @@ class AccountController: UIViewController {
             
             if upgrade {
                 subtitleLabel.textAlignment = .Justified
-                subtitleLabel.text = "Hey! Thanks for using Ignite. In order to better protect the security of your account and allow you to find friends using Ignite more easily, we now require that all users of Ignite have an account with a legitimate email. \n\nYou can do so by connecting with a Facebook account (which you can use to find friends using Ignite!), or entering your email address. We will never post on your Facebook or send you regular emails and, as always, your habits will not be visible to anyone you have not approved as a connection."
+                subtitleLabel.text = "In order to better protect the security of your account, we now require that all users of Ignite have an account with a legitimate email. \n\nYou can do so by connecting with a Facebook account or entering your email address. You public habits will not be visible to anyone except your connections."
+            } else if AuthManager.hasHabits() {
+                subtitleLabel.text = "For stability, we now require all users to have an account. Sign in to Ignite using Facebook or email.\n\nDon't worry, your old habits will be synced."
             } else {
-                subtitleLabel.text = "Sign up for Ignite using Facebook or email.\n\n\nWe will never post on your Facebook or send you regular emails and your habits will not be visible to anyone you have not approved as a connection."
+                subtitleLabel.text = "Sign in to Ignite using Facebook or email."
             }
         }
     }
@@ -85,6 +87,11 @@ class AccountController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+    }
+    
     @IBAction func fbAccount() {
         
         if upgrade {
@@ -108,10 +115,8 @@ class AccountController: UIViewController {
                     self.getUserInfo()
                     if user.isNew {
                         /// New user signed up with facebook
-                        
                     } else {
-                        /// the user logged in to an existing account
-
+                        
                     }
                 } else {
                     /// user cancelled the login
@@ -127,7 +132,7 @@ class AccountController: UIViewController {
         req.startWithCompletionHandler { (connection, result, error) -> Void in
             if error != nil {
                 print("\(error.localizedDescription)")
-            } else if result != nil {
+            } else if let result = result as? [String:AnyObject] {
                 let userId = result["id"] as! String
                 let userFirstName = result["first_name"] as! String
                 let userLastName = result["last_name"] as! String
@@ -155,6 +160,9 @@ class AccountController: UIViewController {
                 myUser.saveInBackground()
                 
                 AuthManager.currentUser = User(parseUser: myUser, withHabits: false)
+                
+                WebServices.updateAllData()
+                
                 Utilities.postNotification(Notifications.reloadNetworkOnline)
                 self.dismissViewControllerAnimated(true, completion: nil)
                 
@@ -195,7 +203,7 @@ class AccountController: UIViewController {
                     Utilities.alertWarning("Invalid email.", vc: self)
                 }
             }))
-            self.navigationController!.pushViewController(alert, animated: true)
+            presentViewController(alert, animated: true, completion: nil)
         } else {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupViewController
             vc.newAccount = sender == signUpButton

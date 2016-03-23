@@ -95,6 +95,7 @@ public class WebServices: NSObject {
     
     /// Overwrite whatever is on the server with whatever is in Core Data
     static func updateAllData() {
+        
         PFUser.currentUser()?.saveInBackground()
         let query = PFQuery(className: "Habit")
         query.whereKey("owner", equalTo: PFUser.currentUser()!)
@@ -104,12 +105,17 @@ public class WebServices: NSObject {
                 let objectId = object.objectId
                 let array = cdObjects.filter({$0.objectId == objectId})
                 if array.count == 0 { // object on server but not CoreData
-                    object.deleteInBackground()
-                }else{
+                    let habit = Habit(parseObject: object)
+                    habit.saveToCoreData(false)
+                } else {
                     array.first!.uploadToServer(nil)
                 }
             }
+            PFUser.currentUser()!["habits"] = objects
+            PFUser.currentUser()?.saveInBackground()
+            Utilities.postNotification(Notifications.habitDataChanged)
         }
+        
     }
     
     static func getContacts(emails: [String], callback: (success: Bool, users:[User]) -> ()) {

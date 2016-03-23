@@ -36,7 +36,6 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.navigationItem.title = "Connections"
         
-        
         let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: "addConnection")
         
         self.navigationItem.rightBarButtonItem = button
@@ -76,6 +75,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     func refreshDataOffline() {
+        self.connections = AuthManager.currentUser?.connections
         self.tableView.reloadData()
     }
     
@@ -186,13 +186,14 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
-        uvc.user = connections![indexPath.row].user
-        uvc.color = connections![indexPath.row].color!
-        uvc.connection = connections![indexPath.row]
-        
-        self.navigationController?.pushViewController(uvc, animated: true)
+        if connections![indexPath.row].approved {
+            let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
+            uvc.user = connections![indexPath.row].user
+            uvc.color = connections![indexPath.row].color!
+            uvc.connection = connections![indexPath.row]
+            
+            self.navigationController?.pushViewController(uvc, animated: true)
+        }
     }
 
     // MARK: - Empty data set data source

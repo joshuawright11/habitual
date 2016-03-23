@@ -52,7 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-//        PFInstallation.currentInstallation().saveEventually() // update the Parse Installation data
+        if let _ = PFUser.currentUser() {
+            PFInstallation.currentInstallation().saveEventually()
+        }
         
         PFUser.currentUser()?.fetchInBackground()
         

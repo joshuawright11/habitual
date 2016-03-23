@@ -20,7 +20,11 @@ class User: ParseObject {
     
     /// The connections in which a user is a member of. This value must always
     /// be loaded asynchronously with `getConnections()`.
-    var connections:[Connection]
+    var connections:[Connection] {
+        didSet {
+            print("\(username) was set with \(connections.count) connections.")
+        }
+    }
     
     /// The user's full name, separated with spaces.
     var name:String

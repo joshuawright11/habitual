@@ -170,7 +170,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func getContactsUsers() {
-        swiftAddressBook?.requestAccessWithCompletion({ (success, error) -> Void in
+        SwiftAddressBook.requestAccessWithCompletion({ (success, error) -> Void in
             if success {
                 if let people = swiftAddressBook?.allPeople {
                     var emailList:[String] = []

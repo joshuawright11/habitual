@@ -37,7 +37,11 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    var habitsOfDate: [Habit] = []
+    var habitsOfDate: [Habit] = [] {
+        didSet {
+            calendarView.refresh()
+        }
+    }
     
     var selectedDate: NSDate = NSDate() {
         didSet {
@@ -77,7 +81,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
         
-        Utilities.registerForNotification(self, selector: "moveCell:", name:
+        Utilities.registerForNotification(self, selector: #selector(moveCell), name:
             Notifications.reloadPulse)
         
         self.calendarView.changeDaysOutShowingState(false)
@@ -471,6 +475,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         darkColor = Colors.accent
         
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
+    
         let percent = AuthManager.currentUser?.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {
             view.fillColor = UIColor.clearColor()

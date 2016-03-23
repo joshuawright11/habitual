@@ -137,7 +137,10 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         if (!newAccount) {
             loginButton.setTitle("Log in", forState: .Normal)
+            self.navigationItem.title = "Log in"
             nameTextField.hidden = true
+        } else {
+            self.navigationItem.title = "Sign Up"
         }
     }
     
