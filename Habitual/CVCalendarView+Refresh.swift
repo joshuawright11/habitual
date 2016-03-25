@@ -14,11 +14,15 @@ extension CVCalendarView {
         for weekView in contentController.presentedMonthView.weekViews {
             for dayView in weekView.dayViews {
                 for view in dayView.subviews {
-                    if view is CVAuxiliaryView {
+                    // I am so so sorry
+                    if view is CVAuxiliaryView && view.tag == 0xdeadbeef {
                         view.removeFromSuperview()
                     }
                 }
                 dayView.preliminarySetup()
+                dayView.labelSetup()
+                dayView.supplementarySetup()
+                dayView.topMarkerSetup()
             }
         }
     }
