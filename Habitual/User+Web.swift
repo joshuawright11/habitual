@@ -59,7 +59,7 @@ extension User
             if let callback = callback { callback(success: false) }
         }else{
             let query = PFUser.query()
-            query!.whereKey("username", equalTo: username)
+            query!.whereKey("email", equalTo: username)
             
             query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
                 

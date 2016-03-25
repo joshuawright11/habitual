@@ -164,6 +164,7 @@ public class SCLAlertView: UIViewController {
         let x = (kCircleHeightBackground - kCircleHeight) / 2
         circleView.frame = CGRect(x:x, y:x, width:kCircleHeight, height:kCircleHeight)
         circleView.layer.cornerRadius = circleView.frame.size.height / 2
+        Styler.viewShader(circleView)
         // Title
         labelTitle.numberOfLines = 1
         labelTitle.textAlignment = .Center
@@ -280,7 +281,8 @@ public class SCLAlertView: UIViewController {
         txt.font = Fonts.calendarSectionHeader
         txt.autocapitalizationType = UITextAutocapitalizationType.Words
         txt.clearButtonMode = UITextFieldViewMode.WhileEditing
-        txt.layer.masksToBounds = true
+        txt.layer.masksToBounds = false
+        Styler.viewShader(txt)
         txt.layer.borderWidth = 2.0
         if title != nil {
             txt.placeholder = title!
@@ -316,7 +318,8 @@ public class SCLAlertView: UIViewController {
         kWindowHeight += kButtonHeight
         // Add button
         let btn = SCLButton()
-        btn.layer.masksToBounds = true
+        btn.layer.masksToBounds = false
+        Styler.viewShader(btn)
         btn.setTitle(title, forState: .Normal)
         btn.titleLabel?.font = Fonts.buttonSelected
         contentView.addSubview(btn)

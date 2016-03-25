@@ -10,8 +10,7 @@
 
 import DynamicColor
 
-public extension UIColor
-{
+public extension UIColor {
     var hexString:String {
         let colorRef = CGColorGetComponents(self.CGColor)
         

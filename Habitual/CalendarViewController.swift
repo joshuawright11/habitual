@@ -475,7 +475,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         darkColor = Colors.accent
         
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
-        view.tag = 0xdeadbeef
+        view.tag = -369
     
         let percent = AuthManager.currentUser?.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {

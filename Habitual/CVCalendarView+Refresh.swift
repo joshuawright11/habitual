@@ -9,20 +9,17 @@
 import Foundation
 import CVCalendar
 
-extension CVCalendarView {
+public extension CVCalendarView {
     public func refresh() {
         for weekView in contentController.presentedMonthView.weekViews {
             for dayView in weekView.dayViews {
                 for view in dayView.subviews {
                     // I am so so sorry
-                    if view is CVAuxiliaryView && view.tag == 0xdeadbeef {
+                    if view is CVAuxiliaryView && view.tag == -369 {
                         view.removeFromSuperview()
                     }
                 }
                 dayView.preliminarySetup()
-                dayView.labelSetup()
-                dayView.supplementarySetup()
-                dayView.topMarkerSetup()
             }
         }
     }
