@@ -62,6 +62,10 @@ class MainTabBarController: UITabBarController {
             ac.upgrade = true
             let nav = UINavigationController(rootViewController: ac)
             presentViewController(nav, animated: false, completion: nil)
+        } else {
+            let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
         }
     }
 }

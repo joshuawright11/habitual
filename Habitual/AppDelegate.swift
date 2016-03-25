@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - App Lifecycle methods
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+        
         // Crashlytics setup
         Fabric.with([Crashlytics.self])
         
@@ -44,15 +44,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-        
         // Parse setup
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
         if let _ = PFUser.currentUser() {
+            let versionNumber = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+
+            let installation = PFInstallation.currentInstallation()
+            installation["versionNumber"] = versionNumber
+            installation["username"] = PFUser.currentUser()?.username
+            installation["deviceId"] = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            installation["operatingSystem"] = NSProcessInfo.processInfo().operatingSystemVersionString
+            installation["platform"] = UIDeviceHardware.platformString()
             PFInstallation.currentInstallation().saveEventually()
         }
         
@@ -124,6 +128,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
+        let versionNumber = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        
+        installation["versionNumber"] = versionNumber
+        installation["username"] = PFUser.currentUser()?.username
+        installation["deviceId"] = UIDevice.currentDevice().identifierForVendor?.UUIDString
+        installation["operatingSystem"] = NSProcessInfo.processInfo().operatingSystemVersionString
+        installation["platform"] = UIDeviceHardware.platformString()
         installation.saveInBackground()
     }
     
@@ -136,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("push received")
         NotificationHandler.handPush(application.applicationState, userInfo: userInfo)
     }
     

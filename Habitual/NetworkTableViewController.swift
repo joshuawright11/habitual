@@ -8,7 +8,6 @@
 
 import UIKit
 import DZNEmptyDataSet
-import SCLAlertView
 import Parse
 
 // -TODO: Needs refactoring/documentation
@@ -81,7 +80,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
     
     @IBAction func addConnection() {
         
-        let alert = AddUserView()
+        let alert = SCLAlertView()
         
         alert.buttonCornerRadius = 5
         alert.contentViewCornerRadius = 10
@@ -91,6 +90,11 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
 
         txt.autocapitalizationType = .None
         txt.autocorrectionType = .No
+        txt.backgroundColor = Colors.barBackground
+        txt.textColor = Colors.textMain
+        txt.attributedPlaceholder =
+            NSAttributedString(string: "email", attributes: [NSForegroundColorAttributeName : Colors.textSubtitle])
+
         
         alert.showCloseButton = true
         alert.addButton("Request Connection") {
@@ -110,12 +114,14 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
                 })
             }
         }
+        
         alert.addButton("Find Friends") { () -> Void in
             let sc = ShareController(nibName: "ShareController", bundle: nil)
             let nav = UINavigationController(rootViewController: sc)
             self.presentViewController(nav, animated: true, completion: nil)
         }
-        alert.showEdit("Add Connection", subTitle: "Request a connection with someone with their email.", closeButtonTitle: "Close", colorStyle: 0xC644FC)
+        
+        alert.showEdit("Add Connection", subTitle: "Request a connection with someone with their email.", closeButtonTitle: "Close", colorStyle: 0xC644FC, colorTextButton: 0xffffff)
     }
     
     func alreadyConnected(string: String) -> Bool {

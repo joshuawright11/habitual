@@ -30,7 +30,7 @@ class AccountController: UIViewController {
                 subtitleLabel.textAlignment = .Justified
                 subtitleLabel.text = "In order to better protect the security of your account, we now require that all users of Ignite have an account with a legitimate email. \n\nYou can do so by connecting with a Facebook account or entering your email address. You public habits will not be visible to anyone except your connections."
             } else if AuthManager.hasHabits() {
-                subtitleLabel.text = "For stability, we now require all users to have an account. Sign in to Ignite using Facebook or email.\n\nDon't worry, your old habits will be synced."
+                subtitleLabel.text = "For stability, we now require all users to have an account. Sign in to Ignite using Facebook or email.\n\nDon't worry, your old habits will be synced, and won't be visible to anyone you don't approve as a connection first."
             } else {
                 subtitleLabel.text = "Sign in to Ignite using Facebook or email."
             }
