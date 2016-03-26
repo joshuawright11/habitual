@@ -12,7 +12,7 @@ import UIKit
 
 class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
 
-    static let height = CGFloat(156)
+    static let height = CGFloat(159)
     
     @IBOutlet weak var borderView: UIView! {
         didSet {

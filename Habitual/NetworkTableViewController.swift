@@ -25,7 +25,7 @@ class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, 
         
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
-        
+        self.tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         
         self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")

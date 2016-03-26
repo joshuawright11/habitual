@@ -58,10 +58,17 @@ extension User
         if test.count != 0 {
             if let callback = callback { callback(success: false) }
         }else{
-            let query = PFUser.query()
-            query!.whereKey("email", equalTo: username)
+            let query1 = PFUser.query()
+            query1!.whereKey("email", equalTo: username)
             
-            query!.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
+            /// acounting for version 1.0 of the app, smfh
+            
+            let query2 = PFUser.query()
+            query2!.whereKey("username", equalTo: username)
+            
+            let query = PFQuery.orQueryWithSubqueries([query1!, query2!])
+            
+            query.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
                 
                 if let user = user{
                     let connection = Connection(receiver: User(parseUser: user as! PFUser, withHabits: false))

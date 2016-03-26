@@ -89,6 +89,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.emptyDataSetDelegate = self
         self.tableView.tableFooterView = UIView()
         
+        self.tableView.showsVerticalScrollIndicator = false
+        
         refreshData()
         
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
@@ -164,7 +166,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func doAppearance(){
         
-        tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
         
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)

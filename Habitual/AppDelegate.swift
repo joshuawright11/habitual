@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: Fonts.navButtons], forState: UIControlState.Normal)
         
         // Tab Bar
-        UITabBar.appearance().barTintColor = Colors.barBackground
+        UITabBar.appearance().barTintColor = Colors.barBackground.darkenColor(0.01)
         UITabBar.appearance().tintColor = Colors.accent
         UITabBar.appearance().translucent = false
         

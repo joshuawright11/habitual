@@ -102,7 +102,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             unit = "months"
         }
         
-        let count = habit.currentStreak()
+        var count = habit.currentStreak()
         var string = "\(count == 0 ? "No streak... yet!" : "\(count) \(unit) in a row!")"
         
         if count == 1 {string = "Solid start."}

@@ -97,7 +97,7 @@ class HabitDetailController: UITableViewController {
     
     func edit(sender: UIBarButtonItem){
         
-        if !checkData() { return }
+        if !checkData() && editng { return }
         
         editng = !editng
         

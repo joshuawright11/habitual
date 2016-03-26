@@ -34,10 +34,10 @@ struct Notifications {
 struct Colors {
     // Main Colors
     static let barBackground = UIColor(hexString: "242C33")
-    static let background = barBackground.lightenColor(0.04)
+    static let background = barBackground//.lightenColor(0.04)
     static let shadow = UIColor.blackColor()
     
-    static let accent = UIColor(hexString: "F09819").colorWithAlphaComponent(0.7)
+    static let accent = UIColor(hexString: "F09819")
     static let accentSecondary = UIColor(hexString: "34AADC")
     static let textViewBackground = UIColor(hexString: "E6E6E6")
     
