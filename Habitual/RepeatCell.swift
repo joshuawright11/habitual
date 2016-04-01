@@ -17,7 +17,7 @@ class RepeatCell: HabitDetailCell {
         didSet {
             dayButton.titleLabel!.font = Fonts.sectionHeader
             dayButton.tintColor = Colors.accent
-            dayButton.addTarget(self, action: Selector("buttonPressed:"),
+            dayButton.addTarget(self, action: #selector(RepeatCell.buttonPressed(_:)),
                 forControlEvents: .TouchUpInside)
         }
     }
@@ -27,7 +27,7 @@ class RepeatCell: HabitDetailCell {
         didSet {
             weekButton.titleLabel!.font = Fonts.sectionHeader
             weekButton.tintColor = Colors.accent
-            weekButton.addTarget(self, action: Selector("buttonPressed:"),
+            weekButton.addTarget(self, action: #selector(RepeatCell.buttonPressed(_:)),
                 forControlEvents: .TouchUpInside)
         }
     }
@@ -37,7 +37,7 @@ class RepeatCell: HabitDetailCell {
         didSet {
             monthButton.titleLabel!.font = Fonts.sectionHeader
             monthButton.tintColor = Colors.accent
-            monthButton.addTarget(self, action: Selector("buttonPressed:"),
+            monthButton.addTarget(self, action: #selector(RepeatCell.buttonPressed(_:)),
                 forControlEvents: .TouchUpInside)
         }
     }

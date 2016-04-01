@@ -14,11 +14,13 @@ import Parse
 /// A model for the habits that a user can create in the app. Each `Habit` has
 /// specific data about when it should be completed, to whom and how it should
 /// be accountable, and various display settings.
-public class Habit: ParseObject {
+public class Habit: NSObject {
 
     // ******************
     // MARK: - Properties
     // ******************
+    
+    var parseObject: PFObject?
     
     /// The underlying Core Data object for the `Habit`, if it is indeed saved
     /// in Core Data.
@@ -128,7 +130,7 @@ public class Habit: ParseObject {
         privat = false
         remindUserAt = ""
         notifyConnectionsAt = ""
-        timeOfDay = AuthManager.currentUser!.habits.count
+        timeOfDay = -1
         timesToComplete = 1
         daysToComplete = []
         icon = "compass"
@@ -136,6 +138,7 @@ public class Habit: ParseObject {
         notificationsEnabled = false
         notificationSettings = [.None]
         usersToNotify = []
+        parseObject = nil
         
         super.init()
     }
@@ -143,12 +146,13 @@ public class Habit: ParseObject {
     /// Initialize with a Parse `PFObject` object.
     ///
     /// - parameter parseObject: The `PFObject` object with which to initialize.
-    override init?(parseObject: PFObject) {
+    init?(parseObject: PFObject) {
         
         guard let name = parseObject["name"] as? String else {
             return nil
         }
         
+        self.parseObject = parseObject
         coreDataObject = nil
         
         datesCompleted = parseObject["datesCompleted"] as! [NSDate]
@@ -176,12 +180,10 @@ public class Habit: ParseObject {
         notificationSettings = [.None]
         usersToNotify = []
         for userPO in parseObject["usersToNotify"] as! [PFUser] {
-            if(userPO.dataAvailable){
-                usersToNotify.append(User(parseUser: userPO, withHabits: false))
+            if let user = User(parseUser: userPO) {
+                usersToNotify.append(user)
             }
         }
-        
-        super.init(parseObject: parseObject)
     }
     
     /// Initialize with a Core Data `HabitCoreData` object.
@@ -206,6 +208,7 @@ public class Habit: ParseObject {
         notificationsEnabled = coreDataObject.notificationsEnabled
         notificationSettings = []
         usersToNotify = []
+        parseObject = nil
         
         super.init()
     }
@@ -282,7 +285,7 @@ public class Habit: ParseObject {
         }
         
         for completion: NSDate in datesCompleted {
-            if(first...last).contains(completion) {count++}
+            if(first...last).contains(completion) {count += 1}
         }
         
         return count
@@ -403,7 +406,7 @@ public class Habit: ParseObject {
                 
                 while(date < NSDate()) {
                     if(daysToComplete.contains(dsotw[date.weekday-1])) {
-                        days++
+                        days += 1
                     }
                     date = date + 1.day
                 }
@@ -491,20 +494,5 @@ public class Habit: ParseObject {
         }
         
         return emoji
-    }
-    
-    /// Loads connections from the AuthManager to the `usersToNotify` property.
-    /// This property is currently initialized as an empty array, since Parse
-    /// objects are not saved offline, hence the need for this method.
-    public func loadUsersToNotify() {
-        let connections = AuthManager.currentUser?.connections
-        if let coreDataObject = coreDataObject {
-            for name in coreDataObject.usernamesToNotify {
-                let first = connections?.filter({$0.user.name == name}).first
-                if let first = first {
-                    usersToNotify.append(first.user)
-                }
-            }
-        }
     }
 }

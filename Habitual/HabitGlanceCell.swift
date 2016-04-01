@@ -30,33 +30,30 @@ class HabitGlanceCell: UITableViewCell {
         }
     }
     
-    var connectionColor: UIColor! {
+    private var connectionColor: UIColor! {
         didSet {
             iv.tintColor = connectionColor
         }
     }
     
-    var habit: Habit! {
+    private var habit: Habit! {
         didSet {
             titleLabel.text = habit.name + " " + habit.streakBadge
-            
-            if finished! {
-                circleView.backgroundColor = UIColor(hexString: habit.color)
-                circleView.layer.borderWidth = 0
-            } else {
-                circleView.backgroundColor = Colors.background
-                circleView.layer.borderColor = UIColor(hexString: habit.color).CGColor
-                circleView.layer.borderWidth = 2
-            }
-            
-            if habit.usersToNotify.filter({$0.username == AuthManager.currentUser?.username}).count > 0 {
-                iv.hidden = false
-                iv.tintColor = connectionColor
-            }else{
-                iv.hidden = true
-            }
         }
     }
     
-    var finished: Bool!
+    func configureForHabit(habit: Habit, color: UIColor, accountable: Bool, completed: Bool) {
+        
+        self.habit = habit
+        iv.hidden = !accountable
+        
+        if completed {
+            circleView.backgroundColor = UIColor(hexString: habit.color)
+            circleView.layer.borderWidth = 0
+        } else {
+            circleView.backgroundColor = Colors.background
+            circleView.layer.borderColor = UIColor(hexString: habit.color).CGColor
+            circleView.layer.borderWidth = 2
+        }
+    }
 }

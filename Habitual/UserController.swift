@@ -16,7 +16,7 @@ import DKChainableAnimationKit
 
 class UserController: UIViewController, UITableViewDelegate, UITableViewDataSource, CVCalendarViewDelegate, CVCalendarViewAppearanceDelegate, CVCalendarMenuViewDelegate {
 
-    var user:User?
+    var user:User!
     var color:UIColor = Colors.accent
     
     var connection: Connection?
@@ -138,20 +138,19 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.contentInset = UIEdgeInsets(top: -15, left: 0, bottom: 0, right: 0)
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
-        Utilities.registerForNotification(self, selector: "refreshData", name:
+        Utilities.registerForNotification(self, selector: #selector(UserController.refreshData), name: Notifications.habitDataChanged)
+        Utilities.registerForNotification(self, selector: #selector(UserController.refreshData), name:
             Notifications.reloadPulse)
         
-        let dataButton = UIBarButtonItem(image: UIImage(named: "line_graph")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "data")
+        let dataButton = UIBarButtonItem(image: UIImage(named: "line_graph")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(UserController.data))
         
 
         
         // this is gross because you can follow yourself when I wrote this
-        if user == nil || user?.username == AuthManager.currentUser?.username && self.tabBarController?.selectedIndex == 2 {
-            user = AuthManager.currentUser;
+        if self.tabBarController?.selectedIndex == 2 {
             self.navigationItem.title = "Me"
             
-            let settingsButton = UIBarButtonItem(image: UIImage(named: "cog")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "settings")
+            let settingsButton = UIBarButtonItem(image: UIImage(named: "cog")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(UserController.settings))
             
             self.navigationItem.leftBarButtonItem = settingsButton
             navigationItem.rightBarButtonItem = dataButton
@@ -160,7 +159,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.navigationItem.title = user?.name.componentsSeparatedByString(" ")[0]
             
             
-            let button = UIBarButtonItem(image: UIImage(named: "chats")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "chat")
+            let button = UIBarButtonItem(image: UIImage(named: "chats")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(UserController.chat))
             self.navigationItem.rightBarButtonItems = [dataButton, button]
         }
         
@@ -179,7 +178,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func settings() {
-        let svc = storyboard?.instantiateViewControllerWithIdentifier("Settings") as! SettingsViewController
+        let svc = storyboard?.instantiateViewControllerWithIdentifier("Settings") as! SettingsController
         let nvc = UINavigationController(rootViewController: svc)
         nvc.modalTransitionStyle = .FlipHorizontal
         presentViewController(nvc, animated: true, completion: nil)
@@ -204,7 +203,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if chartView.hidden {
             self.navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
         } else {
-            if user?.username == AuthManager.currentUser?.username {
+            if self.tabBarController?.selectedIndex == 2 {
                 navigationItem.title = "Me"
             } else {
                 navigationItem.title = user!.name
@@ -213,7 +212,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func chat() {
-        let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatViewController
+        let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatController
         ccvc.connection = self.connection
         
         let nav = UINavigationController(rootViewController: ccvc)
@@ -242,7 +241,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: habit.getCompletionPercentage(), xIndex: 0)], label: habit.name)
             dataSet.colors = [UIColor(hexString: habit.color)]
-            count++
+            count += 1
             
             dataSets.append(dataSet)
         }
@@ -276,9 +275,9 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func statForIndex(index: Int) -> (String, String){
         if(index == 0){
-            return ("Habits completed:","\(user!.statHabitsCompleted())")
+            return ("Habits completed:","\(user.habits.statHabitsCompleted())")
         }else {
-            return ("Most completed habit:",user!.statMostCompletedHabit())
+            return ("Most completed habit:",user.habits.statMostCompletedHabit())
         }
 //        else{
 //            return ("Longest streak:","\(user!.statLongestStreak())")
@@ -452,7 +451,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
-        let percent = user!.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
+        let percent = user.habits.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {
             view.fillColor = UIColor.clearColor()
             view.strokeColor = lightColor

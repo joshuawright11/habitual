@@ -30,6 +30,8 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     var canSwipe = true
     
+    var habitService: HabitService!
+    
     private var date: NSDate!
     private var habit: Habit!
     
@@ -102,7 +104,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             unit = "months"
         }
         
-        var count = habit.currentStreak()
+        let count = habit.currentStreak()
         var string = "\(count == 0 ? "No streak... yet!" : "\(count) \(unit) in a row!")"
         
         if count == 1 {string = "Solid start."}
@@ -129,7 +131,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     func setupHandlers() {
         
         if(pgr == nil){
-            pgr = UIPanGestureRecognizer(target: self, action: Selector("handlePan:"))
+            pgr = UIPanGestureRecognizer(target: self, action: #selector(HabitHomeCell.handlePan(_:)))
             pgr!.delegate = self
             addGestureRecognizer(pgr!)
         }
@@ -193,7 +195,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     func complete(){
         
-        if !habit.completeOn(date) {
+        if !habitService.completeHabit(habit, on: date) {
             return
         }
 
@@ -244,7 +246,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     func uncomplete() {
         
-        if !habit.uncompleteOn(date) {
+        if !habitService.incompleteHabit(habit, on: date) {
             animateReturn()
             return
         }

@@ -22,7 +22,7 @@ class TimesCell: HabitDetailCell {
     @IBOutlet weak var stepper: UIStepper! {
         didSet {
             stepper.tintColor = Colors.accent
-            stepper.addTarget(self, action: Selector("stepperChanged:"), forControlEvents: .ValueChanged)
+            stepper.addTarget(self, action: #selector(TimesCell.stepperChanged(_:)), forControlEvents: .ValueChanged)
         }
     }
     

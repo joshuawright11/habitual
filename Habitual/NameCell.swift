@@ -20,7 +20,7 @@ class NameCell: HabitDetailCell, UITextFieldDelegate {
             textField.textColor = Colors.accentSecondary
             textField.font = Fonts.cellTitle
             textField.delegate = self
-            textField.addTarget(self, action: "textFieldChanged:", forControlEvents: .EditingChanged)
+            textField.addTarget(self, action: #selector(NameCell.textFieldChanged(_:)), forControlEvents: .EditingChanged)
         }
     }
     

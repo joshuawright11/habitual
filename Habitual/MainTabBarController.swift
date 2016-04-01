@@ -61,7 +61,7 @@ class MainTabBarController: UITabBarController, ServiceObserver {
     func serviceDidUpdate() {
         if !accountService.isLoggedIn || accountService.isFakeEmail {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("account") as! AccountController
-            vc.upgrade = accountService.isFakeEmail
+            vc.accountService = accountService
             let nav = UINavigationController(rootViewController: vc)
             presentViewController(nav, animated: false, completion: nil)
         } else {

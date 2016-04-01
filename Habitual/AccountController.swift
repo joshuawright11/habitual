@@ -12,6 +12,8 @@ import ParseFacebookUtilsV4
 import Timepiece
 
 class AccountController: UIViewController {
+    
+    var accountService: AccountService!
 
     let fbPermissions = ["public_profile","email","user_friends"]
     
@@ -26,11 +28,9 @@ class AccountController: UIViewController {
             subtitleLabel.font = Fonts.message
             subtitleLabel.textColor = Colors.textSubtitle
             
-            if upgrade {
+            if accountService.isFakeEmail {
                 subtitleLabel.textAlignment = .Justified
                 subtitleLabel.text = "In order to better protect the security of your account, we now require that all users of Ignite have an account with a legitimate email. \n\nYou can do so by connecting with a Facebook account or entering your email address. You public habits will not be visible to anyone except your connections."
-            } else if AuthManager.hasHabits() {
-                subtitleLabel.text = "For stability, we now require all users to have an account. Sign in to Ignite using Facebook or email.\n\nDon't worry, your old habits will be synced, and won't be visible to anyone you don't approve as a connection first."
             } else {
                 subtitleLabel.text = "Sign in to Ignite using Facebook or email."
             }
@@ -59,7 +59,7 @@ class AccountController: UIViewController {
             signUpButton.layer.borderColor = Colors.textMain.CGColor
             Styler.viewShaderSmall(signUpButton)
             
-            if upgrade {
+            if accountService.isFakeEmail {
                 signUpButton.setTitle("Enter your email", forState: .Normal)
             }
         }
@@ -69,7 +69,7 @@ class AccountController: UIViewController {
         didSet {
             loginButton.titleLabel?.font = Fonts.message
             loginButton.tintColor = Colors.textSubtitle
-            if upgrade {
+            if accountService.isFakeEmail {
                 loginButton.hidden = true
             }
         }
@@ -94,87 +94,18 @@ class AccountController: UIViewController {
     
     @IBAction func fbAccount() {
         
-        if upgrade {
-            PFFacebookUtils.linkUserInBackground(PFUser.currentUser()!, withReadPermissions: fbPermissions, block: { (success, error) -> Void in
-                if success {
-                    print("nice!")
-                    self.getUserInfo()
-                } else {
-                    print("fail")
-                }
-            })
-        } else {
-            PFFacebookUtils.logInInBackgroundWithReadPermissions(fbPermissions) { (user, error) -> Void in
-                
-                if error != nil {
-                    print("\(error?.localizedDescription)")
-                    return
-                }
-                
-                if let user = user {
-                    self.getUserInfo()
-                    if user.isNew {
-                        /// New user signed up with facebook
-                    } else {
-                        
-                    }
-                } else {
-                    /// user cancelled the login
-                }
-            }
-        }
-    }
-    
-    var upgrade: Bool = false
-    
-    private func getUserInfo() {
-        let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id, email, first_name, last_name"])
-        req.startWithCompletionHandler { (connection, result, error) -> Void in
-            if error != nil {
-                print("\(error.localizedDescription)")
-            } else if let result = result as? [String:AnyObject] {
-                let userId = result["id"] as! String
-                let userFirstName = result["first_name"] as! String
-                let userLastName = result["last_name"] as! String
-                let userEmail = result["email"] as! String
-                let userProfileSmallURL = NSURL(string: "https://graph.facebook.com/\(userId)/picture")
-                let pictureData = NSData(contentsOfURL: userProfileSmallURL!)
-                
-                let myUser:PFUser = PFUser.currentUser()!
-                
-                if let pictureData = pictureData {
-                    let file = PFFile(data: pictureData)
-                    myUser.setObject(file!, forKey: "profilePicture")
-                }
-                
-                myUser.email = userEmail
-                myUser["fbId"] = userId
-                
-                if !self.upgrade {
-                    myUser["name"] = "\(userFirstName) \(userLastName)"
-                    myUser["habits"] = []
-                    myUser["paymentDue"] = NSDate() + 1.year
-                    myUser["following"] = []
-                }
-                
-                myUser.saveInBackground()
-                
-                AuthManager.currentUser = User(parseUser: myUser, withHabits: false)
-                
-                WebServices.updateAllData()
-                
-                Utilities.postNotification(Notifications.reloadNetworkOnline)
+        accountService.connectWithFacebook({ (success) in
+            if success {
                 self.dismissViewControllerAnimated(true, completion: nil)
-                
             } else {
-                print("no result")
+                Utilities.alertError("Something went wrong", vc: self)
             }
-        }
+        })
     }
     
     @IBAction func emailAccount(sender: UIButton) {
         
-        if upgrade {
+        if accountService.isFakeEmail {
             var tField: UITextField!
             
             func configurationTextField(textField: UITextField!)
@@ -205,7 +136,7 @@ class AccountController: UIViewController {
             }))
             presentViewController(alert, animated: true, completion: nil)
         } else {
-            let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupViewController
+            let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupController
             vc.newAccount = sender == signUpButton
             self.navigationController?.pushViewController(vc, animated: true)
         }

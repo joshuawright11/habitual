@@ -48,7 +48,10 @@ class ConnectionCell: UITableViewCell {
     var habit:Habit!
     
     /// The `Connection` this cell represents.
-    var connection:Connection!
+    var user:User!
+    
+    /// The color related to the user
+    var color: UIColor!
     
     // *********************************
     // MARK: - UITableViewCell Overrides
@@ -56,12 +59,12 @@ class ConnectionCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         if selected {
-            if habit!.usersToNotify.contains(connection.user) {
-                habit!.usersToNotify.removeAtIndex(habit!.usersToNotify.indexOf(connection.user)!)
+            if habit!.usersToNotify.contains(user) {
+                habit!.usersToNotify.removeAtIndex(habit!.usersToNotify.indexOf(user)!)
                 checkiv.tintColor = Colors.background
             }else{
-                habit!.usersToNotify.append(connection.user)
-                checkiv.tintColor = connection.color!
+                habit!.usersToNotify.append(user)
+                checkiv.tintColor = color
             }
         }
     }
@@ -71,26 +74,26 @@ class ConnectionCell: UITableViewCell {
     // ***************
     
     /// Configure the cell with a `Habit` and a `Connection`.
-    func configure(habit: Habit, connection: Connection) {
+    func configure(habit: Habit, user: User, color: UIColor) {
         self.habit = habit
-        self.connection = connection
+        self.user = user
 
-        initialsLabel.textColor = connection.color
-        initialsLabel.layer.borderColor = connection.color!.CGColor
+        initialsLabel.textColor = color
+        initialsLabel.layer.borderColor = color.CGColor
         
-        nameLabel.text = connection.user.name
-        let names:[String] = connection.user.name.componentsSeparatedByString(" ")
+        nameLabel.text = user.name
+        let names:[String] = user.name.componentsSeparatedByString(" ")
         initialsLabel.text = String(names[0].characters.first!) + String(names[1].characters.first!)
         
         if let cdo = habit.coreDataObject {
-            let contains:Bool = cdo.usernamesToNotify.contains(connection.user.name)
-            checkiv.tintColor = contains ? connection.color! : Colors.background
-            let habitContains:Bool = habit.usersToNotify.map({$0.name}).contains(connection.user.name)
+            let contains:Bool = cdo.usernamesToNotify.contains(user.name)
+            checkiv.tintColor = contains ? color : Colors.background
+            let habitContains:Bool = habit.usersToNotify.map({$0.name}).contains(user.name)
             if(contains && !(habitContains)){
-                habit.usersToNotify.append(connection.user)
+                habit.usersToNotify.append(user)
             }
         }else{
-            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(connection.user.name) ? connection.color! : Colors.background
+            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(user.name) ? color : Colors.background
         }
     }
 }

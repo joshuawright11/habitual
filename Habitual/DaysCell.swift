@@ -21,7 +21,7 @@ class DaysCell: HabitDetailCell {
                 bt.setTitleColor(Colors.accent, forState: .Normal)
                 bt.titleLabel?.font = Fonts.sectionHeader
                 
-                bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+                bt.addTarget(self, action: #selector(DaysCell.buttonPressed(_:)), forControlEvents: .TouchUpInside)
             }
         }
     }

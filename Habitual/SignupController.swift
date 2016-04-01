@@ -44,6 +44,7 @@ class SignupController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    var accountService: AccountService!
     
     var newAccount = true
     
@@ -56,13 +57,13 @@ class SignupController: UIViewController, UITextFieldDelegate {
         
         setupKeyboardNotifications()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignupController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
     func setupKeyboardNotifications() {
-        Utilities.registerForNotification(self, selector: "keyboardWasShown:", name: UIKeyboardWillShowNotification)
-        Utilities.registerForNotification(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification)
+        Utilities.registerForNotification(self, selector: #selector(SignupController.keyboardWasShown(_:)), name: UIKeyboardWillShowNotification)
+        Utilities.registerForNotification(self, selector: #selector(SignupController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification)
     }
     
     func keyboardWasShown(notification: NSNotification) {
@@ -175,26 +176,21 @@ class SignupController: UIViewController, UITextFieldDelegate {
         }
         
         if newAccount {
-            WebServices.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!) { (success, user) -> () in
-                
+            accountService.signup(usernameTextField.text!, password: passwordTextField.text!, name: nameTextField.text!, callback: { (success) in
                 if success {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                    AuthManager.currentUser = user
-                    Utilities.postNotification(Notifications.reloadNetworkOnline)
-                }else{
+                } else {
                     Utilities.alertError("An account with that email already exists", vc: self)
                 }
-            }
+            })
         } else {
-            WebServices.login(usernameTextField.text!, password: passwordTextField.text!) { (success, user) -> () in
+            accountService.login(usernameTextField.text!, password: passwordTextField.text!, callback: { (success) in
                 if success {
-                    AuthManager.currentUser = user
-                    Utilities.postNotification(Notifications.reloadNetworkOnline)
                     self.dismissViewControllerAnimated(true, completion: nil)
-                }else{
+                } else {
                     Utilities.alertError("Invalid email or password", vc: self)
                 }
-            }
+            })
         }
     }
     

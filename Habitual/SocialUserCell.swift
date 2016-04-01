@@ -56,15 +56,14 @@ class SocialUserCell: UITableViewCell {
     var user: User! {
         didSet {
             titleLabel.text = user.name
-            subtitleLabel.text = "Member since \(Utilities.monthYearStringFromDate(user.parseObject!.createdAt!))"
-            let id = user.parseObject!["fbId"]
-            if oldValue == nil || oldValue.username != user.username {
+            subtitleLabel.text = "Member since \(Utilities.monthYearStringFromDate(user.parseObject.createdAt!))"
+            let id = user.parseObject["fbId"]
+            if oldValue == nil || oldValue.email != user.email {
                 iv.image = UIImage()
                 if let id = id as? String {
                     iv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
                 }
-                if AuthManager.currentUser!.connections.map({$0.user.username})
-                    .contains(user.username) {
+                if connectClosure == nil {
                     button.setTitle("Sent", forState: .Normal)
                     button.enabled = false
                 } else {
@@ -81,12 +80,17 @@ class SocialUserCell: UITableViewCell {
         }
     }
     
+    var connectClosure: ((user: User) -> ())?
+
+    func configureForUser(user: User, color: UIColor, connectClosure: ((user: User)->())?) {
+        self.user = user
+        self.color = color
+        self.connectClosure = connectClosure
+    }
+    
     @IBAction func connectPressed() {
-        AuthManager.currentUser?.addConnection(self.user.username, callback: { (success) -> () in
-            if success {
-                self.button.setTitle("Sent", forState: .Normal)
-                self.button.enabled = false
-            }
-        })
+        if let connectClosure = connectClosure {
+            connectClosure(user: user)
+        }
     }
 }

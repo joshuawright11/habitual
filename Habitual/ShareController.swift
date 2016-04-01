@@ -90,7 +90,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     private var contacts: [User] = []
     
     func setupListener(view: UIView) {
-        let gr = UITapGestureRecognizer(target: self, action: "tapped:")
+        let gr = UITapGestureRecognizer(target: self, action: #selector(ShareController.tapped(_:)))
         view.addGestureRecognizer(gr)
     }
     
@@ -135,7 +135,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
         super.viewDidLoad()
 
         self.navigationItem.title = "Find Friends"
-        let button = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
+        let button = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(ShareController.cancel))
         self.navigationItem.leftBarButtonItem = button
         
         self.tableView.registerNib(UINib(nibName: "SocialUserCell", bundle: nil), forCellReuseIdentifier: "social")
@@ -178,9 +178,7 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
                         let emails = person.emails?.map({$0.value})
                         if let emails = emails {
                             for email in emails {
-                                if email != AuthManager.currentUser!.parseObject!["email"] as! String {
-                                    emailList.append(email)
-                                }
+                                emailList.append(email)
                             }
                         }
                     }

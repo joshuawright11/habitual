@@ -12,7 +12,11 @@ import UIKit
 
 class HabitDetailController: UITableViewController {
     
-    var habit:Habit?
+    var habit:Habit = Habit()
+    
+    var habitService: HabitService!
+    
+    var connectionService: ConnectionService!
     
     var canInteract = true // user can interact with elements
     var editng = false // user has pressed edit button
@@ -28,20 +32,10 @@ class HabitDetailController: UITableViewController {
         
         doAppearance()
         
-        Utilities.registerForNotification(self, selector: Selector("toggleDOTW"), name: Notifications.dotwToggled)
-        Utilities.registerForNotification(self, selector: Selector("toggleAccountability"), name: Notifications.accountabilityToggled)
+        Utilities.registerForNotification(self, selector: #selector(HabitDetailController.toggleDOTW), name: Notifications.dotwToggled)
+        Utilities.registerForNotification(self, selector: #selector(HabitDetailController.toggleAccountability), name: Notifications.accountabilityToggled)
         
-        if let habit = habit {
-            
-            if habit.usersToNotify.count != habit.coreDataObject?.usernamesToNotify.count {
-                let connections = AuthManager.currentUser?.connections
-                if let connections = connections {
-                    if(connections.count == 0) { return }
-                    for name in habit.coreDataObject!.usernamesToNotify {
-                        habit.usersToNotify.append(connections.filter({$0.user.name == name}).first!.user)
-                    }
-                }
-            }
+        if habitService.isTracking(habit) {
             
             self.navigationItem.title = habit.name
 
@@ -49,7 +43,7 @@ class HabitDetailController: UITableViewController {
             accountabilityOn = habit.notificationsEnabled
             self.tableView.reloadData()
             
-            let button = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit:")
+            let button = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: #selector(HabitDetailController.edit(_:)))
             self.navigationItem.rightBarButtonItem = button
             
             self.tableView.reloadData()
@@ -57,7 +51,7 @@ class HabitDetailController: UITableViewController {
         }else{
             self.navigationItem.title = "New Habit"
             
-            let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "done:")
+            let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(HabitDetailController.done(_:)))
             self.navigationItem.rightBarButtonItem = button
             
             habit = Habit()
@@ -76,19 +70,16 @@ class HabitDetailController: UITableViewController {
 
         if !checkData() { return }
         
-        habit?.createdAt = NSDate()
-        habit?.saveToCoreData(false)
-        
-        Utilities.postNotification(Notifications.habitDataChanged)
+        habitService.createHabit(habit)
         
         navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func checkData() -> Bool {
-        if habit?.name == "" {
+        if habit.name == "" {
             Utilities.alertWarning("Your habit needs a name", vc: self.navigationController!)
             return false
-        } else if habit?.frequency == .Daily && habit!.daysToComplete.isEmpty {
+        } else if habit.frequency == .Daily && habit.daysToComplete.isEmpty {
             Utilities.alertWarning("Your habit needs to be done on at least 1 weekday", vc: self.navigationController!)
             return false
         }
@@ -109,18 +100,14 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.rightBarButtonItem?.title = "Save"
             canInteract = true
             
-            originalHabitName = habit?.name
-            originalHabitState = habit?.notificationsEnabled
+            originalHabitName = habit.name
+            originalHabitState = habit.notificationsEnabled
             
             for cell in tableView.visibleCells {cell.userInteractionEnabled = true}
             
         } else {
             
-            if habit?.coreDataObject == nil {
-                AuthManager.currentUser?.habits.append(habit!)
-            }
-            
-            habit?.saveToCoreData(false)
+            habitService.createHabit(habit)
             
             self.tableView.deleteSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             
@@ -153,19 +140,19 @@ class HabitDetailController: UITableViewController {
         if(!accountabilityOn){
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 3)], withRowAnimation: .Automatic)
             
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: connectionService.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
             
-            for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
+            for i in 0 ..< connectionService.connections.count {
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 3)], withRowAnimation: .Automatic)
             }
         }else{
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 3)], withRowAnimation: .Automatic)
             
-            for var i = 0; i < (AuthManager.currentUser?.connections.count)!; i++ {
+            for i in 0 ..< connectionService.connections.count {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2+i, inSection: 3)], withRowAnimation: .Automatic)
             }
             
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AuthManager.currentUser!.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: connectionService.connections.count + 2, inSection: 3)], withRowAnimation: .Automatic)
         }
         self.tableView.endUpdates()
     }
@@ -173,11 +160,11 @@ class HabitDetailController: UITableViewController {
     func detailForIndex(index: Int) -> String{
         switch index {
         case 0:
-            return habit == nil ? "Enter name here" : habit!.name
+            return habitService.isTracking(habit) ? "Enter name here" : habit.name
         case 1:
-            return habit == nil ? "Daily" : habit!.frequency.toString()
+            return habitService.isTracking(habit) ? "Daily" : habit.frequency.toString()
         default:
-            return "\(habit!.datesCompleted.count)"
+            return "\(habit.datesCompleted.count)"
         }
     }
     
@@ -188,8 +175,7 @@ class HabitDetailController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) in
-            AuthManager.currentUser!.habits.removeAtIndex(AuthManager.currentUser!.habits.indexOf(self.habit!)!)
-            self.habit?.deleteFromCoreData()
+            self.habitService.deleteHabit(self.habit)
             self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         
@@ -209,7 +195,7 @@ class HabitDetailController: UITableViewController {
         case 0: return 3
         case 1: return dotwOn ? 3 : 2
         case 2: return 1
-        case 3: return accountabilityOn ? 3+(AuthManager.currentUser?.connections.count)! : 1
+        case 3: return accountabilityOn ? 3 + connectionService.connections.count : 1
         case 4: return 1
         default: return 3
         }
@@ -220,12 +206,13 @@ class HabitDetailController: UITableViewController {
         
         if(indexPath.section == 4) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
-        }else if indexPath.section == 3 && indexPath.row == AuthManager.currentUser!.connections.count + 2{
+        }else if indexPath.section == 3 && indexPath.row == connectionService.connections.count + 2 {
             let cell: InviteCell = tableView.dequeueReusableCellWithIdentifier(InviteCell.reuseID) as! InviteCell
             return cell
-        }else if indexPath.section == 3 && indexPath.row > 1 && indexPath.row != AuthManager.currentUser!.connections.count + 2 {
+        }else if indexPath.section == 3 && indexPath.row > 1 && indexPath.row != connectionService.connections.count + 2 {
             let cell: ConnectionCell = tableView.dequeueReusableCellWithIdentifier(id) as! ConnectionCell
-            cell.configure(habit!, connection: AuthManager.currentUser!.connections[indexPath.row - 2])
+            let connection = connectionService.connections[indexPath.row - 2]
+            cell.configure(habit, user: connectionService.otherUser(connection), color: connection.color)
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -234,7 +221,7 @@ class HabitDetailController: UITableViewController {
         }else if indexPath.section == 2 {
             let cell: AccountabilityCell = tableView.dequeueReusableCellWithIdentifier(id) as! AccountabilityCell
             cell.privat = true
-            cell.habit = habit!
+            cell.habit = habit
             
             if !canInteract {cell.userInteractionEnabled = false}
             else {cell.userInteractionEnabled = true}
@@ -242,7 +229,7 @@ class HabitDetailController: UITableViewController {
             return cell
         }else{
             let cell: HabitDetailCell = tableView.dequeueReusableCellWithIdentifier(id) as! HabitDetailCell
-            cell.habit = habit!
+            cell.habit = habit
 
             if indexPath.section == 3 && indexPath.row == 0 {
                 let cell = cell as! AccountabilityCell
@@ -295,7 +282,7 @@ class HabitDetailController: UITableViewController {
             switch indexPath.row {
             case 0: return 72
             case 1: return 44
-            case AuthManager.currentUser!.connections.count + 2: return InviteCell.height
+            case connectionService.connections.count + 2: return InviteCell.height
             default: return 58}
         }
     }
@@ -320,7 +307,7 @@ class HabitDetailController: UITableViewController {
         case 1: return
         case 2: return
         case 3:
-            if indexPath.row == AuthManager.currentUser!.connections.count + 2 {
+            if indexPath.row == connectionService.connections.count + 2 {
                 let sc = ShareController(nibName: "ShareController", bundle: nil)
                 let nav = UINavigationController(rootViewController: sc)
                 self.presentViewController(nav, animated: true, completion: nil)
@@ -331,15 +318,5 @@ class HabitDetailController: UITableViewController {
         default: return
         }
     
-    }
-    
-    // MARK: - View Controller methods
-    
-    override func willMoveToParentViewController(parent: UIViewController?) {
-        super.willMoveToParentViewController(parent)
-        
-        if habit?.createdAt == nil && parent == nil{
-            habit?.deleteFromCoreData()
-        }
     }
 }

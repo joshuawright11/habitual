@@ -12,10 +12,12 @@ import Parse
 
 // -TODO: Needs refactoring/documentation
 
-class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
+class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, ServiceObserver {
 
-    var connections:[Connection]?{
-        didSet{tableView.reloadData()}
+    var connectionService: ConnectionService! {
+        didSet {
+            connectionService.addConnectionServiceObserver(self)
+        }
     }
     
     override func viewDidLoad() {
@@ -35,47 +37,21 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
         self.navigationItem.title = "Connections"
         
-        let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: "addConnection")
+        let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: #selector(NetworkController.addConnection))
         
         self.navigationItem.rightBarButtonItem = button
         
-        self.connections = AuthManager.currentUser!.connections
         self.tableView.reloadData()
         
         if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
             button.enabled = false
         }
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
-        
-        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadNetworkOnline)
-        
-        Utilities.registerForNotification(self, selector: "refreshDataOffline", name: Notifications.reloadNetworkOffline)
-        
-        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.reloadChat)
     }
     
     func doAppearance() {
         self.tableView.backgroundColor = Colors.background
         
         Styler.navBarShader(self)
-    }
-    
-    func refreshData(){
-        self.navigationItem.rightBarButtonItem?.enabled = true
-        AuthManager.currentUser?.getConnections() { (success) -> () in
-            if success {
-                self.connections = AuthManager.currentUser?.connections
-                self.tableView.reloadData()
-            }
-            self.refreshControl?.endRefreshing()
-        }
-    }
-    
-    func refreshDataOffline() {
-        self.connections = AuthManager.currentUser?.connections
-        self.tableView.reloadData()
     }
     
     @IBAction func addConnection() {
@@ -100,18 +76,18 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         alert.addButton("Request Connection") {
             
             let text = txt.text!
-            
-            if(self.alreadyConnected(text)){
-                return
-            }else{
-                AuthManager.currentUser?.addConnection(txt.text!, callback: { (success) -> () in
+            do {
+                try self.connectionService.connectWith(text) { (success) in
                     if success {
-                        self.connections = AuthManager.currentUser?.connections
                         Utilities.alertSuccess("Connection request sent", vc: self.navigationController!)
                     }else{
                         Utilities.alertError("User not found", vc: self.navigationController!)
                     }
-                })
+                }
+            } catch ConnectionServiceError.AlreadyConnected {
+                Utilities.alertError("You're already connected to that user!", vc: self.navigationController!)
+            } catch {
+                Utilities.alertError("You can't connect to yourself!", vc: self.navigationController!)
             }
         }
         
@@ -122,21 +98,6 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         }
         
         alert.showEdit("Add Connection", subTitle: "Request a connection with someone with their email.", closeButtonTitle: "Close", colorStyle: 0xC644FC, colorTextButton: 0xffffff)
-    }
-    
-    func alreadyConnected(string: String) -> Bool {
-        
-        let usernames = connections?.map({$0.user.username})
-        
-        if(usernames!.contains(string)) {
-            Utilities.alertError("You are already connected with that user!", vc: self.navigationController!)
-            return true
-        }else if(AuthManager.currentUser?.username == string){
-            Utilities.alertError("You can't connect with yourself!", vc: self.navigationController!)
-            return true
-        }else{
-            return false
-        }
     }
     
     // MARK: - Empty data set delegate
@@ -154,34 +115,24 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if let connections = connections {
-            
-            if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
-                return 0
-            }else{
-                return connections.count
-            }
-        }else{
-            return 0
-        }
+        return connectionService.connections.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("user") as! UserCell
 
-        let connection = connections![indexPath.row]
-        cell.configure(connection)
+        let connection = connectionService.connections[indexPath.row]
+        cell.configure(connectionService, connection: connection)
         
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let user = connections![indexPath.row].user
+        let user = connectionService.otherUser(connectionService.connections[indexPath.row])
         var numFinished = user.habits.filter({$0.completed()}).count
         var numUnfinished = user.habits.count - numFinished
         
-        if !connections![indexPath.row].approved {
+        if connectionService.connections[indexPath.row].approved {
             numFinished = 0
             numUnfinished = 0
         }
@@ -192,11 +143,12 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if connections![indexPath.row].approved {
-            let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserViewController
-            uvc.user = connections![indexPath.row].user
-            uvc.color = connections![indexPath.row].color!
-            uvc.connection = connections![indexPath.row]
+        if connectionService.connections[indexPath.row].approved {
+            let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserController
+            let connection = connectionService.connections[indexPath.row]
+            uvc.user = connectionService.otherUser(connection)
+            uvc.color = connection.color
+            uvc.connection = connection
             
             self.navigationController?.pushViewController(uvc, animated: true)
         }
@@ -245,6 +197,10 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                 forKey: NSFontAttributeName) as? [String : AnyObject])
         
         return attrString
+    }
+    
+    func serviceDidUpdate() {
+        self.tableView.reloadData()
     }
 
 }

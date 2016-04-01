@@ -29,7 +29,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
         
         Styler.navBarShader(self)
         
-        let button = UIBarButtonItem(image: UIImage(named: "tab_pulse")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "pulse")
+        let button = UIBarButtonItem(image: UIImage(named: "tab_pulse")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(SettingsController.pulse))
         self.navigationItem.rightBarButtonItem = button
         
         tableView.registerNib(UINib(nibName: "SettingsCell", bundle: nil), forCellReuseIdentifier: SettingsCell.reuseIdentifier)
@@ -54,7 +54,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(DatePickerCell.reuseID) as! DatePickerCell
-            cell.datePicker.addTarget(self, action: "notificationTimeSet:", forControlEvents: .ValueChanged)
+            cell.datePicker.addTarget(self, action: #selector(SettingsController.notificationTimeSet(_:)), forControlEvents: .ValueChanged)
             var time = Utilities.readString(Notifications.reminderTime)
             if time == "" {
                 time = "7:00 PM"
@@ -87,7 +87,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
                 }
                 cell.titleLabel.text = "Daily Reminders @ \(time)"
                 cell.swtch.setOn(!bool, animated: false)
-                cell.swtch.addTarget(self, action: "toggleReminders:", forControlEvents: .ValueChanged)
+                cell.swtch.addTarget(self, action: #selector(SettingsController.toggleReminders(_:)), forControlEvents: .ValueChanged)
             default: break
             }
         case 1:

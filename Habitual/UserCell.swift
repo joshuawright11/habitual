@@ -100,12 +100,18 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     
     var connection:Connection! {
         didSet {
-            finishedHabits = connection.user.habits.filter({$0.completed()})
-            unfinishedHabits = connection.user.habits.filter({!$0.completed()})
-            linksLabel.text = "x\(connection.numAccountable)"
-            timesLabel.text = "x\(connection.user.statHabitsCompleted())"
             
-            let id = connection.user.parseObject!["fbId"]
+            guard let connectionService = connectionService else {
+                fatalError("You need to set a connection service before setting a connection.")
+            }
+            
+            let user = connectionService.otherUser(connection)
+            finishedHabits = user.habits.filter({$0.completed()})
+            unfinishedHabits = user.habits.filter({!$0.completed()})
+            linksLabel.text = "x\(connectionService.numHabitsAccountableInConnection(connection))"
+            timesLabel.text = "x\(user.habits.statHabitsCompleted())"
+            
+            let id = user.parseObject["fbId"]
             
             if let id = id as? String {
                 profileiv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
@@ -117,10 +123,10 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             finishedTableView.reloadData()
             unfinishedTableView.reloadData()
             
-            var numFinished = connection.user.habits.filter({$0.completed()}).count
-            var numUnfinished = connection.user.habits.count - numFinished
+            var numFinished = user.habits.filter({$0.completed()}).count
+            var numUnfinished = user.habits.count - numFinished
             
-            if !connection.approved {
+            if !connection.approved.boolValue {
                 numFinished = 0
                 numUnfinished = 0
                 habitsContainer.hidden = true
@@ -137,8 +143,16 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             titleLabel.setNeedsLayout()
             habitsContainer.setNeedsLayout()
             
+            let names = user.name.componentsSeparatedByString(" ")
+            
+            initialsLabel.text = (String(names[0].characters.first!) + String(names[1].characters.first!)).uppercaseString
+            
+            titleLabel.text = user.name
         }
     }
+    
+    var connectionService: ConnectionService!
+    
     var color: UIColor! {
         didSet {
             linksiv.tintColor = color
@@ -152,16 +166,9 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         setupTableViews()
     }
     
-    func configure(connection: Connection) {
+    func configure(connectionService: ConnectionService, connection: Connection) {
+        self.connectionService = connectionService
         self.connection = connection
-        let user = connection.user
-        
-        let names = user.name.componentsSeparatedByString(" ")
-        
-        initialsLabel.text = (String(names[0].characters.first!) + String(names[1].characters.first!)).uppercaseString
-        
-        titleLabel.text = user.name
-        
         doAppearance()
     }
     
@@ -182,15 +189,8 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(HabitGlanceCell.reuseIdentifier, forIndexPath: indexPath) as! HabitGlanceCell
         
-        if tableView == finishedTableView {
-            cell.finished = true
-            cell.habit = finishedHabits[indexPath.row]
-            cell.connectionColor = self.color
-        } else {
-            cell.finished = false
-            cell.habit = unfinishedHabits[indexPath.row]
-            cell.connectionColor = self.color
-        }
+        let habits = tableView == finishedTableView ? finishedHabits : unfinishedHabits
+        cell.configureForHabit(habits[indexPath.row], color: self.color, accountable: false, completed: tableView == finishedTableView)
         
         return cell
     }
@@ -202,23 +202,23 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     func doAppearance() {
         
         if connection.approved {
-            subtitleLabel.text = connection.messages?.last?.text ?? "\(connection.user.statHabitsCompleted()) habits completed"
+            subtitleLabel.text = connection.messages?.last?.text ?? "\(connectionService.otherUser(connection).habits.statHabitsCompleted()) habits completed"
         }else{
-            subtitleLabel.text = connection.sentByCurrentUser ? "Pending acceptance" : "Wants to connect"
+            subtitleLabel.text = connectionService.sentByCurrentUser(connection) ? "Pending acceptance" : "Wants to connect"
         }
         
         color = connection.approved ? connection.color : UIColor(hexString: "999999")
         let textColor = connection.approved ? Colors.textMain : UIColor(hexString: "999999")
         let subtitleTextColor = connection.approved ? Colors.textSubtitle : UIColor(hexString: "999999")
         
-        if connection.approved || connection.sentByCurrentUser {
+        if connection.approved || connectionService.sentByCurrentUser(connection) {
             acceptButton.hidden = true
         } else {
             acceptButton.hidden = false
             acceptButton.backgroundColor = Colors.green.colorWithAlphaComponent(0.7)
             acceptButton.titleLabel?.font = Fonts.sectionHeader
             acceptButton.tintColor = Colors.textMain
-            acceptButton.addTarget(self, action: Selector("approve"), forControlEvents: .TouchUpInside)
+            acceptButton.addTarget(self, action: #selector(UserCell.approve), forControlEvents: .TouchUpInside)
             acceptButton.layer.cornerRadius = Floats.cardCornerRadius
         }
         
@@ -245,7 +245,7 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     }
     
     func approve() {
-        connection.approve()
+        connectionService.approveConnection(connection)
         doAppearance()
     }
     

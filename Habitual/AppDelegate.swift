@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - App Lifecycle methods
     
+    var habitReminderManager: HabitReminderManager!
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Crashlytics setup
@@ -33,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // "content_available" was used to trigger a background push (introduced in iOS 7).
             // In that case, we skip tracking here to avoid double counting the app-open.
             
-            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus")
-            let oldPushHandlerOnly = !self.respondsToSelector("application:didReceiveRemoteNotification:fetchCompletionHandler:")
+            let preBackgroundPush = !application.respondsToSelector(Selector("backgroundRefreshStatus"))
+            let oldPushHandlerOnly = !self.respondsToSelector(#selector(UIApplicationDelegate.application(_:didReceiveRemoteNotification:fetchCompletionHandler:)))
             var pushPayload = false
             if let options = launchOptions {
                 pushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil
@@ -52,13 +54,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         doDesign()
         
+        let manager = ServiceManager()
+        
+        habitReminderManager = HabitReminderManager(habitService: manager)
+        
         return true
     }
 
     func applicationWillResignActive(application: UIApplication) {}
 
     /// Reschedule local notifications every time the app is closed
-    func applicationDidEnterBackground(application: UIApplication) {scheduleLocalNotifications()}
+    func applicationDidEnterBackground(application: UIApplication) {
+        habitReminderManager.scheduleLocalNotifications()
+    }
 
     func applicationWillEnterForeground(application: UIApplication) {}
 

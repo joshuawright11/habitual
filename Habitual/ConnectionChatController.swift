@@ -12,9 +12,12 @@ import Timepiece
 
 // -TODO: Needs refactoring/documentation
 
-class ConnectionChatController: JSQMessagesViewController {
+class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     var connection:Connection!
+    
+    var accountService: AccountService!
+    var connectionService: ConnectionService!
     
     var outgoingBubbleImageData:JSQMessageBubbleImageDataSource!
     var incomingBubbleImageData:JSQMessageBubbleImageDataSource!
@@ -28,16 +31,20 @@ class ConnectionChatController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let user = accountService.currentUser else {
+            fatalError("Yeaahhhhh... YA NEED A USER!")
+        }
+        
+        connectionService.addConnectionServiceObserver(self)
+        
         layout = ConnectionChatViewFlowLayout(connection: self.connection)
         
         self.collectionView!.collectionViewLayout = layout
         
-        Utilities.registerForNotification(self, selector: "chatReceived", name: Notifications.reloadChat)
-        
-        senderId = AuthManager.currentUser?.username
-        senderDisplayName = AuthManager.currentUser?.username
+        senderId = user.email
+        senderDisplayName = user.name
 
-        self.navigationItem.title = connection.user.name.componentsSeparatedByString(" ")[0]
+        self.navigationItem.title = connectionService.otherUser(connection).name.componentsSeparatedByString(" ")[0]
         
         let bif = JSQMessagesBubbleImageFactory()
         outgoingBubbleImageData = bif.outgoingMessagesBubbleImageWithColor(Colors.blue.colorWithAlphaComponent(0.7))
@@ -47,17 +54,8 @@ class ConnectionChatController: JSQMessagesViewController {
         doAppearance()
     }
     
-    func chatReceived() {
-        self.connection.loadMessages { (success) -> () in
-            if success {
-                self.collectionView?.reloadData()
-                Utilities.postNotification(Notifications.reloadNetworkOffline)
-                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                self.scrollToBottomAnimated(true)
-            }else{
-                print("error :(")
-            }
-        }
+    func serviceDidUpdate() {
+        self.collectionView.reloadData()
     }
     
     func doAppearance() {
@@ -69,7 +67,7 @@ class ConnectionChatController: JSQMessagesViewController {
         
         scrollToBottomAnimated(false)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "tab_pulse")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: Selector("pulse"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "tab_pulse")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(ConnectionChatController.pulse))
         
         self.inputToolbar!.contentView!.textView!.keyboardAppearance = .Dark;
         self.inputToolbar?.tintColor = Colors.background
@@ -96,9 +94,9 @@ class ConnectionChatController: JSQMessagesViewController {
         
         let message = connection.messages![indexPath.row]
         if(message.habit == nil){
-            return JSQMessage(senderId: message.sender.username, displayName: message.sender.username, text: message.text)
+            return JSQMessage(senderId: message.sender.email, displayName: message.sender.email, text: message.text)
         }else{
-            return JSQMessage(senderId: message.sender.username, displayName: message.sender.username, text: "")
+            return JSQMessage(senderId: message.sender.email, displayName: message.sender.email, text: "")
         }
     }
     
@@ -110,7 +108,7 @@ class ConnectionChatController: JSQMessagesViewController {
 
         let message = connection.messages![indexPath.row]
         if(message.habit == nil){
-            return message.sentByCurrentUser ? outgoingBubbleImageData : incomingBubbleImageData
+            return message.sender.email == accountService.currentUser?.email ? outgoingBubbleImageData : incomingBubbleImageData
         }else{
             return emptyBubbleImageData
         }
@@ -127,7 +125,11 @@ class ConnectionChatController: JSQMessagesViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         Utilities.postNotification(Notifications.reloadNetworkOffline)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        connection.sendMessage(text)
+        connectionService.message(connection, text: text!) { (success) in
+            if !success {
+                Utilities.alertError("There was an error sending the message :(", vc: self)
+            }
+        }
         finishSendingMessage()
     }
     
@@ -147,7 +149,7 @@ class ConnectionChatController: JSQMessagesViewController {
     func attributedStringForHeaderWithMessage(message: Message) -> NSMutableAttributedString {
         
         var firstName = message.sender.name.componentsSeparatedByString(" ")[0]
-        if message.sender.username == AuthManager.currentUser?.username {firstName = "You"}
+        if message.sender.email == accountService.currentUser?.email {firstName = "You"}
 
         let habitName = message.habit!["name"] as! String
         let due = Utilities.monthDayStringFromDate(message.timeStamp - 1.day)

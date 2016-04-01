@@ -17,8 +17,9 @@ class ColorCell: HabitDetailCell {
             var i = 0
             for bt in colorButtons {
                 bt.layer.cornerRadius = 8.0
-                bt.backgroundColor = Colors.rainbow[i++]
-                bt.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
+                bt.backgroundColor = Colors.rainbow[i]
+                i += 1
+                bt.addTarget(self, action: #selector(ColorCell.buttonPressed(_:)), forControlEvents: .TouchUpInside)
             }
         }
     }

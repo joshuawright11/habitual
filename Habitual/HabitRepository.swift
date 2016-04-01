@@ -12,6 +12,8 @@ import CoreData
 
 internal class HabitRepository: NSObject {
     
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     internal var habits: [Habit] = []
     
     override init() {
@@ -31,15 +33,22 @@ internal class HabitRepository: NSObject {
         
     }
     
+    internal func orderHabits(habits: [Habit]) {
+        
+    }
+    
+    internal func isTracking(habit: Habit) -> Bool {
+        return true
+    }
+    
     private func loadHabitsFromCoreData() {
         
     }
 }
 
 private extension HabitRepository {
-    static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    
-    private static func getHabitsOfCurrentUser() -> [Habit]{
+
+    private func getHabitsOfCurrentUser() -> [Habit]{
         let entityDescription =
             NSEntityDescription.entityForName("Habit",
                                               inManagedObjectContext: managedObjectContext!)
@@ -72,7 +81,7 @@ private extension HabitRepository {
         return habits;
     }
     
-    private static func clearHabitsOfCurrentUser() {
+    private func clearHabitsOfCurrentUser() {
         let entityDescription =
             NSEntityDescription.entityForName("Habit",
                                               inManagedObjectContext: managedObjectContext!)
@@ -102,8 +111,9 @@ private extension HabitRepository {
                 do {
                     try managedObjectContext?.save()
                 } catch _ {
+                
                 }
-                AuthManager.currentUser?.habits = [];
+                habits = [];
             }
         }
     }
@@ -118,7 +128,7 @@ private extension Habit {
         }else{
             if(callback == nil){
                 addToServer({ (success) -> () in
-                    WebServices.syncUserHabits()
+                    
                 })
             }else{
                 addToServer(callback)
@@ -127,13 +137,13 @@ private extension Habit {
     }
     
     func addToServer(callback: ((Bool) -> ())?) {
-        guard let user = AuthManager.currentUser else {
+        guard let user = PFUser.currentUser() else {
             print("ERROR! User is not loaded!")
             return
         }
         
         parseObject = PFObject(className: "Habit")
-        parseObject!["owner"] = user.parseObject
+        parseObject!["owner"] = user
         updateOnServer(callback)
     }
     
@@ -146,7 +156,7 @@ private extension Habit {
         parseObject!["name"] = name
         parseObject!["due"] = dueOn()
         if coreDataObject?.usernamesToNotify.count == usersToNotify.count {
-            parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject!})
+            parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject})
         }
         parseObject!["daysToComplete"] = daysToComplete
         parseObject!["notifyConnectionsAt"] = notifyConnectionsAt
@@ -178,7 +188,6 @@ private extension Habit {
     
     func deleteFromServer() {
         parseObject!.deleteInBackground()
-        WebServices.syncUserHabits()
     }
 }
 
@@ -264,7 +273,6 @@ private extension Habit {
         
         do {
             try managedObjectContext?.save()
-            AuthManager.currentUser?.habits.append(self)
         } catch let error as NSError {
             print("awww error: " + error.description)
         }
@@ -285,9 +293,6 @@ private extension Habit {
         coreDataObject!.createdAt = createdAt
         coreDataObject!.datesCompletedData = datesCompleted
         coreDataObject!.notificationsEnabled = notificationsEnabled
-        if(AuthManager.currentUser?.connections.count != 0) {
-            coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
-        }
         coreDataObject!.save()
     }
     
@@ -299,13 +304,7 @@ private extension Habit {
     func saveToCoreData(completion: Bool) {
         
         defer {
-            if(AuthManager.currentUser?.parseObject != nil){
-                if completion {
-                    saveCompletionData()
-                } else{
-                    uploadToServer(nil)
-                }
-            }
+            uploadToServer(nil)
         }
         
         if completion {

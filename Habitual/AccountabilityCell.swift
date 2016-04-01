@@ -15,7 +15,7 @@ class AccountabilityCell: HabitDetailCell {
     @IBOutlet weak var swich: UISwitch! {
         didSet {
             swich.tintColor = Colors.accent
-            swich.addTarget(self, action: Selector("swichChanged:"), forControlEvents: .ValueChanged)
+            swich.addTarget(self, action: #selector(AccountabilityCell.swichChanged(_:)), forControlEvents: .ValueChanged)
         }
     }
     

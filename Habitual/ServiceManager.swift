@@ -23,15 +23,31 @@ protocol HabitService {
     func deleteHabit(habit: Habit)
     func updateHabit(habit: Habit)
     
+    func completeHabit(habit: Habit, on date: NSDate) -> Bool
+    func incompleteHabit(habit: Habit, on date: NSDate) -> Bool
+    
+    func orderHabits(habits: [Habit])
+    
+    func isTracking(habit: Habit) -> Bool
+    
     func addHabitServiceObserver(observer: ServiceObserver)
     func removeHabitServiceObserver(observer: ServiceObserver)
+}
+
+enum ConnectionServiceError: ErrorType {
+    case AlreadyConnected
+    case SelfConnection
 }
 
 protocol ConnectionService {
     var connections:[Connection] {get}
     
-    func connectWith(emailOfUser:String, callback: (success:Bool) -> ())
+    func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) throws
+    func approveConnection(connection: Connection)
     func message(connection: Connection, text: String, callback:(success: Bool) -> ())
+    func otherUser(connection: Connection) -> User
+    func sentByCurrentUser(connection: Connection) -> Bool
+    func numHabitsAccountableInConnection(connection: Connection) -> Int
     
     func addConnectionServiceObserver(observer: ServiceObserver)
     func removeConnectionServiceObserver(observer: ServiceObserver)
@@ -105,6 +121,22 @@ extension ServiceManager : HabitService {
         notifyHabitServiceObservers()
     }
     
+    func orderHabits(habits: [Habit]) {
+        habitRepository.orderHabits(habits)
+    }
+    
+    func isTracking(habit: Habit) -> Bool {
+        return habitRepository.isTracking(habit)
+    }
+    
+    func completeHabit(habit: Habit, on date: NSDate) -> Bool {
+        return true
+    }
+    
+    func incompleteHabit(habit: Habit, on date: NSDate) -> Bool {
+        return true
+    }
+    
     func addHabitServiceObserver(observer: ServiceObserver) {
         habitServiceObservers.append(observer)
     }
@@ -124,14 +156,45 @@ extension ServiceManager : ConnectionService {
         return connectionReposity.connections
     }
     
-    func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) {
+    func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) throws {
+        try alreadyConnected(emailOfUser)
         connectionReposity.connectWith(emailOfUser, callback: callback)
         notifyConnectionServiceObservers()
+    }
+    
+    private func alreadyConnected(string: String) throws {
+        
+        let emails = connections.map({otherUser($0).email})
+        
+        if(emails.contains(string)) {
+            throw ConnectionServiceError.AlreadyConnected
+        }else if(currentUser?.email == string){
+            throw ConnectionServiceError.SelfConnection
+        }
+    }
+    
+    func approveConnection(connection: Connection) {
+        connectionReposity.approveConnection(connection)
+    }
+    
+    func otherUser(connection: Connection) -> User {
+        return connection.sender.email == user?.email ? connection.receiver : connection.sender
     }
     
     func message(connection: Connection, text: String, callback:(success: Bool) -> ()) {
         connectionReposity.message(connection, text: text, callback: callback)
         notifyConnectionServiceObservers()
+    }
+    
+    func sentByCurrentUser(connection: Connection) -> Bool {
+        return connection.sender.email == currentUser?.email
+    }
+    
+    func numHabitsAccountableInConnection(connection: Connection) -> Int {
+        let user = otherUser(connection)
+        return user.habits.filter({$0.usersToNotify.contains({ (user) -> Bool in
+            return user.email == currentUser?.email
+        })}).count
     }
     
     func addConnectionServiceObserver(observer: ServiceObserver) {

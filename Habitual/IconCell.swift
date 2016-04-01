@@ -31,7 +31,7 @@ class IconCell: HabitDetailCell {
                 iv.accessibilityIdentifier = path
                 
                 if let gr = dict[iv] { iv.removeGestureRecognizer(gr) }
-                let tgr = UITapGestureRecognizer(target: self, action: Selector("tapped:"))
+                let tgr = UITapGestureRecognizer(target: self, action: #selector(IconCell.tapped(_:)))
                 iv.addGestureRecognizer(tgr)
                 dict[iv] = tgr
                 

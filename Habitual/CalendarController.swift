@@ -17,6 +17,8 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!
     
+    var habitService: HabitService!
+    
     var habits: [Habit] = [] {
         didSet {
             habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort(
@@ -79,7 +81,7 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.navigationItem.title = "Habits"
         
-        Utilities.registerForNotification(self, selector: "refreshData", name: Notifications.habitDataChanged)
+        Utilities.registerForNotification(self, selector: #selector(CalendarController.refreshData), name: Notifications.habitDataChanged)
         
         Utilities.registerForNotification(self, selector: #selector(moveCell), name:
             Notifications.reloadPulse)
@@ -95,10 +97,10 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
         
-        let dataButton = UIBarButtonItem(image: UIImage(named: "order")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "order")
+        let dataButton = UIBarButtonItem(image: UIImage(named: "order")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(CalendarController.order))
         navigationItem.leftBarButtonItem = dataButton
         
-        let addButton = UIBarButtonItem(image: UIImage(named: "plus")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: "add")
+        let addButton = UIBarButtonItem(image: UIImage(named: "plus")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(CalendarController.add))
         navigationItem.rightBarButtonItem = addButton
         
         doAppearance()
@@ -132,22 +134,14 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         return .None
     }
     
+    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+        habitService.orderHabits(habitsOfDate)
+    }
+    
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         
         let removed = habitsOfDate.removeAtIndex(sourceIndexPath.row)
         habitsOfDate.insert(removed, atIndex: destinationIndexPath.row)
-        
-        var count = 0
-        for habit in habitsOfDate {
-            habit.timeOfDay = count
-            habit.coreDataObject?.timeOfDayInt = Int16(count)
-            count += 1
-            habit.saveOrder()
-        }
-        
-        habitsOfDate = habits.sort({ (one, two) -> Bool in
-            return one.timeOfDay < two.timeOfDay
-        })
     }
     
     func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
@@ -215,94 +209,8 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func refreshData(){
-        
-        if let currentUser = AuthManager.currentUser {
-            habits = currentUser.habits
-            self.tableView.reloadData()
-        }
-    }
-    
-    @IBAction func clearData(){
-        CoreDataManager.clearHabitsOfCurrentUser()
-        self.refreshData()
-        Utilities.postNotification(Notifications.habitDataChanged)
-    }
-
-    // MARK: - Table view data source
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return habitsOfDate.count
-    }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let habit = habitsOfDate[indexPath.row]
-        
-        var cell:HabitHomeCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? HabitHomeCell
-        
-        if (cell == nil) {
-            cell = HabitHomeCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit", habit: habit, date: self.selectedDate)
-        
-            if cell!.respondsToSelector("setSeparatorInset:") {
-                cell?.separatorInset = UIEdgeInsetsZero
-            }
-        }else{ cell?.data = (habit, self.selectedDate) }
-        
-        cell?.configure()
-        
-        if tableView.editing {cell?.canSwipe = false}
-        else {cell?.canSwipe = true}
-        
-        return cell!
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let hdvc:HabitDetailController = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
-        hdvc.habit = habitsOfDate[indexPath.row]
-        self.navigationController?.pushViewController(hdvc, animated: true)
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
-        
-        return habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 89.0
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let header = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
-        header.textAlignment = .Center
-        
-        if selectedDate > NSDate().endOfDay {
-            
-        }
-        
-        var text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
-        
-        if tableView.editing {
-            text = "Drag to rearrange order"
-        }
-        
-        header.text = habitsOfDate.count > 0 ? text : ""
-        header.font = Fonts.calendarSectionHeader
-        header.textColor = Colors.textSecondary
-        
-        return header
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
+        habits = habitService.habits
+        self.tableView.reloadData()
     }
     
     // MARK: - View Controller methods
@@ -366,8 +274,90 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     func emptyDataSetDidTapView(scrollView: UIScrollView!) {
         // TODO: add a habit
     }
+}
+
+// MARK: - Table view data source
+extension CalendarController {
     
-    // MARK: - CVCalendarViewDelegate methods
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return habitsOfDate.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let habit = habitsOfDate[indexPath.row]
+        
+        var cell:HabitHomeCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? HabitHomeCell
+        
+        if (cell == nil) {
+            cell = HabitHomeCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit", habit: habit, date: self.selectedDate)
+            
+            if cell!.respondsToSelector(Selector("setSeparatorInset:")) {
+                cell?.separatorInset = UIEdgeInsetsZero
+            }
+        }else{ cell?.data = (habit, self.selectedDate) }
+        
+        cell?.configure()
+        
+        if tableView.editing {cell?.canSwipe = false}
+        else {cell?.canSwipe = true}
+        
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let hdvc:HabitDetailController = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
+        hdvc.habit = habitsOfDate[indexPath.row]
+        self.navigationController?.pushViewController(hdvc, animated: true)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        
+        return habitsOfDate.count > 0 ? dateFormatter.stringFromDate(selectedDate) : ""
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 89.0
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let header = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
+        header.textAlignment = .Center
+        
+        if selectedDate > NSDate().endOfDay {
+            
+        }
+        
+        var text = selectedDate > NSDate().endOfDay ? "You can't complete on this day yet" : "Swipe to complete"
+        
+        if tableView.editing {
+            text = "Drag to rearrange order"
+        }
+        
+        header.text = habitsOfDate.count > 0 ? text : ""
+        header.font = Fonts.calendarSectionHeader
+        header.textColor = Colors.textSecondary
+        
+        return header
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+}
+
+// MARK: - CVCalendarView methods
+extension CalendarController {
+    
     func presentationMode() -> CalendarMode {
         return .WeekView
     }
@@ -383,8 +373,8 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     func presentedDateUpdated(date: Date) {
         struct Months {
             static let months = ["January","February","March","April",
-                "May","June","July","August","September","October",
-                "November","December"]
+                                 "May","June","July","August","September","October",
+                                 "November","December"]
         }
     }
     
@@ -394,7 +384,7 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.reloadData()
         self.calendarView.commitCalendarViewUpdate()
     }
-
+    
     func shouldAutoSelectDayOnMonthChange() -> Bool {
         return false
     }
@@ -459,7 +449,7 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
         if let date = dayView.date {
             
-            if date.convertedDate() > NSDate() || AuthManager.currentUser?.habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
+            if date.convertedDate() > NSDate() || habitService.habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
                 return false
             } else {
                 return true
@@ -470,7 +460,7 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
-
+        
         var lightColor: UIColor, darkColor:UIColor
         
         lightColor = Colors.accent.calendarLighten()
@@ -478,8 +468,8 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
         view.tag = -369
-    
-        let percent = AuthManager.currentUser?.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
+        
+        let percent = habitService.habits.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {
             view.fillColor = UIColor.clearColor()
             view.strokeColor = lightColor

@@ -107,7 +107,7 @@ class HabitCell: UITableViewCell {
         }else if habit.daysToComplete.count == 7 {
             sRepeatString = "every day"
         }else{
-            for var i = 0; i < habit.daysToComplete.count; i++ {
+            for i in 0 ..< habit.daysToComplete.count {
                 if i == 0 {sRepeatString += "every \(habit.daysToComplete[i])"}
                 else if i == habit.daysToComplete.count - 1 {sRepeatString += " and \(habit.daysToComplete[i])"}
                 else{

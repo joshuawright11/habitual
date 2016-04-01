@@ -19,15 +19,22 @@ class ConnectionRepository: NSObject {
     func message(connection: Connection, text: String, callback:(success: Bool) -> ()) {
         
     }
+    
+    func approveConnection(connection: Connection) {
+        
+    }
 }
 
 private extension User {
+    
+    /// TODO TODO TODO
+    /// DO NOT FETCH PRIVATE HABITS THAT AREN'T ACCOUNTABLE
     func getConnections(callback:((success: Bool) -> ())?){
         
         let sender = PFQuery(className: "Connection")
-        sender.whereKey("sender", equalTo: parseObject!)
+        sender.whereKey("sender", equalTo: parseObject)
         let receiver = PFQuery(className: "Connection")
-        receiver.whereKey("receiver", equalTo: parseObject!)
+        receiver.whereKey("receiver", equalTo: parseObject)
         
         let or = PFQuery.orQueryWithSubqueries([sender, receiver])
         or.includeKey("sender")
@@ -43,17 +50,19 @@ private extension User {
                 var count = 0
                 var total = objects.count
                 for o in objects {
-                    let connection = Connection(parseObject: o)
+                    guard let connection = Connection(parseObject: o) else {
+                        continue
+                    }
+                    
                     connection.loadMessages({ (success) -> () in
                         total -= 1
                         if total == 0 {Utilities.postNotification(Notifications.reloadNetworkOffline)}
                     })
-                    connection.color = Colors.rainbow[count++ % 6]
+                    connection.color = Colors.rainbow[count % 6]
+                    count += 1
                     self.connections.append(connection)
                 }
-                Utilities.postNotification(Notifications.reloadNetworkOffline)
                 if let callback = callback {
-                    print("User+Web sees a currentUser with \(AuthManager.currentUser!.connections.count) connections")
                     callback(success: true)
                 }
             } else {
@@ -64,34 +73,25 @@ private extension User {
     
     func addConnection(email: String, callback:((success: Bool) -> ())?) {
         
-        let test = self.connections.filter({$0.user.email == email})
-        if test.count != 0 {
-            if let callback = callback { callback(success: false) }
-        }else{
-            let query1 = PFUser.query()
-            query1!.whereKey("email", equalTo: email)
+        let query1 = PFUser.query()
+        query1!.whereKey("email", equalTo: email)
+        
+        /// acounting for version 1.0 of the app, smfh
+        
+        let query2 = PFUser.query()
+        query2!.whereKey("username", equalTo: email)
+        
+        let query = PFQuery.orQueryWithSubqueries([query1!, query2!])
+        
+        query.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
             
-            /// acounting for version 1.0 of the app, smfh
-            
-            let query2 = PFUser.query()
-            query2!.whereKey("username", equalTo: email)
-            
-            let query = PFQuery.orQueryWithSubqueries([query1!, query2!])
-            
-            query.getFirstObjectInBackgroundWithBlock({ (user, error) -> Void in
-                
-                if let user = user{
-                    let connection = Connection(receiver: User(parseUser: user as! PFUser))
-                    connection.saveToServer()
-                    
-                    self.connections.append(connection)
-                    
-                    if let callback = callback {callback(success: true)}
-                }else{
-                    if let callback = callback {callback(success: false)}
-                }
-            })
-        }
+            if user != nil{
+                if let callback = callback {callback(success: true)}
+            }else{
+                if let callback = callback {callback(success: false)}
+            }
+        })
+
     }
 }
 
@@ -106,10 +106,8 @@ private extension Connection {
     /// - returns: The newly created `Message` that has been asynchronously sent
     ///   to the server.
     func sendMessage(text: String) -> Message {
-        let message = Message(text: text, connection: self)
-        message.send()
-        messages?.append(message)
-        return message
+        let message = Message(parseObject: PFObject(className: "Message"))
+        return message!
     }
     
     /// Load every `Message` associated with this connection from the server and
@@ -120,7 +118,7 @@ private extension Connection {
     ///   loaded.
     func loadMessages(callback:((success: Bool) -> ())?) {
         let query = PFQuery(className: "Message")
-        query.whereKey("connection", equalTo: self.parseObject!)
+        query.whereKey("connection", equalTo: self.parseObject)
         query.orderByAscending("timeStamp")
         query.includeKey("sender")
         query.includeKey("habit")
@@ -128,8 +126,9 @@ private extension Connection {
             if let parseObjects = parseObjects {
                 var messages: [Message] = []
                 for parseObject in parseObjects {
-                    let message = Message(parseObject: parseObject)
-                    messages.append(message)
+                    if let message = Message(parseObject: parseObject) {
+                        messages.append(message)
+                    }
                 }
                 
                 self.messages = messages
@@ -143,19 +142,19 @@ private extension Connection {
     
     /// Save the underlying 'PFObject' to the server.
     func saveToServer() {
-        parseObject!.saveInBackground()
+        parseObject.saveInBackground()
     }
     
     /// Approve the `Connection`. The approved `Connection` is then saved to the
     /// server.
     func approve() {
-        parseObject!["privateApproved"] = true
+        parseObject["privateApproved"] = true
         approved = true
-        parseObject!.saveInBackground()
+        parseObject.saveInBackground()
     }
     
     /// Delete the 'Connection' from the server.
     func deleteFromServer() {
-        parseObject!.deleteInBackground()
+        parseObject.deleteInBackground()
     }
 }

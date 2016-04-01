@@ -19,6 +19,7 @@
 		0330CDD91CAE2C3C00C2465C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */; };
 		0330CDDB1CAE405C00C2465C /* HabitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDDA1CAE405C00C2465C /* HabitRepository.swift */; };
 		0330CDDD1CAE408600C2465C /* ConnectionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */; };
+		0330CDE11CAF038300C2465C /* Array+HabitStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDE01CAF038300C2465C /* Array+HabitStats.swift */; };
 		0336741E1BCF477500AA87C2 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336741D1BCF477500AA87C2 /* SecretConstants.swift */; };
 		033DE64E1BF1A94C00842C03 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DE64D1BF1A94C00842C03 /* Styler.swift */; };
 		033DE6561BF1BA5900842C03 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033DE6541BF1BA5900842C03 /* UserCell.xib */; };
@@ -29,7 +30,6 @@
 		034ADC101BFD444D00593C4E /* ConnectionChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC0F1BFD444D00593C4E /* ConnectionChatController.swift */; };
 		034ADC121BFD77E600593C4E /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC111BFD77E600593C4E /* Connection.swift */; };
 		034ADC141BFD77F100593C4E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC131BFD77F100593C4E /* Message.swift */; };
-		034ADC161BFD804300593C4E /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034ADC151BFD804300593C4E /* ParseObject.swift */; };
 		034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E13281C07E68F00EC3BCC /* NotificationSetting.swift */; };
 		034E132D1C07E6F400EC3BCC /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132C1C07E6F400EC3BCC /* Frequency.swift */; };
 		034E132F1C07EE7400EC3BCC /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */; };
@@ -51,7 +51,7 @@
 		03B488141B509C390077E601 /* HabitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03B488121B509C390077E601 /* HabitCell.xib */; };
 		03B488161B509CAA0077E601 /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B488151B509CAA0077E601 /* CalendarController.swift */; };
 		03BA13451B5DB82900504A63 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13441B5DB82900504A63 /* MainTabBarController.swift */; };
-		03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */; };
+		03BA13471B5EEB8300504A63 /* HabitReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BA13461B5EEB8300504A63 /* HabitReminderManager.swift */; };
 		03CC14E91C32FF1F00831F1A /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC14E81C32FF1F00831F1A /* AccountController.swift */; };
 		03CC14EC1C335D4E00831F1A /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC14EA1C335D4E00831F1A /* ShareController.swift */; };
 		03CC14ED1C335D4E00831F1A /* ShareController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC14EB1C335D4E00831F1A /* ShareController.xib */; };
@@ -115,6 +115,7 @@
 		0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		0330CDDA1CAE405C00C2465C /* HabitRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitRepository.swift; sourceTree = "<group>"; };
 		0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionRepository.swift; sourceTree = "<group>"; };
+		0330CDE01CAF038300C2465C /* Array+HabitStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+HabitStats.swift"; sourceTree = "<group>"; };
 		0336741D1BCF477500AA87C2 /* SecretConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretConstants.swift; sourceTree = "<group>"; };
 		033DE64D1BF1A94C00842C03 /* Styler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
 		033DE6541BF1BA5900842C03 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		034ADC0F1BFD444D00593C4E /* ConnectionChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionChatController.swift; sourceTree = "<group>"; };
 		034ADC111BFD77E600593C4E /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		034ADC131BFD77F100593C4E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		034ADC151BFD804300593C4E /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		034E13281C07E68F00EC3BCC /* NotificationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		034E132C1C07E6F400EC3BCC /* Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
 		034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		03B488121B509C390077E601 /* HabitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitCell.xib; sourceTree = "<group>"; };
 		03B488151B509CAA0077E601 /* CalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
 		03BA13441B5DB82900504A63 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		03BA13461B5EEB8300504A63 /* HabitReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitReminderManager.swift; sourceTree = "<group>"; };
 		03C8A3491BD1F2C3006E16B2 /* Ignite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Ignite-Bridging-Header.h"; sourceTree = "<group>"; };
 		03CC14E81C32FF1F00831F1A /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		03CC14EA1C335D4E00831F1A /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
@@ -300,7 +300,6 @@
 				039BFC0D1B2AE10B006EAFD9 /* User.swift */,
 				034ADC111BFD77E600593C4E /* Connection.swift */,
 				034ADC131BFD77F100593C4E /* Message.swift */,
-				034ADC151BFD804300593C4E /* ParseObject.swift */,
 				03DD15DE1C05A1780099C497 /* Habit.swift */,
 			);
 			name = Models;
@@ -355,6 +354,7 @@
 				0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */,
 				0330CDDA1CAE405C00C2465C /* HabitRepository.swift */,
 				0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */,
+				0330CDE01CAF038300C2465C /* Array+HabitStats.swift */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -388,7 +388,7 @@
 				039BFC071B2AD1F9006EAFD9 /* Constants.swift */,
 				0336741D1BCF477500AA87C2 /* SecretConstants.swift */,
 				039BFC091B2AD234006EAFD9 /* Utilities.swift */,
-				03BA13461B5EEB8300504A63 /* LocalNotificationManager.swift */,
+				03BA13461B5EEB8300504A63 /* HabitReminderManager.swift */,
 				03C8A3491BD1F2C3006E16B2 /* Ignite-Bridging-Header.h */,
 				033DE64D1BF1A94C00842C03 /* Styler.swift */,
 				039437731C04264800E8566D /* NotificationHandler.swift */,
@@ -584,7 +584,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" ccc151c1a1f2ebb45ae499391dba6bc8c4ddaf36 6e9cb81fb4260388b2e86b3317c3ca3868975a878ed8141cc9cb830c6fb517e8";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ccc151c1a1f2ebb45ae499391dba6bc8c4ddaf36 6e9cb81fb4260388b2e86b3317c3ca3868975a878ed8141cc9cb830c6fb517e8";
 		};
 		0D1D3B40AA770E0875F10A2B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -672,14 +672,14 @@
 				03ECDE461BF96A2300B9F9E7 /* AccountabilityCell.swift in Sources */,
 				0330CDDB1CAE405C00C2465C /* HabitRepository.swift in Sources */,
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
-				03BA13471B5EEB8300504A63 /* LocalNotificationManager.swift in Sources */,
+				03BA13471B5EEB8300504A63 /* HabitReminderManager.swift in Sources */,
 				03DF8E301B602A3000C6DC78 /* SignupController.swift in Sources */,
 				039DBF471C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift in Sources */,
 				034ADC101BFD444D00593C4E /* ConnectionChatController.swift in Sources */,
 				034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */,
-				034ADC161BFD804300593C4E /* ParseObject.swift in Sources */,
 				0355D1101B5D786D00EA8185 /* UserController.swift in Sources */,
 				034ADC0E1BFC365500593C4E /* SettingsController.swift in Sources */,
+				0330CDE11CAF038300C2465C /* Array+HabitStats.swift in Sources */,
 				0330CDD91CAE2C3C00C2465C /* ServiceManager.swift in Sources */,
 				03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */,
 				03E9F81A1C37384C008EC91A /* InviteCell.swift in Sources */,
@@ -835,7 +835,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = Habitual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
@@ -900,7 +899,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = Habitual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
@@ -958,10 +956,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -981,10 +976,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = HabitualTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshwright.$(PRODUCT_NAME:rfc1034identifier)";
