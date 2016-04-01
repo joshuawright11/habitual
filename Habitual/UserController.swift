@@ -14,7 +14,7 @@ import DKChainableAnimationKit
 
 // -TODO: Needs refactoring/documentation
 
-class UserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CVCalendarViewDelegate, CVCalendarViewAppearanceDelegate, CVCalendarMenuViewDelegate {
+class UserController: UIViewController, UITableViewDelegate, UITableViewDataSource, CVCalendarViewDelegate, CVCalendarViewAppearanceDelegate, CVCalendarMenuViewDelegate {
 
     var user:User?
     var color:UIColor = Colors.accent

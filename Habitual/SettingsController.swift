@@ -12,7 +12,7 @@ import Social
 
 // -TODO: Needs refactoring/documentation
 
-class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
+class SettingsController: UITableViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     let url = "https://itunes.apple.com/us/app/ignite-habit-tracker-accountability/id1049840265?ls=1&mt=8"
     

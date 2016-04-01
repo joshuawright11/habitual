@@ -10,7 +10,7 @@ import UIKit
 
 // -TODO: Needs refactoring/documentation
 
-class SignupViewController: UIViewController, UITextFieldDelegate {
+class SignupController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField! {
         didSet {
             usernameTextField.layer.cornerRadius = 7

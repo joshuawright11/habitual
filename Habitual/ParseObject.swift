@@ -26,7 +26,7 @@ public class ParseObject: NSObject {
     /// Initialize with a Parse `PFObject` object.
     ///
     /// - parameter parseObject: The `PFObject` object with which to initialize.
-    init(parseObject: PFObject) {
+    init?(parseObject: PFObject) {
         self.parseObject = parseObject
         super.init()
     }

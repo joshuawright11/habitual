@@ -13,7 +13,7 @@ import Parse
 class User: ParseObject {
     
     /// The user's username
-    let username:String
+    let email:String
     
     /// The user's habits.
     var habits:[Habit]
@@ -44,13 +44,18 @@ class User: ParseObject {
     /// - parameter parseUser: The `PFUser` object with which to initialize.
     /// - parameter withHabits: Whether the habits of the parseUser are
     ///   available and should be loaded.
-    init(parseUser: PFUser, withHabits: Bool) {
+    init?(parseUser: PFUser?) {
+        guard let parseUser = parseUser else {
+            return nil
+        }
+        
         username = parseUser.username!
         habits = []
         
-        if PFUser.currentUser()!.objectId != parseUser.objectId && withHabits {
-            for parseObject in parseUser["habits"] as! [PFObject] {
-                let habit = Habit(parseObject: parseObject)
+        
+        for parseObject in parseUser["habits"] as! [PFObject] {
+            let habit = Habit(parseObject: parseObject)
+            if let habit = habit {
                 if !habit.privat {
                     habits.append(habit)
                 } else if !(habit.usersToNotify.filter({$0.username == AuthManager.currentUser?.username}).isEmpty) {
@@ -58,6 +63,7 @@ class User: ParseObject {
                 }
             }
         }
+    
         connections = []
         name = parseUser["name"] as! String
         super.init(parseObject: parseUser)

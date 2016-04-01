@@ -7,14 +7,17 @@
 //
 
 import UIKit
-import Parse
 
 // -TODO: Needs refactoring/documentation
 
-class MainTabBarController: UITabBarController {
+class MainTabBarController: UITabBarController, ServiceObserver {
 
+    var accountService: AccountService!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        accountService.addAccountServiceObserver(self)
         
         let t1image = UIImage(named: "tab_network")
         let t1imageSelected = UIImage(named: "tab_network_filled")
@@ -52,15 +55,14 @@ class MainTabBarController: UITabBarController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if !AuthManager.loggedIn {
-            let vc = storyboard?.instantiateViewControllerWithIdentifier("account")
-            let nav = UINavigationController(rootViewController: vc!)
-            presentViewController(nav, animated: false, completion: nil)
-        } else if PFUser.currentUser()!.email!.containsString("@false.com") {
-            let ac = storyboard?.instantiateViewControllerWithIdentifier("account") as! AccountController
-            ac.upgrade = true
-            let nav = UINavigationController(rootViewController: ac)
+        serviceDidUpdate()
+    }
+    
+    func serviceDidUpdate() {
+        if !accountService.isLoggedIn || accountService.isFakeEmail {
+            let vc = storyboard?.instantiateViewControllerWithIdentifier("account") as! AccountController
+            vc.upgrade = accountService.isFakeEmail
+            let nav = UINavigationController(rootViewController: vc)
             presentViewController(nav, animated: false, completion: nil)
         } else {
             let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil)

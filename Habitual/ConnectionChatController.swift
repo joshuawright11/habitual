@@ -12,7 +12,7 @@ import Timepiece
 
 // -TODO: Needs refactoring/documentation
 
-class ConnectionChatViewController: JSQMessagesViewController {
+class ConnectionChatController: JSQMessagesViewController {
     
     var connection:Connection!
     

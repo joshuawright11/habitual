@@ -12,7 +12,7 @@ import Parse
 
 // -TODO: Needs refactoring/documentation
 
-class NetworkTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
+class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
 
     var connections:[Connection]?{
         didSet{tableView.reloadData()}

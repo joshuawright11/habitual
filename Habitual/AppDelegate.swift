@@ -48,18 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-        if let _ = PFUser.currentUser() {
-            let versionNumber = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-
-            let installation = PFInstallation.currentInstallation()
-            installation["versionNumber"] = versionNumber
-            installation["username"] = PFUser.currentUser()?.username
-            installation["deviceId"] = UIDevice.currentDevice().identifierForVendor?.UUIDString
-            installation["operatingSystem"] = NSProcessInfo.processInfo().operatingSystemVersionString
-            installation["platform"] = UIDeviceHardware.platformString()
-            PFInstallation.currentInstallation().saveEventually()
-        }
-        
         PFUser.currentUser()?.fetchInBackground()
         
         doDesign()
