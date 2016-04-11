@@ -78,7 +78,13 @@ class ServiceManager: NSObject {
     var accountServiceObservers: [ServiceObserver] = []
     
     override init() {
+        user = User(parseUser: PFUser.currentUser())
         super.init()
+        connectionReposity.initialize { (success) in
+            if success {
+                self.notifyConnectionServiceObservers()
+            }
+        }
     }
     
     func notifyHabitServiceObservers() {
@@ -213,7 +219,7 @@ extension ServiceManager : ConnectionService {
 extension ServiceManager : AccountService {
     
     var isLoggedIn: Bool {
-        return user == nil
+        return user != nil
     }
     
     var currentUser: User? {

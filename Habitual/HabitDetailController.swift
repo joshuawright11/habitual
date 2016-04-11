@@ -12,10 +12,9 @@ import UIKit
 
 class HabitDetailController: UITableViewController {
     
-    var habit:Habit = Habit()
+    lazy var habit:Habit = Habit()
     
     var habitService: HabitService!
-    
     var connectionService: ConnectionService!
     
     var canInteract = true // user can interact with elements
@@ -29,7 +28,6 @@ class HabitDetailController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         doAppearance()
         
         Utilities.registerForNotification(self, selector: #selector(HabitDetailController.toggleDOTW), name: Notifications.dotwToggled)

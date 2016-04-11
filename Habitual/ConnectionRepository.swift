@@ -10,6 +10,17 @@ import UIKit
 import Parse
 
 class ConnectionRepository: NSObject {
+    
+    override init() {
+        super.init()
+    }
+    
+    func initialize(connectionsLoaded callback: (success: Bool) -> ()) {
+        getConnections { (success) in
+            callback(success: success)
+        }
+    }
+    
     var connections: [Connection] = []
     
     func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) {
@@ -25,16 +36,20 @@ class ConnectionRepository: NSObject {
     }
 }
 
-private extension User {
+private extension ConnectionRepository {
     
     /// TODO TODO TODO
     /// DO NOT FETCH PRIVATE HABITS THAT AREN'T ACCOUNTABLE
     func getConnections(callback:((success: Bool) -> ())?){
         
+        guard let currentUser = PFUser.currentUser() else {
+            return
+        }
+        
         let sender = PFQuery(className: "Connection")
-        sender.whereKey("sender", equalTo: parseObject)
+        sender.whereKey("sender", equalTo: currentUser)
         let receiver = PFQuery(className: "Connection")
-        receiver.whereKey("receiver", equalTo: parseObject)
+        receiver.whereKey("receiver", equalTo: currentUser)
         
         let or = PFQuery.orQueryWithSubqueries([sender, receiver])
         or.includeKey("sender")

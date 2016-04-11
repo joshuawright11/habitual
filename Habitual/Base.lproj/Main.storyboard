@@ -50,7 +50,7 @@
         <!--Network-->
         <scene sceneID="p4w-YL-tf7">
             <objects>
-                <tableViewController id="gV9-M3-lsf" customClass="NetworkTableViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="gV9-M3-lsf" customClass="NetworkController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yla-un-g2v">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,10 +67,10 @@
             </objects>
             <point key="canvasLocation" x="312" y="-317.25"/>
         </scene>
-        <!--Connection Chat View Controller-->
+        <!--Connection Chat Controller-->
         <scene sceneID="Qwi-St-XSo">
             <objects>
-                <viewController storyboardIdentifier="Chat" hidesBottomBarWhenPushed="YES" id="AE4-jg-R79" customClass="ConnectionChatViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chat" hidesBottomBarWhenPushed="YES" id="AE4-jg-R79" customClass="ConnectionChatController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nCy-c7-hk1"/>
                         <viewControllerLayoutGuide type="bottom" id="mn4-sn-zQM"/>
@@ -346,7 +346,7 @@
         <!--Signup-->
         <scene sceneID="WQy-fh-M5H">
             <objects>
-                <viewController storyboardIdentifier="signin" id="83v-GV-iKW" customClass="SignupViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signin" id="83v-GV-iKW" customClass="SignupController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wcF-29-IjD"/>
                         <viewControllerLayoutGuide type="bottom" id="ADv-9m-sLl"/>
@@ -588,7 +588,7 @@
         <!--Calendar Appearance Delegate-->
         <scene sceneID="FtP-Fv-KHr">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="oTK-IX-oA7" customClass="CalendarViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="oTK-IX-oA7" customClass="CalendarController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="586-x8-uCj"/>
                         <viewControllerLayoutGuide type="bottom" id="3wA-U3-3wm"/>
@@ -2671,7 +2671,7 @@ per day/week/month</string>
         <!--Settings-->
         <scene sceneID="bVh-Kl-DUg">
             <objects>
-                <tableViewController storyboardIdentifier="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lr4-kl-EAl" customClass="SettingsViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lr4-kl-EAl" customClass="SettingsController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yF3-z5-hDD">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2758,7 +2758,7 @@ per day/week/month</string>
         <!--Calendar Appearance Delegate-->
         <scene sceneID="Gbm-9O-rcp">
             <objects>
-                <viewController storyboardIdentifier="User" automaticallyAdjustsScrollViewInsets="NO" id="cR2-n2-zfV" customClass="UserViewController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="User" automaticallyAdjustsScrollViewInsets="NO" id="cR2-n2-zfV" customClass="UserController" customModule="Ignite" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I3g-q2-FLF"/>
                         <viewControllerLayoutGuide type="bottom" id="1Rn-2h-M3q"/>

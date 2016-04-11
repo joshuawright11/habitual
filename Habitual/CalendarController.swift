@@ -18,23 +18,25 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!
     
     var habitService: HabitService!
+    var connectionService: ConnectionService!
     
     var habits: [Habit] = [] {
         didSet {
-            habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort(
-                { (firstHabit, secondHabit) -> Bool in
-                    let first = firstHabit.canDoOn(selectedDate)
-                    let second = secondHabit.canDoOn(selectedDate)
-                    
-                    if first && second {
-                        return firstHabit.timeOfDay < secondHabit.timeOfDay
-                    } else if first {
-                        return true
-                    } else if second {
-                        return false
-                    } else {
-                        return firstHabit.timeOfDay < secondHabit.timeOfDay
-                    }
+            habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort({
+                (firstHabit, secondHabit) -> Bool in
+                
+                let first = firstHabit.canDoOn(selectedDate)
+                let second = secondHabit.canDoOn(selectedDate)
+                
+                if first && second {
+                    return firstHabit.timeOfDay < secondHabit.timeOfDay
+                } else if first {
+                    return true
+                } else if second {
+                    return false
+                } else {
+                    return firstHabit.timeOfDay < secondHabit.timeOfDay
+                }
             })
         }
     }
@@ -148,9 +150,12 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         return proposedDestinationIndexPath
     }
     
+    
     func add() {
-        let hdc = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail")
-        self.navigationController?.pushViewController(hdc!, animated: true)
+        let hdc = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
+        hdc.habitService = habitService
+        hdc.connectionService = connectionService
+        self.navigationController?.pushViewController(hdc, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -211,17 +216,6 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     func refreshData(){
         habits = habitService.habits
         self.tableView.reloadData()
-    }
-    
-    // MARK: - View Controller methods
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.destinationViewController is HabitDetailController {
-            let vc = segue.destinationViewController as! HabitDetailController
-            if let indexPath = tableView.indexPathForSelectedRow{
-                vc.habit = habitsOfDate[indexPath.row]
-            }
-        }
     }
     
     // MARK: - Empty data set data source
@@ -311,6 +305,8 @@ extension CalendarController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let hdvc:HabitDetailController = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
         hdvc.habit = habitsOfDate[indexPath.row]
+        hdvc.habitService = habitService
+        hdvc.connectionService = connectionService
         self.navigationController?.pushViewController(hdvc, animated: true)
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }

@@ -147,8 +147,8 @@ public class Habit: NSObject {
     ///
     /// - parameter parseObject: The `PFObject` object with which to initialize.
     init?(parseObject: PFObject) {
-        
-        guard let name = parseObject["name"] as? String else {
+        parseObject.dataAvailable
+        guard parseObject.dataAvailable else {
             return nil
         }
         
@@ -157,7 +157,7 @@ public class Habit: NSObject {
         
         datesCompleted = parseObject["datesCompleted"] as! [NSDate]
         frequency = Frequency.frequencyForName(parseObject["frequency"] as! String)
-        self.name = name
+        self.name = parseObject["name"] as! String
         createdAt = parseObject["creationDate"] as! NSDate
 
         if let priv = parseObject["private"] {

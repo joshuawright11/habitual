@@ -20,6 +20,8 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         }
     }
     
+    var accountService: AccountService!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -132,7 +134,7 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         var numFinished = user.habits.filter({$0.completed()}).count
         var numUnfinished = user.habits.count - numFinished
         
-        if connectionService.connections[indexPath.row].approved {
+        if !connectionService.connections[indexPath.row].approved {
             numFinished = 0
             numUnfinished = 0
         }
@@ -146,9 +148,11 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         if connectionService.connections[indexPath.row].approved {
             let uvc = storyboard?.instantiateViewControllerWithIdentifier("User") as! UserController
             let connection = connectionService.connections[indexPath.row]
-            uvc.user = connectionService.otherUser(connection)
+            uvc.habits = connectionService.otherUser(connection).habits
             uvc.color = connection.color
             uvc.connection = connection
+            uvc.accountService = accountService
+            uvc.connectionService = connectionService
             
             self.navigationController?.pushViewController(uvc, animated: true)
         }

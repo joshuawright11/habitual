@@ -54,9 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         doDesign()
         
-        let manager = ServiceManager()
+        let services = ServiceManager()
+        let rvc = self.window!.rootViewController as! MainTabBarController
+        rvc.serviceManager = services
         
-        habitReminderManager = HabitReminderManager(habitService: manager)
+        habitReminderManager = HabitReminderManager(habitService: services)
         
         return true
     }

@@ -48,8 +48,7 @@ class User: NSObject {
         super.init()
         
         for parseObject in parseUser["habits"] as! [PFObject] {
-            let habit = Habit(parseObject: parseObject)
-            if let habit = habit {
+            if let habit = Habit(parseObject: parseObject) {
                 if !habit.privat {
                     habits.append(habit)
                 } else if !(habit.usersToNotify.filter({$0.email == email}).isEmpty) {

@@ -16,10 +16,14 @@ import DKChainableAnimationKit
 
 class UserController: UIViewController, UITableViewDelegate, UITableViewDataSource, CVCalendarViewDelegate, CVCalendarViewAppearanceDelegate, CVCalendarMenuViewDelegate {
 
-    var user:User!
+    var habits: [Habit]!
+
     var color:UIColor = Colors.accent
     
     var connection: Connection?
+    
+    var connectionService: ConnectionService!
+    var accountService: AccountService!
     
     @IBOutlet weak var keyView: UIView! {
         didSet {
@@ -103,7 +107,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private var selectedDate = NSDate() {
         didSet {
             navigationItem.title = Utilities.monthDayStringFromDate(selectedDate)
-            habitsOfDate = user!.habits.filter({$0.availableOn(selectedDate)}).sort(
+            habitsOfDate = habits.filter({$0.availableOn(selectedDate)}).sort(
                 { (firstHabit, secondHabit) -> Bool in
                     let first = firstHabit.canDoOn(selectedDate)
                     let second = secondHabit.canDoOn(selectedDate)
@@ -147,7 +151,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         
         // this is gross because you can follow yourself when I wrote this
-        if self.tabBarController?.selectedIndex == 2 {
+        if self.connection == nil {
             self.navigationItem.title = "Me"
             
             let settingsButton = UIBarButtonItem(image: UIImage(named: "cog")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(UserController.settings))
@@ -156,9 +160,8 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
             navigationItem.rightBarButtonItem = dataButton
         }
         else {
-            self.navigationItem.title = user?.name.componentsSeparatedByString(" ")[0]
-            
-            
+            self.navigationItem.title = "FIXME"
+        
             let button = UIBarButtonItem(image: UIImage(named: "chats")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(UserController.chat))
             self.navigationItem.rightBarButtonItems = [dataButton, button]
         }
@@ -206,14 +209,16 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if self.tabBarController?.selectedIndex == 2 {
                 navigationItem.title = "Me"
             } else {
-                navigationItem.title = user!.name
+                navigationItem.title = "FIXME"
             }
         }
     }
     
     func chat() {
         let ccvc = storyboard?.instantiateViewControllerWithIdentifier("Chat") as! ConnectionChatController
-        ccvc.connection = self.connection
+        ccvc.connection = connection
+        ccvc.accountService = accountService
+        ccvc.connectionService = connectionService
         
         let nav = UINavigationController(rootViewController: ccvc)
         nav.modalTransitionStyle = .FlipHorizontal
@@ -237,7 +242,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var dataSets: [BarChartDataSet] = []
         
         var count = 0
-        for habit: Habit in user!.habits {
+        for habit: Habit in habits {
             
             let dataSet = BarChartDataSet(yVals: [BarChartDataEntry(value: habit.getCompletionPercentage(), xIndex: 0)], label: habit.name)
             dataSet.colors = [UIColor(hexString: habit.color)]
@@ -275,12 +280,12 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func statForIndex(index: Int) -> (String, String){
         if(index == 0){
-            return ("Habits completed:","\(user.habits.statHabitsCompleted())")
+            return ("Habits completed:","\(habits.statHabitsCompleted())")
         }else {
-            return ("Most completed habit:",user.habits.statMostCompletedHabit())
+            return ("Most completed habit:",habits.statMostCompletedHabit())
         }
 //        else{
-//            return ("Longest streak:","\(user!.statLongestStreak())")
+//            return ("Longest streak:","\(user.statLongestStreak())")
 //        }
     }
     
@@ -292,11 +297,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if let user = user {
-                return calendar ?  habitsOfDate.count : user.habits.count
-            }else{
-                return 0
-            }
+            return calendar ?  habitsOfDate.count : habits.count
         }else{
             return 2
         }
@@ -307,9 +308,9 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCellWithIdentifier("habit", forIndexPath: indexPath) as! HabitCell
             if calendar {
-                cell.configureForHabit(user!.habits[indexPath.row], date: selectedDate)
+                cell.configureForHabit(habits[indexPath.row], date: selectedDate)
             } else {
-                cell.configureForHabit(user!.habits[indexPath.row])
+                cell.configureForHabit(habits[indexPath.row])
             }
             return cell
         }else{
@@ -430,7 +431,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
         if let date = dayView.date {
             
-            if date.convertedDate() > NSDate() || user?.habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
+            if date.convertedDate() > NSDate() || habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
                 return false
             } else {
                 return true
@@ -451,7 +452,7 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
-        let percent = user.habits.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
+        let percent = habits.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {
             view.fillColor = UIColor.clearColor()
             view.strokeColor = lightColor

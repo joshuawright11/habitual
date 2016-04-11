@@ -12,12 +12,12 @@ import UIKit
 
 class MainTabBarController: UITabBarController, ServiceObserver {
 
-    var accountService: AccountService!
+    var serviceManager: ServiceManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        accountService.addAccountServiceObserver(self)
+        serviceManager.addAccountServiceObserver(self)
         
         let t1image = UIImage(named: "tab_network")
         let t1imageSelected = UIImage(named: "tab_network_filled")
@@ -46,6 +46,16 @@ class MainTabBarController: UITabBarController, ServiceObserver {
         
         Styler.tabBarShader(self.tabBar)
         
+        let connections = (viewControllers![0] as! UINavigationController).viewControllers[0] as! NetworkController
+        let calendarViewController = (viewControllers![1] as! UINavigationController).viewControllers[0] as! CalendarController
+        let userController = (viewControllers![2] as! UINavigationController).viewControllers[0] as! UserController
+        
+        connections.connectionService = serviceManager
+        connections.accountService = serviceManager
+        calendarViewController.habitService = serviceManager
+        calendarViewController.connectionService = serviceManager
+        userController.habits = serviceManager.habits
+        
 //        self.tabBar.backgroundImage = UIImage(named: "clear")
         
 //        let frost = UIVisualEffectView(effect: UIVibrancyEffect())
@@ -55,13 +65,14 @@ class MainTabBarController: UITabBarController, ServiceObserver {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         serviceDidUpdate()
     }
     
     func serviceDidUpdate() {
-        if !accountService.isLoggedIn || accountService.isFakeEmail {
+        if !serviceManager.isLoggedIn || serviceManager.isFakeEmail {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("account") as! AccountController
-            vc.accountService = accountService
+            vc.accountService = serviceManager
             let nav = UINavigationController(rootViewController: vc)
             presentViewController(nav, animated: false, completion: nil)
         } else {

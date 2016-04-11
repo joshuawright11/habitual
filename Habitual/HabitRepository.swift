@@ -18,7 +18,8 @@ internal class HabitRepository: NSObject {
     
     override init() {
         super.init()
-        
+        // attempt to load from coredata
+        habits = getHabitsOfCurrentUser()
     }
     
     internal func createHabit(habit: Habit) {
@@ -38,7 +39,7 @@ internal class HabitRepository: NSObject {
     }
     
     internal func isTracking(habit: Habit) -> Bool {
-        return true
+        return habits.contains(habit)
     }
     
     private func loadHabitsFromCoreData() {
