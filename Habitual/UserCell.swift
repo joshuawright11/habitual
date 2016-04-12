@@ -111,10 +111,10 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             linksLabel.text = "x\(connectionService.numHabitsAccountableInConnection(connection))"
             timesLabel.text = "x\(user.habits.statHabitsCompleted())"
             
-            let id = user.parseObject["fbId"]
+            let url = user.profileImageURL
             
-            if let id = id as? String {
-                profileiv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
+            if let url = url {
+                profileiv.imageFromURL(url)
                 profileiv.hidden = false
             } else {
                 profileiv.hidden = true
@@ -202,7 +202,7 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     func doAppearance() {
         
         if connection.approved {
-            subtitleLabel.text = connection.messages?.last?.text ?? "\(connectionService.otherUser(connection).habits.statHabitsCompleted()) habits completed"
+            subtitleLabel.text = connection.messages.last?.text ?? "\(connectionService.otherUser(connection).habits.statHabitsCompleted()) habits completed"
         }else{
             subtitleLabel.text = connectionService.sentByCurrentUser(connection) ? "Pending acceptance" : "Wants to connect"
         }

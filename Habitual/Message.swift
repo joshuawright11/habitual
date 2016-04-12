@@ -16,14 +16,8 @@ class Message: NSObject {
     /// The text of the message.
     var text: String
     
-    var parseObject: PFObject
-    
     /// The timestamp of when the message was sent.
-    var timeStamp: NSDate {
-        get{
-            return parseObject.createdAt!
-        }
-    }
+    var timeStamp: NSDate
     
     /// The `User` who sent the message (with the receiver being the other 
     /// `User` in the `connection`).
@@ -34,27 +28,12 @@ class Message: NSObject {
     /// lack thereof of a `Habit`. A `Message` with a non-nil `habit` value can
     /// be referred to as an "accountability message" and should not ever be
     /// created in the app.
-    var habit: PFObject?
+    var habit: Habit?
     
-    /// Initialize with a Parse `PFObject` object.
-    ///
-    /// - parameter parseObject: The `PFObject` object with which to initialize.
-    init?(parseObject: PFObject) {
-        guard let sender = User(parseUser: parseObject["sender"] as? PFUser) else {
-            return nil
-        }
-        
-        self.parseObject = parseObject
+    init(sender: User) {
+        text = ""
+        timeStamp = NSDate()
         self.sender = sender
-        
-        text = parseObject["text"] as! String
-        
-        if let po = parseObject["habit"] { // No habit data is stored, just a
-            habit = po as? PFObject        // placeholder `PFObject` to show
-        }else{                             // there is one.
-            habit = nil
-        }
-        
-        super.init()
+        habit = nil
     }
 }

@@ -16,6 +16,9 @@ internal class HabitRepository: NSObject {
     
     internal var habits: [Habit] = []
     
+    private var habitCoreDataObjects:[Habit : HabitCoreData] = [:]
+    private var habitParseObjects:[Habit : PFObject] = [:]
+    
     override init() {
         super.init()
         // attempt to load from coredata
@@ -23,15 +26,16 @@ internal class HabitRepository: NSObject {
     }
     
     internal func createHabit(habit: Habit) {
-        
+        addToCoreData(habit)
+        uploadToServer(habit, callback: nil)
     }
     
     internal func deleteHabit(habit: Habit) {
-        
+        deleteFromCoreData(habit)
     }
     
     internal func updateHabit(habit: Habit) {
-        
+        updateCoreData(habit)
     }
     
     internal func orderHabits(habits: [Habit]) {
@@ -74,8 +78,10 @@ private extension HabitRepository {
             if results.count > 0 {
                 
                 for result in results{
-                    let habit = result as! HabitCoreData
-                    habits.append(Habit(coreDataObject: habit))
+                    let coreDataObject = result as! HabitCoreData
+                    let habit = Habit(coreDataObject: coreDataObject)
+                    habits.append(habit)
+                    habitCoreDataObjects[habit] = coreDataObject
                 }
             }
         }
@@ -120,104 +126,186 @@ private extension HabitRepository {
     }
 }
 
-private extension Habit {
+internal extension Habit {
     
-    func uploadToServer(callback: ((Bool) -> ())?) {
+    /// Initialize with a Parse `PFObject` object.
+    ///
+    /// - parameter parseObject: The `PFObject` object with which to initialize.
+    convenience init?(parseObject: PFObject) {
         
-        if let _ = parseObject {
-            updateOnServer(callback)
-        }else{
-            if(callback == nil){
-                addToServer({ (success) -> () in
-                    
-                })
-            }else{
-                addToServer(callback)
+        self.init()
+        
+        guard parseObject.dataAvailable else {
+            return nil
+        }
+        
+        datesCompleted = parseObject["datesCompleted"] as! [NSDate]
+        frequency = Frequency.frequencyForName(parseObject["frequency"] as! String)
+        self.name = parseObject["name"] as! String
+        createdAt = parseObject["creationDate"] as! NSDate
+        
+        if let priv = parseObject["private"] {
+            privat = priv as! Bool
+        } else {
+            if name == "Call home" {
+                print("here")
+            }
+            privat = false
+        }
+        
+        remindUserAt = ""
+        notifyConnectionsAt = ""
+        timeOfDay = 1
+        timesToComplete = parseObject["timesToComplete"] as! Int
+        daysToComplete = parseObject["daysToComplete"] as! [String]
+        icon = parseObject["icon"] as! String
+        color = parseObject["color"] as! String
+        notificationsEnabled = parseObject["notificationsEnabled"] as! Bool
+        notificationSettings = [.None]
+        usersToNotify = []
+        for userPO in parseObject["usersToNotify"] as! [PFUser] {
+            if let user = User(parseUser: userPO) {
+                usersToNotify.append(user)
             }
         }
     }
+}
+extension HabitRepository {
     
-    func addToServer(callback: ((Bool) -> ())?) {
+    func uploadToServer(habit: Habit, callback: ((Bool) -> ())?) {
+    
+        if habitParseObjects[habit] == nil {
+            let parseObject = HabitRepository.makeParseObjectForHabit()
+            habitParseObjects[habit] = parseObject
+        }
+        
+        
+    }
+    
+    static func makeParseObjectForHabit() -> PFObject {
         guard let user = PFUser.currentUser() else {
-            print("ERROR! User is not loaded!")
+            fatalError("ERROR! User is not loaded!")
+        }
+        
+        let parseObject = PFObject(className: "Habit")
+        parseObject["owner"] = user
+        return parseObject
+    }
+    
+    func updateOnServer(habit: Habit, callback: ((Bool) -> ())?) {
+        
+        guard let parseObject = habitParseObjects[habit] else {
             return
         }
         
-        parseObject = PFObject(className: "Habit")
-        parseObject!["owner"] = user
-        updateOnServer(callback)
-    }
-    
-    func updateOnServer(callback: ((Bool) -> ())?) {
+        parseObject["creationDate"] = habit.createdAt
+        parseObject["datesCompleted"] = habit.datesCompleted
+        parseObject["timesToComplete"] = habit.timesToComplete
+        parseObject["frequency"] = habit.frequency.toString()
+        parseObject["name"] = habit.name
+        parseObject["due"] = habit.dueOn()
+        parseObject["daysToComplete"] = habit.daysToComplete
+        parseObject["notifyConnectionsAt"] = habit.notifyConnectionsAt
+        parseObject["timeOfDay"] = String(habit.timeOfDay)
+        parseObject["timesToComplete"] = habit.timesToComplete
+        parseObject["icon"] = habit.icon
+        parseObject["color"] = habit.color
+        parseObject["notificationsEnabled"] = habit.notificationsEnabled
+        parseObject["notificationSettings"] = habit.notificationSettings.map({$0.toString()})
+        parseObject["private"] = habit.privat
         
-        parseObject!["creationDate"] = createdAt
-        parseObject!["datesCompleted"] = datesCompleted
-        parseObject!["timesToComplete"] = timesToComplete
-        parseObject!["frequency"] = frequency.toString()
-        parseObject!["name"] = name
-        parseObject!["due"] = dueOn()
-        if coreDataObject?.usernamesToNotify.count == usersToNotify.count {
-            parseObject!["usersToNotify"] = usersToNotify.map({$0.parseObject})
-        }
-        parseObject!["daysToComplete"] = daysToComplete
-        parseObject!["notifyConnectionsAt"] = notifyConnectionsAt
-        parseObject!["timeOfDay"] = String(timeOfDay)
-        parseObject!["timesToComplete"] = timesToComplete
-        parseObject!["icon"] = icon
-        parseObject!["color"] = color
-        parseObject!["notificationsEnabled"] = notificationsEnabled
-        parseObject!["notificationSettings"] = notificationSettings.map({$0.toString()})
-        parseObject!["private"] = privat
-        
-        parseObject!.saveInBackgroundWithBlock({ (success, error) -> Void in
+        parseObject.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
-                self.coreDataObject!.objectId = self.parseObject!.objectId!
-                self.coreDataObject?.save()
                 if let callback = callback {callback(true)}
             } else {
-                print("ERROR! \(error?.code)")
                 if let callback = callback {callback(false)}
             }
         })
     }
     
-    func saveCompletionData() {
-        parseObject!["datesCompleted"] = datesCompleted
-        parseObject!["due"] = dueOn()
-        parseObject?.saveInBackground()
+    func deleteFromServer(habit: Habit) {
+        if let parseObject = habitParseObjects[habit] {
+            parseObject.deleteInBackground()
+        }
     }
+}
+
+internal extension Message {
     
-    func deleteFromServer() {
-        parseObject!.deleteInBackground()
+    /// Initialize with a Parse `PFObject` object.
+    ///
+    /// - parameter parseObject: The `PFObject` object with which to initialize.
+    convenience init?(parseObject: PFObject) {
+        
+        guard let sender = User(parseUser: parseObject["sender"] as? PFUser) else {
+            return nil
+        }
+        
+        self.init(sender: sender)
+        text = parseObject["text"] as! String
+        
+        if let _ = parseObject["habit"] { // No habit data is stored, just a
+            habit = Habit()               // placeholder `PFObject` to show
+        } else {                          // there is one.
+            habit = nil
+        }
     }
 }
 
 private extension Habit {
-    
-    func completeOn(date: NSDate) -> Bool {
+   
+    /// Initialize with a Core Data `HabitCoreData` object.
+    ///
+    /// - parameter coreDataObject: The `HabitCoreData` object with which to
+    ///                             initialize.
+    convenience init(coreDataObject: HabitCoreData) {
         
-        if numCompletedIn(date) >= timesToComplete {
+        self.init()
+        
+        datesCompleted = coreDataObject.datesCompletedData as! [NSDate]
+        frequency = Frequency(rawValue: coreDataObject.frequencyInt)!
+        name = coreDataObject.name
+        createdAt = coreDataObject.createdAt
+        privat = coreDataObject.privat
+        remindUserAt = coreDataObject.remindUserAt
+        notifyConnectionsAt = coreDataObject.notifyConnectionsAt
+        timeOfDay = Int(coreDataObject.timeOfDayInt)
+        timesToComplete = Int(coreDataObject.timesToCompleteInt)
+        daysToComplete = coreDataObject.daysToComplete
+        icon = coreDataObject.icon
+        color = coreDataObject.color
+        notificationsEnabled = coreDataObject.notificationsEnabled
+        notificationSettings = []
+        usersToNotify = []
+    }
+}
+
+private extension HabitRepository {
+    
+    func completeOn(habit: Habit, date: NSDate) -> Bool {
+        
+        if habit.numCompletedIn(date) >= habit.timesToComplete {
             return false
         }else{
-            datesCompleted.append(date)
-            saveToCoreData(true)
+            habit.datesCompleted.append(date)
+            saveToCoreData(habit)
             return true
         }
     }
     
     // uncomplete a habit on a certain date
-    func uncompleteOn(date: NSDate) -> Bool {
+    func uncompleteOn(habit: Habit, date: NSDate) -> Bool {
         
-        if !(numCompletedIn(date) > 0) {
+        if !(habit.numCompletedIn(date) > 0) {
             return false
         }
         
-        for completion: NSDate in datesCompleted {
+        for completion: NSDate in habit.datesCompleted {
             
             var beginning:NSDate
             var end:NSDate
             
-            switch frequency{
+            switch habit.frequency{
             case .Daily:
                 beginning = completion.beginningOfDay
                 end = completion.endOfDay
@@ -230,9 +318,9 @@ private extension Habit {
             }
             
             if(beginning...end).contains(date) {
-                if let index = datesCompleted.indexOf(completion) {
-                    datesCompleted.removeAtIndex(index)
-                    saveToCoreData(true)
+                if let index = habit.datesCompleted.indexOf(completion) {
+                    habit.datesCompleted.removeAtIndex(index)
+                    saveToCoreData(habit)
                     return true
                 }
             }
@@ -241,7 +329,7 @@ private extension Habit {
         return false
     }
     
-    private func addToCoreData() {
+    func addToCoreData(habit: Habit) {
         
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
@@ -249,91 +337,67 @@ private extension Habit {
             NSEntityDescription.entityForName("Habit",
                                               inManagedObjectContext: managedObjectContext!)
         
-        coreDataObject = HabitCoreData(entity: entityDescription!,
+        let coreDataObject = HabitCoreData(entity: entityDescription!,
                                        insertIntoManagedObjectContext: managedObjectContext)
         
-        coreDataObject!.name = name
-        coreDataObject!.frequencyInt = frequency.rawValue
-        coreDataObject!.color = color
-        coreDataObject!.icon = icon
-        coreDataObject!.privat = privat
-        coreDataObject!.daysToComplete = daysToComplete
-        coreDataObject!.timeOfDayInt = Int16(timeOfDay)
-        coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
-        coreDataObject!.remindUserAt = remindUserAt
-        coreDataObject!.notificationSettingsInts = []
-        coreDataObject!.timesToCompleteInt = Int64(timesToComplete)
-        coreDataObject!.createdAt = createdAt
-        coreDataObject!.datesCompletedData = datesCompleted
-        coreDataObject!.notificationsEnabled = notificationsEnabled
-        coreDataObject!.usernamesToNotify = usersToNotify.map {$0.name}
-        
-        if let po = parseObject {
-            coreDataObject!.objectId = po.objectId!
-        }
+        coreDataObject.name = habit.name
+        coreDataObject.frequencyInt = habit.frequency.rawValue
+        coreDataObject.color = habit.color
+        coreDataObject.icon = habit.icon
+        coreDataObject.privat = habit.privat
+        coreDataObject.daysToComplete = habit.daysToComplete
+        coreDataObject.timeOfDayInt = Int16(habit.timeOfDay)
+        coreDataObject.notifyConnectionsAt = habit.notifyConnectionsAt
+        coreDataObject.remindUserAt = habit.remindUserAt
+        coreDataObject.notificationSettingsInts = []
+        coreDataObject.timesToCompleteInt = Int64(habit.timesToComplete)
+        coreDataObject.createdAt = habit.createdAt
+        coreDataObject.datesCompletedData = habit.datesCompleted
+        coreDataObject.notificationsEnabled = habit.notificationsEnabled
+        coreDataObject.usernamesToNotify = habit.usersToNotify.map {$0.name}
         
         do {
             try managedObjectContext?.save()
+            habitCoreDataObjects[habit] = coreDataObject
         } catch let error as NSError {
             print("awww error: " + error.description)
         }
     }
     
-    private func updateCoreData() {
-        coreDataObject!.name = name
-        coreDataObject!.frequencyInt = frequency.rawValue
-        coreDataObject!.color = color
-        coreDataObject!.icon = icon
-        coreDataObject!.privat = privat
-        coreDataObject!.daysToComplete = daysToComplete
-        coreDataObject!.timeOfDayInt = Int16(timeOfDay)
-        coreDataObject!.notifyConnectionsAt = notifyConnectionsAt
-        coreDataObject!.remindUserAt = remindUserAt
-        coreDataObject!.notificationSettingsInts = []
-        coreDataObject!.timesToCompleteInt = Int64(timesToComplete)
-        coreDataObject!.createdAt = createdAt
-        coreDataObject!.datesCompletedData = datesCompleted
-        coreDataObject!.notificationsEnabled = notificationsEnabled
-        coreDataObject!.save()
-    }
-    
-    func saveCompletionCoreData() {
-        coreDataObject!.datesCompletedData = datesCompleted
-        coreDataObject?.save()
-    }
-    
-    func saveToCoreData(completion: Bool) {
+    private func updateCoreData(habit: Habit) {
         
-        defer {
-            uploadToServer(nil)
+        guard let coreDataObject = habitCoreDataObjects[habit] else {
+            return
         }
         
-        if completion {
-            saveCompletionCoreData()
+        coreDataObject.name = habit.name
+        coreDataObject.frequencyInt = habit.frequency.rawValue
+        coreDataObject.color = habit.color
+        coreDataObject.icon = habit.icon
+        coreDataObject.privat = habit.privat
+        coreDataObject.daysToComplete = habit.daysToComplete
+        coreDataObject.timeOfDayInt = Int16(habit.timeOfDay)
+        coreDataObject.notifyConnectionsAt = habit.notifyConnectionsAt
+        coreDataObject.remindUserAt = habit.remindUserAt
+        coreDataObject.notificationSettingsInts = []
+        coreDataObject.timesToCompleteInt = Int64(habit.timesToComplete)
+        coreDataObject.createdAt = habit.createdAt
+        coreDataObject.datesCompletedData = habit.datesCompleted
+        coreDataObject.notificationsEnabled = habit.notificationsEnabled
+        coreDataObject.save()
+    }
+    
+    func saveToCoreData(habit: Habit) {
+        if habitCoreDataObjects[habit] == nil {
+            addToCoreData(habit)
         } else {
-            if let _ = coreDataObject {
-                updateCoreData()
-            } else {
-                addToCoreData()
-            }
+            updateCoreData(habit)
         }
     }
     
-    func saveOrder() {
-        if let coreDataObject = coreDataObject {
-            coreDataObject.save()
-        } else {
-            print("Error! No core data object")
-        }
-    }
-    
-    func deleteFromCoreData() {
-        if let coreDataObject = coreDataObject {
+    func deleteFromCoreData(habit: Habit) {
+        if let coreDataObject = habitCoreDataObjects[habit] {
             coreDataObject.delete()
-            deleteFromServer()
-            Utilities.postNotification(Notifications.habitDataChanged)
-        }else{
-            fatalError("Not a core data object!")
         }
     }
 }

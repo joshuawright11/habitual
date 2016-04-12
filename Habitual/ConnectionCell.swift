@@ -85,15 +85,6 @@ class ConnectionCell: UITableViewCell {
         let names:[String] = user.name.componentsSeparatedByString(" ")
         initialsLabel.text = String(names[0].characters.first!) + String(names[1].characters.first!)
         
-        if let cdo = habit.coreDataObject {
-            let contains:Bool = cdo.usernamesToNotify.contains(user.name)
-            checkiv.tintColor = contains ? color : Colors.background
-            let habitContains:Bool = habit.usersToNotify.map({$0.name}).contains(user.name)
-            if(contains && !(habitContains)){
-                habit.usersToNotify.append(user)
-            }
-        }else{
-            checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(user.name) ? color : Colors.background
-        }
+        checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(user.name) ? color : Colors.background
     }
 }

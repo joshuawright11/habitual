@@ -14,8 +14,6 @@ import Parse
 /// `Connection` has two users, described as `sender` and `receiver`.
 class Connection: NSObject {
     
-    var parseObject: PFObject
-    
     /// The user who originally sent the connection request.
     let sender:User
     
@@ -27,26 +25,16 @@ class Connection: NSObject {
     
     /// The color associated with this `Connection`. Used purely for design 
     /// purposes and is unique to each user's app.
-    var color: UIColor!
+    var color: UIColor
     
     /// All the messages associated with this `Connection`.
-    var messages:[Message]?
-    
-    /// Initialize with a Parse `PFObject` object.
-    ///
-    /// - parameter parseObject: The `PFObject` object with which to initialize.
-    init?(parseObject: PFObject) {
-        
-        guard let sender = User(parseUser: parseObject["sender"] as? PFUser), receiver = User(parseUser: parseObject["receiver"] as? PFUser) else {
-            return nil
-        }
+    var messages:[Message]
 
+    init(sender: User, receiver: User, color: UIColor) {
+        self.color = color
         self.sender = sender
         self.receiver = receiver
-        self.parseObject = parseObject
-        
-        approved = parseObject["privateApproved"] as! Bool
-        
-        super.init()
+        approved = false
+        messages = []
     }
 }

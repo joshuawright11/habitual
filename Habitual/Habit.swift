@@ -7,8 +7,6 @@
 //
 
 import Timepiece
-import SwiftyJSON
-import Parse
 
 
 /// A model for the habits that a user can create in the app. Each `Habit` has
@@ -19,19 +17,6 @@ public class Habit: NSObject {
     // ******************
     // MARK: - Properties
     // ******************
-    
-    var parseObject: PFObject?
-    
-    /// The underlying Core Data object for the `Habit`, if it is indeed saved
-    /// in Core Data.
-    var coreDataObject:HabitCoreData?
-
-    /// The unique identifier of the `Habit` for identifying it on the server.
-    var objectId: String {
-        get{
-            return coreDataObject!.objectId
-        }
-    }
     
     /// The dates on which the `Habit` was completed.
     var datesCompleted: [NSDate]
@@ -121,8 +106,6 @@ public class Habit: NSObject {
     /// but has not yet been saved to Core Data or the server. This should never
     /// otherwise be called.
     override init() {
-        self.coreDataObject = nil
-        
         datesCompleted = []
         frequency = .Daily
         name = ""
@@ -138,77 +121,6 @@ public class Habit: NSObject {
         notificationsEnabled = false
         notificationSettings = [.None]
         usersToNotify = []
-        parseObject = nil
-        
-        super.init()
-    }
-    
-    /// Initialize with a Parse `PFObject` object.
-    ///
-    /// - parameter parseObject: The `PFObject` object with which to initialize.
-    init?(parseObject: PFObject) {
-        parseObject.dataAvailable
-        guard parseObject.dataAvailable else {
-            return nil
-        }
-        
-        self.parseObject = parseObject
-        coreDataObject = nil
-        
-        datesCompleted = parseObject["datesCompleted"] as! [NSDate]
-        frequency = Frequency.frequencyForName(parseObject["frequency"] as! String)
-        self.name = parseObject["name"] as! String
-        createdAt = parseObject["creationDate"] as! NSDate
-
-        if let priv = parseObject["private"] {
-            privat = priv as! Bool
-        } else {
-            if name == "Call home" {
-                print("here")
-            }
-            privat = false
-        }
-        
-        remindUserAt = ""
-        notifyConnectionsAt = ""
-        timeOfDay = 1
-        timesToComplete = parseObject["timesToComplete"] as! Int
-        daysToComplete = parseObject["daysToComplete"] as! [String]
-        icon = parseObject["icon"] as! String
-        color = parseObject["color"] as! String
-        notificationsEnabled = parseObject["notificationsEnabled"] as! Bool
-        notificationSettings = [.None]
-        usersToNotify = []
-        for userPO in parseObject["usersToNotify"] as! [PFUser] {
-            if let user = User(parseUser: userPO) {
-                usersToNotify.append(user)
-            }
-        }
-    }
-    
-    /// Initialize with a Core Data `HabitCoreData` object.
-    ///
-    /// - parameter coreDataObject: The `HabitCoreData` object with which to 
-    ///                             initialize.
-    init(coreDataObject: HabitCoreData) {
-        self.coreDataObject = coreDataObject
-        
-        datesCompleted = coreDataObject.datesCompletedData as! [NSDate]
-        frequency = Frequency(rawValue: coreDataObject.frequencyInt)!
-        name = coreDataObject.name
-        createdAt = coreDataObject.createdAt
-        privat = coreDataObject.privat
-        remindUserAt = coreDataObject.remindUserAt
-        notifyConnectionsAt = coreDataObject.notifyConnectionsAt
-        timeOfDay = Int(coreDataObject.timeOfDayInt)
-        timesToComplete = Int(coreDataObject.timesToCompleteInt)
-        daysToComplete = coreDataObject.daysToComplete
-        icon = coreDataObject.icon
-        color = coreDataObject.color
-        notificationsEnabled = coreDataObject.notificationsEnabled
-        notificationSettings = []
-        usersToNotify = []
-        parseObject = nil
         
         super.init()
     }

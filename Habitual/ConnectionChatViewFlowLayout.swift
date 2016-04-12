@@ -27,7 +27,7 @@ class ConnectionChatViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
     
     override func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath!) -> CGSize {
         var size = super.messageBubbleSizeForItemAtIndexPath(indexPath)
-        if(connection?.messages![indexPath.row].habit != nil){ size.height = 1 }
+        if(connection?.messages[indexPath.row].habit != nil){ size.height = 1 }
         return size
     }
 }

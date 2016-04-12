@@ -92,7 +92,7 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         
-        let message = connection.messages![indexPath.row]
+        let message = connection.messages[indexPath.row]
         if(message.habit == nil){
             return JSQMessage(senderId: message.sender.email, displayName: message.sender.email, text: message.text)
         }else{
@@ -106,7 +106,7 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
 
-        let message = connection.messages![indexPath.row]
+        let message = connection.messages[indexPath.row]
         if(message.habit == nil){
             return message.sender.email == accountService.currentUser?.email ? outgoingBubbleImageData : incomingBubbleImageData
         }else{
@@ -119,7 +119,7 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return connection.messages!.count
+        return connection.messages.count
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
@@ -142,7 +142,7 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
         
-        let message = connection.messages![indexPath.row]
+        let message = connection.messages[indexPath.row]
         return message.habit != nil ? attributedStringForHeaderWithMessage(message) : NSAttributedString(string: "0xdeadbeef")
     }
     
@@ -151,9 +151,9 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
         var firstName = message.sender.name.componentsSeparatedByString(" ")[0]
         if message.sender.email == accountService.currentUser?.email {firstName = "You"}
 
-        let habitName = message.habit!["name"] as! String
+        let habitName = message.habit!.name
         let due = Utilities.monthDayStringFromDate(message.timeStamp - 1.day)
-        let goal = message.habit!["frequency"] as! String
+        let goal = message.habit!.frequency.toString()
 //        let timesMissed = message.hab
 //, Times Missed: \(timesMissed)
         
@@ -173,7 +173,7 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         
-        let habit = connection.messages![indexPath.row].habit
+        let habit = connection.messages[indexPath.row].habit
         return habit != nil ? 40.0 : 0.0
     }
 }

@@ -56,13 +56,15 @@ class SocialUserCell: UITableViewCell {
     var user: User! {
         didSet {
             titleLabel.text = user.name
-            subtitleLabel.text = "Member since \(Utilities.monthYearStringFromDate(user.parseObject.createdAt!))"
-            let id = user.parseObject["fbId"]
+            subtitleLabel.text = "Member since \(Utilities.monthYearStringFromDate(user.joined))"
+            let url = user.profileImageURL
             if oldValue == nil || oldValue.email != user.email {
                 iv.image = UIImage()
-                if let id = id as? String {
-                    iv.imageFromURL("https://graph.facebook.com/\(id)/picture?type=large")
+                if let url = url {
+                    iv.imageFromURL(url)
                 }
+                
+                //"https://graph.facebook.com/\(id)/picture?type=large"
                 if connectClosure == nil {
                     button.setTitle("Sent", forState: .Normal)
                     button.enabled = false

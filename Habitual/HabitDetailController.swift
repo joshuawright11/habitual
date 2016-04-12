@@ -49,7 +49,7 @@ class HabitDetailController: UITableViewController {
         }else{
             self.navigationItem.title = "New Habit"
             
-            let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(HabitDetailController.done(_:)))
+            let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(HabitDetailController.create(_:)))
             self.navigationItem.rightBarButtonItem = button
             
             habit = Habit()
@@ -64,7 +64,7 @@ class HabitDetailController: UITableViewController {
         Styler.navBarShader(self)
     }
     
-    func done(sender: UIBarButtonItem) {
+    func create(sender: UIBarButtonItem) {
 
         if !checkData() { return }
         
