@@ -38,12 +38,14 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             subtitleLabel.font = Fonts.cellSubtitleBold
         }
     }
+    
     @IBOutlet weak var bottomLabel: LTMorphingLabel! {
         didSet {
             bottomLabel.font = Fonts.cellSubtitle
             bottomLabel.textColor = Colors.textSubtitle
         }
     }
+    
     @IBOutlet weak var emojiLabel: UILabel!
     
     @IBOutlet weak var borderView: UIView! {
@@ -61,6 +63,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             checkmark.alpha = 0.0
         }
     }
+    
     @IBOutlet weak var borderConstraint: NSLayoutConstraint!
     
     var pgr:UIPanGestureRecognizer? = nil
@@ -221,7 +224,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     }
     
     func complete(){
-        if !completionBlock(completed: true) {
+        if completionBlock(completed: true) {
             animateReturn()
         } else {
             animateComplete()
@@ -262,7 +265,7 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     }
     
     func uncomplete() {
-        if !completionBlock(completed: false) {
+        if completionBlock(completed: false) {
             animateReturn()
         } else {
             animateUncomplete()

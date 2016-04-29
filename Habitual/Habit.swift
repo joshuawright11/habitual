@@ -43,6 +43,8 @@ public class Habit: NSObject {
     var notifyConnectionsAt: String
     
     /// The time of day that a user aims to complete this `Habit`.
+    ///     WARNING: Currently used to keep track of habit ordering, nothing to do
+    ///     with time of day
     var timeOfDay: Int
     
     /// The amount of times a habit should be completed per `Frequency`.

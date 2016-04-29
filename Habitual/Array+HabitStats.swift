@@ -58,8 +58,6 @@ extension Array where Element : Habit {
                 available += 1
                 if !habit.canDoOn(date) {
                     completed += 1
-                } else {
-                    print("")
                 }
             }
         }

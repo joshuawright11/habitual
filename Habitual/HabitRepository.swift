@@ -28,10 +28,12 @@ internal class HabitRepository: NSObject {
     internal func createHabit(habit: Habit) {
         addToCoreData(habit)
         uploadToServer(habit, callback: nil)
+        habits.append(habit)
     }
     
     internal func deleteHabit(habit: Habit) {
         deleteFromCoreData(habit)
+        habits.removeObject(habit)
     }
     
     internal func updateHabit(habit: Habit) {
@@ -39,7 +41,11 @@ internal class HabitRepository: NSObject {
     }
     
     internal func orderHabits(habits: [Habit]) {
-        
+        for index in 0...habits.count - 1 {
+            let habit = habits[index]
+            habit.timeOfDay = index
+            saveToCoreData(habit)
+        }
     }
     
     internal func isTracking(habit: Habit) -> Bool {
@@ -147,9 +153,6 @@ internal extension Habit {
         if let priv = parseObject["private"] {
             privat = priv as! Bool
         } else {
-            if name == "Call home" {
-                print("here")
-            }
             privat = false
         }
         

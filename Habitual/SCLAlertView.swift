@@ -394,7 +394,7 @@ public class SCLAlertView: UIViewController {
     }
     
     func baseViewPressed() {
-        print("Hello")
+        
     }
     
     // showSuccess(view, title, subTitle)

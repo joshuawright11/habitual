@@ -13,7 +13,7 @@ import CVCalendar
 
 // -TODO: Needs refactoring/documentation
 
-class CalendarController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
+class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     @IBOutlet weak var calendarHeight: NSLayoutConstraint!
     
@@ -67,7 +67,18 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableView: UITableView! {
+        didSet {
+            tableView.backgroundColor = Colors.background
+            tableView.emptyDataSetSource = self
+            tableView.emptyDataSetDelegate = self
+            tableView.tableFooterView = UIView()
+            tableView.showsVerticalScrollIndicator = false
+            tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
+            tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
+        }
+    }
+    
     @IBOutlet weak var spacerView: UIView! {
         didSet {
             spacerView.backgroundColor = Colors.barBackground
@@ -75,41 +86,43 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    @IBOutlet weak var calendarView: CVCalendarView!
-    @IBOutlet weak var menuView: CVCalendarMenuView!
+    @IBOutlet weak var calendarView: CVCalendarView! {
+        didSet {
+            calendarView.backgroundColor = Colors.barBackground
+            calendarView.changeDaysOutShowingState(false)
+        }
+    }
+    
+    @IBOutlet weak var menuView: CVCalendarMenuView! {
+        didSet {
+            menuView.backgroundColor = Colors.barBackground
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Habits"
-        
-        Utilities.registerForNotification(self, selector: #selector(CalendarController.refreshData), name: Notifications.habitDataChanged)
-        
-        Utilities.registerForNotification(self, selector: #selector(moveCell), name:
-            Notifications.reloadPulse)
-        
-        self.calendarView.changeDaysOutShowingState(false)
-        self.tableView.emptyDataSetSource = self
-        self.tableView.emptyDataSetDelegate = self
-        self.tableView.tableFooterView = UIView()
-        
-        self.tableView.showsVerticalScrollIndicator = false
-        
+        habitService.addHabitServiceObserver(self)
         refreshData()
         
-        tableView.registerNib(UINib(nibName: "HabitHomeCell", bundle: nil), forCellReuseIdentifier: "habit")
-        
         let dataButton = UIBarButtonItem(image: UIImage(named: "order")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(CalendarController.order))
-        navigationItem.leftBarButtonItem = dataButton
         
         let addButton = UIBarButtonItem(image: UIImage(named: "plus")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(CalendarController.add))
-        navigationItem.rightBarButtonItem = addButton
         
-        doAppearance()
+        navigationItem.leftBarButtonItem = dataButton
+        navigationItem.rightBarButtonItem = addButton
+       
+        navigationItem.title = "Habits"
+        
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        
+        view.backgroundColor = Colors.background
     }
     
     func order() {
         if self.tableView.editing {
+            habitService.orderHabits(habitsOfDate)
             let temp = habits
             habits = temp
             self.calendarView.userInteractionEnabled = true
@@ -124,33 +137,6 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.setEditing(!self.tableView.editing, animated: true)
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-    
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .None
-    }
-    
-    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
-        habitService.orderHabits(habitsOfDate)
-    }
-    
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        
-        let removed = habitsOfDate.removeAtIndex(sourceIndexPath.row)
-        habitsOfDate.insert(removed, atIndex: destinationIndexPath.row)
-    }
-    
-    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
-        return proposedDestinationIndexPath
-    }
-    
-    
     func add() {
         let hdc = storyboard?.instantiateViewControllerWithIdentifier("HabitDetail") as! HabitDetailController
         hdc.habitService = habitService
@@ -161,19 +147,6 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.layer.shadowColor = UIColor.clearColor().CGColor
-    }
-    
-    func doAppearance(){
-        
-        tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
-        
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        
-        self.calendarView.backgroundColor = Colors.barBackground
-        self.menuView.backgroundColor = Colors.barBackground
-        self.view.backgroundColor = Colors.background
-        self.tableView.backgroundColor = Colors.background
     }
     
     override func viewDidLayoutSubviews() {
@@ -213,7 +186,7 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func refreshData(){
+    func refreshData() {
         habits = habitService.habits
         self.tableView.reloadData()
     }
@@ -271,7 +244,29 @@ class CalendarController: UIViewController, UITableViewDataSource, UITableViewDe
 }
 
 // MARK: - Table view data source
-extension CalendarController {
+extension CalendarController : UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .None
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+        let removed = habitsOfDate.removeAtIndex(sourceIndexPath.row)
+        habitsOfDate.insert(removed, atIndex: destinationIndexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+        return proposedDestinationIndexPath
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -350,8 +345,15 @@ extension CalendarController {
     }
 }
 
+extension CalendarController : ServiceObserver {
+    
+    func serviceDidUpdate() {
+        refreshData()
+    }
+}
+
 // MARK: - CVCalendarView methods
-extension CalendarController {
+extension CalendarController : CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
     func presentationMode() -> CalendarMode {
         return .WeekView

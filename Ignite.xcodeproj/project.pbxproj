@@ -11,6 +11,9 @@
 		03167CE71CD2E7E500E30E1C /* ConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CE61CD2E7E500E30E1C /* ConnectionService.swift */; };
 		03167CE91CD2E7EF00E30E1C /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CE81CD2E7EF00E30E1C /* AccountService.swift */; };
 		03167CEB1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */; };
+		03167CEE1CD2F0BD00E30E1C /* ServiceManager+HabitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CED1CD2F0BD00E30E1C /* ServiceManager+HabitService.swift */; };
+		03167CF01CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CEF1CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift */; };
+		03167CF21CD2F0D500E30E1C /* ServiceManager+AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CF11CD2F0D500E30E1C /* ServiceManager+AccountService.swift */; };
 		0317811D1CA497940092EC2C /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 0317811C1CA497940092EC2C /* UIDeviceHardware.m */; };
 		0317811F1CA4A33E0092EC2C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */; };
 		031D28031B29D1300060263A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28021B29D1300060263A /* AppDelegate.swift */; };
@@ -105,6 +108,9 @@
 		03167CE61CD2E7E500E30E1C /* ConnectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionService.swift; sourceTree = "<group>"; };
 		03167CE81CD2E7EF00E30E1C /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RangeReplicableCollectionType+Remove.swift"; sourceTree = "<group>"; };
+		03167CED1CD2F0BD00E30E1C /* ServiceManager+HabitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServiceManager+HabitService.swift"; sourceTree = "<group>"; };
+		03167CEF1CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServiceManager+ConnectionService.swift"; sourceTree = "<group>"; };
+		03167CF11CD2F0D500E30E1C /* ServiceManager+AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServiceManager+AccountService.swift"; sourceTree = "<group>"; };
 		0317811B1CA497940092EC2C /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
 		0317811C1CA497940092EC2C /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
 		0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
@@ -247,6 +253,34 @@
 			name = "Service Protocols";
 			sourceTree = "<group>";
 		};
+		03167CEC1CD2F09F00E30E1C /* Service Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */,
+				03167CED1CD2F0BD00E30E1C /* ServiceManager+HabitService.swift */,
+				03167CEF1CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift */,
+				03167CF11CD2F0D500E30E1C /* ServiceManager+AccountService.swift */,
+			);
+			name = "Service Manager";
+			sourceTree = "<group>";
+		};
+		03167CF31CD2F76F00E30E1C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				031D28061B29D1300060263A /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		03167CF41CD2FBF300E30E1C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				0330CDDA1CAE405C00C2465C /* HabitRepository.swift */,
+				0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */,
+			);
+			name = Repositories;
+			sourceTree = "<group>";
+		};
 		031D27F41B29D1300060263A = {
 			isa = PBXGroup;
 			children = (
@@ -276,8 +310,6 @@
 				031D28241B29D4C60060263A /* Controllers */,
 				031D28251B29D57F0060263A /* Stores */,
 				039BFC061B2AD1E3006EAFD9 /* Helpers */,
-				03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */,
-				031D28061B29D1300060263A /* Main.storyboard */,
 				031D28091B29D1300060263A /* Images.xcassets */,
 				031D280B1B29D1300060263A /* LaunchScreen.xib */,
 				031D28001B29D1300060263A /* Supporting Files */,
@@ -313,6 +345,7 @@
 		031D28221B29D4BA0060263A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0330CDE01CAF038300C2465C /* Array+HabitStats.swift */,
 				034E13271C07E66500EC3BCC /* Enums */,
 				03E6F2E21B51A23400484DB6 /* HabitCoreData.swift */,
 				039BFC0D1B2AE10B006EAFD9 /* User.swift */,
@@ -326,6 +359,7 @@
 		031D28231B29D4C10060263A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				03167CF31CD2F76F00E30E1C /* Storyboards */,
 				03ECDE361BF9695000B9F9E7 /* HabitDetailCells */,
 				034ADC0B1BFAC6F700593C4E /* StatCell.swift */,
 				03B488111B509C390077E601 /* HabitCell.swift */,
@@ -368,12 +402,11 @@
 		031D28251B29D57F0060263A /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				03E6F2D71B51998600484DB6 /* HabitualModel.xcdatamodeld */,
 				03167CE31CD2E7BD00E30E1C /* Service Protocols */,
+				03167CEC1CD2F09F00E30E1C /* Service Manager */,
+				03167CF41CD2FBF300E30E1C /* Repositories */,
 				039BFC021B2AD1C7006EAFD9 /* WebManager.swift */,
-				0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */,
-				0330CDDA1CAE405C00C2465C /* HabitRepository.swift */,
-				0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */,
-				0330CDE01CAF038300C2465C /* Array+HabitStats.swift */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -699,11 +732,14 @@
 				03DF8E301B602A3000C6DC78 /* SignupController.swift in Sources */,
 				039DBF471C14F0D9000EED3B /* ConnectionChatViewFlowLayout.swift in Sources */,
 				034ADC101BFD444D00593C4E /* ConnectionChatController.swift in Sources */,
+				03167CF01CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift in Sources */,
 				034E13291C07E68F00EC3BCC /* NotificationSetting.swift in Sources */,
+				03167CF21CD2F0D500E30E1C /* ServiceManager+AccountService.swift in Sources */,
 				0355D1101B5D786D00EA8185 /* UserController.swift in Sources */,
 				034ADC0E1BFC365500593C4E /* SettingsController.swift in Sources */,
 				0330CDE11CAF038300C2465C /* Array+HabitStats.swift in Sources */,
 				03167CE51CD2E7DA00E30E1C /* HabitService.swift in Sources */,
+				03167CEE1CD2F0BD00E30E1C /* ServiceManager+HabitService.swift in Sources */,
 				0330CDD91CAE2C3C00C2465C /* ServiceManager.swift in Sources */,
 				03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */,
 				03E9F81A1C37384C008EC91A /* InviteCell.swift in Sources */,

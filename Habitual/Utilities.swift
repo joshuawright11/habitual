@@ -132,7 +132,6 @@ public class Utilities {
         } else {
             return ""
         }
-
     }
     
     public static func incrementBadgeNumber() {
@@ -161,9 +160,5 @@ public class Utilities {
             return false
         }
         return true
-    }
-    
-    public static func log(text: String) {
-        print("---> \(text). Line: \(#line) File: \(#file) Column:\(#column) Function:\(#function)")
     }
 }

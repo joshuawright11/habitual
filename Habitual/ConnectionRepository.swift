@@ -159,7 +159,6 @@ private extension ConnectionRepository {
         or.includeKey("receiver.habits.usersToNotify")
         or.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let objects = objects {
-                print("connections loaded \(objects.count)")
                 self.connections = []
                 var count = 0
                 var total = objects.count
