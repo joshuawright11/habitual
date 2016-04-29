@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - App Lifecycle methods
     
+    var habitReminderManager: HabitReminderManager!
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Crashlytics setup
@@ -33,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // "content_available" was used to trigger a background push (introduced in iOS 7).
             // In that case, we skip tracking here to avoid double counting the app-open.
             
-            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus")
-            let oldPushHandlerOnly = !self.respondsToSelector("application:didReceiveRemoteNotification:fetchCompletionHandler:")
+            let preBackgroundPush = !application.respondsToSelector(Selector("backgroundRefreshStatus"))
+            let oldPushHandlerOnly = !self.respondsToSelector(#selector(UIApplicationDelegate.application(_:didReceiveRemoteNotification:fetchCompletionHandler:)))
             var pushPayload = false
             if let options = launchOptions {
                 pushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil
@@ -48,21 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-        if let _ = PFUser.currentUser() {
-            let versionNumber = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-
-            let installation = PFInstallation.currentInstallation()
-            installation["versionNumber"] = versionNumber
-            installation["username"] = PFUser.currentUser()?.username
-            installation["deviceId"] = UIDevice.currentDevice().identifierForVendor?.UUIDString
-            installation["operatingSystem"] = NSProcessInfo.processInfo().operatingSystemVersionString
-            installation["platform"] = UIDeviceHardware.platformString()
-            PFInstallation.currentInstallation().saveEventually()
-        }
-        
         PFUser.currentUser()?.fetchInBackground()
         
         doDesign()
+        
+        let services = ServiceManager()
+        let rvc = self.window!.rootViewController as! MainTabBarController
+        rvc.serviceManager = services
+        
+        habitReminderManager = HabitReminderManager(habitService: services)
         
         return true
     }
@@ -70,7 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {}
 
     /// Reschedule local notifications every time the app is closed
-    func applicationDidEnterBackground(application: UIApplication) {scheduleLocalNotifications()}
+    func applicationDidEnterBackground(application: UIApplication) {
+        habitReminderManager.scheduleLocalNotifications()
+    }
 
     func applicationWillEnterForeground(application: UIApplication) {}
 
