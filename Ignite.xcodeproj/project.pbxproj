@@ -250,7 +250,7 @@
 				03167CE61CD2E7E500E30E1C /* ConnectionService.swift */,
 				03167CE81CD2E7EF00E30E1C /* AccountService.swift */,
 			);
-			name = "Service Protocols";
+			path = "Service Protocols";
 			sourceTree = "<group>";
 		};
 		03167CEC1CD2F09F00E30E1C /* Service Manager */ = {
@@ -261,7 +261,7 @@
 				03167CEF1CD2F0C800E30E1C /* ServiceManager+ConnectionService.swift */,
 				03167CF11CD2F0D500E30E1C /* ServiceManager+AccountService.swift */,
 			);
-			name = "Service Manager";
+			path = "Service Manager";
 			sourceTree = "<group>";
 		};
 		03167CF31CD2F76F00E30E1C /* Storyboards */ = {
@@ -269,7 +269,7 @@
 			children = (
 				031D28061B29D1300060263A /* Main.storyboard */,
 			);
-			name = Storyboards;
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		03167CF41CD2FBF300E30E1C /* Repositories */ = {
@@ -278,7 +278,7 @@
 				0330CDDA1CAE405C00C2465C /* HabitRepository.swift */,
 				0330CDDC1CAE408600C2465C /* ConnectionRepository.swift */,
 			);
-			name = Repositories;
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		031D27F41B29D1300060263A = {
@@ -353,7 +353,7 @@
 				034ADC131BFD77F100593C4E /* Message.swift */,
 				03DD15DE1C05A1780099C497 /* Habit.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		031D28231B29D4C10060263A /* Views */ = {
@@ -378,7 +378,7 @@
 				0350ED9D1C506AFF00CECE5A /* DatePickerCell.swift */,
 				0350ED9E1C506AFF00CECE5A /* DatePickerCell.xib */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		031D28241B29D4C60060263A /* Controllers */ = {
@@ -396,7 +396,7 @@
 				03CC14EA1C335D4E00831F1A /* ShareController.swift */,
 				03CC14EB1C335D4E00831F1A /* ShareController.xib */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		031D28251B29D57F0060263A /* Stores */ = {
@@ -408,7 +408,7 @@
 				03167CF41CD2FBF300E30E1C /* Repositories */,
 				039BFC021B2AD1C7006EAFD9 /* WebManager.swift */,
 			);
-			name = Stores;
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		034E13271C07E66500EC3BCC /* Enums */ = {
@@ -418,7 +418,7 @@
 				034E132C1C07E6F400EC3BCC /* Frequency.swift */,
 				034E132E1C07EE7400EC3BCC /* TimeOfDay.swift */,
 			);
-			name = Enums;
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		034E13321C07F2B500EC3BCC /* Helper Extensions */ = {
@@ -431,7 +431,7 @@
 				03ADD4ED1CA32BBF000C8475 /* CVCalendarView+Refresh.swift */,
 				03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */,
 			);
-			name = "Helper Extensions";
+			path = "Helper Extensions";
 			sourceTree = "<group>";
 		};
 		039BFC061B2AD1E3006EAFD9 /* Helpers */ = {
@@ -449,7 +449,7 @@
 				0317811C1CA497940092EC2C /* UIDeviceHardware.m */,
 				0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */,
 			);
-			name = Helpers;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		03ECDE361BF9695000B9F9E7 /* HabitDetailCells */ = {
@@ -468,7 +468,7 @@
 				03ECDE491BF96A5800B9F9E7 /* NameCell.swift */,
 				03ECDE4D1BF96F1900B9F9E7 /* HabitDetailCell.swift */,
 			);
-			name = HabitDetailCells;
+			path = HabitDetailCells;
 			sourceTree = "<group>";
 		};
 		566B0A2AF5872A2C0665C670 /* Pods */ = {
@@ -783,6 +783,7 @@
 				031D28071B29D1300060263A /* Base */,
 			);
 			name = Main.storyboard;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		031D280B1B29D1300060263A /* LaunchScreen.xib */ = {
@@ -942,7 +943,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshwright.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ignite;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Habitual/Ignite-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Habitual/Helpers/Ignite-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1006,7 +1007,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.joshwright.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ignite;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Habitual/Ignite-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Habitual/Helpers/Ignite-Bridging-Header.h";
 			};
 			name = Release;
 		};
