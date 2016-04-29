@@ -16,57 +16,6 @@ protocol ServiceObserver: class {
     func serviceDidUpdate()
 }
 
-protocol HabitService {
-    var habits:[Habit] {get}
-    
-    func createHabit(habit: Habit)
-    func deleteHabit(habit: Habit)
-    func updateHabit(habit: Habit)
-    
-    func completeHabit(habit: Habit, on date: NSDate) -> Bool
-    func incompleteHabit(habit: Habit, on date: NSDate) -> Bool
-    
-    func orderHabits(habits: [Habit])
-    
-    func isTracking(habit: Habit) -> Bool
-    
-    func addHabitServiceObserver(observer: ServiceObserver)
-    func removeHabitServiceObserver(observer: ServiceObserver)
-}
-
-enum ConnectionServiceError: ErrorType {
-    case AlreadyConnected
-    case SelfConnection
-}
-
-protocol ConnectionService {
-    var connections:[Connection] {get}
-    
-    func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) throws
-    func approveConnection(connection: Connection)
-    func message(connection: Connection, text: String, callback:(success: Bool) -> ())
-    func otherUser(connection: Connection) -> User
-    func sentByCurrentUser(connection: Connection) -> Bool
-    func numHabitsAccountableInConnection(connection: Connection) -> Int
-    
-    func addConnectionServiceObserver(observer: ServiceObserver)
-    func removeConnectionServiceObserver(observer: ServiceObserver)
-}
-
-protocol AccountService {
-    var isLoggedIn: Bool { get }
-    var currentUser: User? { get }
-    
-    var isFakeEmail: Bool { get }
-    
-    func login(email: String, password:String, callback: (success: Bool) -> ())
-    func signup(email: String, password:String, name: String, callback: (success: Bool) -> ())
-    func connectWithFacebook(callback:(success: Bool) -> ())
-    
-    func addAccountServiceObserver(observer: ServiceObserver)
-    func removeAccountServiceObserver(observer: ServiceObserver)
-}
-
 class ServiceManager: NSObject {
     var habitRepository: HabitRepository = HabitRepository()
     var connectionReposity: ConnectionRepository = ConnectionRepository()
@@ -135,12 +84,31 @@ extension ServiceManager : HabitService {
         return habitRepository.isTracking(habit)
     }
     
+    // return whether the habit can be completed again
     func completeHabit(habit: Habit, on date: NSDate) -> Bool {
-        return true
+        if habit.canDoOn(date) {
+            habit.datesCompleted.append(date);
+            habitRepository.updateHabit(habit)
+            return habit.canDoOn(date)
+        } else {
+            return false;
+        }
     }
     
+    // return whether the habit can be incompleted again
     func incompleteHabit(habit: Habit, on date: NSDate) -> Bool {
-        return true
+        if habit.numCompletedIn(date) > 0 {
+            for completion in habit.datesCompleted {
+                if (date.beginningOfDay...date.endOfDay).contains(completion) {
+                    habit.datesCompleted.removeObject(completion)
+                    habitRepository.updateHabit(habit)
+                    break
+                }
+            }
+            return habit.numCompletedIn(date) > 0
+        } else {
+            return false
+        }
     }
     
     func addHabitServiceObserver(observer: ServiceObserver) {

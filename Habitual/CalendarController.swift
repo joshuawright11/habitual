@@ -284,22 +284,21 @@ extension CalendarController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let habit = habitsOfDate[indexPath.row]
         
-        var cell:HabitHomeCell? = tableView.dequeueReusableCellWithIdentifier("habit") as? HabitHomeCell
+        let cell:HabitHomeCell = tableView.dequeueReusableCellWithIdentifier("habit") as! HabitHomeCell
+    
+        cell.data = (habit, self.selectedDate)
         
-        if (cell == nil) {
-            cell = HabitHomeCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "habit", habit: habit, date: self.selectedDate)
-            
-            if cell!.respondsToSelector(Selector("setSeparatorInset:")) {
-                cell?.separatorInset = UIEdgeInsetsZero
+        cell.completionBlock = { completed in
+            if completed {
+                return self.habitService.completeHabit(habit, on: self.selectedDate)
+            } else {
+                return self.habitService.incompleteHabit(habit, on: self.selectedDate)
             }
-        }else{ cell?.data = (habit, self.selectedDate) }
+        }
         
-        cell?.configure()
+        cell.canSwipe = !tableView.editing
         
-        if tableView.editing {cell?.canSwipe = false}
-        else {cell?.canSwipe = true}
-        
-        return cell!
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

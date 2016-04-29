@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03167CE51CD2E7DA00E30E1C /* HabitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CE41CD2E7DA00E30E1C /* HabitService.swift */; };
+		03167CE71CD2E7E500E30E1C /* ConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CE61CD2E7E500E30E1C /* ConnectionService.swift */; };
+		03167CE91CD2E7EF00E30E1C /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CE81CD2E7EF00E30E1C /* AccountService.swift */; };
+		03167CEB1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */; };
 		0317811D1CA497940092EC2C /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 0317811C1CA497940092EC2C /* UIDeviceHardware.m */; };
 		0317811F1CA4A33E0092EC2C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */; };
 		031D28031B29D1300060263A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28021B29D1300060263A /* AppDelegate.swift */; };
@@ -97,6 +101,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03167CE41CD2E7DA00E30E1C /* HabitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitService.swift; sourceTree = "<group>"; };
+		03167CE61CD2E7E500E30E1C /* ConnectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionService.swift; sourceTree = "<group>"; };
+		03167CE81CD2E7EF00E30E1C /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
+		03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RangeReplicableCollectionType+Remove.swift"; sourceTree = "<group>"; };
 		0317811B1CA497940092EC2C /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
 		0317811C1CA497940092EC2C /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
 		0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
@@ -229,6 +237,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03167CE31CD2E7BD00E30E1C /* Service Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				03167CE41CD2E7DA00E30E1C /* HabitService.swift */,
+				03167CE61CD2E7E500E30E1C /* ConnectionService.swift */,
+				03167CE81CD2E7EF00E30E1C /* AccountService.swift */,
+			);
+			name = "Service Protocols";
+			sourceTree = "<group>";
+		};
 		031D27F41B29D1300060263A = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +368,7 @@
 		031D28251B29D57F0060263A /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				03167CE31CD2E7BD00E30E1C /* Service Protocols */,
 				039BFC021B2AD1C7006EAFD9 /* WebManager.swift */,
 				0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */,
 				0330CDDA1CAE405C00C2465C /* HabitRepository.swift */,
@@ -377,6 +396,7 @@
 				03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */,
 				0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */,
 				03ADD4ED1CA32BBF000C8475 /* CVCalendarView+Refresh.swift */,
+				03167CEA1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift */,
 			);
 			name = "Helper Extensions";
 			sourceTree = "<group>";
@@ -652,6 +672,7 @@
 				03CC14F01C34459500831F1A /* SocialUserCell.swift in Sources */,
 				037610951C2F61C100B3E9F2 /* HabitGlanceCell.swift in Sources */,
 				03CC14EC1C335D4E00831F1A /* ShareController.swift in Sources */,
+				03167CE71CD2E7E500E30E1C /* ConnectionService.swift in Sources */,
 				0355D10E1B5D786200EA8185 /* NetworkController.swift in Sources */,
 				0350ED981C5041F800CECE5A /* UserCell.swift in Sources */,
 				03ECDE3C1BF969C200B9F9E7 /* ColorCell.swift in Sources */,
@@ -670,6 +691,8 @@
 				039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */,
 				032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */,
 				03ECDE461BF96A2300B9F9E7 /* AccountabilityCell.swift in Sources */,
+				03167CEB1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift in Sources */,
+				03167CE91CD2E7EF00E30E1C /* AccountService.swift in Sources */,
 				0330CDDB1CAE405C00C2465C /* HabitRepository.swift in Sources */,
 				03E6F2D91B51998600484DB6 /* HabitualModel.xcdatamodeld in Sources */,
 				03BA13471B5EEB8300504A63 /* HabitReminderManager.swift in Sources */,
@@ -680,6 +703,7 @@
 				0355D1101B5D786D00EA8185 /* UserController.swift in Sources */,
 				034ADC0E1BFC365500593C4E /* SettingsController.swift in Sources */,
 				0330CDE11CAF038300C2465C /* Array+HabitStats.swift in Sources */,
+				03167CE51CD2E7DA00E30E1C /* HabitService.swift in Sources */,
 				0330CDD91CAE2C3C00C2465C /* ServiceManager.swift in Sources */,
 				03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */,
 				03E9F81A1C37384C008EC91A /* InviteCell.swift in Sources */,

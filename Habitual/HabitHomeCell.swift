@@ -17,20 +17,57 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     /// The length in seconds that the animation should run
     let kAnimationLength = 0.3
     
-    @IBOutlet weak var iv: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: LTMorphingLabel!
-    @IBOutlet weak var bottomLabel: LTMorphingLabel!
+    @IBOutlet weak var iv: UIImageView! {
+        didSet {
+            iv.backgroundColor = UIColor.clearColor()
+            iv.contentMode = .ScaleAspectFit
+            iv.tintColor = color
+        }
+    }
+    
+    @IBOutlet weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.textColor = Colors.textMain
+            titleLabel.font = Fonts.cellTitle
+        }
+    }
+    
+    @IBOutlet weak var subtitleLabel: LTMorphingLabel! {
+        didSet {
+            subtitleLabel.textColor = Colors.textSubtitle
+            subtitleLabel.font = Fonts.cellSubtitleBold
+        }
+    }
+    @IBOutlet weak var bottomLabel: LTMorphingLabel! {
+        didSet {
+            bottomLabel.font = Fonts.cellSubtitle
+            bottomLabel.textColor = Colors.textSubtitle
+        }
+    }
     @IBOutlet weak var emojiLabel: UILabel!
-    @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var checkmark: UIImageView!
+    
+    @IBOutlet weak var borderView: UIView! {
+        didSet {
+            backgroundColor = UIColor.clearColor()
+            borderView.backgroundColor = color
+            borderView.layer.cornerRadius = Floats.cardCornerRadius
+        }
+    }
+    
+    @IBOutlet weak var checkmark: UIImageView! {
+        didSet {
+            checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
+            checkmark.tintColor = Colors.background
+            checkmark.alpha = 0.0
+        }
+    }
     @IBOutlet weak var borderConstraint: NSLayoutConstraint!
     
     var pgr:UIPanGestureRecognizer? = nil
     
     var canSwipe = true
     
-    var habitService: HabitService!
+    var completionBlock: ((completed: Bool)->(Bool))!
     
     private var date: NSDate!
     private var habit: Habit!
@@ -48,18 +85,8 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
             
             color = UIColor(hexString: habit.color)
             bgColor = color.igniteDarken()
-            
-            doAppearance()
+            configure()
         }
-    }
-    
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, habit: Habit, date: NSDate) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        data = (habit, date)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -73,8 +100,10 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     
     func configure() {
         
-        setupHandlers()
+        let image = UIImage(named: habit.icon)
+        iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
         
+        setupHandlers()
         selectionStyle = UITableViewCellSelectionStyle.None
         
         self.titleLabel.text = habit.name
@@ -141,8 +170,6 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
         }else{
             pgr?.enabled = true
         }
-        
-        
     }
     
     func handlePan(recognizer: UIPanGestureRecognizer) {
@@ -194,20 +221,10 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     }
     
     func complete(){
-        
-        if !habitService.completeHabit(habit, on: date) {
-            return
-        }
-
-        if habit.numCompletedIn(date) == habit.timesToComplete {
-            animateComplete()
-            Utilities.delay(0.7) {
-                Utilities.postNotification(Notifications.reloadPulse,
-                    data: self.habit.name, secondaryData: true)
-            }
-        }else{
+        if !completionBlock(completed: true) {
             animateReturn()
-            Utilities.postNotification(Notifications.reloadPulse)
+        } else {
+            animateComplete()
         }
     }
     
@@ -245,22 +262,11 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     }
     
     func uncomplete() {
-        
-        if !habitService.incompleteHabit(habit, on: date) {
+        if !completionBlock(completed: false) {
             animateReturn()
-            return
-        }
-        
-        if habit.numCompletedIn(date) + 1 == habit.timesToComplete {
-            Utilities.delay(0.7) {
-                Utilities.postNotification(Notifications.reloadPulse,
-                    data: self.habit.name, secondaryData: false)
-            }
         } else {
-            Utilities.postNotification(Notifications.reloadPulse)
+            animateUncomplete()
         }
-        
-        animateUncomplete()
     }
     
     func instantUncomplete() {
@@ -314,32 +320,5 @@ class HabitHomeCell: UITableViewCell, LTMorphingLabelDelegate {
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         let velocity = pgr?.velocityInView(self)
         return fabs(velocity!.y) < fabs(velocity!.x)
-    }
-    
-    func doAppearance() {
-        
-        titleLabel.textColor = Colors.textMain
-        titleLabel.font = Fonts.cellTitle
-        subtitleLabel.textColor = Colors.textSubtitle
-        subtitleLabel.font = Fonts.cellSubtitleBold
-        
-        bottomLabel.font = Fonts.cellSubtitle
-        bottomLabel.textColor = Colors.textSubtitle
-        
-        let image = UIImage(named: habit.icon)
-        iv.backgroundColor = UIColor.clearColor()
-        iv.contentMode = .ScaleAspectFit
-        iv.tintColor = color
-        iv.image = image?.imageWithRenderingMode(.AlwaysTemplate)
-        
-        backgroundColor = UIColor.clearColor()
-        
-        self.borderView.backgroundColor = color
-        
-        checkmark.image = UIImage(named: "checkmark_large")?.imageWithRenderingMode(.AlwaysTemplate)
-        checkmark.tintColor = Colors.background
-        checkmark.alpha = 0.0
-        
-        borderView.layer.cornerRadius = Floats.cardCornerRadius
     }
 }
