@@ -43,7 +43,6 @@ class MainTabBarController: UITabBarController, ServiceObserver {
         tb3.title = "Pulse"
 
         self.selectedIndex = 1
-        
         Styler.tabBarShader(self.tabBar)
         
         let connections = (viewControllers![0] as! UINavigationController).viewControllers[0] as! NetworkController
@@ -55,13 +54,11 @@ class MainTabBarController: UITabBarController, ServiceObserver {
         calendarViewController.habitService = serviceManager
         calendarViewController.connectionService = serviceManager
         userController.habits = serviceManager.habits
-        
+
 //        self.tabBar.backgroundImage = UIImage(named: "clear")
-        
 //        let frost = UIVisualEffectView(effect: UIVibrancyEffect())
 //        frost.frame = self.tabBar.bounds
 //        self.tabBar.insertSubview(frost, atIndex: 0)
-        
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -14,9 +14,7 @@ class HabitGlanceCell: UITableViewCell {
     static let height = CGFloat(22)
     
     @IBOutlet weak var circleView: UIView! {
-        didSet {
-            circleView.layer.cornerRadius = 5.5
-        }
+        didSet {circleView.layer.cornerRadius = 5.5}
     }
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
@@ -31,15 +29,11 @@ class HabitGlanceCell: UITableViewCell {
     }
     
     private var connectionColor: UIColor! {
-        didSet {
-            iv.tintColor = connectionColor
-        }
+        didSet {iv.tintColor = connectionColor}
     }
     
     private var habit: Habit! {
-        didSet {
-            titleLabel.text = habit.name + " " + habit.streakBadge
-        }
+        didSet {titleLabel.text = habit.name + " " + habit.streakBadge}
     }
     
     func configureForHabit(habit: Habit, color: UIColor, accountable: Bool, completed: Bool) {

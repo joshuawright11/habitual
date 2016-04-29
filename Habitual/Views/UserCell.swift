@@ -15,9 +15,7 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     static let height = CGFloat(159)
     
     @IBOutlet weak var borderView: UIView! {
-        didSet {
-            Styler.viewShader(borderView)
-        }
+        didSet {Styler.viewShader(borderView)}
     }
     @IBOutlet weak var profileiv: UIImageView! {
         didSet {
@@ -84,15 +82,11 @@ class UserCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     }
     
     @IBOutlet weak var finishedTableView: UITableView! {
-        didSet {
-            finishedTableView.layer.cornerRadius = Floats.cardCornerRadius
-        }
+        didSet {finishedTableView.layer.cornerRadius = Floats.cardCornerRadius}
     }
     
     @IBOutlet weak var unfinishedTableView: UITableView! {
-        didSet {
-            unfinishedTableView.layer.cornerRadius = Floats.cardCornerRadius
-        }
+        didSet {unfinishedTableView.layer.cornerRadius = Floats.cardCornerRadius}
     }
     
     private var finishedHabits: [Habit]!

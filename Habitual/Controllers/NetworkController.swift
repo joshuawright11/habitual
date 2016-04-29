@@ -25,41 +25,24 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        doAppearance()
-        
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
-        
-        self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")
-        
+        self.tableView.backgroundColor = Colors.background
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 160.0
-        
-        self.navigationItem.title = "Connections"
-        
-        let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: #selector(NetworkController.addConnection))
-        
-        self.navigationItem.rightBarButtonItem = button
-        
+        self.tableView.registerNib(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "user")
         self.tableView.reloadData()
         
-        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
-            button.enabled = false
-        }
-    }
-    
-    func doAppearance() {
-        self.tableView.backgroundColor = Colors.background
-        
+        let button = UIBarButtonItem(image: UIImage(named: "plus"), style: .Plain, target: self, action: #selector(NetworkController.addConnection))
+        self.navigationItem.rightBarButtonItem = button
+        self.navigationItem.title = "Connections"
         Styler.navBarShader(self)
     }
     
     @IBAction func addConnection() {
-        
         let alert = SCLAlertView()
-        
         alert.buttonCornerRadius = 5
         alert.contentViewCornerRadius = 10
         alert.fieldCornerRadius = 5
@@ -72,11 +55,9 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         txt.textColor = Colors.textMain
         txt.attributedPlaceholder =
             NSAttributedString(string: "email", attributes: [NSForegroundColorAttributeName : Colors.textSubtitle])
-
         
         alert.showCloseButton = true
         alert.addButton("Request Connection") {
-            
             let text = txt.text!
             do {
                 try self.connectionService.connectWith(text) { (success) in
@@ -103,20 +84,11 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         alert.showEdit("Add Connection", subTitle: "Request a connection with someone with their email.", closeButtonTitle: "Close", colorStyle: 0xC644FC, colorTextButton: 0xffffff)
     }
     
-    // MARK: - Empty data set delegate
     
-    func emptyDataSetDidTapView(scrollView: UIScrollView!) {
-        
-        if (PFUser.currentUser()!["paymentDue"] as! NSDate) < NSDate() {
-            return
-        }
-        
-        addConnection()
-    }
-    
-    
-    // MARK: - Table view data source
+}
 
+// MARK: - Table view data sources
+extension NetworkController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return connectionService.connections.count
     }
@@ -158,9 +130,10 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
             self.navigationController?.pushViewController(uvc, animated: true)
         }
     }
+}
 
-    // MARK: - Empty data set data source
-    
+// MARK: - Empty data set data source
+extension NetworkController{
     func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor! {
         return Colors.background
     }
@@ -207,5 +180,11 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     func serviceDidUpdate() {
         self.tableView.reloadData()
     }
+}
 
+// MARK: - Empty data set delegate
+extension NetworkController {
+    func emptyDataSetDidTapView(scrollView: UIScrollView!) {
+        addConnection()
+    }
 }

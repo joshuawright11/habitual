@@ -13,10 +13,6 @@ import Timepiece
 
 class AccountController: UIViewController {
     
-    var accountService: AccountService!
-
-    let fbPermissions = ["public_profile","email","user_friends"]
-    
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
             titleLabel.font = Fonts.mainTitle
@@ -86,6 +82,9 @@ class AccountController: UIViewController {
             leftSpacer.backgroundColor = Colors.textSubtitle
         }
     }
+    
+    var accountService: AccountService!
+    let fbPermissions = ["public_profile","email","user_friends"]
     
     override func viewDidLoad() {
         navigationController?.navigationBar.shadowImage = UIImage()

@@ -42,9 +42,7 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
     }
     
     var habitsOfDate: [Habit] = [] {
-        didSet {
-            calendarView.refresh()
-        }
+        didSet {calendarView.refresh()}
     }
     
     var selectedDate: NSDate = NSDate() {
@@ -94,9 +92,7 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
     }
     
     @IBOutlet weak var menuView: CVCalendarMenuView! {
-        didSet {
-            menuView.backgroundColor = Colors.barBackground
-        }
+        didSet {menuView.backgroundColor = Colors.barBackground}
     }
     
     override func viewDidLoad() {
@@ -111,7 +107,6 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
         
         navigationItem.leftBarButtonItem = dataButton
         navigationItem.rightBarButtonItem = addButton
-       
         navigationItem.title = "Habits"
         
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -132,7 +127,7 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
                 return one.timeOfDay < two.timeOfDay
             })
         }
-        
+
         self.tableView.reloadData()
         self.tableView.setEditing(!self.tableView.editing, animated: true)
     }
@@ -151,7 +146,6 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         calendarView.commitCalendarViewUpdate()
         menuView.commitMenuViewUpdate()
     }
@@ -246,43 +240,28 @@ class CalendarController: UIViewController, UIGestureRecognizerDelegate, DZNEmpt
 // MARK: - Table view data source
 extension CalendarController : UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {return true}
     
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {return false}
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .None
-    }
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {return .None}
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        
         let removed = habitsOfDate.removeAtIndex(sourceIndexPath.row)
         habitsOfDate.insert(removed, atIndex: destinationIndexPath.row)
     }
     
-    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
-        return proposedDestinationIndexPath
-    }
+    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {return proposedDestinationIndexPath}
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {return 1}
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return habitsOfDate.count
-    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {return habitsOfDate.count}
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let habit = habitsOfDate[indexPath.row]
-        
         let cell:HabitHomeCell = tableView.dequeueReusableCellWithIdentifier("habit") as! HabitHomeCell
-    
         cell.data = (habit, self.selectedDate)
-        
+        cell.canSwipe = !tableView.editing
         cell.completionBlock = { completed in
             if completed {
                 return self.habitService.completeHabit(habit, on: self.selectedDate)
@@ -290,9 +269,6 @@ extension CalendarController : UITableViewDataSource, UITableViewDelegate {
                 return self.habitService.incompleteHabit(habit, on: self.selectedDate)
             }
         }
-        
-        cell.canSwipe = !tableView.editing
-        
         return cell
     }
     
@@ -340,40 +316,20 @@ extension CalendarController : UITableViewDataSource, UITableViewDelegate {
         return header
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
-    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {return 40.0}
 }
 
 extension CalendarController : ServiceObserver {
-    
-    func serviceDidUpdate() {
-        refreshData()
-    }
+    func serviceDidUpdate() {refreshData()}
 }
 
 // MARK: - CVCalendarView methods
 extension CalendarController : CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate {
     
-    func presentationMode() -> CalendarMode {
-        return .WeekView
-    }
-    
-    func firstWeekday() -> Weekday {
-        return .Sunday
-    }
-    
-    func shouldShowWeekdaysOut() -> Bool {
-        return true
-    }
-    
-    func presentedDateUpdated(date: Date) {
-        struct Months {
-            static let months = ["January","February","March","April",
-                                 "May","June","July","August","September","October",
-                                 "November","December"]
-        }
-    }
+    func presentationMode() -> CalendarMode {return .WeekView}
+    func firstWeekday() -> Weekday {return .Sunday}
+    func shouldShowWeekdaysOut() -> Bool {return true}
+    func shouldAutoSelectDayOnMonthChange() -> Bool {return false}
     
     func didSelectDayView(dayView: DayView, animationDidFinish: Bool) {
         self.selectedDate = dayView.date.convertedDate()!
@@ -382,70 +338,25 @@ extension CalendarController : CVCalendarViewDelegate, CVCalendarMenuViewDelegat
         self.calendarView.commitCalendarViewUpdate()
     }
     
-    func shouldAutoSelectDayOnMonthChange() -> Bool {
-        return false
-    }
-    
     // MARK: - CVCalendarAppearanceDelegate methods
-    func dayLabelWeekdayInTextColor() -> UIColor {
-        return Colors.textMain
-    }
+    func dayLabelWeekdayInTextColor() -> UIColor {return Colors.textMain}
+    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {return Colors.accentSecondary}
+    func dayLabelWeekdayHighlightedTextColor() -> UIColor {return Colors.accent}
+    func dayLabelPresentWeekdayFont() -> UIFont {return Fonts.calendar}
+    func dayLabelWeekdayOutTextColor() -> UIColor {return Colors.textSecondary}
+    func dayLabelWeekdayFont() -> UIFont {return Fonts.calendar}
+    func dayLabelPresentWeekdayTextColor() -> UIColor {return Colors.textMain}
+    func dayLabelPresentWeekdayInitallyBold() -> Bool {return false}
+    func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {return Colors.accentSecondary}
+    func dayOfWeekTextColor() -> UIColor {return Colors.textMain}
+    func dayLabelPresentWeekdaySelectedFont() -> UIFont {return Fonts.calendar}
+    func dayLabelWeekdaySelectedFont() -> UIFont {return Fonts.calendar}
+    func dayOfWeekFont() -> UIFont {return Fonts.secondary}
     
-    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
-        return Colors.accentSecondary
-    }
-    
-    func dayLabelWeekdayHighlightedTextColor() -> UIColor {
-        return Colors.accent
-    }
-    
-    func dayLabelPresentWeekdayFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelWeekdayOutTextColor() -> UIColor {
-        return Colors.textSecondary
-    }
-    
-    func dayLabelWeekdayFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelPresentWeekdayTextColor() -> UIColor {
-        return Colors.textMain
-    }
-    
-    func dayLabelPresentWeekdayInitallyBold() -> Bool {
-        return false
-    }
-    
-    func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {
-        return Colors.accentSecondary
-    }
-    
-    func dayOfWeekTextColor() -> UIColor {
-        return Colors.textMain
-    }
-    
-    func dayLabelPresentWeekdaySelectedFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelWeekdaySelectedFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayOfWeekFont() -> UIFont {
-        return Fonts.secondary
-    }
-    
-    func shouldAutoSelectDayOnWeekChange() -> Bool {
-        return true
-    }
+    func shouldAutoSelectDayOnWeekChange() -> Bool {return true}
     
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
         if let date = dayView.date {
-            
             if date.convertedDate() > NSDate() || habitService.habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
                 return false
             } else {
@@ -457,14 +368,12 @@ extension CalendarController : CVCalendarViewDelegate, CVCalendarMenuViewDelegat
     }
     
     func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
-        
-        var lightColor: UIColor, darkColor:UIColor
-        
-        lightColor = Colors.accent.calendarLighten()
-        darkColor = Colors.accent
-        
         let view = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
         view.tag = -369
+        
+        var lightColor: UIColor, darkColor:UIColor
+        lightColor = Colors.accent.calendarLighten()
+        darkColor = Colors.accent
         
         let percent = habitService.habits.statHabitCompletionPercentageForDate(dayView.date.convertedDate()!)
         if percent < 50.0 {
@@ -475,7 +384,6 @@ extension CalendarController : CVCalendarViewDelegate, CVCalendarMenuViewDelegat
         } else {
             view.fillColor = darkColor
         }
-        
         return view
     }
 }

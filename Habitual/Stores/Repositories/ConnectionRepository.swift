@@ -174,7 +174,9 @@ private extension ConnectionRepository {
                     
                     self.loadMessages(connection) { (success) -> () in
                         total -= 1
-                        if total == 0 {Utilities.postNotification(Notifications.reloadNetworkOffline)}
+                        if total == 0 {
+                        
+                        }
                     }
                     connection.color = Colors.rainbow[count % 6]
                     count += 1

@@ -60,15 +60,12 @@ internal class HabitRepository: NSObject {
 private extension HabitRepository {
 
     private func getHabitsOfCurrentUser() -> [Habit]{
-        let entityDescription =
-            NSEntityDescription.entityForName("Habit",
+        let entityDescription = NSEntityDescription.entityForName("Habit",
                                               inManagedObjectContext: managedObjectContext!)
-        
         let request = NSFetchRequest()
         request.entity = entityDescription
         
         var error: NSError?
-        
         var objects: [AnyObject]?
         do {
             objects = try managedObjectContext?.executeFetchRequest(request)
@@ -79,10 +76,8 @@ private extension HabitRepository {
         }
         
         var habits:[Habit] = []
-        
         if let results = objects {
             if results.count > 0 {
-                
                 for result in results{
                     let coreDataObject = result as! HabitCoreData
                     let habit = Habit(coreDataObject: coreDataObject)
@@ -95,15 +90,11 @@ private extension HabitRepository {
     }
     
     private func clearHabitsOfCurrentUser() {
-        let entityDescription =
-            NSEntityDescription.entityForName("Habit",
+        let entityDescription = NSEntityDescription.entityForName("Habit",
                                               inManagedObjectContext: managedObjectContext!)
-        
         let request = NSFetchRequest()
         request.entity = entityDescription
-        
         var error: NSError?
-        
         var objects: [AnyObject]?
         do {
             objects = try managedObjectContext?.executeFetchRequest(request)
@@ -112,11 +103,9 @@ private extension HabitRepository {
             print("Error: \(error?.description)")
             objects = nil
         }
-        
+
         if let results = objects {
-            
             if results.count > 0 {
-                
                 for result in results{
                     let habit = result as! HabitCoreData
                     managedObjectContext?.deleteObject(habit)

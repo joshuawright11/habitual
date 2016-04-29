@@ -16,7 +16,7 @@ class HabitDetailController: UITableViewController {
     
     var habitService: HabitService!
     var connectionService: ConnectionService!
-    
+
     var canInteract = true // user can interact with elements
     var editng = false // user has pressed edit button
     
@@ -28,13 +28,16 @@ class HabitDetailController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doAppearance()
+        
+        Styler.navBarShader(self)
+        tableView.backgroundColor = Colors.background
+        tableView.registerNib(UINib(nibName: "InviteCell", bundle: nil), forCellReuseIdentifier: InviteCell.reuseID)
         
         Utilities.registerForNotification(self, selector: #selector(HabitDetailController.toggleDOTW), name: Notifications.dotwToggled)
         Utilities.registerForNotification(self, selector: #selector(HabitDetailController.toggleAccountability), name: Notifications.accountabilityToggled)
         
         if habitService.isTracking(habit) {
-            
+
             self.navigationItem.title = habit.name
 
             canInteract = false
@@ -45,31 +48,24 @@ class HabitDetailController: UITableViewController {
             self.navigationItem.rightBarButtonItem = button
             
             self.tableView.reloadData()
-            if(habit.frequency != .Daily) {toggleDOTW()}
-        }else{
-            self.navigationItem.title = "New Habit"
+            if(habit.frequency != .Daily) {
+                toggleDOTW()
+            }
+        } else {
             
             let button = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(HabitDetailController.create(_:)))
             self.navigationItem.rightBarButtonItem = button
+            self.navigationItem.title = "New Habit"
             
             habit = Habit()
         }
-        
-        tableView.registerNib(UINib(nibName: "InviteCell", bundle: nil), forCellReuseIdentifier: InviteCell.reuseID)
-    }
-    
-    func doAppearance() {
-        self.tableView.backgroundColor = Colors.background
-        
-        Styler.navBarShader(self)
     }
     
     func create(sender: UIBarButtonItem) {
-
-        if !checkData() { return }
-        
+        if !checkData() {
+            return
+        }
         habitService.createHabit(habit)
-        
         navigationController?.popToRootViewControllerAnimated(true)
     }
     
@@ -89,10 +85,8 @@ class HabitDetailController: UITableViewController {
         if !checkData() && editng { return }
         
         editng = !editng
-        
         self.tableView.beginUpdates()
         if editng {
-            
             self.tableView.insertSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             
             self.navigationItem.rightBarButtonItem?.title = "Save"
@@ -101,21 +95,20 @@ class HabitDetailController: UITableViewController {
             originalHabitName = habit.name
             originalHabitState = habit.notificationsEnabled
             
-            for cell in tableView.visibleCells {cell.userInteractionEnabled = true}
-            
+            for cell in tableView.visibleCells {
+                cell.userInteractionEnabled = true
+            }
         } else {
-            
             habitService.createHabit(habit)
             
             self.tableView.deleteSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             
             canInteract = false
-            for cell in tableView.visibleCells {cell.userInteractionEnabled = false}
+            for cell in tableView.visibleCells {
+                cell.userInteractionEnabled = false
+            }
             
             self.navigationItem.rightBarButtonItem?.title = "Edit"
-            
-            Utilities.postNotification(Notifications.habitDataChanged)
-            
             navigationController?.popToRootViewControllerAnimated(true)
         }
         self.tableView.endUpdates()
@@ -155,17 +148,6 @@ class HabitDetailController: UITableViewController {
         self.tableView.endUpdates()
     }
     
-    func detailForIndex(index: Int) -> String{
-        switch index {
-        case 0:
-            return habitService.isTracking(habit) ? "Enter name here" : habit.name
-        case 1:
-            return habitService.isTracking(habit) ? "Daily" : habit.frequency.toString()
-        default:
-            return "\(habit.datesCompleted.count)"
-        }
-    }
-    
     func deletePressed(){
         let alert = UIAlertController(title: "Danger Zone", message: "You sure you want to delete? Can't be undone.", preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
@@ -179,13 +161,13 @@ class HabitDetailController: UITableViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    // MARK: - Table view data source
+}
+
+// MARK: - Table view data source
+extension HabitDetailController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if editng {return 5}
-        else {return 4}
-        
+        return editng ? 5 : 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -200,8 +182,8 @@ class HabitDetailController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let id = cellIdentifierForIndexPath(indexPath)
         
+        let id = cellIdentifierForIndexPath(indexPath)
         if(indexPath.section == 4) {
             return tableView.dequeueReusableCellWithIdentifier(id)!
         }else if indexPath.section == 3 && indexPath.row == connectionService.connections.count + 2 {
@@ -241,7 +223,7 @@ class HabitDetailController: UITableViewController {
         }
     }
     
-    func cellIdentifierForIndexPath(ip: NSIndexPath) -> String {
+    private func cellIdentifierForIndexPath(ip: NSIndexPath) -> String {
         switch ip.section {
         case 0:
             switch ip.row {
@@ -294,16 +276,12 @@ class HabitDetailController: UITableViewController {
         default: return ""
         }
     }
-    
-    // MARK: - Table view delegate
-    
+}
+
+// MARK: - Table view delegate
+extension HabitDetailController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        defer { tableView.deselectRowAtIndexPath(indexPath, animated: true) }
         switch indexPath.section {
-        case 0: return
-        case 1: return
-        case 2: return
         case 3:
             if indexPath.row == connectionService.connections.count + 2 {
                 let sc = ShareController(nibName: "ShareController", bundle: nil)
@@ -316,6 +294,5 @@ class HabitDetailController: UITableViewController {
         case 4: deletePressed()
         default: return
         }
-    
     }
 }

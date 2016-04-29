@@ -25,10 +25,8 @@ class NotificationHandler: NSObject {
         if let aps = userInfo["aps"] as? [String: String] {
             switch action {
             case Notifications.reloadChat:
-                Utilities.postNotification(Notifications.reloadChat)
                 Utilities.globalAlert("Message", text: aps["alert"]!)
             case Notifications.reloadNetworkOnline:
-                Utilities.postNotification(Notifications.reloadNetworkOnline)
                 Utilities.globalAlert("Connections", text: aps["alert"]!)
             default:
                 return

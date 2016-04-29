@@ -15,14 +15,12 @@ import Timepiece
 class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     
     var connection:Connection!
-    
     var accountService: AccountService!
     var connectionService: ConnectionService!
     
     var outgoingBubbleImageData:JSQMessageBubbleImageDataSource!
     var incomingBubbleImageData:JSQMessageBubbleImageDataSource!
     var emptyBubbleImageData:JSQMessageBubbleImageDataSource!
-    
     var incomingAvatar:JSQMessagesAvatarImage!
     var outgoingAvatar:JSQMessagesAvatarImage!
     
@@ -123,7 +121,6 @@ class ConnectionChatController: JSQMessagesViewController, ServiceObserver {
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        Utilities.postNotification(Notifications.reloadNetworkOffline)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         connectionService.message(connection, text: text!) { (success) in
             if !success {

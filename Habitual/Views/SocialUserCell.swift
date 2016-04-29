@@ -76,9 +76,7 @@ class SocialUserCell: UITableViewCell {
     }
     
     var color: UIColor! {
-        didSet {
-            borderView.backgroundColor = color.igniteDarken().lightenColor(0.07)
-        }
+        didSet {borderView.backgroundColor = color.igniteDarken().lightenColor(0.07)}
     }
     
     var connectClosure: ((user: User) -> ())?

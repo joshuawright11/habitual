@@ -98,9 +98,7 @@ public class Utilities {
     }
     
     public static func postNotification(name: String, data: String = "", secondaryData: Bool = false) {
-        
         let info:[NSObject:AnyObject] = ["data":data,"secondaryData":secondaryData]
-        
         NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil, userInfo: info)
     }
     

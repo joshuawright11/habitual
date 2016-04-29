@@ -11,12 +11,9 @@ import UIKit
 class DatePickerCell: UITableViewCell {
     
     static let height = 225
-    
     static let reuseID = "DatePickerCell"
-    
+
     @IBOutlet weak var datePicker: UIDatePicker! {
-        didSet {
-            datePicker.setValue(Colors.textMain, forKey: "textColor")
-        }
+        didSet {datePicker.setValue(Colors.textMain, forKey: "textColor")}
     }
 }

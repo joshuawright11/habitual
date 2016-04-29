@@ -11,6 +11,10 @@ import UIKit
 // -TODO: Needs refactoring/documentation
 
 class SignupController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField! {
         didSet {
             usernameTextField.layer.cornerRadius = 7
@@ -32,11 +36,6 @@ class SignupController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var titleLabel: UILabel!
-
     @IBOutlet weak var loginButton: UIButton! {
         didSet {
             loginButton.layer.cornerRadius = 7
@@ -45,16 +44,13 @@ class SignupController: UIViewController, UITextFieldDelegate {
     }
 
     var accountService: AccountService!
-    
     var newAccount = true
     
     override func viewDidLoad() {
         doAppearance()
-        
         if(!newAccount) {
             nameTextFieldHeight.constant = 0
         }
-        
         setupKeyboardNotifications()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignupController.dismissKeyboard))
@@ -203,7 +199,6 @@ class SignupController: UIViewController, UITextFieldDelegate {
             }else{
                 passwordTextField.becomeFirstResponder()
             }
-            
             return false
         } else {
             textField.resignFirstResponder()

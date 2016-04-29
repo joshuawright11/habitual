@@ -88,7 +88,6 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     private var fbFriends: [User] = []
     private var contacts: [User] = []
-    
     var connectionService: ConnectionService!
     
     func setupListener(view: UIView) {

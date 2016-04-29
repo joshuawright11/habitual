@@ -17,18 +17,13 @@ import DKChainableAnimationKit
 class UserController: UIViewController, UITableViewDelegate, UITableViewDataSource, CVCalendarViewDelegate, CVCalendarViewAppearanceDelegate, CVCalendarMenuViewDelegate {
 
     var habits: [Habit]!
-
     var color:UIColor = Colors.accent
-    
     var connection: Connection?
-    
     var connectionService: ConnectionService!
     var accountService: AccountService!
     
     @IBOutlet weak var keyView: UIView! {
-        didSet {
-            keyView.backgroundColor = Colors.barBackground
-        }
+        didSet {keyView.backgroundColor = Colors.barBackground}
     }
     
     @IBOutlet weak var key1: UIView! {
@@ -55,7 +50,6 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBOutlet weak var keyHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var chartView: BarChartView! {
         didSet {
             chartView.hidden = true
@@ -175,7 +169,6 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         calendarView.commitCalendarViewUpdate()
         menuView.commitMenuViewUpdate()
     }
@@ -219,28 +212,22 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ccvc.connection = connection
         ccvc.accountService = accountService
         ccvc.connectionService = connectionService
-        
         let nav = UINavigationController(rootViewController: ccvc)
         nav.modalTransitionStyle = .FlipHorizontal
-        
         presentViewController(nav, animated: true, completion: nil)
     }
     
     func doAppearance() {
         self.tableView.backgroundColor = Colors.background
         self.view.backgroundColor = Colors.barBackground
-        
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        
         Styler.viewBottomShader(spacerView)
         spacerView.backgroundColor = Colors.barBackground
     }
 
     func getChartData() -> BarChartData {
-        
         var dataSets: [BarChartDataSet] = []
-        
         var count = 0
         for habit: Habit in habits {
             
@@ -252,23 +239,20 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         var xvals: [String] = []
-        
         if count != 0 {
             xvals = ["Habit Completion Percentage"]
         }
-        
-        let data = BarChartData(xVals: xvals, dataSets: dataSets)
-        data.setValueFont(Fonts.body)
-        data.setValueTextColor(Colors.textMain)
         
         let nf = NSNumberFormatter()
         nf.numberStyle = .PercentStyle
         nf.maximumFractionDigits = 0
         nf.multiplier = 1
+        
+        let data = BarChartData(xVals: xvals, dataSets: dataSets)
+        data.setValueFont(Fonts.body)
+        data.setValueTextColor(Colors.textMain)
         data.setValueFormatter(nf)
-        
         return data
-        
     }
     
     func refreshData(){
@@ -288,9 +272,11 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            return ("Longest streak:","\(user.statLongestStreak())")
 //        }
     }
-    
-    // MARK: - Table view data source
+}
 
+// MARK: - Table view data source
+extension UserController {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return calendar ? 1 : 2
     }
@@ -329,108 +315,44 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
         if(section == 0){
             return calendar ? "Habits of \(Utilities.monthDayStringFromDate(selectedDate))" : "All Habits"
-        }else{
+        } else {
             return "Stats"
         }
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    // MARK: - CVCalendarViewDelegate methods
-    func presentationMode() -> CalendarMode {
-        return .MonthView
-    }
-    
-    func firstWeekday() -> Weekday {
-        return .Sunday
-    }
-    
-    func shouldShowWeekdaysOut() -> Bool {
-        return true
-    }
-    
-    func presentedDateUpdated(date: Date) {
-        struct Months {
-            static let months = ["January","February","March","April",
-                "May","June","July","August","September","October",
-                "November","December"]
-        }
-    }
-    
+}
+
+// MARK: - CVCalendarViewDelegate methods
+extension UserController {
+    func presentationMode() -> CalendarMode {return .MonthView}
+    func firstWeekday() -> Weekday {return .Sunday}
+    func shouldShowWeekdaysOut() -> Bool {return true}
+    func shouldAutoSelectDayOnMonthChange() -> Bool {return true}
     func didSelectDayView(dayView: DayView, animationDidFinish: Bool) {
         self.selectedDate = dayView.date.convertedDate()!
         self.tableView.reloadData()
     }
-    
-    func shouldAutoSelectDayOnMonthChange() -> Bool {
-        return true
-    }
-    
-    // MARK: - CVCalendarAppearanceDelegate methods
-    func dayLabelWeekdayInTextColor() -> UIColor {
-        return Colors.textMain
-    }
-    
-    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
-        return Colors.accentSecondary
-    }
-    
-    func dayLabelWeekdayHighlightedTextColor() -> UIColor {
-        return Colors.accent
-    }
-    
-    func dayLabelPresentWeekdayFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelWeekdayOutTextColor() -> UIColor {
-        return Colors.textSecondary
-    }
-    
-    func dayLabelWeekdayFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelPresentWeekdayTextColor() -> UIColor {
-        return Colors.textMain
-    }
-    
-    func dayLabelPresentWeekdayInitallyBold() -> Bool {
-        return false
-    }
-    
-    func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {
-        return Colors.accentSecondary
-    }
-    
-    func dayLabelPresentWeekdaySelectedFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayLabelWeekdaySelectedFont() -> UIFont {
-        return Fonts.calendar
-    }
-    
-    func dayOfWeekTextColor() -> UIColor {
-        return Colors.textMain
-    }
-    
-    func dayOfWeekFont() -> UIFont {
-        return Fonts.secondary
-    }
-    
-    func shouldAutoSelectDayOnWeekChange() -> Bool {
-        return false
-    }
-    
+}
+
+// MARK: - CVCalendarAppearanceDelegate methods
+extension UserController {
+    func dayLabelWeekdayInTextColor() -> UIColor {return Colors.textMain}
+    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {return Colors.accentSecondary}
+    func dayLabelWeekdayHighlightedTextColor() -> UIColor {return Colors.accent}
+    func dayLabelPresentWeekdayFont() -> UIFont {return Fonts.calendar}
+    func dayLabelWeekdayOutTextColor() -> UIColor {return Colors.textSecondary}
+    func dayLabelWeekdayFont() -> UIFont {return Fonts.calendar}
+    func dayLabelPresentWeekdayTextColor() -> UIColor {return Colors.textMain}
+    func dayLabelPresentWeekdayInitallyBold() -> Bool {return false}
+    func dayLabelPresentWeekdaySelectedBackgroundColor() -> UIColor {return Colors.accentSecondary}
+    func dayLabelPresentWeekdaySelectedFont() -> UIFont {return Fonts.calendar}
+    func dayLabelWeekdaySelectedFont() -> UIFont {return Fonts.calendar}
+    func dayOfWeekTextColor() -> UIColor {return Colors.textMain}
+    func dayOfWeekFont() -> UIFont {return Fonts.secondary}
+    func shouldAutoSelectDayOnWeekChange() -> Bool {return false}
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
         if let date = dayView.date {
-            
             if date.convertedDate() > NSDate() || habits.filter({$0.createdAt.beginningOfDay <= date.convertedDate()?.endOfDay}).count < 1 {
                 return false
             } else {
@@ -461,9 +383,6 @@ class UserController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             view.fillColor = darkColor
         }
-        
         return view
     }
-    
-    
 }
