@@ -17,6 +17,7 @@ protocol ConnectionService {
     var connections:[Connection] {get}
     
     func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) throws
+    func isConnectedWith(user: User) -> Bool
     func approveConnection(connection: Connection)
     func message(connection: Connection, text: String, callback:(success: Bool) -> ())
     func otherUser(connection: Connection) -> User

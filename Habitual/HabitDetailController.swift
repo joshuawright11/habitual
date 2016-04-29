@@ -307,6 +307,7 @@ class HabitDetailController: UITableViewController {
         case 3:
             if indexPath.row == connectionService.connections.count + 2 {
                 let sc = ShareController(nibName: "ShareController", bundle: nil)
+                sc.connectionService = connectionService
                 let nav = UINavigationController(rootViewController: sc)
                 self.presentViewController(nav, animated: true, completion: nil)
             } else {

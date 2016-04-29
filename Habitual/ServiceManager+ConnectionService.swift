@@ -16,8 +16,15 @@ extension ServiceManager : ConnectionService {
     
     func connectWith(emailOfUser:String, callback: (success:Bool) -> ()) throws {
         try alreadyConnected(emailOfUser)
-        connectionReposity.connectWith(emailOfUser, callback: callback)
-        notifyConnectionServiceObservers()
+        connectionReposity.connectWith(emailOfUser) { (success) in
+            callback(success: success)
+            self.notifyConnectionServiceObservers()
+        }
+    }
+    
+    func isConnectedWith(user: User) -> Bool {
+        let emails = connections.map({otherUser($0).email})
+        return emails.contains(user.email)
     }
     
     private func alreadyConnected(string: String) throws {
@@ -33,6 +40,7 @@ extension ServiceManager : ConnectionService {
     
     func approveConnection(connection: Connection) {
         connectionReposity.approveConnection(connection)
+        notifyConnectionServiceObservers()
     }
     
     func otherUser(connection: Connection) -> User {

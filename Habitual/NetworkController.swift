@@ -95,6 +95,7 @@ class NetworkController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
         alert.addButton("Find Friends") { () -> Void in
             let sc = ShareController(nibName: "ShareController", bundle: nil)
+            sc.connectionService = self.connectionService
             let nav = UINavigationController(rootViewController: sc)
             self.presentViewController(nav, animated: true, completion: nil)
         }

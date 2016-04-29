@@ -89,6 +89,8 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     private var fbFriends: [User] = []
     private var contacts: [User] = []
     
+    var connectionService: ConnectionService!
+    
     func setupListener(view: UIView) {
         let gr = UITapGestureRecognizer(target: self, action: #selector(ShareController.tapped(_:)))
         view.addGestureRecognizer(gr)
@@ -217,15 +219,33 @@ class ShareController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if selectedView == fbView {
+    
+        if selectedView == fbView || selectedView == contactsView {
             let cell = tableView.dequeueReusableCellWithIdentifier("social", forIndexPath: indexPath) as! SocialUserCell
-            cell.user = fbFriends[indexPath.row]
+            
+            let user = selectedView == fbView ? fbFriends[indexPath.row] : contacts[indexPath.row]
+            
+            if !connectionService.isConnectedWith(user) {
+                cell.connectClosure = { user in
+                    do{
+                        try self.connectionService.connectWith(user.email, callback: { (success) in
+                            if success {
+                                Utilities.alertSuccess("Connection requested", vc: self.navigationController!)
+                            } else {
+                                Utilities.alertError("Error sending connection request :(", vc: self.navigationController!)
+                            }
+                        })
+                    } catch {
+                        // error
+                    }
+                }
+            } else {
+                cell.connectClosure = nil
+            }
+            
+            cell.user = user
             cell.color = Colors.rainbow[indexPath.row%Colors.rainbow.count]
-            return cell
-        } else if selectedView == contactsView {
-            let cell = tableView.dequeueReusableCellWithIdentifier("social", forIndexPath: indexPath) as! SocialUserCell
-            cell.user = contacts[indexPath.row]
-            cell.color = Colors.rainbow[indexPath.row%Colors.rainbow.count]
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(SettingsCell.reuseIdentifier, forIndexPath: indexPath) as! SettingsCell

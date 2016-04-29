@@ -41,6 +41,7 @@ class ConnectionRepository: NSObject {
                 let connectionParseObject = PFObject(className: "Connection")
                 connectionParseObject["sender"] = PFUser.currentUser()
                 connectionParseObject["receiver"] = user
+                connectionParseObject["privateApproved"] = false
                 connectionParseObject.saveInBackground()
                 
                 let connection = Connection(parseObject: connectionParseObject)!
@@ -106,6 +107,10 @@ internal extension User {
         connections = []
         name = parseUser["name"] as! String
         
+        if let fbId = parseUser["fbId"] as? String {
+            profileImageURL = "https://graph.facebook.com/\(fbId)/picture?type=large"
+        }
+
         for parseObject in parseUser["habits"] as! [PFObject] {
             if let habit = Habit(parseObject: parseObject) {
                 if !habit.privat {

@@ -64,7 +64,6 @@ class SocialUserCell: UITableViewCell {
                     iv.imageFromURL(url)
                 }
                 
-                //"https://graph.facebook.com/\(id)/picture?type=large"
                 if connectClosure == nil {
                     button.setTitle("Sent", forState: .Normal)
                     button.enabled = false
@@ -91,8 +90,8 @@ class SocialUserCell: UITableViewCell {
     }
     
     @IBAction func connectPressed() {
-        if let connectClosure = connectClosure {
-            connectClosure(user: user)
-        }
+        connectClosure?(user: user)
+        button.setTitle("Sent", forState: .Normal)
+        button.enabled = false
     }
 }
