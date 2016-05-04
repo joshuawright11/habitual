@@ -136,6 +136,7 @@ class AccountController: UIViewController {
             presentViewController(alert, animated: true, completion: nil)
         } else {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupController
+            vc.accountService = self.accountService
             vc.newAccount = sender == signUpButton
             self.navigationController?.pushViewController(vc, animated: true)
         }
