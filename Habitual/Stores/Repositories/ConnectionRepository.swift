@@ -117,7 +117,7 @@ internal extension User {
             if let habit = Habit(parseObject: parseObject) {
                 if !habit.privat {
                     habits.append(habit)
-                } else if !(habit.usersToNotify.filter({$0.email == email}).isEmpty) {
+                } else if !(habit.emailsToNotify.filter({$0 == email}).isEmpty) {
                     habits.append(habit)
                 }
             }

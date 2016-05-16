@@ -99,7 +99,12 @@ class HabitDetailController: UITableViewController {
                 cell.userInteractionEnabled = true
             }
         } else {
-            habitService.createHabit(habit)
+            if habitService.isTracking(habit) {
+                habitService.updateHabit(habit)
+            } else {
+                habitService.createHabit(habit)
+            }
+            
             
             self.tableView.deleteSections(NSIndexSet(index: 4), withRowAnimation: .Automatic)
             

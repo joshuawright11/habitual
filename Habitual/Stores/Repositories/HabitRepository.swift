@@ -25,19 +25,21 @@ internal class HabitRepository: NSObject {
         habits = getHabitsOfCurrentUser()
     }
     
-    internal func createHabit(habit: Habit) {
+    internal func createHabit(habit: Habit, serviceManager: ServiceManager) {
         addToCoreData(habit)
-        uploadToServer(habit, callback: nil)
+        addToServer(habit, serviceManager: serviceManager, callback: nil)
         habits.append(habit)
     }
     
     internal func deleteHabit(habit: Habit) {
         deleteFromCoreData(habit)
+        deleteFromServer(habit)
         habits.removeObject(habit)
     }
     
-    internal func updateHabit(habit: Habit) {
+    internal func updateHabit(habit: Habit, serviceManager: ServiceManager) {
         updateCoreData(habit)
+        updateOnServer(habit, serviceManager: serviceManager, callback: nil)
     }
     
     internal func orderHabits(habits: [Habit]) {
@@ -154,24 +156,22 @@ internal extension Habit {
         color = parseObject["color"] as! String
         notificationsEnabled = parseObject["notificationsEnabled"] as! Bool
         notificationSettings = [.None]
-        usersToNotify = []
+        emailsToNotify = []
         for userPO in parseObject["usersToNotify"] as! [PFUser] {
-            if let user = User(parseUser: userPO) {
-                usersToNotify.append(user)
+            if let email = userPO.email {
+                emailsToNotify.append(email)
             }
         }
     }
 }
 extension HabitRepository {
     
-    func uploadToServer(habit: Habit, callback: ((Bool) -> ())?) {
-    
+    func addToServer(habit: Habit, serviceManager: ServiceManager, callback: ((Bool) -> ())?) {
         if habitParseObjects[habit] == nil {
             let parseObject = HabitRepository.makeParseObjectForHabit()
             habitParseObjects[habit] = parseObject
+            updateOnServer(habit, serviceManager: serviceManager, callback: callback)
         }
-        
-        
     }
     
     static func makeParseObjectForHabit() -> PFObject {
@@ -184,7 +184,7 @@ extension HabitRepository {
         return parseObject
     }
     
-    func updateOnServer(habit: Habit, callback: ((Bool) -> ())?) {
+    func updateOnServer(habit: Habit, serviceManager: ServiceManager, callback: ((Bool) -> ())?) {
         
         guard let parseObject = habitParseObjects[habit] else {
             return
@@ -205,6 +205,18 @@ extension HabitRepository {
         parseObject["notificationsEnabled"] = habit.notificationsEnabled
         parseObject["notificationSettings"] = habit.notificationSettings.map({$0.toString()})
         parseObject["private"] = habit.privat
+        
+        let connectionsToNotify = serviceManager.connections.filter({habit.emailsToNotify.contains(serviceManager.otherUser($0).email)})
+        
+        var parseObjects:[PFObject] = []
+        connectionsToNotify.forEach {
+            connection in
+            if let parseObject = serviceManager.connectionReposity.connectionParseObjects[connection] {
+                parseObjects.append(parseObject)
+            }
+        }
+        
+        parseObject["usersToNotify"] = parseObjects
         
         parseObject.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
@@ -268,7 +280,7 @@ private extension Habit {
         color = coreDataObject.color
         notificationsEnabled = coreDataObject.notificationsEnabled
         notificationSettings = []
-        usersToNotify = []
+        emailsToNotify = coreDataObject.usernamesToNotify
     }
 }
 
@@ -346,7 +358,7 @@ private extension HabitRepository {
         coreDataObject.createdAt = habit.createdAt
         coreDataObject.datesCompletedData = habit.datesCompleted
         coreDataObject.notificationsEnabled = habit.notificationsEnabled
-        coreDataObject.usernamesToNotify = habit.usersToNotify.map {$0.name}
+        coreDataObject.usernamesToNotify = habit.emailsToNotify
         
         do {
             try managedObjectContext?.save()
@@ -376,6 +388,7 @@ private extension HabitRepository {
         coreDataObject.createdAt = habit.createdAt
         coreDataObject.datesCompletedData = habit.datesCompleted
         coreDataObject.notificationsEnabled = habit.notificationsEnabled
+        coreDataObject.usernamesToNotify = habit.emailsToNotify
         coreDataObject.save()
     }
     

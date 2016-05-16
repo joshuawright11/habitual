@@ -15,7 +15,7 @@ extension ServiceManager : HabitService {
     }
     
     func createHabit(habit: Habit) {
-        habitRepository.createHabit(habit)
+        habitRepository.createHabit(habit, serviceManager: self)
         notifyHabitServiceObservers()
     }
     
@@ -25,7 +25,7 @@ extension ServiceManager : HabitService {
     }
     
     func updateHabit(habit: Habit) {
-        habitRepository.updateHabit(habit)
+        habitRepository.updateHabit(habit, serviceManager: self)
         notifyHabitServiceObservers()
     }
     
@@ -41,7 +41,7 @@ extension ServiceManager : HabitService {
     func completeHabit(habit: Habit, on date: NSDate) -> Bool {
         if habit.canDoOn(date) {
             habit.datesCompleted.append(date);
-            habitRepository.updateHabit(habit)
+            habitRepository.updateHabit(habit, serviceManager: self)
             return habit.canDoOn(date)
         } else {
             return false;
@@ -54,7 +54,7 @@ extension ServiceManager : HabitService {
             for completion in habit.datesCompleted {
                 if (date.beginningOfDay...date.endOfDay).contains(completion) {
                     habit.datesCompleted.removeObject(completion)
-                    habitRepository.updateHabit(habit)
+                    habitRepository.updateHabit(habit, serviceManager: self)
                     break
                 }
             }

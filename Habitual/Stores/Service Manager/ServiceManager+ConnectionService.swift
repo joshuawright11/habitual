@@ -58,8 +58,8 @@ extension ServiceManager : ConnectionService {
     
     func numHabitsAccountableInConnection(connection: Connection) -> Int {
         let user = otherUser(connection)
-        return user.habits.filter({$0.usersToNotify.contains({ (user) -> Bool in
-            return user.email == currentUser?.email
+        return user.habits.filter({$0.emailsToNotify.contains({ (email) -> Bool in
+            return email == currentUser?.email
         })}).count
     }
     

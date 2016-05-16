@@ -59,11 +59,11 @@ class ConnectionCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         if selected {
-            if habit!.usersToNotify.contains(user) {
-                habit!.usersToNotify.removeAtIndex(habit!.usersToNotify.indexOf(user)!)
+            if habit!.emailsToNotify.contains(user.email) {
+                habit!.emailsToNotify.removeAtIndex(habit!.emailsToNotify.indexOf(user.email)!)
                 checkiv.tintColor = Colors.background
-            }else{
-                habit!.usersToNotify.append(user)
+            } else {
+                habit!.emailsToNotify.append(user.email)
                 checkiv.tintColor = color
             }
         }
@@ -85,6 +85,6 @@ class ConnectionCell: UITableViewCell {
         let names:[String] = user.name.componentsSeparatedByString(" ")
         initialsLabel.text = String(names[0].characters.first!) + String(names[1].characters.first!)
         
-        checkiv.tintColor = habit.usersToNotify.map({$0.name}).contains(user.name) ? color : Colors.background
+        checkiv.tintColor = habit.emailsToNotify.contains(user.email) ? color : Colors.background
     }
 }

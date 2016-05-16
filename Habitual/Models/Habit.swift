@@ -76,7 +76,7 @@ public class Habit: NSObject {
     var notificationSettings:[NotificationSetting]
     
     /// The `User` objects of the users to which the habit is accountable.
-    var usersToNotify: [User]
+    var emailsToNotify: [String]
     
     var streakBadge: String {
         get {
@@ -122,7 +122,7 @@ public class Habit: NSObject {
         color = Colors.purple.hexString
         notificationsEnabled = false
         notificationSettings = [.None]
-        usersToNotify = []
+        emailsToNotify = []
         
         super.init()
     }
