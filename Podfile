@@ -1,26 +1,25 @@
-link_with 'Ignite'
 use_frameworks!
 
-pod 'SwiftyJSON'
-pod 'Alamofire'
-pod 'Locksmith'
-pod 'Timepiece'
-pod 'DZNEmptyDataSet'
-pod 'Parse'
-pod 'Fabric'
-pod 'Crashlytics'
-pod 'CVCalendar'
-pod 'Charts'
-pod 'DKChainableAnimationKit'
-pod 'JSQMessagesViewController'
-pod 'TextFieldEffects'
-pod 'LTMorphingLabel'
-pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
-pod 'DynamicColor', '~> 2.3.0'
-pod 'FBSDKCoreKit'
-pod 'FBSDKShareKit'
-pod 'FBSDKLoginKit'
-pod 'ParseFacebookUtilsV4'
+target 'Ignite' do
+
+    pod 'Timepiece'
+    pod 'DZNEmptyDataSet'
+    pod 'Parse'
+    pod 'Fabric'
+    pod 'Crashlytics'
+    pod 'CVCalendar'
+    pod 'Charts'
+    pod 'DKChainableAnimationKit'
+    pod 'JSQMessagesViewController'
+    pod 'LTMorphingLabel'
+    pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
+    pod 'DynamicColor', '~> 2.3.0'
+    pod 'FBSDKCoreKit'
+    pod 'FBSDKShareKit'
+    pod 'FBSDKLoginKit'
+    pod 'ParseFacebookUtilsV4'
+    pod 'SprintSwift'
+end
 
 post_install do |installer|
   installer.pods_project.build_configuration_list.build_configurations.each do |configuration|

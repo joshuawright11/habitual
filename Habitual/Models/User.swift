@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Josh Wright. All rights reserved.
 //
 
-import SwiftyJSON
 import Parse
 
 /// A user of Ignite. Accessible to all classes.

@@ -107,8 +107,7 @@ class AccountController: UIViewController {
         if accountService.isFakeEmail {
             var tField: UITextField!
             
-            func configurationTextField(textField: UITextField!)
-            {
+            func configurationTextField(textField: UITextField!) {
                 textField.placeholder = "username@example.com"
                 tField = textField
             }
@@ -137,6 +136,7 @@ class AccountController: UIViewController {
         } else {
             let vc = storyboard?.instantiateViewControllerWithIdentifier("signin") as! SignupController
             vc.newAccount = sender == signUpButton
+            vc.accountService = self.accountService
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

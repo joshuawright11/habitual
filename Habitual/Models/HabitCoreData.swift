@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 import Timepiece
-import SwiftyJSON
 
 /// The `NSManagedObject` for representing a `Habit` in Core Data. This class
 /// should only be accessible by the `Habit` class.

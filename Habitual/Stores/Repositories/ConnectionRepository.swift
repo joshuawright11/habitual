@@ -79,10 +79,12 @@ class ConnectionRepository: NSObject {
     /// Approve the `Connection`. The approved `Connection` is then saved to the
     /// server.
     func approveConnection(connection: Connection) {
+        print("we made it")
         if let parseObject = connectionParseObjects[connection] {
             parseObject["privateApproved"] = true
             connection.approved = true
             parseObject.saveInBackground()
+            print("here")
         }
     }
 }
@@ -166,21 +168,16 @@ private extension ConnectionRepository {
             if let objects = objects {
                 self.connections = []
                 var count = 0
-                var total = objects.count
                 for o in objects {
                     guard let connection = Connection(parseObject: o) else {
                         continue
                     }
                     
-                    self.loadMessages(connection) { (success) -> () in
-                        total -= 1
-                        if total == 0 {
-                        
-                        }
-                    }
+                    self.loadMessages(connection) { (success) -> () in}
                     connection.color = Colors.rainbow[count % 6]
                     count += 1
                     self.connections.append(connection)
+                    self.connectionParseObjects[connection] = o
                 }
                 if let callback = callback {
                     callback(success: true)

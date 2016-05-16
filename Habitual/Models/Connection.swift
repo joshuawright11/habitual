@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 import Parse
 
 /// A class to represent the various connections between users in Ignite. Each

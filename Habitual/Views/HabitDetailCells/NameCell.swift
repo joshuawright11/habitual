@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TextFieldEffects
 
 /// A cell representing the name of the `Habit`.
 class NameCell: HabitDetailCell, UITextFieldDelegate {

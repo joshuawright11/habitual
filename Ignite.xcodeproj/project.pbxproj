@@ -22,6 +22,7 @@
 		031D280D1B29D1300060263A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031D280B1B29D1300060263A /* LaunchScreen.xib */; };
 		031D28191B29D1300060263A /* HabitualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031D28181B29D1300060263A /* HabitualTests.swift */; };
 		0322F18E1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */; };
+		032893F31CE68B86004D231F /* Sprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032893F21CE68B86004D231F /* Sprint.swift */; };
 		032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */; };
 		0330CDD91CAE2C3C00C2465C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */; };
 		0330CDDB1CAE405C00C2465C /* HabitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330CDDA1CAE405C00C2465C /* HabitRepository.swift */; };
@@ -73,11 +74,8 @@
 		03E99C9B1B545D3800E93D82 /* HabitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E99C9A1B545D3800E93D82 /* HabitDetailController.swift */; };
 		03E9F81A1C37384C008EC91A /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E9F8181C37384C008EC91A /* InviteCell.swift */; };
 		03E9F81B1C37384C008EC91A /* InviteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E9F8191C37384C008EC91A /* InviteCell.xib */; };
-		03EBFE551BC9972600F0777C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE4D1BC9972600F0777C /* Alamofire.framework */; };
 		03EBFE571BC9972600F0777C /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE4F1BC9972600F0777C /* DZNEmptyDataSet.framework */; };
-		03EBFE581BC9972600F0777C /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE501BC9972600F0777C /* Locksmith.framework */; };
 		03EBFE591BC9972600F0777C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE511BC9972600F0777C /* Parse.framework */; };
-		03EBFE5B1BC9972600F0777C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE531BC9972600F0777C /* SwiftyJSON.framework */; };
 		03EBFE5C1BC9972600F0777C /* Timepiece.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EBFE541BC9972600F0777C /* Timepiece.framework */; };
 		03ECDE3A1BF969A700B9F9E7 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ECDE391BF969A700B9F9E7 /* IconCell.swift */; };
 		03ECDE3C1BF969C200B9F9E7 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ECDE3B1BF969C200B9F9E7 /* ColorCell.swift */; };
@@ -90,7 +88,7 @@
 		03ECDE4A1BF96A5800B9F9E7 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ECDE491BF96A5800B9F9E7 /* NameCell.swift */; };
 		03ECDE4E1BF96F1900B9F9E7 /* HabitDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ECDE4D1BF96F1900B9F9E7 /* HabitDetailCell.swift */; };
 		03ECDE551BF99BDA00B9F9E7 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */; };
-		7005971548E4B2405F8B53F4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37BDF06A9F97547913E3FEF7 /* Pods.framework */; };
+		98B7107BEA8BCE571505DDCD /* Pods_Ignite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9530AB817EEBFE49D8D8293F /* Pods_Ignite.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +122,7 @@
 		031D28171B29D1300060263A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031D28181B29D1300060263A /* HabitualTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitualTests.swift; sourceTree = "<group>"; };
 		0322F18D1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+AsyncDownload.swift"; sourceTree = "<group>"; };
+		032893F21CE68B86004D231F /* Sprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprint.swift; sourceTree = "<group>"; };
 		032EEBE71BF81C3C0094F179 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; };
 		032EEBE81BF81C3C0094F179 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		0330CDD81CAE2C3C00C2465C /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
@@ -213,9 +212,10 @@
 		03ECDE491BF96A5800B9F9E7 /* NameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		03ECDE4D1BF96F1900B9F9E7 /* HabitDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitDetailCell.swift; sourceTree = "<group>"; };
 		03ECDE541BF99BDA00B9F9E7 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		2752A37A8353C50F267F38DA /* Pods-Ignite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignite.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ignite/Pods-Ignite.release.xcconfig"; sourceTree = "<group>"; };
 		37BDF06A9F97547913E3FEF7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		563879E4DCD5B2EAC7D169DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		6B3F56EE0E5812EF7F9BA1E7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		9530AB817EEBFE49D8D8293F /* Pods_Ignite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ignite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9738A8CC44A0849A3B01BF72 /* Pods-Ignite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ignite.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ignite/Pods-Ignite.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,13 +223,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03EBFE551BC9972600F0777C /* Alamofire.framework in Frameworks */,
 				03EBFE571BC9972600F0777C /* DZNEmptyDataSet.framework in Frameworks */,
-				03EBFE581BC9972600F0777C /* Locksmith.framework in Frameworks */,
 				03EBFE591BC9972600F0777C /* Parse.framework in Frameworks */,
-				03EBFE5B1BC9972600F0777C /* SwiftyJSON.framework in Frameworks */,
 				03EBFE5C1BC9972600F0777C /* Timepiece.framework in Frameworks */,
-				7005971548E4B2405F8B53F4 /* Pods.framework in Frameworks */,
+				98B7107BEA8BCE571505DDCD /* Pods_Ignite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +285,7 @@
 				031D28151B29D1300060263A /* HabitualTests */,
 				031D27FE1B29D1300060263A /* Products */,
 				A7BCFA7EFDD6DA07080E4878 /* Frameworks */,
-				566B0A2AF5872A2C0665C670 /* Pods */,
+				7D48738FEDD34571E9A997A2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -448,6 +445,7 @@
 				0317811B1CA497940092EC2C /* UIDeviceHardware.h */,
 				0317811C1CA497940092EC2C /* UIDeviceHardware.m */,
 				0317811E1CA4A33E0092EC2C /* SCLAlertView.swift */,
+				032893F21CE68B86004D231F /* Sprint.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -471,11 +469,11 @@
 			path = HabitDetailCells;
 			sourceTree = "<group>";
 		};
-		566B0A2AF5872A2C0665C670 /* Pods */ = {
+		7D48738FEDD34571E9A997A2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6B3F56EE0E5812EF7F9BA1E7 /* Pods.debug.xcconfig */,
-				563879E4DCD5B2EAC7D169DD /* Pods.release.xcconfig */,
+				9738A8CC44A0849A3B01BF72 /* Pods-Ignite.debug.xcconfig */,
+				2752A37A8353C50F267F38DA /* Pods-Ignite.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -509,6 +507,7 @@
 				03DF8E191B5F192000C6DC78 /* AudioToolbox.framework */,
 				03DF8E171B5F191B00C6DC78 /* Accounts.framework */,
 				37BDF06A9F97547913E3FEF7 /* Pods.framework */,
+				9530AB817EEBFE49D8D8293F /* Pods_Ignite.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -520,13 +519,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 031D281C1B29D1300060263A /* Build configuration list for PBXNativeTarget "Ignite" */;
 			buildPhases = (
-				0D1D3B40AA770E0875F10A2B /* Check Pods Manifest.lock */,
+				83F7628CA07CA6796A452B19 /* 📦 Check Pods Manifest.lock */,
 				031D27F91B29D1300060263A /* Sources */,
 				031D27FA1B29D1300060263A /* Frameworks */,
 				031D27FB1B29D1300060263A /* Resources */,
 				033AB3691BD00E39006D8D8F /* ShellScript */,
-				BEDC9AD3D1C89A53A40AE36A /* Embed Pods Frameworks */,
-				93941ACF3677A5D6EF3AC081 /* Copy Pods Resources */,
+				EAEB9CDEB5A258C666A98441 /* 📦 Embed Pods Frameworks */,
+				910653FE79736BCD4CBE7FFC /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -639,14 +638,14 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" ccc151c1a1f2ebb45ae499391dba6bc8c4ddaf36 6e9cb81fb4260388b2e86b3317c3ca3868975a878ed8141cc9cb830c6fb517e8";
 		};
-		0D1D3B40AA770E0875F10A2B /* Check Pods Manifest.lock */ = {
+		83F7628CA07CA6796A452B19 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,34 +653,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		93941ACF3677A5D6EF3AC081 /* Copy Pods Resources */ = {
+		910653FE79736BCD4CBE7FFC /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ignite/Pods-Ignite-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BEDC9AD3D1C89A53A40AE36A /* Embed Pods Frameworks */ = {
+		EAEB9CDEB5A258C666A98441 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ignite/Pods-Ignite-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -722,6 +721,7 @@
 				0322F18E1C48B9D6005A5B16 /* UIImageView+AsyncDownload.swift in Sources */,
 				03ECDE481BF96A3400B9F9E7 /* ConnectionsHeaderCell.swift in Sources */,
 				039BFC0E1B2AE10B006EAFD9 /* User.swift in Sources */,
+				032893F31CE68B86004D231F /* Sprint.swift in Sources */,
 				032EEBE91BF81C3C0094F179 /* UIAppearance+Swift.m in Sources */,
 				03ECDE461BF96A2300B9F9E7 /* AccountabilityCell.swift in Sources */,
 				03167CEB1CD2EB2A00E30E1C /* RangeReplicableCollectionType+Remove.swift in Sources */,
@@ -885,7 +885,7 @@
 		};
 		031D281D1B29D1300060263A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B3F56EE0E5812EF7F9BA1E7 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 9738A8CC44A0849A3B01BF72 /* Pods-Ignite.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -906,8 +906,6 @@
 					"-l\"sqlite3\"",
 					"-l\"z\"",
 					"-framework",
-					"\"Alamofire\"",
-					"-framework",
 					"\"AudioToolbox\"",
 					"-framework",
 					"\"Bolts\"",
@@ -920,8 +918,6 @@
 					"-framework",
 					"\"DZNEmptyDataSet\"",
 					"-framework",
-					"\"Locksmith\"",
-					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",
 					"\"QuartzCore\"",
@@ -929,8 +925,6 @@
 					"\"Security\"",
 					"-framework",
 					"\"StoreKit\"",
-					"-framework",
-					"\"SwiftyJSON\"",
 					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
@@ -949,7 +943,7 @@
 		};
 		031D281E1B29D1300060263A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 563879E4DCD5B2EAC7D169DD /* Pods.release.xcconfig */;
+			baseConfigurationReference = 2752A37A8353C50F267F38DA /* Pods-Ignite.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -970,8 +964,6 @@
 					"-l\"sqlite3\"",
 					"-l\"z\"",
 					"-framework",
-					"\"Alamofire\"",
-					"-framework",
 					"\"AudioToolbox\"",
 					"-framework",
 					"\"Bolts\"",
@@ -984,8 +976,6 @@
 					"-framework",
 					"\"DZNEmptyDataSet\"",
 					"-framework",
-					"\"Locksmith\"",
-					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",
 					"\"QuartzCore\"",
@@ -993,8 +983,6 @@
 					"\"Security\"",
 					"-framework",
 					"\"StoreKit\"",
-					"-framework",
-					"\"SwiftyJSON\"",
 					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",

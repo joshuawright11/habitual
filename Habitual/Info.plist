@@ -18,16 +18,19 @@
 	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb1014991215190531</string>
-				<string>fbauth2</string>
-			</array>
-		</dict>
-	</array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb1014991215190531</string>
+            </array>
+        </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>1014991215190531</string>
+    <key>FacebookDisplayName</key>
+    <string>Ignite</string>
 	<key>CFBundleVersion</key>
 	<string>117</string>
 	<key>Fabric</key>
